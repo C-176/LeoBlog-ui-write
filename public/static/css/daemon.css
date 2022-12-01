@@ -1,0 +1,134 @@
+/* CDN 服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+@font-face {
+    font-family: 'iconfont';  /* Project id 3270950 */
+    src: url('//at.alicdn.com/t/c/font_3270950_q21sl35q5at.woff2?t=1667797852199') format('woff2'),
+    url('//at.alicdn.com/t/c/font_3270950_q21sl35q5at.woff?t=1667797852199') format('woff'),
+    url('//at.alicdn.com/t/c/font_3270950_q21sl35q5at.ttf?t=1667797852199') format('truetype');
+}
+.iconfont {
+    font-family: "iconfont" !important;
+    /* font-size: 16px; */
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+* a {
+    text-decoration: none;
+}
+
+* button:hover {
+    cursor: pointer;
+}
+* a:hover {
+    cursor: pointer;
+}
+
+
+.iconfont{
+    display: inline;
+}
+
+:deep( .router-link-active) {
+     color: #fff;
+     text-decoration: none;
+}
+
+.router-link-active {
+    text-decoration: none;
+    /*color: #fff;*/
+}
+img{
+    -webkit-user-drag: none;
+}
+a {
+    text-decoration: none;
+    color: #111;
+}
+a:hover {
+    color: #8e9192 !important;
+}
+
+
+
+/*引入字体*/
+@font-face {
+    font-family: 'PingFang SC';  /* Project id 3270950 */
+    src: url('/static/fonts/PingFang Bold.ttf')
+}
+.dark {
+    /* 自定义深色背景颜色 */
+    /*--el-bg-color: #063432;*/
+    background: #063432;
+    color: #acc3cb;
+}
+.light {
+    /* 自定义深色背景颜色 */
+    background: #eef2f4;
+    color: #132c33;
+}
+
+.whole {
+    background: #fff;
+    width: 55%;
+
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.whole > div {
+    width: 100%;
+}
+
+
+body {
+    font-family: "Arial", "PingFang SC", sans-serif;
+    background: #eef2f4;
+    background-size: 100% 100%;
+    text-align: center;
+    /*color: #132c33;*/
+}
+
+
+/*!* 设置滚动条的样式 *!*/
+/*::-webkit-scrollbar {*/
+/*    width: 6px !important;*/
+/*}*/
+
+/*!* 滚动槽 *!*/
+/*::-webkit-scrollbar-track {*/
+/*    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);*/
+/*    !*border-radius: 10px;*!*/
+/*}*/
+
+/*!* 滚动条滑块 *!*/
+/*::-webkit-scrollbar-thumb {*/
+/*    border-radius: 10px;*/
+/*    background: rgba(0, 0, 0, 0.1);*/
+/*    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);*/
+/*}*/
+
+/*::-webkit-scrollbar-thumb:window-inactive {*/
+/*    background: rgba(0, 0, 0, 0.5);*/
+/*}*/
+
+/** i {*/
+/*    font-style: normal;*/
+/*}*/
+/*::selection{*/
+/*    background:#869d9d;*/
+/*    color:#134857;*/
+/*}*/
+/*::-moz-selection{*/
+/*    background:#869d9d;*/
+/*    color:#134857;*/
+/*}*/
+/*p::-webkit-selection {*/
+/*    background:#869d9d;*/
+/*    color:#134857;*/
+/*}*/

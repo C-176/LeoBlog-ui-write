@@ -1,0 +1,198 @@
+.container {
+    position: absolute; /*声明绝对定位*/
+    left: 0; /*在页面最左侧对齐*/
+    top: 0; /*在页面最上方对齐*/
+    height: 100vh; /*高度是相对屏幕高度的100%*/
+    width: 100vw; /*宽度是相对屏幕宽度的100%*/
+    /* z-index:3; *//*设置元素优先级为1级*/
+    /*display:none;!*设置元素隐藏*!*/
+
+    /* 渐变背景 */
+    background: linear-gradient(to top, #134857, #fff);
+
+    /*width: 100%;*/
+    /*height: 100%;*/
+    /* 弹性布局 水平+垂直居中 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 钢铁侠 */
+.iron-man {
+    /* 相对定位 */
+    position: relative;
+    /* 执行飞行抖动动画：动画名 时长 线性的 无限次播放 */
+    animation: flight 0.3s linear infinite;
+}
+
+.iron-man img {
+    width: 250px;
+    position: relative;
+    z-index: 1;
+}
+
+/* 脚下喷射线 */
+.iron-man span {
+    width: 30px;
+    height: 1px;
+    background-color: #d8e3e7;
+    /* 绝对定位 */
+    position: absolute;
+    top: 12px;
+    z-index: 0;
+    /* 执行喷射动画 */
+    animation: spray 0.3s linear infinite;
+}
+
+/* 为每条喷射线设置top、动画延迟时间 */
+.iron-man span:nth-child(2) {
+    top: 13px;
+    animation-delay: -1s;
+}
+
+.iron-man span:nth-child(3) {
+    top: 14px;
+    animation-delay: -2s;
+}
+
+.iron-man span:nth-child(4) {
+    top: 15px;
+    animation-delay: -1.5s;
+}
+
+/* 背景线区域 */
+.lines {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+/* 背景线 */
+.lines span {
+    position: absolute;
+    width: 20%;
+    height: 2px;
+    background-color: #d8e3e7;
+    /* 执行线移动的动画 */
+    animation: linemove linear infinite;
+}
+
+/* 为每条线设置top、动画时长、动画延迟时间 */
+.lines span:nth-child(1) {
+    top: 20%;
+    animation-duration: 0.6s;
+    animation-delay: -5s;
+}
+
+.lines span:nth-child(2) {
+    top: 40%;
+    animation-duration: 0.8s;
+    animation-delay: -1s;
+}
+
+.lines span:nth-child(3) {
+    top: 60%;
+    animation-duration: 0.6s;
+    animation-delay: 0s;
+}
+
+.lines span:nth-child(4) {
+    top: 80%;
+    animation-duration: 0.5s;
+    animation-delay: -3s;
+}
+
+.loading-text {
+    /* 绝对定位 水平居中 垂直偏下 */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 58%;
+    color: #13485754;
+    font-size: 20px;
+    letter-spacing: 3px;
+    white-space: nowrap;
+    /* 执行文字移动的动画：动画名 时长 贝塞尔曲线 无限次播放 */
+    animation: textmove 3s cubic-bezier(0.075, 0.82, 0.165, 1) infinite;
+}
+
+/* 定义动画 */
+/* 飞行动画（抖动） */
+@keyframes flight {
+    0% {
+        transform: translate(2px, 1px) rotate(0deg);
+    }
+    10% {
+        transform: translate(-1px, -3px) rotate(-1deg);
+    }
+    20% {
+        transform: translate(-2px, 0px) rotate(1deg);
+    }
+    30% {
+        transform: translate(1px, 2px) rotate(0deg);
+    }
+    40% {
+        transform: translate(1px, -1px) rotate(1deg);
+    }
+    50% {
+        transform: translate(-1px, 3px) rotate(-1deg);
+    }
+    60% {
+        transform: translate(-1px, 1px) rotate(0deg);
+    }
+    70% {
+        transform: translate(3px, 1px) rotate(-1deg);
+    }
+    80% {
+        transform: translate(-2px, -1px) rotate(1deg);
+    }
+    90% {
+        transform: translate(2px, 1px) rotate(0deg);
+    }
+    100% {
+        transform: translate(1px, -2px) rotate(-1deg);
+    }
+}
+
+/* 脚下喷射 */
+@keyframes spray {
+    0% {
+        left: 0;
+        opacity: 1;
+    }
+    100% {
+        left: -80px;
+        opacity: 0;
+    }
+}
+
+/* 线移动（速度的感觉） */
+@keyframes linemove {
+    0% {
+        left: 200%;
+        opacity: 1;
+    }
+    100% {
+        left: -200%;
+        opacity: 0;
+    }
+}
+
+/* 加载文字移动 */
+@keyframes textmove {
+    0% {
+        margin-left: 500px;
+        opacity: 0;
+    }
+    30%, 70% {
+        margin-left: 0;
+        opacity: 1;
+    }
+    100% {
+        margin-left: -500px;
+        opacity: 0;
+    }
+}
