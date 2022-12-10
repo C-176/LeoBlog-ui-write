@@ -1,6 +1,6 @@
 <template>
   <bread>个人信息</bread>
-  <div class="whole">
+  <div class="mt-14 w-full md:w-2/3 md:p-5 bg-gray-100 rounded-xl mx-auto ">
     <template v-if="loading">
       <a-skeleton active/>
       <a-skeleton active/>
@@ -8,28 +8,30 @@
     </template>
 
     <template v-else>
-      <div class="pic">
-        <div class="bg">
+      <el-upload
+          class="avatar-uploader  border border-gray-100 max-h-56 rounded-xl w-full overflow-hidden"
+          method="post"
+          name="file"
+          :action="action"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccessBg"
+          :before-upload="beforeAvatarUpload"
+          :on-error="handleAvatarError"
+          :disabled="readonly"
+      >
+        <img v-if="p(userx.userBgPic) && showBg" id="bg" :src="p(userx.userBgPic)" class="avatar"/>
+        <el-icon v-else class="avatar-uploader-icon bgUpload">
+          <Plus/>
+        </el-icon>
+      </el-upload>
+
+
+      <div class="overflow-hidden w-full bg-white  sm:rounded-lg p-10 text-left">
+
+        <div class="flex w-full justify-start items-center">
+
           <el-upload
-              class="avatar-uploader"
-              method="post"
-              name="file"
-              :action="action"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccessBg"
-              :before-upload="beforeAvatarUpload"
-              :on-error="handleAvatarError"
-              :disabled="readonly"
-          >
-            <img v-if="p(userx.userBgPic) && showBg" id="bg" :src="p(userx.userBgPic)" class="avatar"/>
-            <el-icon v-else class="avatar-uploader-icon bgUpload">
-              <Plus/>
-            </el-icon>
-          </el-upload>
-        </div>
-        <div class="head">
-          <el-upload
-              class="avatar-uploader"
+              class="avatar-uploader flex justify-center items-center w-20 h-20 border border-gray-100 rounded-xl overflow-hidden"
               method="post"
               name="file"
               :action="action"
@@ -40,103 +42,124 @@
               :disabled="readonly"
 
           >
-            <!--/*            <img  :src="p(userx.userProfilePhoto) " class="avatar" style="height: 150px;width: 150px;"/>*/-->
-            <a-avatar
-                v-if="userx.userProfilePhoto && showProfile"
-                :src="p(userx.userProfilePhoto)"
-                :style="{ backgroundColor: '#067061'  ,verticalAlign: 'middle',height: '150px',width: '150px'}"
-                shape="square"
-            >
-              {{ userx.userNickname }}
-            </a-avatar>
-            <el-icon v-else class="avatar-uploader-icon profileUpload">
+            <img v-if="userx.userProfilePhoto && showProfile"
+                 :src="p(userx.userProfilePhoto)" class="avatar rounded-xl w-full"/>
+
+            <el-icon v-else class="avatar-uploader-icon flex items-center justify-center">
               <Plus/>
             </el-icon>
           </el-upload>
+          <div class="px-4 py-5 sm:px-6 flex-col justify-between items-center">
+            <h3 class="text-lg font-medium leading-6 text-gray-900">{{ userx.userNickname }}</h3>
+            <div class=" inline-block  mt-1 max-w-2xl text-sm text-gray-500">{{ userx.userIntro }}</div>
+          </div>
         </div>
-        <label>
-          <span class="iconfont" id="uname">&#xe656; 用户名 </span>
-          <input class="name" :class="{readonly:readonly}" :readonly="readonly" v-model="userx.userNickname"/></label>
-      </div>
+        <div class="border-t border-gray-200">
+          <dl>
+            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt class="text-sm font-medium text-gray-500">昵称</dt>
+              <input v-model="userx.userNickname" :readonly="readonly"
+                     class="introInput">
+            </div>
+            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt class="text-sm font-medium text-gray-500">性别</dt>
+              <select v-model="userx.userSex" :disabled="readonly"
+                      class=" introInput w-1/2"
+              >
+                <option value="1">
+                  男
+                </option>
+                <option value="0">
+                  女
+                </option>
+                <option value="2">
+                  未知
+                </option>
+
+              </select>
+            </div>
+            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt class="text-sm font-medium text-gray-500">生日</dt>
+              <!--              <div class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">-->
+              <div class="flex justify-start items-center">
+              <el-date-picker
+                  :readonly="readonly"
+                  v-model="userx.userBirthday"
+                  type="date"
+                  placeholder="选择日期"
+                  :size="size"
+
+              /></div>
+              <!--              </div>-->
+            </div>
+            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt class="text-sm font-medium text-gray-500">居住地</dt>
+              <input v-model="userx.userPos" :readonly="readonly" class="introInput">
+            </div>
+            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt class="text-sm font-medium text-gray-500">所在行业</dt>
+              <input v-model="userx.userIndustry" :readonly="readonly" class="introInput">
+            </div>
+            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <dt class="text-sm font-medium text-gray-500">教育经历</dt>
+            <input v-model="userx.userEducation" :readonly="readonly" class="introInput">
+          </div>
+            <div class="bg-white px-4 py-5  sm:grid-cols-3 sm:gap-4 sm:px-6 flex-col justify-start items-center">
+              <div class="text-sm font-medium text-gray-500 w-full py-2">个人介绍</div>
+              <textarea v-model="userx.userIntro" :readonly="readonly" class="introInput w-full"></textarea>
+            </div>
 
 
-      <div class="comment">
-        <div class="q"><span class="iconfont">&#xe642;</span> 性别</div>
-        <div class="s"><label>
-          <input v-if="readonly" :value="userx.userSex == 0?'女':'男'" :class="{readonly:readonly}" readonly="true"/>
-          <template v-else>
-            <a-select :value="userx.userSex == 0?'女':'男'" :bordered="false"
-                      @change='handleSexChange'  >
 
-              <a-select-option value="1">
-                <template #prefix>
-                  <user-outlined type="user"/>
-                </template>
-                男
-              </a-select-option>
-              <a-select-option value="0">
-                <template #prefix>
-                  <user-outlined type="user"/>
-                </template>
-                女
-              </a-select-option>
-            </a-select>
-          </template>
+            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt class="text-sm font-medium text-gray-500">Attachments</dt>
+              <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                <ul role="list" class="divide-y divide-gray-200 rounded-md border border-gray-200">
+                  <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
+                    <div class="flex w-0 flex-1 items-center">
+                      <!-- Heroicon name: mini/paper-clip -->
+                      <svg class="h-5 w-5 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                           viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                              d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"
+                              clip-rule="evenodd"/>
+                      </svg>
+                      <span class="ml-2 w-0 flex-1 truncate">resume_back_end_developer.pdf</span>
+                    </div>
+                    <div class="ml-4 flex-shrink-0">
+                      <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
+                    </div>
+                  </li>
+                  <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">
+                    <div class="flex w-0 flex-1 items-center">
+                      <!-- Heroicon name: mini/paper-clip -->
+                      <svg class="h-5 w-5 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg"
+                           viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                              d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"
+                              clip-rule="evenodd"/>
+                      </svg>
+                      <span class="ml-2 w-0 flex-1 truncate">coverletter_back_end_developer.pdf</span>
+                    </div>
+                    <div class="ml-4 flex-shrink-0">
+                      <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>
+                    </div>
+                  </li>
+                </ul>
+              </dd>
+            </div>
 
-        </label></div>
-
-      </div>
-      <div class="comment">
-        <div class="q"><span class="iconfont">&#xe63d;</span> 居住地</div>
-        <div class="s"><label>
-          <input v-model="userx.userPos" :class="{readonly:readonly}" :readonly="readonly">
-        </label></div>
-
-      </div>
-      <div class="comment">
-        <div class="q"><span class="iconfont">&#xe73b;</span> 所在行业</div>
-        <div class="s"><label>
-          <input :class="{readonly:readonly}" :readonly="readonly"
-                 v-model="userx.userIndustry">
-        </label></div>
-      </div>
-      <div class="comment">
-        <div class="q"><span class="iconfont">&#xe80f;</span> 生日</div>
-        <div class="s"><label>
-          <el-date-picker
-              :readonly="readonly"
-              v-model="userx.userBirthday"
-              type="date"
-              placeholder="选择日期"
-              :size="size"
-              :class="{readonly:readonly}"
-          />
-        </label>
-
+            <button
+                class="button w-full"
+                @click="todo">{{ mode }}
+            </button>
+          </dl>
 
         </div>
+
       </div>
-      <div class="comment">
-        <div class="q"><span class="iconfont">&#xe624;</span> 教育经历</div>
-        <div class="s"><label>
-          <input :class="{readonly:readonly}" :readonly="readonly" v-model="userx.userEducation">
-        </label></div>
-      </div>
-      <div class="comment">
-        <div class="q"><span class="iconfont">&#xe7c0;</span> 个人认证</div>
-        <div class="s"><label>
-          <input name="userCertification" :class="{readonly:readonly}" :readonly="readonly"
-                 v-model="userx.userCertification">
-        </label></div>
-      </div>
-      <div class="comment">
-        <div class="q"><span class="iconfont">&#xe78b;</span> 个人简介</div>
-        <div class="s"><label>
-          <input class="userIntroduction" name="userIntroduction" :class="{readonly:readonly}" :readonly="readonly"
-                 v-model="userx.userIntro">
-        </label></div>
-      </div>
-      <a class="change" @click="todo">{{ mode }}</a>
+
+
     </template>
   </div>
 
@@ -189,9 +212,7 @@ export default {
   },
 
   methods: {
-    handleSexChange(e){
-      this.userx.userSex = e
-    },
+
     todo() {
       if (this.mode === '保存') {
         // 检查数据是否变化
@@ -204,6 +225,7 @@ export default {
             this.userx.userCertification === this.$store.state.user.userCertification &&
             this.userx.userIntroduction === this.$store.state.user.userIntroduction &&
             this.userx.userProfilePhoto === this.$store.state.user.userProfilePhoto &&
+            this.userx.userIntro === this.$store.state.user.userIntro &&
             this.userx.userBgPic === this.$store.state.user.userBgPic) {
           this.$st('您未做任何修改', 'warning');
           this.mode = '修改';
@@ -275,10 +297,10 @@ export default {
 
 <style scoped>
 
-:deep(.avatar-uploader,.el-upload) {
-  height: 100%;
-  width: 100%;
-}
+/*:deep(.avatar-uploader,.el-upload) {*/
+/*  height: 100%;*/
+/*  width: 100%;*/
+/*}*/
 
 .profileUpload .avatar {
   width: 178px;
@@ -309,14 +331,14 @@ export default {
   height: 100%;
 }
 
-.avatar-uploader-icon .el-upload {
-  border: 1px dashed var(--el-border-color);
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: var(--el-transition-duration-fast);
-}
+/*.avatar-uploader-icon .el-upload {*/
+/*  border: 1px dashed var(--el-border-color);*/
+/*  border-radius: 6px;*/
+/*  cursor: pointer;*/
+/*  position: relative;*/
+/*  overflow: hidden;*/
+/*  transition: var(--el-transition-duration-fast);*/
+/*}*/
 
 /*.profileUpload .el-upload:hover {*/
 /*  border-color: var(--el-color-primary);*/
@@ -379,9 +401,6 @@ export default {
   color: #fff;
 }
 
-:deep(.readonly) {
-  background-color: #f5f5f5 !important;
-}
 
 .whole {
   margin-top: 60px;
@@ -405,10 +424,6 @@ export default {
   border: 5px solid #fff;
 }
 
-/*.whole img {*/
-/*  width: 100%;*/
-/*  height: 100%;*/
-/*}*/
 
 .whole .pic .head {
   float: left;
@@ -446,19 +461,15 @@ export default {
 
 :deep(.el-date-editor.el-input) {
   height: 40px;
-  width: 80%;
+  width: 100%;
   font-size: 15px;
-  background: #d5d5d5;
+  background: transparent;
   border-radius: 10px;
+  border-width: 0;
+  /*margin-top: 0.5rem;*/
 
 }
 
-.whole .comment {
-  width: 80%;
-  height: 60px;
-  margin-left: 20%;
-  color: #134857;
-}
 
 :deep(.ant-select) {
   width: 80%;
@@ -467,69 +478,6 @@ export default {
   border-radius: 10px;
 }
 
-.comment .q, .comment .s {
-  float: left;
-  height: 100%;
-  font-size: 15px;
-  line-height: 60px;
-  padding-left: 20px;
-  border-bottom: 1px solid rgba(134, 157, 157, 0.23);
-}
-
-.comment .q {
-  width: 20%;
-  text-align: left;
-  font-weight: 600;
-}
-
-.comment .s {
-  text-align: left;
-  width: 40%;
-  margin-right: 300px;
-  padding-left: 20px;
-}
-
-.s select {
-  height: 40px;
-  width: 15%;
-  font-size: 15px;
-  color: #134857;
-  line-height: 40px;
-  border: none;
-  margin: 10px 0 10px 20px;
-}
-
-
-label input {
-  height: 40px;
-  width: 80%;
-  font-size: 15px;
-  color: #134857;
-  line-height: 40px;
-
-  padding-left: 20px;
-  border-radius: 10px;
-  background: rgba(17, 17, 17, 0.17);
-  outline: none;
-  border: 1px solid #dde0e7;
-  transition: all 0.3s;
-}
-
-.whole .change {
-  display: block;
-  height: 40px;
-  width: 64px;
-  background: rgba(17, 17, 17, 0.17);
-  position: relative;
-  bottom: 500px;
-  left: 90%;
-  line-height: 40px;
-  text-align: center;
-  border-radius: 5px;
-  color: #134857;
-  font-size: 20px;
-  font-weight: 600;
-}
 
 :deep(.bg .el-icon ) {
   width: 100%;
@@ -539,7 +487,7 @@ label input {
 }
 
 :deep(.el-upload) {
-  width: 100%;
+  /*width: 100%;*/
 }
 
 :deep(.head .el-icon) {

@@ -7,6 +7,7 @@ import axios from "axios";
 const store = createStore({
     state() {
         return {
+            bgCover:false,
             shell: false,
             mode: 'light',
             addChat: -1,

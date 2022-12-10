@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div v-if="showCover" class="bg-cover"></div>
+    <div v-if="showCover" class="fixed w-screen h-screen bg-black bg-opacity-30 z-40"></div>
   </transition>
 </template>
 
@@ -30,13 +30,9 @@ export default {
 <style scoped>
 
 .bg-cover {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
+
   background-color: #1E2427BE;
-  z-index: 101;
+
 }
 
 .fade-enter-active, .fade-leave-active {

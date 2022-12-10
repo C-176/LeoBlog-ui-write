@@ -1,10 +1,19 @@
 <template>
-  <div style="margin-bottom: 10px">
-    <input type="file" onchange="onChange(this.files[0])">
+  <!--  <div style="margin-bottom: 10px;margin: 0 auto;">-->
+  <!--    <input type="file" onchange="onChange(this.files[0])">-->
+  <!--  </div>-->
+  <div class="mx-auto w-2/3 h-1/2 mt-14 rounded-xl bg-gray-100 flex-col justify-center items-center">
+    <div class="w-full h-2/3 p-2 space-x-2 flex justify-center items-center overflow-hidden">
+      <div id="contant"  class="w-4/5 h-full  overflow-hidden" >
+      <canvas id="cvs" class="w-full h-full" @wheel="rollImg" @mousedown="handleMouseDown" @mouseup="isMoving=false"
+              @mousemove="handleMouseMove"></canvas></div>
+      <canvas id="clipCvs" class="w-1/5 h-1/2" ></canvas>
+    </div>
+    <div class="w-full h-1/3 p-2 flex justify-center space-x-2 items-center">
+      <button id="download" class="rounded-xl bg-indigo-600 p-3 hover:bg-indigo-500 text-white text-sm" @click="downloadPic">下载图片</button>
+      <button id="download" class="rounded-xl bg-indigo-600 p-3  hover:bg-indigo-500 text-white text-sm" @click="downloadPic">下载图片</button>
+    </div>
   </div>
-  <canvas id="cvs" @mousedown="handleMouseDown" @mouseup="isMoving=false" @mousemove="handleMouseMove"></canvas>
-  <canvas id="clipCvs" @wheel="scrollWheel"></canvas>
-  <button id="download" @click="downloadPic">下载图片</button>
 
 </template>
 
@@ -24,18 +33,20 @@ export default {
       size: 150,
       maxW: 400,
       p: {left: 0, top: 0, stepX: 0, stepY: 0},
-      isMoving:false,
+      isMoving: false,
+      contant:null,
 
     }
   },
   mounted() {
+    this.contant = document.getElementById('contant')
     this.cvs = document.getElementById('cvs')
     this.clipCvs = document.getElementById('clipCvs')
     this.download = document.getElementById('download')
     this.ctx = this.cvs.getContext('2d')
     this.clipCtx = this.clipCvs.getContext('2d')
 
-    this.onInit('/source/images/zip/1.jpg')
+    this.onInit('/source/images/index/1.jpg')
   },
   methods: {
     onChange(file) {
@@ -54,6 +65,12 @@ export default {
         }
         this.cvs.width = width
         this.cvs.height = height
+        // this.contant = document.getElementById('contant')
+
+        //获取contant的宽高
+        // let contantWidth = this.contant.offsetWidth
+        // let contantHeight = this.contant.offsetHeight
+        // console.log(contantWidth,contantHeight)
         this.render(width / 2 - this.size / 2, height / 2 - this.size / 2)
       }
     },
@@ -107,8 +124,14 @@ export default {
       a.click()
 
     },
-    scrollWheel(e){
-      alert(e)
+    rollImg(e) {
+      this.size += e.deltaY / 10
+      // let transform = this.cvs.style.transform
+      // let zoom = transform.indexOf("scale") != -1 ? +transform.split("(")[1].split(")")[0] : 1
+      // zoom += e.wheelDelta / 1200
+      // if (zoom > 0.1 && zoom < 2) {
+      //   this.cvs.style.transform = "scale(" + zoom + ")"
+      // }
     }
 
 

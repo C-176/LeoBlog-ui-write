@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full  bg-white  text-left">
+  <div class="w-full b-gray-100 p-2 my-1 rounded-xl text-left">
     <template v-if="loading">
       <a-skeleton active/>
       <a-skeleton active/>
@@ -12,7 +12,7 @@
           暂无评论，快去发表你的评论吧
         </template>
       </el-empty>
-      <a-list v-else :data-source="comments" item-layout="vertical" size="small">
+      <a-list v-else :data-source="comments" item-layout="vertical" size="small" >
         <template #renderItem="{item}">
           <template v-if="item.articleTitle.trim() != ''">
             <a class="text-base my-2 block" @click="$router.push('/article/'+item.articleId)"><span
@@ -106,16 +106,16 @@
                               placeholder="请输入内容... | Enter键发送"
                               @keyup.enter="saveComment()">
                     </textarea>
-          <a-button :loading="submitting" class="absolute  hover:text-black right-2 -top-8  text-gray-400"
+          <a-button :loading="submitting" class="absolute  hover:text-black right-3 -top-8  text-gray-400"
                     shape="round" size="small"
                     @click="saveComment()">
-            <enter-outlined/>
+            <enter-outlined class="flex justify-center items-center" />
 <!--            发送-->
           </a-button>
-          <a-button :loading="submitting" class="absolute   hover:text-black right-0.5 -top-8  text-gray-400"
+          <a-button :loading="submitting" class="absolute   hover:text-black right-1 -top-8  text-gray-400"
                     shape="round" size="small"
                     @click="showComment =false">
-            <close-outlined/>
+            <close-outlined class="flex justify-center items-center" />
 
           </a-button>
         </el-affix>
@@ -215,10 +215,20 @@ export default {
 
     },
     commentClick(id, userId) {
+      if(!this.checkLogin()) {
+        return
+      }
       this.showComment = !this.showComment
       this.commentParentId = id
       this.receiverId = userId
     },
+    checkLogin(){
+      if(this.$store.state.user == null){
+        this.$st('请先登录','error')
+        return false
+      }
+      return true
+    }
 
 
   },

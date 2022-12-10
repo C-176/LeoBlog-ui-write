@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="f9d261f0-4d49-4085-abd0-ecac19e6c92a" name="ryker-tencent-pre">
+        <fileTransfer accessType="SFTP" host="49.235.100.240" port="22" sshConfigId="0ac9caf5-5c28-4d51-93e4-78ad052bc102" sshConfig="root@49.235.100.240:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

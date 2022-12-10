@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full mt-2 invisible md:visible bg-white h-60 p-4 rounded-xl invisible md:visible">
+  <div class="w-full mt-2 invisible md:visible bg-gray-100 h-60 p-4 rounded-xl invisible md:visible">
     <a-carousel autoplay :dots="false" effect="fade">
 
       <div>

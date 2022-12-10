@@ -1,5 +1,5 @@
 <template>
-  <bread>草稿</bread>
+  <bread>我的草稿</bread>
   <div class="whole">
     <template v-if="loading">
       <a-skeleton active/>

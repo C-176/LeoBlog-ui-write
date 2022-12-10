@@ -40,6 +40,9 @@ const mutations = {
             state.chatPoint = 0;
         }
     },
+    changeBgCover(state, val){
+        state.bgCover = val
+    },
     changeMessageVisible(state, messageVisible) {
         state.messageVisible = messageVisible;
         if (messageVisible) {

@@ -1,19 +1,12 @@
 <template>
   <transition name="fade">
-    <div v-show="$store.state.messageVisible" class="whole">
-      <div class="logo">
-        <img id="logo" :src="logoSrc" alt="">
-        <!--      <span>消息盒子</span>-->
+    <div v-show="$store.state.messageVisible" class="fixed p-5 text-left z-50 inset-1 mx-auto mt-16 w-full  md:w-2/3 h-5/6 p-2 bg-white md:rounded-xl">
 
-      </div>
-      <a-tooltip id="close" style="position: fixed;top: 100px;right: 10px" title="关闭">
-        <a-button shape="circle" size="large" style="position: absolute;top: 10px;right: 10px"
-                  type="dashed"
-                  @click="$store.commit('changeMessageVisible',!$store.state.messageVisible)">
-          <template #icon>
-            <close-outlined/>
-          </template>
-        </a-button>
+      <a-tooltip id="close" class="absolute top-2 right-2 z-20" title="关闭">
+        <button class="rounded-xl text-white h-8 w-8 text-center bg-indigo-600 hover:bg-indigo-500"
+                @click="$store.commit('changeMessageVisible',!$store.state.messageVisible)">
+          ✖
+        </button>
       </a-tooltip>
       <el-empty v-if="messages.length===0" description="暂无消息">
 
@@ -32,20 +25,24 @@
                 </template>
 
                 <template #title>
-                  <a href="javascript:void(0)">{{ item.messageTitle }}</a>
+                  <a @click="$sa('别做梦了，航哥！','error')">{{ item.messageTitle }}</a>
                 </template>
                 <template #avatar>
-                  <user v-slot="slotP" :userId='item.userId' style="text-align: center">
+<!--                  <user v-slot="slotP" :userId='item.userId' style="text-align: center">-->
                     <a-avatar
-                        :src="p(slotP.photo)"
+                        class="cursor-pointer"
+                        @click="$sa('别做梦了，航哥！','error')"
+                        src="https://tse4-mm.cn.bing.net/th/id/OIP-C.shEUS46R2nM0YPKHsqIE5AAAAA?w=182&h=182&c=7&r=0&o=5&dpr=1.3&pid=1.7"
                         :style="{ backgroundColor: '#067061'  ,verticalAlign: 'middle'}"
                         shape="circle"
                         size="middle"
                     >
-                      {{ slotP.text }}
+
+
                     </a-avatar>
-                    <div style="font-size: 12px;color: #7c929c">{{ slotP.text }}</div>
-                  </user>
+                    <!--                      {{ slotP.text }}-->
+                    <div style="font-size: 12px;color: #7c929c">林思意</div>
+<!--                  </user>-->
                 </template>
               </a-list-item-meta>
             </a-list-item>
@@ -74,19 +71,19 @@ export default {
       pageSize: 10,
       logoSrc: '',
       messages: [
-        // {
-        //   userId: 1,
-        //   messageTitle: '消息标题',
-        //   messageContent: '消息内容',
-        //   messageUpdateTime: '2021-01-01 00:00:00'
-        // }
+        {
+          userId: 1,
+          messageTitle: '向你发来一条心动消息',
+          messageContent: '听人说，你也喜欢我，你能做我男朋友吗...',
+          messageUpdateTime: '2022-12-06 00:00:00'
+        }
       ],
 
     }
   },
   created() {
     this.logoSrc = this.baseURL + '/source/images/logoC.png'
-    this.getMessages()
+    // this.getMessages()
   },
   methods: {
     getMessages() {
@@ -110,62 +107,6 @@ export default {
 </script>
 
 <style scoped>
-
-.whole {
-  z-index: 110 !important;
-  position: fixed;
-  top: 60px;
-  background: #fff;
-  height: 600px !important;
-  width: 65%;
-  border-radius: 10px !important;
-  /*margin-top: 60px;*/
-  margin-left: calc(17.5%) !important;
-  text-align: left;
-
-}
-
-
-.logo::before {
-  display: inline-block;
-  content: "";
-  height: 100%;
-  vertical-align: middle;
-}
-
-.logo {
-  width: 20%;
-  height: 8%;
-  text-align: left;
-  font-size: 14px;
-  font-weight: 600;
-  padding-left: 30px;
-}
-
-/*.logo {*/
-/*  width: 100px;*/
-/*  height: 50px;*/
-/*  !*margin-left: 35px;*!*/
-/*  float: left;*/
-/*  margin-left: 35px;*/
-/*  !*color: #132c33;*!*/
-/*  !*font-size: 35px;*!*/
-/*  transition: width 0.5s;*/
-/*  !*line-height: 50px;*!*/
-/*}*/
-#logo {
-  width: 100%;
-  height: 100%;
-
-}
-
-.messageBox {
-  margin-top: 20px;
-  margin-left: 30px;
-  width: 90%;
-  height: 90%;
-  overflow: auto;
-}
 
 .fade-enter-active, .fade-leave-active {
   transition: opacity .3s;

@@ -16,6 +16,17 @@ import bread from "@/components/pub/bread";
 import bigImg from "@/components/pub/bigImg";
 import user from "@/components/pub/user"
 
+import VueMarkdownEditor from '@kangc/v-md-editor';
+import '@kangc/v-md-editor/lib/style/base-editor.css';
+import vuepressTheme from '@kangc/v-md-editor/lib/theme/vuepress.js';
+import '@kangc/v-md-editor/lib/theme/style/vuepress.css';
+import Prism from 'prismjs';
+import createEmojiPlugin from '@kangc/v-md-editor/lib/plugins/emoji/index';
+import '@kangc/v-md-editor/lib/plugins/emoji/emoji.css';
+import createCopyCodePlugin from '@kangc/v-md-editor/lib/plugins/copy-code/index';
+import '@kangc/v-md-editor/lib/plugins/copy-code/copy-code.css';
+VueMarkdownEditor.use(vuepressTheme, {Prism}).use(createCopyCodePlugin()).use(createEmojiPlugin());
+// VueMarkdownEditor
 
 // 第一步导入默认图片
 import IMG_SRC from '/source/images/index/1.jpg'
@@ -23,7 +34,7 @@ import IMG_SRC from '/source/images/index/1.jpg'
 //全局注册一个a函数
 const app = createApp(App)
 //1.开发 2.生产
-let env = 2
+let env = 1
 let host = ''
 if (env === 1) {
     host = 'localhost'
@@ -102,7 +113,7 @@ app.config.globalProperties.$imgOnerror = e => {
     img.onerror = null
 }
 
-app.use(router).use(store).use(ElementPlus).use(Antd)
+app.use(router).use(store).use(ElementPlus).use(Antd).use(VueMarkdownEditor)
     .component('bread',bread).component('user',user).component('bigImg',bigImg)
 
 // app.use(APlayer, {

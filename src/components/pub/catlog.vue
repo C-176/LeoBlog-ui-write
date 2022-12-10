@@ -212,7 +212,7 @@ export default {
 <style scoped>
 .catalog-card {
   /*background: #fdfdfd;*/
-  border-radius: 2px;
+  border-radius: 10px;
   /*box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.05);*/
   padding: 0 24px;
   width: 14%;
@@ -273,13 +273,13 @@ export default {
 }
 
 .active {
-  background-color: #fdfdfd;
+  background-color: #f1f2f5;
   color: #111111;
   border-radius: 3px;
 }
 
 .not-active:hover, .active:hover {
-  background-color: #fdfdfd;
+  background-color: #f1f2f5;
   color: #111111;
   border-radius: 3px;
 }

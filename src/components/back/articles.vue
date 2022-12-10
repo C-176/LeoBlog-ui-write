@@ -1,6 +1,7 @@
 <template>
+  <bread>我的文章</bread>
 
-  <div ref="tar" class="whole text-left">
+  <div ref="tar" class="text-left w-full h-screen  md:w-2/3 mx-auto md:p-5 mt-14">
     <template v-if="loading">
       <a-skeleton active/>
       <a-skeleton active/>
@@ -13,106 +14,50 @@
         <template #description>
           <span>暂无文章</span>
         </template>
-        <a-button shape="round" @click="$router.push('/write/0')">点击进行创作</a-button>
+        <button class="button w-full" @click="$router.push('/write/0')">点击进行创作</button>
       </el-empty>
-      <!--      文章展示-->
-<!--      <div class="Article" v-for="(article,index) in myArticles" :key="article.articleId">-->
 
-<!--        <div v-if="article.articlePic==null || article.articlePic!=''" class="img">-->
-<!--          <el-image-->
-<!--              style="height: 100%"-->
-<!--              :src="p(article.articlePic)"-->
-<!--              :preview-src-list="[p(article.articlePic)]"-->
-<!--              hide-on-click-modal-->
-<!--              close-on-press-escape-->
-<!--              fit="cover"-->
-<!--          />-->
-<!--        </div>-->
-
-<!--        <div class="right"-->
-<!--             :class="{isFull:article.articlePic==null || article.articlePic==''}">-->
-<!--          <div class="at"><a href="javascript:void(0)">-->
-<!--            <router-link :to="'/article/'+article.articleId"><span class="iconfont"-->
-<!--                                                                   v-html="'&#xe630;'+article.articleTitle"></span>-->
-<!--            </router-link>-->
-<!--          </a>-->
-<!--          </div>-->
-
-<!--          <div class="author"><span class="iconfont">&#xe6fb;</span> 更新时间: {{ article.articleUpdateDate }}-->
-<!--          </div>-->
-<!--          <div class="comment"><span v-html="article.articleContent"></span></div>-->
-
-<!--          <div class="toolbar">-->
-<!--            <a class="like" @click="deleteArticle(article.articleId)">删除<span class="iconfont">&#xe611;</span> </a>-->
-<!--            <a class="reply" @click="modifyArticle(article.articleId)">修改<span class="iconfont">&#xe615;</span> </a>-->
-<!--            <a class="collect" @click="shareArticle(article.articleId)">分享<span class="iconfont">&#xe73a;</span> </a>-->
-<!--            <a class="share">其他<span class="iconfont">&#xe63e;</span> </a>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <a-divider style="height: 2px; background-color: #afb2b2"/>-->
-<!--      </div>-->
-      <div class="lg:flex lg:items-center lg:justify-between" v-for="(article,index) in myArticles" :key="article.articleId">
+      <div class="lg:flex lg:items-center bg-gray-100 w-full md:rounded-xl p-4 my-2 lg:justify-between"
+           v-for="(article,index) in myArticles" :key="article.articleId">
         <div class="min-w-0 flex-1">
-          <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">{{article.articleTitle}}</h2>
+          <h2 class="text-base font-bold leading-5 text-gray-900 sm:truncate sm:text-base sm:tracking-tight">
+            {{ article.articleTitle.replaceAll('<p>','').replaceAll('</p>','').replaceAll('<br>','') }}
+          </h2>
           <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
-<!--            <div class="mt-2 flex items-center text-sm text-gray-500">-->
-<!--              <BriefcaseIcon class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />-->
-<!--              Full-time-->
-<!--            </div>-->
-<!--            <div class="mt-2 flex items-center text-sm text-gray-500">-->
-<!--              <MapPinIcon class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />-->
-<!--              Remote-->
-<!--            </div>-->
-<!--            <div class="mt-2 flex items-center text-sm text-gray-500">-->
-<!--              <CurrencyDollarIcon class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />-->
-<!--              $120k &ndash; $140k-->
-<!--            </div>-->
+
             <div class="mt-2 flex items-center text-sm text-gray-500">
-              <CalendarIcon class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" />
-              {{article.articleUpdateDate}}
+              <CalendarIcon class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true"/>
+              {{ article.articleUpdateDate }}
             </div>
           </div>
         </div>
-        <div class="mt-5 flex lg:mt-0 lg:ml-4">
-      <span class="hidden sm:block">
-        <button type="button" class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-          <PencilIcon class="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true" />
-          编辑
-        </button>
-      </span>
-
-          <span class="ml-3 hidden sm:block">
-        <button type="button" class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-          <LinkIcon class="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true" />
+        <div class="mt-5 flex lg:mt-0 space-x-2 lg:ml-4">
+           <span class="ml-3 sm:block">
+        <button type="button"
+                @click="$router.push('/article/'+article.articleId)"
+                class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+          <LinkIcon class="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true"/>
           查看
         </button>
       </span>
 
+          <span class="sm:block ml-3">
+        <button type="button" @click="$router.push('/write/'+article.articleId)"
+                class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2
+                text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+          <PencilIcon class="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true"/>
+          编辑
+        </button>
+      </span>
           <span class="sm:ml-3">
-        <button type="button" class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-          <CheckIcon class="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+        <button type="button" @click="deleteArticle(article.articleId)"
+                class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2
+                text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+          <CheckIcon class="-ml-1 mr-2 h-5 w-5" aria-hidden="true"/>
           删除
         </button>
       </span>
 
-          <!-- Dropdown -->
-          <Menu as="div" class="relative ml-3 sm:hidden">
-            <MenuButton class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-              More
-              <ChevronDownIcon class="-mr-1 ml-2 h-5 w-5 text-gray-500" aria-hidden="true" />
-            </MenuButton>
-
-            <transition enter-active-class="transition ease-out duration-200" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-              <MenuItems class="absolute right-0 z-10 mt-2 -mr-1 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <MenuItem v-slot="{ active }">
-                  <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">Edit</a>
-                </MenuItem>
-                <MenuItem v-slot="{ active }">
-                  <a href="#" :class="[active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700']">View</a>
-                </MenuItem>
-              </MenuItems>
-            </transition>
-          </Menu>
         </div>
       </div>
       <el-pagination
@@ -140,7 +85,6 @@
 import Swal from 'sweetalert2'
 
 import {
-
   BriefcaseIcon,
   CalendarIcon,
   CheckIcon,
@@ -150,7 +94,7 @@ import {
   MapPinIcon,
   PencilIcon,
 } from '@heroicons/vue/20/solid'
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
+import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
 
 export default {
   name: 'articles',

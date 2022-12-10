@@ -1,8 +1,8 @@
 <template>
-  <div ref="show" class="w-full  md:mt-20 md:flex justify-center items-start  " @wheel="scrollBottom">
+  <div ref="show" class="w-full mt-14 md:mt-14 md:flex p-2 justify-center space-x-2 items-start z-10  " @wheel="scrollBottom">
 
-    <div class="w-full md:w-3/5 my-2 mx-2 md:my-0 float-left ">
-      <scroll-pics></scroll-pics>
+    <div class="w-full md:w-3/5   md:my-0 float-left ">
+<!--      <scroll-pics></scroll-pics>-->
       <article-show :article-list="articleList"></article-show>
     </div>
     <div class="w-1/6  float-left invisible md:visible">

@@ -1,6 +1,6 @@
 <template>
   <bread>文章</bread>
-  <div class="mx-auto w-screen md:w-2/3 bg-white md:mt-20 p-5 mb-2">
+  <div class="mx-auto w-full mt-16 md:w-2/3 bg-gray-100 md:rounded-xl md:mt-16 p-5  mb-2">
 
     <div>
       <template v-if="loading">
@@ -14,7 +14,7 @@
         <img v-if="article.articlePic!=''&&article.articlePic!=null" class="picture mx-auto"
              :src="p(article.articlePic)"/>
 
-        <div class="text-xl text-left h-10 w-full font-bold mt-1">{{
+        <div class="text md:text-xl text-left h-auto w-full font-bold mt-1">{{
             article.articleTitle.replaceAll('<p>','').replaceAll('</p>','')}}
         </div>
         <div class="labels">
@@ -67,13 +67,16 @@
         <!--      </el-affix>-->
         <transition name="fade">
           <div v-if="showComment " class="relative w-full h-28 text-right">
-            <textarea v-model="commentIn" class="bg-white border-2 border-gray-200 w-full h-full rounded-xl resize-none outline-0 p-2" placeholder="请输入内容... | Enter键发送"
+            <textarea v-model="commentIn"
+                      class="bg-white border-2 border-gray-200 w-full h-full rounded-xl resize-none outline-0 p-2"
+                      placeholder="请输入内容... | Enter键发送"
                       @keyup.enter="saveComment(-1)">
             </textarea>
-            <a-button  class="absolute hover:text-black right-5 -top-10  text-gray-400"   shape="round" size="small"
+            <a-button class="absolute hover:text-black right-5 -top-10  text-gray-400" shape="round" size="small"
                       @click="saveComment(-1,article.user.userId)">
               <!--              <template #icon>-->
-                              <enter-outlined/>发送
+              <enter-outlined/>
+              发送
               <!--              </template>-->
             </a-button>
           </div>
@@ -85,7 +88,7 @@
 
     </div>
 
-    <comment-template  id="comment" v-if="article.isArticle === 1"
+    <comment-template id="comment" v-if="article.isArticle === 1"
                       :comments="comments" :method="getComments">
 
     </comment-template>
@@ -211,26 +214,29 @@ export default {
   },
 
   mounted() {
-    //给所有图片添加点击事件
-    let imgs = document.querySelectorAll('.content img')
-    if (imgs.length == 0) {
-      setTimeout(() => {
-        imgs = document.querySelectorAll('.content img')
+    setTimeout(()=>{
+      //给所有图片添加点击事件
+      let imgs = document.querySelectorAll('.content img')
+      if (imgs.length == 0) {
+        setTimeout(() => {
+          imgs = document.querySelectorAll('.content img')
+          imgs.forEach((item) => {
+            item.addEventListener('click', () => {
+              this.photoVisible = true
+              this.bigImgUrl = item.src
+            })
+          })
+        }, 1000)
+      } else {
         imgs.forEach((item) => {
           item.addEventListener('click', () => {
             this.photoVisible = true
             this.bigImgUrl = item.src
           })
         })
-      }, 1000)
-    } else {
-      imgs.forEach((item) => {
-        item.addEventListener('click', () => {
-          this.photoVisible = true
-          this.bigImgUrl = item.src
-        })
-      })
-    }
+      }
+    },200)
+
 
 
   }
@@ -243,6 +249,9 @@ export default {
       this.$st("分享成功", "success")
     },
     collect(articleId) {
+      if (!this.checkLogin()) {
+        return
+      }
       this.$axios.get("/article/collect/" + articleId).then((res) => {
         if (res.data.code === 200) {
           if (res.data.data == "取消收藏成功") {
@@ -257,6 +266,9 @@ export default {
       })
     },
     like(articleId) {
+      if (!this.checkLogin()) {
+        return
+      }
       this.$axios.get("/article/like/" + articleId).then((res) => {
         if (res.data.code === 200) {
 
@@ -274,7 +286,17 @@ export default {
 
       })
     },
+    checkLogin() {
+      if (this.$store.state.user == null) {
+        this.$st('请先登录', 'error')
+        return false
+      }
+      return true
+    },
     comment() {
+      if (!this.checkLogin()) {
+        return
+      }
       this.showComment = !this.showComment
       if (!this.showComment) {
         this.commentIn = ""
@@ -451,13 +473,13 @@ export default {
   box-shadow: 1px 3px 11px #134857;
 }
 
-:deep(.content img:hover) {
+:deep(p img:hover) {
   cursor: pointer !important;
 }
 
 :deep(pre) {
-  background: #f4f4f4 !important;
-  border-radius: 5px !important;
+  background: #fff !important;
+  border-radius: 10px !important;
   padding: 10px !important;
 }
 

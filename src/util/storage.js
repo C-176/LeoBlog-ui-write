@@ -13,13 +13,18 @@ const storage = {
     },
     set(key, value, expire) {
         // console.log("set", key, value);
-        if(expire){
+        if (expire) {
             // console.log("expire",expire)
             //过期时间20min
             const now = new Date().getTime();
-            const expires = now + expire * 60 * 1000;
-            localStorage.setItem(key, JSON.stringify({data:value,expires:expires}));
-        }else{
+            expire = now + expire * 60 * 1000;
+            const obj = {
+                data: value,
+                expire: expire
+            };
+            localStorage.setItem(key, JSON.stringify(obj));
+
+        } else {
             localStorage.setItem(key, value);
         }
     },
@@ -28,13 +33,27 @@ const storage = {
         if (key === encode("lb_user")) {
             if (value) {
                 value = JSON.parse(decode(value))
+                return value
+            }else{
+                return null
             }
-            return value
+
         } else if (key === "valueTitle" || key === "valueContent") {
-            // console.log("get", key, JSON.parse(value).data);
-            if (value) {
-                return JSON.parse(value).data;
+
+            const time = new Date().getTime();
+
+            let result = null;
+
+            const obj = JSON.parse(value);
+            if (obj) {
+                if (time < obj.expire) {
+                    result = obj.data;
+                } else {
+                    localStorage.removeItem(key);
+                }
             }
+
+            return '';
         }
         return value
 

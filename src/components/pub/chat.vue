@@ -1,86 +1,89 @@
 <template>
   <transition name="fade">
-    <div v-show="$store.state.chatVisible" class="whole">
+    <div v-show="$store.state.chatVisible"
+         class="fixed text-left z-50 md:inset-1  mx-auto md:mt-16 w-full h-screen md:w-2/3 md:h-5/6 p-2 bg-white md:rounded-xl">
       <audio ref="audio" hidden src="/source/audios/Windows%20Proximity%20Notification.wav"></audio>
-      <a-tooltip id="close" style="position: fixed;top: 100px;right: 10px" title="关闭">
-        <a-button shape="circle" size="large" style="position: absolute;top: 10px;right: 10px"
-                  type="dashed"
-                  @click="$store.commit('changeChatVisible',!$store.state.chatVisible)">
-          <template #icon>
-            <close-outlined/>
-          </template>
-        </a-button>
+      <a-tooltip id="close" class="absolute top-2 right-2" title="关闭">
+        <button class="rounded-xl z-20 text-white h-8 w-8 text-center bg-indigo-600 hover:bg-indigo-500"
+                @click="$store.commit('changeChatVisible',!$store.state.chatVisible)">
+          ✖
+        </button>
       </a-tooltip>
-      <div class="chatWindow">
-        <div class="logo">
-          <img id="logo" :src="logoSrc" alt="">
-        </div>
+      <div class="w-full h-full rounded-xl">
+        <!--          <img id="logo" :src="logoSrc" alt="">-->
 
-        <div class="chat">
-          <div id="list">
-            <!--            <a-input-search-->
-            <!--                v-model:value="key"-->
-            <!--                placeholder="搜索用户"-->
-            <!--                style="width: 80%;padding:10px"-->
-            <!--                @search="onSearch"-->
-            <!--            />-->
-            <el-autocomplete
-                style="width: 80%;padding: 0 10px"
-                v-model="state"
-                :fetch-suggestions="querySearch"
-                clearable
-                class="inline-input w-50"
-                popper-class="my-autocomplete"
-                placeholder="搜索用户"
-                @select="handleSelect"
-                value-key="userNickname"
-            />
-
-            <div v-for="(chat,index) in chats" :key="chat.user.userId"
-                 :class="{select:isSelected[index]}" class="user"
-                 @click="select(index)">
-              <div class="up">{{ this.$moments(chat.record.recordUpdateTime) }}</div>
-              <div class="down">
-                <a-badge :count="redPoint[index]" size="small" style="float: left;line-height: 100%">
-                  <user :user="chat.user">
-                    <a-avatar :class="{online:chat.user.userStatus}"
-                              :src="p(chat.user.userProfilePhoto)"
-                              :style="{backgroundColor:'#067061'}"
-                              size="middle">
-                      {{ chat.user.userNickname }}
-                    </a-avatar>
-                  </user>
-                </a-badge>
-
-                <div class="right">
-                  <div id="uname">
-                    <!--                    <router-link :to="'/user/'+chat.user.userId"> {{-->
-                    <!--                        chat.user.userNickname-->
-                    <!--                      }}-->
-                    <!--                    </router-link>-->
-                    {{ chat.user.userNickname }}
-                  </div>
-                  <div id="uId" style="display: none">{{ chat.user.userId }}</div>
-                  <div id="content"><span v-html="chat.record.recordContent"></span></div>
+        <div class="w-full h-full flex justify-start">
+          <div class="w-1/6 md:w-2/5 h-full overflow-auto">
+            <div class="w-4/5  mx-auto my-2  text-sm ">
+              <el-autocomplete
+                  v-model="state"
+                  style="width: 100%; border-radius: 10px"
+                  :fetch-suggestions="querySearch"
+                  clearable
+                  popper-class="my-autocomplete"
+                  placeholder="搜索"
+                  @select="handleSelect"
+                  value-key="userNickname"
+              />
+            </div>
+            <div class="w-4/5 mx-auto  space-y-2 justify-start items-center">
+              <div v-for="(chat,index) in chats" :key="chat.user.userId"
+                   :class="{select:isSelected[index]}"
+                   class=" p-1 w-full rounded-xl bg-gray-100 cursor-pointer transition-all focus:border-indigo-500 border-2 border-white hover:border-indigo-600"
+                   @click="select(index)">
+                <div class=" hidden  md:h-1/5 md:block pr-2 text-xs text-right text-gray-400">
+                  {{ this.$moments(chat.record.recordUpdateTime) }}
                 </div>
+                <div class="h-full md:h-4/5 md:pl-2 mx-auto flex justify-center md:justify-start  items-center ">
+                  <a-badge :count="redPoint[index]" size="small" style="float: left;line-height: 100%">
+                    <div class="h-full w-full md:w-10   text-center rounded-full ">
+                      <user :user="chat.user">
+                        <!--                      <a-avatar :class="{online:chat.user.userStatus}"-->
+                        <!--                                :src="p(chat.user.userProfilePhoto)"-->
+                        <!--                                :style="{backgroundColor:'#067061'}"-->
+                        <!--                                size="middle">-->
+                        <!--                        {{ chat.user.userNickname }}-->
+                        <!--                      </a-avatar>-->
+                        <a class="relative block ">
+                          <img alt="profile" :src="p(chat.user.userProfilePhoto)"
+                               class="mx-auto  object-cover rounded-full h-10 w-10 "/>
+                          <span
+                              class="absolute w-3 h-3 transform -translate-x-1/2 bg-gray-500 border-2 border-white rounded-full left-1/2 -bottom-2">
 
+                        </span>
+                        </a>
+                      </user>
+                    </div>
+                  </a-badge>
+
+                  <div class="hidden max-h-12 overflow-hidden md:block flex-col items-start p-2 justify-between">
+                    <div class="font-bold hidden md:inline text-sm">
+                      {{ chat.user.userNickname }}
+                    </div>
+                    <div id="uId" style="display: none">{{ chat.user.userId }}</div>
+                    <div id="content" class="  hidden md:inline  overflow-hidden text-xs text-gray-400"><span
+                        v-html="chat.record.recordContent"></span></div>
+                  </div>
+
+                </div>
               </div>
             </div>
           </div>
 
-          <div v-loading="$loading" class="chatMessage">
-            <div class="userIntro">
-              <div class="uname">
-<!--                <router-link :to="'/user/'+talkTo.user.userId"> {{-->
-<!--                    talkTo.user.userNickname-->
-<!--                  }}-->
-                {{talkTo.user.userNickname}}
-<!--                </router-link>-->
+          <div v-loading="$loading" class="w-5/6 md:w-3/5 -mt-4 h-full flex-col justify-start items-center p-5">
+            <div class="h-auto text-center w-full mx-auto  space-y-1 flex-col justify-between items-center ">
+              <div class="text-base font-bold cursor-pointer">
+                <router-link :to="'/user/'+talkTo.user.userId">
+                  {{
+                    talkTo.user.userNickname
+                  }}
+                </router-link>
               </div>
-              <div class="address">{{ talkTo.user.userPos }}</div>
+              <div class="">{{ talkTo.user.userPos }}</div>
             </div>
 
-            <div id="chat" ref="chat" class="chatting" @wheel.once="scrollRecord">
+            <div id="chat" ref="chat" class="w-full h-2/3 bg-gray-100  rounded-xl p-3 overflow-auto"
+                 @wheel.once="scrollRecord">
               <template v-if="showLoading">
                 <div class="loading" style="text-align: center;">
                   <a-spin/>
@@ -88,62 +91,64 @@
 
               </template>
               <template v-for="(record,index) in talkTo.record" :key="index">
-                <div v-if="timeDiff(index,index-1)" id="updateTime">
+                <div v-if="timeDiff(index,index-1)" class=" w-full h-auto my-1 text-center text-gray-400 text-sm"
+                     id="updateTime">
                   {{ this.$moments(record.recordUpdateTime) }}
                 </div>
                 <template v-if="record.userId == $store.state.user.userId">
 
-
-                  <div id="myBox" :key="record.userId">
-                    <user v-slot="slotP" :user-id="record.userId">
+                  <div class="w-full flex-1 text-right  mb-1 flex float-right justify-end space-x-0.5  items-start"
+                       :key="record.userId">
+                    <div class="flex-col justify-start items-end space-y-0.5">
+                      <!--                      <div class="text-xs text-right">{{ $store.state.user.userNickname }}</div>-->
+                      <div
+                          class=" w-auto rounded-xl bg-indigo-600 hover:bg-indigo-500 cursor-pointer text-white shadow text-left text-xs p-2"><span
+                          v-html="record.recordContent" id="message"></span></div>
+                    </div>
+                    <div class="w-10 h-10 rounded-full">
+                      <!--                      <user v-slot="slotP" :user-id="record.userId">-->
                       <a-avatar
-                          :src="p(slotP.photo)"
+                          :src="p($store.state.user.userProfilePhoto)"
                           :style="{ backgroundColor:'#0eb73a', verticalAlign: 'middle' ,float:'right'}"
                           shape="circle"
                           size="middle"
                       >
-                        {{ slotP.text }}
+                        {{ $store.state.user.userNickname }}
                       </a-avatar>
-                    </user>
-                    <a-dropdown :trigger="['contextmenu']">
+                      <!--                      </user>-->
+                    </div>
 
-                      <div id="myMessage"><span v-html="record.recordContent"></span></div>
 
-                      <template #overlay>
-                        <a-menu>
-                          <a-menu-item key="1" @click="deleteRecord(record.recordId)">删除
-                          </a-menu-item>
-                          <a-menu-item key="3" @click="deleteRecord(record.recordId)">撤回
-                          </a-menu-item>
-                        </a-menu>
-                      </template>
-                    </a-dropdown>
                   </div>
 
                 </template>
                 <template v-else>
-                  <div id="yourBox" :key="record.userId">
+                  <div class="w-full  mb-2 flex float-left justify-start  items-start" :key="record.userId">
+
                     <user v-slot="slotP" :user-id="record.userId">
-                      <a-avatar
-                          :src="p(slotP.photo)"
-                          :style="{ backgroundColor: '#067061'  ,verticalAlign: 'middle' ,float:'left'}"
-                          shape="circle"
-                          size="middle"
-                      >
-                        {{ slotP.text }}
-                      </a-avatar>
+                      <div class="flex justify-start space-x-1 items-start">
+                        <a-avatar
+                            :src="p(slotP.photo)"
+                            :style="{ backgroundColor:'#0eb73a', verticalAlign: 'middle' ,float:'right'}"
+                            shape="circle"
+                            size="middle"
+                        >
+                          {{ slotP.text }}
+                        </a-avatar>
+                        <div class="flex-col space-y-1 justify-start items-start">
+                          <div v-if="talkTo.user.userId == -1" class="text-xs w-1 text-left">{{
+                              slotP.text
+                            }}
+                          </div>
+                          <div
+                              class="rounded-xl bg-white hover:bg-gray-100 cursor-pointer text-black shadow text-left text-xs p-2"><span
+                              v-html="record.recordContent" id="message"></span>
+                          </div>
+                        </div>
+                      </div>
                     </user>
 
-                    <a-dropdown :trigger="['contextmenu']">
-                      <div id="yourMessage"><span v-html="record.recordContent"></span></div>
 
-
-                      <template #overlay>
-                        <a-menu>
-                          <a-menu-item key="2">回复</a-menu-item>
-                        </a-menu>
-                      </template>
-                    </a-dropdown>
                   </div>
 
 
@@ -160,15 +165,15 @@
                 :defaultConfig="toolbarConfig"
                 :editor="editor"
                 mode="simple"
-                style="margin-top: 0px;height: 20px;padding: 0;"
+                class="w-full h-8"
             />
-            <div id="input" contentEditable="false">
+            <div class="w-full relative border-2 h-28 bg-gray-100 overflow-auto rounded-xl">
 
               <Editor
                   v-model="message"
                   :defaultConfig="editorConfig1"
                   mode="simple"
-                  style="width:100%;margin-top: -12px;"
+                  style="width:100%;height:100%;"
                   @onCreated="handleCreated"
                   @onFocus="handleFocus"
 
@@ -176,13 +181,13 @@
 
 
               />
-              <a-button id="enter" :loading="submitting" shape="round"
-                        @click="sendMessage()">
-                <template #icon>
-                  <!--                  <enter-outlined/>-->
-                  发送
-                </template>
-              </a-button>
+              <button class="absolute bottom-2 right-2 p-2 px-4 text-white bg-indigo-600 hover:bg-indigo-500 rounded-xl"
+                      @click="sendMessage()">
+
+                <!--                  <enter-outlined/>-->
+                发送
+
+              </button>
             </div>
 
 
@@ -246,6 +251,7 @@ export default {
           recordUpdateTime: '2021-05-01 12:00:00',
         }]
       },
+      toDown: true,
       chats: [
         //     {
         //   user: {
@@ -347,32 +353,39 @@ export default {
     this.editorConfig1.MENU_CONF.uploadImage.server = this.baseURL + '/upload/file'
     this.editorConfig1.MENU_CONF.uploadVideo.server = this.baseURL + '/upload/file'
     this.getUsers();
-    // setInterval(() => {
-    //   this.getUsers()
-    // }, 10000)
-    this.logoSrc = this.baseURL + '/source/images/logoC.png'
+
+    this.logoSrc = this.baseURL + '/source/images/logoTest.png'
     this.$nextTick(() => {
       this.redPoint = new Array(this.chats.length).fill(0)
       this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight
-
-
     })
 
 
     this.ws = this.connectSocket()
-    setTimeout(() => {
-      this.$refs.chat.addEventListener("scroll", this.scrollRecord)
-    }, 1000)
+
 
   },
+  mounted() {
+    setTimeout(() => {
+      this.$refs.chat.scrollTop = 10
+      this.$refs.chat.addEventListener("scroll", this.scrollRecord)
+    }, 500)
+  },
+
   watch: {
+
     talkTo: {
       handler() {
         this.$nextTick(() => {
-          // this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight
+          if (this.toDown) {
+            this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight
+            this.toDown = false
+          }
+
+
           this.$loading = false
           //给所有img标签添加点击事件
-          let imgs = document.querySelectorAll('#chat #myMessage img, #chat #yourMessage img')
+          let imgs = document.querySelectorAll('#chat #message img')
           if (imgs.length != 0) {
             imgs.forEach((item) => {
               item.addEventListener('click', () => {
@@ -394,6 +407,7 @@ export default {
       },
       deep: true
     },
+
     addChat(val) {
       if (val != -1) {
         //查找是否有该用户
@@ -419,16 +433,14 @@ export default {
 
     },
 
-    // message(val) {
-    //   if (val == '' || val == '<p><br></p>') {
-    //     this.editor.focus()
-    //   }
-    // },
-
 
   },
   computed: {
-    ...mapState(['addChat', 'chatVisible'])
+    ...mapState(['addChat', 'chatVisible']),
+    logined() {
+      return this.$store.state.user != null
+    },
+
   },
 
   methods: {
@@ -481,7 +493,7 @@ export default {
       })
     },
     scrollRecord() {
-      if (this.$refs.chat.scrollTop == 0) {
+      if (this.$refs.chat.scrollTop <= 5) {
         this.loadingRecord()
       }
     },
@@ -602,6 +614,7 @@ export default {
 
     },
     select(index) {
+      this.toDown = true
 
       this.talkTo.user = this.chats[index].user
 
@@ -630,7 +643,6 @@ export default {
         }
       })
       this.editor.focus()
-      console.log(this.talkTo.user.userNickname)
     }
     ,
 
@@ -715,6 +727,7 @@ export default {
       //     console.log(this.ws.readyState)
       //   })
       // }
+      this.toDown = true
       if (this.ws.readyState !== 1) {
         this.ws = this.connectSocket()
         this.$nextTick(() => {
@@ -751,6 +764,7 @@ export default {
       })
     },
     onMessage(event) {
+      this.toDown = true
       let data = JSON.parse(event.data);
       // console.log(data)
 
@@ -905,26 +919,6 @@ export default {
 }
 
 
-.whole {
-  z-index: 110 !important;
-  position: fixed;
-  top: 60px;
-  background: #fff;
-  height: 630px !important;
-  width: 65%;
-  border-radius: 10px !important;
-  /*margin-top: 60px;*/
-  margin-left: calc(17.5%) !important;
-
-}
-
-.chatWindow {
-  width: 100%;
-  height: 100%;
-  border-radius: 0 30px 30px 0;
-
-}
-
 .online {
   border: 2px #0eb63a solid;
 }
@@ -950,257 +944,32 @@ export default {
   background: #eaeef0;
 }
 
-.logo::before {
-  display: inline-block;
-  content: "";
-  height: 100%;
-  vertical-align: middle;
-}
-
-.logo {
-  width: 20%;
-  height: 8%;
-  text-align: left;
-  font-size: 14px;
-  font-weight: 600;
-  padding-left: 30px;
-}
-
-#logo {
-  width: 100%;
-  height: 100%;
-
-}
-
-.chat {
-  height: 90%;
-  width: 100%;
-}
-
-#list, .chatMessage {
-  float: left;
-}
-
-#list {
-  width: 40%;
-  height: 100%;
-  overflow: auto;
-}
-
-.user {
-  width: 80%;
-  height: 11%;
-  background: #ecf0f2;
-
-  margin: 10px auto;
-  padding: 2px 10px;
-  border-radius: 10px;
-  transition: all 0.3s;
-  border: 2px solid #fdfdfd;
-
-}
-
-.user:hover {
-  cursor: pointer;
-  border: 2px solid #838ea4;
-}
-
-
-.user .up {
-  height: 20%;
-  text-align: right;
-  font-size: 10px;
-  color: #0f6674;
-  padding-right: 5px;
-
-}
-
-.user .down {
-  margin-top: 5px;
-  height: 75%;
-}
-
-
-.right {
-  float: left;
-  margin-left: 20px;
-  width: 70%;
-  height: 100%;
-}
-
-.right #uname {
-  font-size: 14px;
-  font-weight: 600;
-  height: 50%;
-  /*background: #00ff80;*/
-}
-
-.right #content {
-  font-size: 12px;
-  height: 40%;
-  /*height: 12px;*/
-  /*background: #cf0f0f;*/
-  /* 内容溢出隐藏 */
-  overflow: hidden;
-  /* 设置文本不换行 */
-  white-space: nowrap;
-  /* 元素溢出省略号 */
-  text-overflow: ellipsis;
-  color: #7c929c;
-}
-
-.right #uname::before {
-  display: inline-block;
-  content: "";
-  height: 100%;
-  vertical-align: middle;
-}
-
-
-.right #uname, .right #content {
-
-  width: 100%;
-
-
-  /*line-height: 25px;*/
-  text-align: left;
-}
-
-
-.chatMessage {
-  width: 50%;
-
-  height: 100%;
-  padding: 10px;
-  /*margin-left: 30px;*/
-
-}
 
 :deep(p img) {
-  width: 100% !important;
-  border-radius: 5px;
-}
-:deep(.chatting video){
-  width: 100% !important;
+  max-height: 200px !important;
   border-radius: 5px;
 }
 
-
-
-.chatMessage .userIntro {
-  width: 100%;
-  height: 10%;
-  text-align: center;
-  margin-top: -50px;
+:deep(.chatting video) {
+  width: 50% !important;
+  border-radius: 5px;
 }
 
-.userIntro .uname, .userIntro .address {
-  /*width: 20%;*/
-  height: 50%;
-  margin: 0 auto;
-  text-align: center;
-  font-size: 14px;
-}
 
-.userIntro .uname {
-  font-size: 16px;
-  font-weight: 600;
-}
-
-:deep(.my-autocomplete){
+:deep(.my-autocomplete) {
   font-size: 12px !important;
 }
 
-.userIntro .address {
-
-}
-
-.chatting {
-  height: 80%;
-  width: 100%;
-  background: #ecf0f2;
-  /*margin: 10px 0;*/
-  border-radius: 20px;
-  padding: 10px 10px;
-  overflow: auto;
-  /*transition: all .3s;*/
-
-}
-
-#input {
-  margin-top: 20px;
-  width: 100%;
-  height: 17%;
-  /*background: #848fa5;*/
-  border-radius: 10px;
-  text-align: left;
-  line-height: 20px;
-  font-size: 14px;
-  padding-top: 10px;
-  border: 1px solid #838ea4;
-  overflow: auto;
-  resize: none;
-  outline: none;
-}
-
-#input div {
-  float: left;
-}
-
-#myMessage, #yourMessage {
-  font-size: 13px;
-  line-height: 25px;
-  border-radius: 12px;
-  padding: 5px 10px;
-  max-width: 80%;
-  text-align: left;
-  word-break: break-all;
-
-  /*margin-top: 10px;*/
-}
 
 :deep(p img:hover) {
   cursor: pointer !important;
-}
-
-#myBox {
-  max-width: 60%;
-  margin-left: 40%;
-  float: right;
-  margin-bottom: 10px;
-}
-
-#yourBox {
-  max-width: 60%;
-  margin-right: 40%;
-  float: left;
-  margin-bottom: 10px;
-}
-
-#myMessage {
-  float: right;
-  background: #134857;
-  color: #fff;
-  box-shadow: 1px 1px 3px #134857;
-  margin-right: 10px;
-
-}
-
-#yourMessage {
-  float: left;
-  color: #000;
-  background: #fdfdfd;
-  box-shadow: 1px 1px 3px #d8e3e7;
-  margin-left: 10px;
-
-
 }
 
 
 .select {
   /*width: 80%;*/
   /*height: 12%;*/
-  border: 2px solid #838ea4;
+  border: 2px solid #4f46e4;
   /*background: #838ea4;*/
 
 }
@@ -1218,7 +987,7 @@ export default {
   opacity: 0;
 }
 
-:deep(.chat p) {
+:deep(p) {
   padding: 0 !important;
   margin-bottom: 0 !important;
 }

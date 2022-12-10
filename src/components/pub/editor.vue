@@ -1,20 +1,22 @@
 <template>
 
-  <div ref="containerRef" class="editor">
-    <el-affix offset="50" position="top" style="position: absolute;width: 55%;top: 50px;z-index: 10;margin-left:-10px">
+  <div ref="containerRef" class=" bg-gray-100">
+    <el-affix offset="50" position="top"
+>
       <!--          <a-affix offset-top="10" :target="this.$refs.containerRef" :style="{ }">-->
       <div>
         <Toolbar
             :defaultConfig="toolbarConfig"
             :editor="editor"
             :mode="mode"
-            style="border-bottom: 1px solid #ccc;"
+            style="border-bottom: 1px solid #ccc; "
         />
       </div>
       <!--            </a-affix>-->
     </el-affix>
     <textarea
         id="title"
+        class=" h-10 w-full px-2 leading-10 resize-none outline-none text-left font-bold text-xl"
         v-model="valueTitle" placeholder="请输入标题...（最多100字）"
     />
     <Editor
@@ -26,7 +28,7 @@
         @click="handleFocus"
     />
   </div>
-  <catlog container=".whole"></catlog>
+<!--  <catlog container=".whole"></catlog>-->
 
 
 </template>
@@ -258,16 +260,16 @@ export default {
   cursor: pointer;
 }
 
-#title {
-  overflow-y: hidden;
-  font-size: 18px;
-  outline: none;
-  resize: none;
-  height: 30px;
-  line-height: 30px;
-  width: 100%;
-  border-width: 0;
-  border-bottom: 1px solid #ccc;
-}
+/*#title {*/
+/*  overflow-y: hidden;*/
+/*  font-size: 18px;*/
+/*  outline: none;*/
+/*  resize: none;*/
+/*  height: 30px;*/
+/*  line-height: 30px;*/
+/*  width: 100%;*/
+/*  border-width: 0;*/
+/*  border-bottom: 1px solid #ccc;*/
+/*}*/
 
 </style>

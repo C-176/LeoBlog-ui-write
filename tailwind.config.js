@@ -5,5 +5,12 @@ module.exports = {
   theme: {
     extend: {},
   },
+  //字体大小
+    fontSize: {
+        'xs': '.75rem',
+
+    },
+
+
   plugins: [],
 }

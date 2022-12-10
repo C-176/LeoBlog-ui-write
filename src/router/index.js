@@ -5,16 +5,24 @@ import 'nprogress/nprogress.css'
 
 
 const routes = [
-    {path: '/', redirect: '/home/index'},
+    {path: '/', redirect: '/index'},
+    {path:'/canvas',component:()=>import('@/components/pub/canvasPic.vue')},
+    {path:'/canv',component:()=>import('@/components/pub/canv')},
+    {path:'/avatar',component:()=>import('@/components/pub/avator')},
+    {path:'/dialog',component:()=>import('@/components/pub/searchDialog')},
+
 
     {path: '/test', component: () => import('@/components/test')},
-    {path: '/index', component: () => import('@/components/index')},
+
     {path: '/user', component: () => import('@/components/pub/user')},
     {path: '/LR', component: () => import('@/components/LR')},
     {
         path: '/home', component: () => import('@/components/home'), redirect: '/home/index',
         children: [
+            {path: '/editorMe', component: () => import('@/components/pub/editorMe.vue')},
+            {path: '/index', component: () => import('@/components/index')},
             {path: '/write/:articleId', component: () => import('@/components/front/write')},
+            {path: '/editor/new', component: () => import('@/components/pub/editorMe')},
             {path: '/home/index', name: 'index', component: () => import('@/components/front/index_main')},
             {path: '/home/article', component: () => import('@/components/front/articles')},
             {path: '/home/picture', component: () => import('@/components/front/pictures')},
@@ -74,23 +82,32 @@ router.beforeEach((to, from, next) => {
         return
     }
     if (to.path.includes('/LR')) {
-        store.commit('changeLogin', true)
         store.commit('changeIndex', false)
         next()
-    } else {
-        let token = localStorage.getItem("token")
-        let user = store.state.user
+    }
+    let token = localStorage.getItem("token")
+    let user = store.state.user
+    if (to.path.includes('/home/index')) {
+        if (token == null || token.trim() == '' || token == undefined || user == null || user == undefined) {
+            next('/home/article')
+        } else {
+            next()
+        }
+    }
+
+    if (to.path.includes('/back')) {
         if (token == null || token.trim() == '' || token == undefined || user == null || user == undefined) {
             next('/LR')
         } else {
             next()
         }
-    }
-    if (to.path.includes('/back')) {
+
+
         store.commit('changeShell', true)
     } else {
         store.commit('changeShell', false)
     }
+    next()
 },)
 router.afterEach(() => {
     NProgress.done()

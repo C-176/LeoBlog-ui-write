@@ -1,16 +1,9 @@
 <template>
-  <div class="header">
-    <div class="logo">
-      <router-link to="/home/index">
-        <img id="logo" :src="logoSrc" alt="">
-        <!--        <span class="iconfont">&#xe614;</span>-->
-      </router-link>
-    </div>
-<!--    <span class="iconfont">&#xe614;</span>-->
-<!--    <div id="cyber">LeoBlog</div>-->
-    <div v-if="!index" class="login">
-      <a id="mode" @click="update">{{ login ? "注册" : "登陆" }}</a>
-    </div>
+  <div class="w-full h-12 px-6  flex  justify-center items-center bg-white border-b-2 border-gray-100 relative">
+
+    <img id="logo" class="h-full w-12 mx-auto " @click="$router.push('/index')"  :src="logoSrc" alt="">
+    <a class="block h-full py-2  w-20 p-2 bg-indigo-600 text-white text-base" @click="update">{{ login ? "注册" : "登陆" }}</a>
+
   </div>
 
 </template>

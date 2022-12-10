@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full invisible md:visible bg-white h-80 p-4 rounded-xl">
+  <div class="w-full invisible md:visible  bg-gray-100 h-auto p-4 rounded-xl">
 
     <a class="block text-right hover:text-gray-500 text-sm h-5 w-full" @click="$router.push('/back/scripts')">
       <!--      <span class="iconfont">&#xe823;</span> 创作中心-->
@@ -28,10 +28,12 @@
     </div>
 
     <div class="w-full px-5 py-3 h-20 flex justify-between items-center">
-      <div @click="$router.push('/back/articles')" class="h-full hover:cursor-pointer w-2/5 text-sm  p-2 align-middle rounded-xl bg-gray-100"><span
+      <div @click="$router.push('/back/articles')"
+           class="h-full hover:cursor-pointer w-2/5 text-sm  p-2 align-middle rounded-xl bg-white"><span
           class="iconfont">&#xe610;</span>
         文章 <h3> {{ articleSize }}</h3></div>
-      <div @click="$router.push('/back/comments')" class="h-full  hover:cursor-pointer w-2/5 text-sm p-2 rounded-xl bg-gray-100"><span
+      <div @click="$router.push('/back/comments')"
+          class="h-full  hover:cursor-pointer w-2/5 text-sm p-2 rounded-xl bg-white"><span
           class="iconfont">&#xe654;</span>
         评论 <h3>{{ commentSize }}</h3></div>
     </div>

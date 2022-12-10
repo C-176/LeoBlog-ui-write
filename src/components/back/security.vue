@@ -1,13 +1,10 @@
 <template>
-  <bread>安全</bread>
-  <div class="whole">
+  <bread>安全中心</bread>
+  <div class="mx-auto text-center flex-col justify-around items-center w-full md:w-2/3 bg-gray-100 rounded-xl mt-16 md:mt-16 p-2 ">
 
-    <div class="custom-slick-arrow" @click="move">
-      {{ modify ? '取消' : '修改' }}
-    </div>
-    <a-carousel arrows :dots="showDots" effect="fade" ref="carousel" >
+    <a-carousel arrows  :dots="showDots" effect="fade" ref="carousel" >
       <div>
-        <a-descriptions title="安全信息" layout="vertical" bordered>
+        <a-descriptions title="安全信息" layout="vertical" class="text-center" bordered>
           <a-descriptions-item label="用户名">{{ user.userName }}</a-descriptions-item>
           <a-descriptions-item label="手机号">{{ user.userPhone }}</a-descriptions-item>
           <a-descriptions-item label="邮箱">{{ user.userEmail }}</a-descriptions-item>
@@ -95,6 +92,9 @@
       </div>
 
     </a-carousel>
+    <button class="w-2/3 button" @click="move">
+      {{ modify ? '取消' : '修改' }}
+    </button>
 
   </div>
 

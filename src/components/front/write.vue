@@ -1,7 +1,7 @@
 <template>
-  <h></h>
+
   <bread>创作</bread>
-  <div class="whole">
+  <div class="w-full md:w-2/3 mx-auto md:p-5 p-2 md:rounded-xl mt-16 bg-gray-100 text-left ">
     <editor class="editor" :articleId="$route.params.articleId"></editor>
     <div class="labels">
       <Divider orientation="left">标签</Divider>
@@ -43,20 +43,21 @@
 <!--    <el-affix position="bottom" target=".editor" :offset="10">-->
 
 
-      <div class="tools">
-        <div class="left">
-          <div class="publish" @click.once="saveAsArticle">
+
+        <div class="flex -w-full justify-end items-center h-14  space-x-2">
+          <div class="bg-gray-200 hover:cursor-pointer hover:bg-gray-300 transition  text-black text-medium rounded-xl px-2 py-1" @click.once="saveAsScript">
+          <span>保存草稿</span>
+        </div>
+          <div class=" bg-gray-200 hover:cursor-pointer hover:bg-gray-300 transition  text-black text-medium rounded-xl px-2 py-1" @click.once="saveAsArticle">
             <span>发布文章</span>
           </div>
-          <div class="save" @click.once="saveAsScript">
-            <span>保存草稿</span>
-          </div>
+
         </div>
 
 
-      </div>
+
 <!--    </el-affix>-->
-    <!--  <comment-template></comment-template>-->
+
   </div>
   <a-back-top/>
 
@@ -70,12 +71,12 @@ import {Plus} from '@element-plus/icons-vue'
 
 import h from "@/components/pub/header";
 import editor from "@/components/pub/editor";
-import commentTemplate from "@/components/pub/commentTemplate";
+
 
 
 export default {
   name: 'write',
-  components: {h, editor, commentTemplate, Divider, Tag, Plus},
+  components: {h, editor, Divider, Tag, Plus},
   data() {
     return {
       state: '',
@@ -266,17 +267,6 @@ export default {
   transition: all 0.3s;
 
 }
-
-.whole {
-  margin-left: calc(22.5%);
-  margin-top: 60px;
-  width: 55%;
-  text-align: left;
-  background-color: #fff;
-  padding: 10px;
-  padding-top: 80px;
-}
-
 
 
 .cover {

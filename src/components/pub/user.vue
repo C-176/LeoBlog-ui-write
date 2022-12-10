@@ -1,60 +1,82 @@
 <template>
-  <a-popover>
+<!--  <a-popover>-->
+<!--    <template #title>-->
+<!--    <div class="p-4 bg-white shadow-lg rounded-2xl w-80 dark:bg-gray-800">-->
+<!--      <div class="flex flex-row items-start gap-4">-->
+<!--        <img :src="p(userx.userProfilePhoto)" class="rounded-lg w-28 h-28"/>-->
+<!--        <div class="flex flex-col justify-between w-full h-28">-->
+<!--          <div>-->
+<!--            <p class="text-xl font-medium text-gray-800 dark:text-white">-->
+<!--              {{userx.userNickname}}-->
+<!--            </p>-->
+<!--            <p class="text-xs text-gray-400">-->
+<!--              {{userx.userIntro}}-->
+<!--            </p>-->
+<!--          </div>-->
+<!--&lt;!&ndash;          <div class="w-full p-2 bg-blue-100 rounded-lg dark:bg-white">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="flex items-center justify-between text-xs text-gray-400 dark:text-black">&ndash;&gt;-->
+<!--&lt;!&ndash;              <p class="flex flex-col">&ndash;&gt;-->
+<!--&lt;!&ndash;                Articles&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="font-bold text-black dark:text-indigo-500">&ndash;&gt;-->
+<!--&lt;!&ndash;                            34&ndash;&gt;-->
+<!--&lt;!&ndash;                        </span>&ndash;&gt;-->
+<!--&lt;!&ndash;              </p>&ndash;&gt;-->
+<!--&lt;!&ndash;              <p class="flex flex-col">&ndash;&gt;-->
+<!--&lt;!&ndash;                Followers&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="font-bold text-black dark:text-indigo-500">&ndash;&gt;-->
+<!--&lt;!&ndash;                            455&ndash;&gt;-->
+<!--&lt;!&ndash;                        </span>&ndash;&gt;-->
+<!--&lt;!&ndash;              </p>&ndash;&gt;-->
+<!--&lt;!&ndash;              <p class="flex flex-col">&ndash;&gt;-->
+<!--&lt;!&ndash;                Rating&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="font-bold text-black dark:text-indigo-500">&ndash;&gt;-->
+<!--&lt;!&ndash;                            9.3&ndash;&gt;-->
+<!--&lt;!&ndash;                        </span>&ndash;&gt;-->
+<!--&lt;!&ndash;              </p>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="flex items-center justify-between gap-4 mt-6">-->
+<!--        <button type="button" @click="talk" class="w-1/2 px-4 py-2 text-base bg-white border rounded-xl text-grey-500 hover:bg-gray-200 ">-->
+<!--          私信-->
+<!--        </button>-->
+<!--        <button type="button" @click="follow" class="w-1/2 px-4 py-2 text-base text-white bg-indigo-600 border rounded-xl hover:bg-indigo-500 ">-->
+<!--          关注-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
 
 
-    <template #content>
-      <!--      <div class="card">-->
-      <!--        <div class="imgBx">-->
-      <!--          <img :src="p(userx.userProfilePhoto)" :alt="userx.userNickname">-->
-      <!--&lt;!&ndash;          <a-avatar&ndash;&gt;-->
-      <!--&lt;!&ndash;              shape="circle"&ndash;&gt;-->
-      <!--&lt;!&ndash;              size="middle"&ndash;&gt;-->
-      <!--&lt;!&ndash;              :src="p(userx.userProfilePhoto)"&ndash;&gt;-->
-      <!--&lt;!&ndash;              :style="{ backgroundColor: '#067061'  ,verticalAlign: 'middle' ,float:'left'}"&ndash;&gt;-->
-      <!--&lt;!&ndash;          >&ndash;&gt;-->
-      <!--&lt;!&ndash;            {{ userx.userNickname }}&ndash;&gt;-->
-      <!--&lt;!&ndash;          </a-avatar>&ndash;&gt;-->
-      <!--        </div>-->
-      <!--        <div class="content">-->
-      <!--          <div class="details">-->
-      <!--            <h2>{{userx.userNickname}}<br><span>{{ userx.userPos }}</span></h2>-->
-      <!--            <div class="data">-->
-      <!--              <h3>342<br><span>Posts</span></h3>-->
-      <!--              <h3>120k<br><span>Followers</span></h3>-->
-      <!--              <h3>285<br><span>Following</span></h3>-->
-      <!--            </div>-->
-      <!--            <div class="actionBtn">-->
-      <!--              <button>关注</button>-->
-      <!--              <button>私信</button>-->
-      <!--            </div>-->
-      <!--          </div>-->
-      <!--        </div>-->
-      <!--      </div>-->
-      <a-card hoverable style="width: 300px;">
-        <template #cover>
-          <img
-              alt="pic"
-              :src="p(userx.userBgPic)"
-              style="width: 100%;"
-          />
-        </template>
-        <template #actions>
-          <plus-outlined key="setting"/>
-          <message-outlined key="edit" @click="talk"/>
-          <ellipsis-outlined key="ellipsis"/>
-        </template>
-        <a-card-meta :description="userx.userCertification" :title="userx.userNickname">
-          <template #avatar>
-            <a-avatar :src="p(userx.userProfilePhoto)"
-                      :style="{backgroundColor:'#067061'}"
-            >{{ userx.userNickname }}
-            </a-avatar>
-          </template>
-        </a-card-meta>
-      </a-card>
-    </template>
-    <slot :photo="userx.userProfilePhoto" :text="userx.userNickname"></slot>
-  </a-popover>
+
+
+<!--&lt;!&ndash;      &ndash;&gt;-->
+<!--&lt;!&ndash;      <a-card hoverable style="width: 300px;">&ndash;&gt;-->
+<!--&lt;!&ndash;        <template #cover>&ndash;&gt;-->
+<!--&lt;!&ndash;          <img&ndash;&gt;-->
+<!--&lt;!&ndash;              alt="pic"&ndash;&gt;-->
+<!--&lt;!&ndash;              :src="p(userx.userBgPic)"&ndash;&gt;-->
+<!--&lt;!&ndash;              style="width: 100%;"&ndash;&gt;-->
+<!--&lt;!&ndash;          />&ndash;&gt;-->
+<!--&lt;!&ndash;        </template>&ndash;&gt;-->
+<!--&lt;!&ndash;        <template #actions>&ndash;&gt;-->
+<!--&lt;!&ndash;          <plus-outlined key="setting"/>&ndash;&gt;-->
+<!--&lt;!&ndash;          <message-outlined key="edit" @click="talk"/>&ndash;&gt;-->
+<!--&lt;!&ndash;          <ellipsis-outlined key="ellipsis"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </template>&ndash;&gt;-->
+<!--&lt;!&ndash;        <a-card-meta :description="userx.userCertification" :title="userx.userNickname">&ndash;&gt;-->
+<!--&lt;!&ndash;          <template #avatar>&ndash;&gt;-->
+<!--&lt;!&ndash;            <a-avatar :src="p(userx.userProfilePhoto)"&ndash;&gt;-->
+<!--&lt;!&ndash;                      :style="{backgroundColor:'#067061'}"&ndash;&gt;-->
+<!--&lt;!&ndash;            >{{ userx.userNickname }}&ndash;&gt;-->
+<!--&lt;!&ndash;            </a-avatar>&ndash;&gt;-->
+<!--&lt;!&ndash;          </template>&ndash;&gt;-->
+<!--&lt;!&ndash;        </a-card-meta>&ndash;&gt;-->
+<!--&lt;!&ndash;      </a-card>&ndash;&gt;-->
+<!--    </template>-->
+<!--    -->
+<!--  </a-popover>-->
+  <slot  :photo="userx.userProfilePhoto" :text="userx.userNickname"></slot>
 </template>
 
 <script>
@@ -73,9 +95,10 @@ export default {
     }
   },
   methods: {
+    follow() {
+      this.$st('你没有资格关注别人\n因为你长的太丑', 'error')
+    },
     talk() {
-
-
       this.$axios.get(this.baseURL + '/chat/connect/' + this.$store.state.user.userId + '/' + this.userx.userId).then(res => {
         if (res.data.code === 200) {
           this.$store.commit('changeAddChat', this.userx.userId);

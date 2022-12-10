@@ -1,6 +1,7 @@
 <template>
-  <bread>评论</bread>
-  <comment-template :comments="comments"></comment-template>
+  <bread>我的评论</bread>
+  <div class="w-full md:w-2/3 p-5 mt-16 bg-gray-100 rounded-xl mx-auto">
+  <comment-template :comments="comments"></comment-template></div>
   <a-back-top/>
 </template>
 
