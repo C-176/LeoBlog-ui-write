@@ -34,7 +34,7 @@ import IMG_SRC from '/source/images/index/1.jpg'
 //全局注册一个a函数
 const app = createApp(App)
 //1.开发 2.生产
-let env = 1
+let env = 2
 let host = ''
 if (env === 1) {
     host = 'localhost'

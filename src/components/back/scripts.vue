@@ -1,6 +1,6 @@
 <template>
   <bread>我的草稿</bread>
-  <div class="whole">
+  <div class="text-left w-full h-screen  md:w-2/3 mx-auto md:p-5 mt-14">
     <template v-if="loading">
       <a-skeleton active/>
       <a-skeleton active/>
@@ -13,39 +13,66 @@
         <template #description>
           <span>暂无草稿</span>
         </template>
-        <a-button shape="round" @click="$router.push('/write/0')">点击进行创作</a-button>
+        <button class="button w-full mx-auto " @click="$router.push('/write/0')">去创作</button>
       </el-empty>
       <!--      文章展示-->
-      <div class="Article" v-for="(article,index) in myScripts" :key="article.articleId">
+      <!--      <div class="Article" v-for="(article,index) in myScripts" :key="article.articleId">-->
 
-        <div v-if="article.articlePic!=null && article.articlePic!==''" class="img">
-          <img alt="文章头部图" :src="p(article.articlePic)"/>
+      <!--        <div v-if="article.articlePic!=null && article.articlePic!==''" class="img">-->
+      <!--          <img alt="文章头部图" :src="p(article.articlePic)"/>-->
+      <!--        </div>-->
+
+      <!--        <div class="right"-->
+      <!--             :class="{isFull:article.articlePic==null || article.articlePic===''}">-->
+      <!--          <div class="at"><a>-->
+      <!--            <router-link :to="'/article/'+article.articleId"><span class="iconfont"-->
+      <!--                                                                   v-html="'&#xe630;'+article.articleTitle"></span>-->
+      <!--            </router-link>-->
+      <!--          </a>-->
+      <!--          </div>-->
+
+      <!--          <div class="author"><span class="iconfont">&#xe6fb;</span> 更新时间: {{ article.articleUpdateDate }}-->
+      <!--          </div>-->
+      <!--          <div class="comment"><span v-html="article.articleContent"></span></div>-->
+
+      <!--          <div class="toolbar">-->
+      <!--            <a class="like" @click="deleteArticle(article.articleId)">删除<span class="iconfont">&#xe611;</span> </a>-->
+      <!--            <a class="reply" @click="modifyArticle(article.articleId)">修改<span class="iconfont">&#xe615;</span> </a>-->
+      <!--            <a class="collect" @click="shareArticle(article.articleId)">分享<span class="iconfont">&#xe73a;</span> </a>-->
+      <!--            <a class="share">其他<span class="iconfont">&#xe63e;</span> </a>-->
+      <!--          </div>-->
+
+      <!--        </div>-->
+      <!--        <a-divider style="height: 2px; background-color: #afb2b2"/>-->
+
+      <!--      </div>-->
+
+
+      <div class="m-auto overflow-hidden rounded-lg shadow-lg cursor-pointer h-90 p-5 w-60 md:w-80"
+           v-for="(article,index) in myScripts" :key="article.articleId">
+        <a @click="$router.push('/article/'+article.articleId)" class="block w-full h-full">
+          <img v-if="article.articlePic!=null && article.articlePic!==''" :src="p(article.articlePic)"
+               class="object-cover w-full max-h-40"/>
+          <div class="w-full p-4 bg-white dark:bg-gray-800">
+            <p class="font-medium text-indigo-600 text-base">
+              {{ article.articleTitle }}
+            </p>
+
+            <p class="font-light truncate text-gray-400 dark:text-gray-300 text-md">
+              <span v-html="article.articleContent"></span>
+
+            </p>
+          </div>
+        </a>
+        <div class="flex justify-center items-center h-6 w-full space-x-2 ">
+          <a class="tools hover:bg-gray-200 " @click="deleteArticle(article.articleId)">删除<span class="iconfont">&#xe611;</span> </a>
+          <a class="tools hover:bg-gray-200" @click="modifyArticle(article.articleId)">修改<span class="iconfont">&#xe615;</span> </a>
+          <a class="tools hover:bg-gray-200" @click="shareArticle(article.articleId)">分享<span class="iconfont">&#xe73a;</span> </a>
+          <a class="tools hover:bg-gray-200">其他<span class="iconfont">&#xe63e;</span> </a>
         </div>
-
-        <div class="right"
-             :class="{isFull:article.articlePic==null || article.articlePic===''}">
-          <div class="at"><a>
-            <router-link :to="'/article/'+article.articleId"><span class="iconfont"
-                                                                   v-html="'&#xe630;'+article.articleTitle"></span>
-            </router-link>
-          </a>
-          </div>
-
-          <div class="author"><span class="iconfont">&#xe6fb;</span> 更新时间: {{ article.articleUpdateDate }}
-          </div>
-          <div class="comment"><span v-html="article.articleContent"></span></div>
-
-          <div class="toolbar">
-            <a class="like" @click="deleteArticle(article.articleId)">删除<span class="iconfont">&#xe611;</span> </a>
-            <a class="reply" @click="modifyArticle(article.articleId)">修改<span class="iconfont">&#xe615;</span> </a>
-            <a class="collect" @click="shareArticle(article.articleId)">分享<span class="iconfont">&#xe73a;</span> </a>
-            <a class="share">其他<span class="iconfont">&#xe63e;</span> </a>
-          </div>
-
-        </div>
-        <a-divider style="height: 2px; background-color: #afb2b2"/>
-
       </div>
+
+
       <el-pagination
           v-model:currentPage="currentPage"
           v-model:page-size="pageSize"

@@ -62,7 +62,7 @@
                     </div>
                     <div id="uId" style="display: none">{{ chat.user.userId }}</div>
                     <div id="content" class="  hidden md:inline  overflow-hidden text-xs text-gray-400"><span
-                        v-html="chat.record.recordContent"></span></div>
+                        v-html="chat.record.recordContent" class="truncate"></span></div>
                   </div>
 
                 </div>
@@ -71,7 +71,7 @@
           </div>
 
           <div v-loading="$loading" class="w-5/6 md:w-3/5 -mt-4 h-full flex-col justify-start items-center p-5">
-            <div class="h-auto text-center w-full mx-auto  space-y-1 flex-col justify-between items-center ">
+            <div class="h-1/8 text-center w-full mx-auto -mt-2  space-y-0 flex-col justify-between items-center ">
               <div class="text-base font-bold cursor-pointer">
                 <router-link :to="'/user/'+talkTo.user.userId">
                   {{
@@ -84,12 +84,6 @@
 
             <div id="chat" ref="chat" class="w-full h-2/3 bg-gray-100  rounded-xl p-3 overflow-auto"
                  @wheel.once="scrollRecord">
-              <template v-if="showLoading">
-                <div class="loading" style="text-align: center;">
-                  <a-spin/>
-                </div>
-
-              </template>
               <template v-for="(record,index) in talkTo.record" :key="index">
                 <div v-if="timeDiff(index,index-1)" class=" w-full h-auto my-1 text-center text-gray-400 text-sm"
                      id="updateTime">
@@ -167,7 +161,7 @@
                 mode="simple"
                 class="w-full h-8"
             />
-            <div class="w-full relative border-2 h-28 bg-gray-100 overflow-auto rounded-xl">
+            <div class="w-full relative border-2 h-1/4 bg-gray-100 overflow-auto rounded-xl">
 
               <Editor
                   v-model="message"

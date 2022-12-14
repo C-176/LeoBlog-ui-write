@@ -6,10 +6,10 @@ import 'nprogress/nprogress.css'
 
 const routes = [
     {path: '/', redirect: '/index'},
-    {path:'/canvas',component:()=>import('@/components/pub/canvasPic.vue')},
-    {path:'/canv',component:()=>import('@/components/pub/canv')},
-    {path:'/avatar',component:()=>import('@/components/pub/avator')},
-    {path:'/dialog',component:()=>import('@/components/pub/searchDialog')},
+    {path: '/canvas', component: () => import('@/components/pub/canvasPic.vue')},
+    {path: '/canv', component: () => import('@/components/pub/canv')},
+    {path: '/avatar', component: () => import('@/components/pub/avator')},
+    {path: '/dialog', component: () => import('@/components/pub/searchDialog')},
 
 
     {path: '/test', component: () => import('@/components/test')},
@@ -26,9 +26,12 @@ const routes = [
             {path: '/home/index', name: 'index', component: () => import('@/components/front/index_main')},
             {path: '/home/article', component: () => import('@/components/front/articles')},
             {path: '/home/picture', component: () => import('@/components/front/pictures')},
-            {path: '/home/about/bigs', component: () => import('@/components/front/about')},
-            {path: '/home/about/team', component: () => import('@/components/front/team')},
-            {path: '/home/video/:add', component: () => import('@/components/pub/video')},
+            {path: '/about/bigs', component: () => import('@/components/front/bigs')},
+            {path: '/about/team', component: () => import('@/components/front/team')},
+            {path: '/about/contact', component: () => import('@/components/front/contact')},
+            {path: '/about/privacy', component: () => import('@/components/front/privacy')},
+            {path: '/about/join', component: () => import('@/components/front/join')},
+            {path: '/video/:add', component: () => import('@/components/pub/video')},
             {path: '/back/info', component: () => import('@/components/back/info')},
             {path: '/back/articles', component: () => import('@/components/back/articles')},
             {path: '/back/scripts', component: () => import('@/components/back/scripts')},
@@ -42,11 +45,11 @@ const routes = [
                 }
             },
             {path: '/article/:articleId', component: () => import('@/components/front/articleShowing')},
-
+            {path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('@/components/pub/404')},
         ]
 
     },
-    {path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('@/components/pub/404')},
+
 ]
 
 const router = createRouter({

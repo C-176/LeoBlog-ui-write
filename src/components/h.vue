@@ -13,11 +13,12 @@
           </div>
           <!--大屏logo-->
           <div class="flex justify-start hidden md:inline-block lg:w-0 lg:flex-1">
-            <a @click="$router.push('/index')">
+            <div>
               <span class="sr-only">LeoBlog</span>
-              <img class="h-10 scale-140  w-auto sm:h-10" src="http://49.235.100.240/api/source/images/logoTest.png"
+              <img  @click="$router.push('/index')" class="h-10 scale-140 cursor-pointer w-auto sm:h-10" src="http://49.235.100.240/api/source/images/logoTest.png"
                    alt=""/>
-            </a>
+              <music></music>
+            </div>
           </div>
 
           <Menu as="div" v-if="logined"
@@ -176,7 +177,7 @@
                     class="z-10 space-x-2  inline-flex justify-center items-center text-left ">
 
                 <button type="button" @click="$store.commit('changeMessageVisible',!$store.state.messageVisible)"
-                        class="rounded-full  bg-gray-300 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
+                        class="rounded-full duration-500 hover:bg-gray-300 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
                   <span class="sr-only">View notifications</span>
                   <BellIcon class="h-4 w-4 text-indigo-600" aria-hidden="true"/>
                 </button>
@@ -184,7 +185,7 @@
                 <a-badge :count="$store.state.chatPoint">
 
                 <button type="button" @click="$store.commit('changeChatVisible',!$store.state.chatVisible)"
-                        class="rounded-full  bg-gray-300 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
+                        class="rounded-full  duration-500 hover:bg-gray-300 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
                   <span class="sr-only">View notifications</span>
 <!--                  <a-badge :count="$store.state.messagePoint">-->
                     <ChatBubbleOvalLeftEllipsisIcon class="h-4 w-4 text-indigo-600" aria-hidden="true"/>
@@ -194,11 +195,13 @@
                 <div class="relative inline-block text-left">
                   <div class="flex items-center justify-center p-0.5 cursor-pointer   border-indigo-600 border-2  rounded-full">
 
-                      <img :src="user.userProfilePhoto" id="options-menu" @click="openMenu = !openMenu"
+                      <img :src="user.userProfilePhoto" id="options-menu" @mouseover="openMenu = true"
+
                            class="w-8 h-8 rounded-full">
                   </div>
                   <div v-show="openMenu"
-                       class="absolute transition p-2 right-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
+                       @mouseover="openMenu = true" @mouseleave="closeMenu"
+                       class="absolute transition duration-500 p-2 right-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
                     <div class="py-1 " role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
 
                       <div @click="item.href($router)" v-for="item in pages" :key="item.name"
@@ -335,6 +338,8 @@ import Swal from "sweetalert2";
 import {encode} from '@/util/AES'
 import {useRoute, useRouter} from 'vue-router'
 import SearchDialog from "@/components/pub/searchDialog";
+import music from "@/components/pub/music";
+import Message from "@/components/pub/message.vue";
 
 const router = useRouter()
 const route = useRoute()
@@ -364,6 +369,13 @@ const navigation = [
   {name: 'Marketplace', href: '#', icon: ChartBarIcon},
 ]
 
+function closeMenu() {
+  setTimeout(() => {
+    openMenu.value = false
+  }, 300)
+
+}
+
 function logOut() {
 
   //选择框
@@ -377,8 +389,6 @@ function logOut() {
     if (result.value) {
       // this.$store.commit('removeToken')
       localStorage.removeItem(encode("lb_user"),)
-
-
       router.push('/LR')
 
     }
@@ -441,32 +451,7 @@ const callsToAction = [
   {name: 'Watch Demo', href: '#', icon: PlayIcon},
   {name: 'Contact Sales', href: '#', icon: PhoneIcon},
 ]
-const resources = [
-  {
-    name: 'Help Center',
-    description: 'Get all of your questions answered in our forums or contact support.',
-    href: '#',
-    icon: LifebuoyIcon,
-  },
-  {
-    name: 'Guides',
-    description: 'Learn how to maximize our platform to get the most out of it.',
-    href: '#',
-    icon: BookmarkSquareIcon,
-  },
-  {
-    name: 'Events',
-    description: 'See what meet-ups and other events we might be planning near you.',
-    href: '#',
-    icon: CalendarIcon,
-  },
-  {name: 'Security', description: 'Understand how we take your privacy seriously.', href: '#', icon: ShieldCheckIcon},
-]
-const recentPosts = [
-  {id: 1, name: 'Boost your conversion rate', href: '#'},
-  {id: 2, name: 'How to use search engine optimization to drive traffic to your site', href: '#'},
-  {id: 3, name: 'Improve your customer experience', href: '#'},
-]
+
 const about = [
   {
     name: '大事记',
@@ -480,7 +465,7 @@ const about = [
     name: '关于我们',
     description: '我们是一个小团队，致力于为大家提供一个优质的创作平台。',
     href: function ($router) {
-      $router.push("/about/introduce")
+      $router.push("/about/team")
     },
     icon: Bars3Icon,
   }
@@ -492,14 +477,15 @@ const about = [
       $router.push("/about/contact")
     },
     icon: PhoneIcon,
-  }, {
-    name: '隐私政策',
-    description: '我们的隐私政策',
-    href: function ($router) {
-      $router.push("/about/privacy")
-    },
-    icon: PhoneIcon,
   },
+  {
+    name: '加入我们',
+    description: '如果您有兴趣加入我们，欢迎联系我们。',
+    href: function ($router) {
+      $router.push("/about/join")
+    },
+    icon: LifebuoyIcon,
+  }
 
 
 ]

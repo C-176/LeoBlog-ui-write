@@ -45,9 +45,9 @@
             />
           </div>
           <div
-              class="text-left text-gray-600 font-medium leading:6 md:leading-7    text-xs md:text-sm  justify-items-start  float-left w-full md:w-3/4 ">
+              class="text-left text-gray-600 font-medium leading:6 md:leading-7   truncate  text-xs md:text-sm  justify-items-start  float-left w-full md:w-3/4 ">
               <span class="hover:cursor-pointer" @click="$router.push('/article/'+article.articleId)"
-                    v-html="article.articleContent"></span>
+                    v-html="article.articleContent" ></span>
           </div>
         </div>
 
@@ -74,8 +74,10 @@
 <script>
 
 export default {
+
   name: 'articleShow',
   props: ['articleList', 'scrollBottom'],
+
   data() {
     return {
       articles: [
@@ -127,7 +129,8 @@ export default {
   },
   methods: {
     share(articleId) {
-      this.$message.success("分享成功")
+      this.showShare = true
+      // this.$message.success("分享成功")
     },
     addCollectMessage(articleId) {
       let a = this.articles.find(item => item.articleId === articleId)

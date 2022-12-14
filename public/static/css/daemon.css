@@ -61,6 +61,11 @@ a:hover {
     font-family: 'PingFang SC';  /* Project id 3270950 */
     src: url('/static/fonts/PingFang Medium.ttf')
 }
+/*引入字体*/
+@font-face {
+    font-family: 'smileySans';  /* Project id 3270950 */
+    src: url('/static/fonts/smiley-sans-v1.0.0/SmileySans-Oblique.ttf')
+}
 .dark {
     /* 自定义深色背景颜色 */
     /*--el-bg-color: #063432;*/
@@ -88,6 +93,7 @@ a:hover {
 
 body {
     font-family: "Arial", "PingFang SC", sans-serif;
+    /*font-family: "smileySans";*/
     /*background: #eef2f4;*/
     background-size: 100% 100%;
     text-align: center;

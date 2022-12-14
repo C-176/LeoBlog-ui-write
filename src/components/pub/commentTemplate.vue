@@ -12,113 +12,94 @@
           暂无评论，快去发表你的评论吧
         </template>
       </el-empty>
-      <a-list v-else :data-source="comments" item-layout="vertical" size="small" >
-        <template #renderItem="{item}">
-          <template v-if="item.articleTitle.trim() != ''">
-            <a class="text-base my-2 block" @click="$router.push('/article/'+item.articleId)"><span
-                v-html="item.articleTitle"></span></a>
-          </template>
-          <a-list-item :key="item.commentId" :extra="item.commentUpdateTime">
-            <template #actions>
-            <span>
-              <component is="LikeOutlined" style="margin-right: 0px"/>
-              {{ item.commentLikes }}
-            </span>
-              <span v-if="item.articleTitle.trim() ==''" class="reply1"
-                    @click="commentClick(item.commentId,item.userId)">
-              <component is="MessageOutlined" style="margin-right: 0px"/>
-            </span>
-              <span v-if="item.user.userId == $store.state.user.userId" @click="deleteComment(item.commentId)">
-              <component is="DeleteOutlined" style="margin-right: 0px"/>
-            </span>
-            </template>
 
-            <a-list-item-meta :description="item.commentContent" :title="item.user.userNickname">
-              {{ item.commentUpdateTime }}
 
-              <template #avatar>
-                <user :user="item.user">
-                  <a-avatar :src="p(item.user.userProfilePhoto)"
-                            :style="{backgroundColor:'#0eb73a'}"
-                            size="middle">
-                    {{ item.user.userNickname }}
-                  </a-avatar>
-                </user>
-              </template>
-            </a-list-item-meta>
-          </a-list-item>
+      <template v-else>
+        <!-- component -->
+        <a-collapse v-for="(comment,index1) in comments" v-model:activeKey="activeKey" accordion>
+          <a-collapse-panel :key="index1"
+                            :header="comment.articleTitle.trim().length == 0?comment.commentContent:comment.articleTitle">
+            <div class=" w-full flex-col items-center justify-center space-y-1">
 
-          <a-list v-for=" i in item.value" item-layout="vertical" size="small">
+              <div class="bg-white w-full rounded-2xl px-6 py-1 shadow transition duration-500">
+                <p class=" text-xs py-0.5 md:text-sm text-gray-600"> {{ comment.commentContent }}</p>
+                <div class="space-x-1 flex justify-end items-center">
+                  <a-tooltip>
+                    <template #title>删除</template>
+                    <div
+                        v-if="comment.articleTitle.trim().length == 0"
+                        @click="commentClick(comment.commentId,i.userId)"
+                        class="p-3 bg-indigo-600 hover:bg-indigo-500 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white  shadow-lg cursor-pointer">
+                      回复+
+                    </div>
+                  </a-tooltip>
+                  <a-tooltip>
+                    <template #title>删除</template>
+                    <div
+                        v-if="comment.user.userId == $store.state.user.userId" @click="deleteComment(comment.commentId)"
+                        class="p-3 bg-indigo-600 hover:bg-indigo-500 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white cursor-pointer">
+                      ×
+                    </div>
+                  </a-tooltip>
+                </div>
+              </div>
 
-            <a-list-item :key="i.commentId"  class="ml-10">
-              <template #actions>
-                  <span>
-                    <component is="LikeOutlined" style="margin-right: 0px"/>
-                    {{ i.commentLikes }}
-                  </span>
-                <span v-if="item.articleTitle.trim() ==''" class="reply1"
-                      @click="commentClick(item.commentId,i.userId)">
-                    <component is="MessageOutlined" style="margin-right: 0px"/>
-                  </span>
-                <span v-if="i.user.userId == $store.state.user.userId" @click="deleteComment(i.commentId)">
-                    <component is="DeleteOutlined" style="margin-right: 0px"/>
-                  </span>
-              </template>
 
-              <a-list-item-meta :description="i.commentContent" :title="i.user.userNickname">
-                <template #avatar>
-                  <user :user="i.user">
-                    <a-avatar :src="p(i.user.userProfilePhoto)"
-                              :style="{backgroundColor:'#067061'}"
-                              size="middle">
-                      {{ i.user.userNickname }}
-                    </a-avatar>
-                  </user>
-                </template>
-              </a-list-item-meta>
+              <div v-for="(i,index2) in comment.value" :key="i.commentId"
+                   class="bg-white w-full  rounded-2xl px-6 pl-10 py-1 shadow transition duration-500">
+                <p class="text-xs md:text-sm py-0.5 text-gray-600"> {{ i.commentContent }}</p>
+                <div class="flex justify-between items-center">
+                  <div class=" flex items-center space-x-4 py-0">
+                    <img class="w-8 h-8 rounded-full" :src="p(i.user.userProfilePhoto)" alt=""/>
+                    <div class="text-sm text-gray-400 ">{{ i.user.userNickname }} • <span
+                        class="font-normal text-gray-400"> {{ i.commentUpdateTime }}</span></div>
+                  </div>
+                  <div class="space-x-1 flex justify-end items-center">
+                    <a-tooltip>
+                      <template #title>删除</template>
+                      <div
+                          v-if="comment.articleTitle.trim().length == 0"
+                          @click="commentClick(comment.commentId,i.userId)"
+                          class="p-3 bg-indigo-600 hover:bg-indigo-500 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white  shadow-lg cursor-pointer">
+                        回复+
+                      </div>
+                    </a-tooltip>
+                    <a-tooltip>
+                      <template #title>删除</template>
+                      <div
+                          v-if="i.user.userId == $store.state.user.userId" @click="deleteComment(i.commentId)"
+                          class="p-3 bg-indigo-600 hover:bg-indigo-500 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white cursor-pointer">
+                        ×
+                      </div>
+                    </a-tooltip>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a-collapse-panel>
+        </a-collapse>
 
-            </a-list-item>
 
-          </a-list>
-        </template>
+      </template>
 
-      </a-list>
-      <!--      <template v-if="showComment">-->
-      <!--        <el-affix :offset="20" position="bottom">-->
-      <!--          <textarea v-model="commentIn" class="commentIn" placeholder="请输入内容"-->
-      <!--                    @keyup.enter="saveComment()">-->
-      <!--          </textarea>-->
-      <!--          <a-button id="enter" :loading="submitting" ghost shape="round" size="small"-->
-      <!--                    type="primary" @click="saveComment()">-->
-      <!--            &lt;!&ndash;            <template #icon>&ndash;&gt;-->
-      <!--            <enter-outlined/>-->
-      <!--            发送-->
-      <!--            &lt;!&ndash;            </template>&ndash;&gt;-->
-      <!--          </a-button>-->
-
-      <!--        </el-affix>-->
-      <!--      </template>-->
 
       <div v-if="showComment" class="relative w-full h-28 text-right">
-        <el-affix :offset="5" class="h-full" position="bottom">
-                    <textarea v-model="commentIn"
-                              class="bg-white border-2 border-gray-200 w-full h-full rounded-xl resize-none outline-0 p-2"
-                              placeholder="请输入内容... | Enter键发送"
-                              @keyup.enter="saveComment()">
-                    </textarea>
-          <a-button :loading="submitting" class="absolute  hover:text-black right-3 -top-8  text-gray-400"
-                    shape="round" size="small"
-                    @click="saveComment()">
-            <enter-outlined class="flex justify-center items-center" />
-<!--            发送-->
-          </a-button>
-          <a-button :loading="submitting" class="absolute   hover:text-black right-1 -top-8  text-gray-400"
-                    shape="round" size="small"
-                    @click="showComment =false">
-            <close-outlined class="flex justify-center items-center" />
+        <textarea v-model="commentIn"
+                  class="bg-white border-2 border-gray-200 w-full h-full rounded-xl resize-none outline-0 p-2"
+                  placeholder="请输入内容... | Enter键发送"
+                  @keyup.enter="saveComment()">
+        </textarea>
+        <div class="absolute bottom-1 right-1 space-x-1 flex justify-around items-center">
+          <button class="  button p-1  "
+                  @click="saveComment()">
+            发送
+          </button>
+          <button class=" p-1  button"
+                  @click="showComment =false">
+            取消
+          </button>
+        </div>
 
-          </a-button>
-        </el-affix>
       </div>
 
 
@@ -129,7 +110,7 @@
 </template>
 
 <script>
-import {DeleteOutlined,CloseOutlined, EnterOutlined, LikeOutlined, MessageOutlined} from "@ant-design/icons-vue";
+import {DeleteOutlined, CloseOutlined, EnterOutlined, LikeOutlined, MessageOutlined} from "@ant-design/icons-vue";
 import user from "@/components/pub/user";
 
 export default {
@@ -144,10 +125,10 @@ export default {
     CloseOutlined
 
 
-
   },
   data() {
     return {
+      activeKey: 0,
       loading: true,
       submitting: false,
       showComment: false,
@@ -161,9 +142,7 @@ export default {
     deleteComment(id) {
       this.$axios.delete('/comment/' + id).then(res => {
         if (res.data.code === 200) {
-
           // 将对应的评论从数组中删除
-
           for (let i = 0; i < this.comments.length; i++) {
             if (this.comments[i].commentId === id) {
               this.comments.splice(i, 1);
@@ -173,11 +152,7 @@ export default {
           for (let i = 0; i < this.comments.length; i++) {
             this.comments[i].value = this.comments[i].value.filter(item => item.commentId !== id);
           }
-
-
           this.$st('删除成功', 'success')
-
-
         } else {
           this.$st('删除失败', 'error')
         }
@@ -205,26 +180,23 @@ export default {
           this.method()
           this.submitting = false
           this.showComment = false
-
         } else {
           this.$st(res.data.data, 'error')
         }
-
-
       })
 
     },
     commentClick(id, userId) {
-      if(!this.checkLogin()) {
+      if (!this.checkLogin()) {
         return
       }
       this.showComment = !this.showComment
       this.commentParentId = id
       this.receiverId = userId
     },
-    checkLogin(){
-      if(this.$store.state.user == null){
-        this.$st('请先登录','error')
+    checkLogin() {
+      if (this.$store.state.user == null) {
+        this.$st('请先登录', 'error')
         return false
       }
       return true
@@ -244,19 +216,6 @@ export default {
 </script>
 
 <style scoped>
-
-#enter {
-  color: #7c929c;
-  border-color: #7c929c;
-  position: absolute;
-  margin-left: -100px;
-  margin-top: calc(7%);
-}
-
-#enter:hover {
-  background: rgba(124, 146, 156, 0.68);
-}
-
 :deep(.ant-list-vertical .ant-list-item-meta-title) {
   font-size: 14px;
 }
@@ -265,6 +224,9 @@ export default {
   color: #8b8b8b;
 }
 
+:deep(p) {
+  margin-bottom: 0;
+}
 
 span:hover {
   cursor: pointer;

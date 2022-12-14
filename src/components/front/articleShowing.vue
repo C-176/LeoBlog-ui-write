@@ -1,6 +1,6 @@
 <template>
   <bread>文章</bread>
-  <div class="mx-auto w-full mt-16 md:w-2/3 bg-gray-100 md:rounded-xl md:mt-16 p-5  mb-2">
+  <div class="mx-auto w-full relative mt-16 md:w-2/3 bg-gray-100 md:rounded-xl md:mt-16 p-5  mb-2">
 
     <div>
       <template v-if="loading">
@@ -56,7 +56,7 @@
           <div class="w-full flex justify-around items-center">
             <a class="tools" @click="like(article.articleId)">点赞<span
                 class="iconfont">&#xe605;</span>{{ article.articleLikes }} </a>
-            <a class="tools" @click="comment()">评论<span
+            <a class="tools reply" @click="comment()">评论<span
                 class="iconfont">&#xe646;</span>{{ article.articleComments }} </a>
             <a class="tools" @click="collect(article.articleId)">收藏<span
                 class="iconfont">&#xe8b9;</span>{{ article.articleCollects }} </a>
@@ -72,13 +72,18 @@
                       placeholder="请输入内容... | Enter键发送"
                       @keyup.enter="saveComment(-1)">
             </textarea>
-            <a-button class="absolute hover:text-black right-5 -top-10  text-gray-400" shape="round" size="small"
+
+
+            <div class="absolute bottom-1 right-1 space-x-1 flex justify-around items-center">
+              <button class="  button p-1  "
                       @click="saveComment(-1,article.user.userId)">
-              <!--              <template #icon>-->
-              <enter-outlined/>
-              发送
-              <!--              </template>-->
-            </a-button>
+                发送
+              </button>
+              <button class=" p-1  button"
+                      @click="showComment =false">
+                取消
+              </button>
+            </div>
           </div>
 
         </transition>
@@ -87,11 +92,16 @@
       </template>
 
     </div>
-
-    <comment-template id="comment" v-if="article.isArticle === 1"
+    <div id="comment">
+    <comment-template  v-if="article.isArticle === 1"
                       :comments="comments" :method="getComments">
 
-    </comment-template>
+    </comment-template></div>
+
+
+
+
+
 
     <!--  显示放大图片的组件-->
     <big-img :visible="photoVisible" :url="bigImgUrl" @closeClick="()=>{photoVisible=false}"></big-img>
@@ -99,8 +109,121 @@
 
     <a-back-top/>
     <catlog :container="container"></catlog>
-  </div>
 
+  </div>
+  <shareModal @close="()=>{showShare=false}" :showShare="showShare"></shareModal>
+  <div
+      class="px-2 md:px-6 my-3 w-screen mx-auto text-slate-700 dark:text-white flex flex-col items-center"
+  >
+    <div class="text-left flex flex-col w-full items-center justify-center md:p-4 md:border border-slate-300 dark:border-slate-600 rounded-xl">
+      <div class="w-full">
+        <a
+            href="/"
+            rel="noreferrer"
+            target="_blank"
+            class="bg-white dark:bg-slate-800 rounded-xl w-full flex flex-col md:flex-row justify-start shadow-md transition-all duration-100 md:hover:scale-95"
+        >
+          <!-- <div class="flex-grow"> -->
+          <div
+              class="flex-grow w-full h-64 shadow bg-cover rounded-t-xl md:rounded-none md:rounded-l-xl"
+              style=' background-image: url("https://cdn.mos.cms.futurecdn.net/QDt6zbWrSc3RYSNWGiVBmS.jpg");'
+          ></div>
+          <!-- </div> -->
+
+          <div class="w-full xl:w-1/2 p-3 flex flex-col justify-between h-40 md:h-64 overflow-auto">
+            <div>
+              <div class="flex flex-col md:w-full text-xs text-left">
+                            <span class="text-blue-700 dark:text-blue-300">
+                                24/08/2022
+                            </span>
+                <h2 class="text-blue-600 dark:text-blue-400 font-bold uppercase text-md">
+                  News Article
+                </h2>
+              </div>
+              <p class="text-left text-sm md:text-lg xl:text-xl font-bold leading-normal">
+                I hope this excites you!
+              </p>
+            </div>
+            <p class="flex text-left text-xs md:text-sm text-blue-700 dark:text-blue-400 font-bold leading-normal items-center">
+              <svg
+                  height="21"
+                  viewBox="0 0 21 21"
+                  width="21"
+                  xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                    fill="none"
+                    fillRule="evenodd"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    transform="translate(6 6)"
+                >
+                  <path d="m8.5 7.5v-7h-7"></path>
+                  <path d="m8.5.5-8 8"></path>
+                </g>
+              </svg>
+              News Site
+            </p>
+          </div>
+        </a>
+      </div>
+      <div class="lg:px-4 w-full mt-2">
+        <div class="flex justify-center">
+          <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md flex w-full lg:w-1/2 p-2 justify-between h-12 lg:h-fit items-center">
+            <button
+                class="border-slate-500 dark:border-slate-100 hover:text-blue-500 dark:hover:text-blue-400 border hover:border-blue-500 dark:hover:border-blue-400 w-6 h-6 rounded-xl duration-150 hover:scale-105 active:scale-95"
+                onClick="handleRotation"
+            >
+              <svg
+                  height="22"
+                  viewBox="0 0 21 21"
+                  width="22"
+                  xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                    fill="none"
+                    fillRule="evenodd"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    transform="translate(2 2)"
+                >
+                  <path d="m9.55 11.4-3-2.9 3-3"></path>
+                </g>
+              </svg>
+            </button>
+            <button
+                onClick="handleRotation"
+                class="bg-blue-400 h-3 transition-all w-3 self-center duration-150 hover:scale-150 active:scale-125 ease-in-out rounded-md xl:p-1 shadow"
+            ></button>
+            <button
+                class="border-slate-500 dark:border-slate-100 hover:text-blue-500 dark:hover:text-blue-400 border hover:border-blue-500 dark:hover:border-blue-400 w-6 h-6 rounded-xl duration-150 hover:scale-105 active:scale-95"
+                onClick="handleRotation"
+            >
+              <svg
+                  height="22"
+                  viewBox="0 0 21 21"
+                  width="22"
+                  xmlns="http://www.w3.org/2000/svg"
+              >
+                <g
+                    fill="none"
+                    fillRule="evenodd"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    transform="translate(2 2)"
+                >
+                  <path d="m7.5 11.5 3-3-3.068-3"></path>
+                </g>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -112,13 +235,15 @@ import user from "@/components/pub/user";
 import bigImg from "@/components/pub/bigImg";
 import catlog from "@/components/pub/catlog";
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
+import shareModal from "@/components/pub/shareModal";
 
 
 export default {
   name: 'forward-article',
-  components: {h, commentTemplate, Divider, Tag, EnterOutlined, user, bigImg, catlog},
+  components: {h, commentTemplate, Divider, Tag, EnterOutlined, user, bigImg, catlog,shareModal},
   data() {
     return {
+      showShare:false,
       container: '#xxxxxxxxxxxx',
       photoVisible: false,
       bigImgUrl: "",
@@ -246,7 +371,12 @@ export default {
       return this.colors[Math.floor(Math.random() * this.colors.length)]
     },
     share(articleId) {
-      this.$st("分享成功", "success")
+      // this.$st("分享成功", "success")
+      this.showShare = true
+    },
+    closeShare(){
+      this.showShare = false
+
     },
     collect(articleId) {
       if (!this.checkLogin()) {

@@ -1,6 +1,7 @@
 <template>
   <transition name="fade">
-    <div v-show="$store.state.messageVisible" class="fixed p-5 text-left z-50 inset-1 mx-auto mt-16 w-full  md:w-2/3 h-5/6 p-2 bg-white md:rounded-xl">
+
+        <div v-show="$store.state.messageVisible" class="fixed text-left z-50 md:inset-1  mx-auto md:mt-16 w-full h-screen md:w-2/3 md:h-5/6 p-2 bg-white md:rounded-xl">
 
       <a-tooltip id="close" class="absolute top-2 right-2 z-20" title="关闭">
         <button class="rounded-xl text-white h-8 w-8 text-center bg-indigo-600 hover:bg-indigo-500"

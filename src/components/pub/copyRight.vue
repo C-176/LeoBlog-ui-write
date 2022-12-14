@@ -85,8 +85,8 @@
       </div>
     </a-carousel>
     <div >
-      @2021-2022 LeoBlog 版权所有<br>
-      <a href="https://beian.miit.gov.cn/" class="text-sm" >豫ICP备2022025200号</a>
+      @2021-2022 LeoBlog©版权所有<br>
+      <a href="https://beian.miit.gov.cn/" class="text-xs" >豫ICP备2022025200号</a>
 
     </div>
   </div>

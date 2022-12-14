@@ -1,5 +1,5 @@
 <template>
-  <bread>关于</bread>
+  <bread>工程进度</bread>
   <div class="whole">
 
     <div>
