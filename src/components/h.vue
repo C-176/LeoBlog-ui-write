@@ -195,7 +195,7 @@
                 <div class="relative inline-block text-left">
                   <div class="flex items-center justify-center p-0.5 cursor-pointer   border-indigo-600 border-2  rounded-full">
 
-                      <img :src="user.userProfilePhoto" id="options-menu" @mouseover="openMenu = true"
+                      <img :src="p(user.userProfilePhoto)" id="options-menu" @mouseover="openMenu = true"
 
                            class="w-8 h-8 rounded-full">
                   </div>

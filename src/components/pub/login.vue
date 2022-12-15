@@ -136,7 +136,7 @@
                 </div>
                 <p class="hidden text-xs text-red-600 mt-2" id="email-error">请输入有效邮箱</p>
               </div>
-              <button @click="changePwd" class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">重置密码</button>
+              <button @click="changePwd" class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-indigo-600 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-base dark:focus:ring-offset-gray-800">重置密码</button>
             </div>
 <!--          </form>-->
         </div>
@@ -240,7 +240,8 @@ export default {
       return new Promise((resolve, reject) => {
         if (this.login) {
           axios.post("/user/login", {
-            userName: this.userName,
+            userName: this.userName.includes('@') ? '' : this.userName,
+            userEmail: this.userName.includes('@') ? this.userName : '',
             userPassword: this.userPassword,
             captcha: this.captcha,
           }).then(res => {
@@ -378,18 +379,18 @@ export default {
             showCancelButton: true,
             cancelButtonText: '取消',
           }).then((result) => {
-            if (result.value) {
-              axios.post("/user/resetPwd", {
-
+            console.log(result)
+              axios.post("/user/changePwd", {
                 userPassword: this.userPassword,
-                userEmail: this.userEmail,
+                // userNewPassword: this.userPassword,
+                userEmail: this.forgetEmail,
                 captcha: result.value
               }).then(res => {
                 if (res.data.code === 200) {
-                  this.$store.commit('changeLR', true)
-                  this.$st("注册成功，已定向到登陆页面，请登录", "success")
+                  this.forgetPwd = false
+                  this.$sa("密码修改成功，请登录", "success")
                   this.$store.commit('changeLogin', true);
-                  this.$store.commit('setToken', res.data.data.token)
+
 
                   resolve(res.data.code)
                 } else {
@@ -397,7 +398,7 @@ export default {
                   reject(res.data)
                 }
               })
-            }
+
           })
         }
       })

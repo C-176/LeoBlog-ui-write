@@ -23,38 +23,14 @@
 
               <div class="bg-white w-full rounded-2xl px-6 py-1 shadow transition duration-500">
                 <p class=" text-xs py-0.5 md:text-sm text-gray-600"> {{ comment.commentContent }}</p>
-                <div class="space-x-1 flex justify-end items-center">
-                  <a-tooltip>
-                    <template #title>删除</template>
-                    <div
-                        v-if="comment.articleTitle.trim().length == 0"
-                        @click="commentClick(comment.commentId,i.userId)"
-                        class="p-3 bg-indigo-600 hover:bg-indigo-500 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white  shadow-lg cursor-pointer">
-                      回复+
-                    </div>
-                  </a-tooltip>
-                  <a-tooltip>
-                    <template #title>删除</template>
-                    <div
-                        v-if="comment.user.userId == $store.state.user.userId" @click="deleteComment(comment.commentId)"
-                        class="p-3 bg-indigo-600 hover:bg-indigo-500 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white cursor-pointer">
-                      ×
-                    </div>
-                  </a-tooltip>
-                </div>
-              </div>
-
-
-              <div v-for="(i,index2) in comment.value" :key="i.commentId"
-                   class="bg-white w-full  rounded-2xl px-6 pl-10 py-1 shadow transition duration-500">
-                <p class="text-xs md:text-sm py-0.5 text-gray-600"> {{ i.commentContent }}</p>
                 <div class="flex justify-between items-center">
                   <div class=" flex items-center space-x-4 py-0">
-                    <img class="w-8 h-8 rounded-full" :src="p(i.user.userProfilePhoto)" alt=""/>
-                    <div class="text-sm text-gray-400 ">{{ i.user.userNickname }} • <span
-                        class="font-normal text-gray-400"> {{ i.commentUpdateTime }}</span></div>
+                    <img class="w-8 h-8 rounded-full" :src="p(comment.user.userProfilePhoto)" alt=""/>
+                    <div class="text-sm text-gray-400 ">{{ comment.user.userNickname }} • <span
+                        class="font-normal text-gray-400"> {{ comment.commentUpdateTime }}</span></div>
                   </div>
                   <div class="space-x-1 flex justify-end items-center">
+
                     <a-tooltip>
                       <template #title>删除</template>
                       <div
@@ -67,7 +43,8 @@
                     <a-tooltip>
                       <template #title>删除</template>
                       <div
-                          v-if="i.user.userId == $store.state.user.userId" @click="deleteComment(i.commentId)"
+                          v-if="comment.user.userId == $store.state.user.userId"
+                          @click="deleteComment(comment.commentId)"
                           class="p-3 bg-indigo-600 hover:bg-indigo-500 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white cursor-pointer">
                         ×
                       </div>
@@ -75,7 +52,40 @@
                   </div>
                 </div>
               </div>
-            </div>
+
+
+                <div v-for="(i,index2) in comment.value" :key="i.commentId"
+                     class="bg-white w-full  rounded-2xl px-6 pl-10 py-1 shadow transition duration-500">
+                  <p class="text-xs md:text-sm py-0.5 text-gray-600"> {{ i.commentContent }}</p>
+                  <div class="flex justify-between items-center">
+                    <div class=" flex items-center space-x-4 py-0">
+                      <img class="w-8 h-8 rounded-full" :src="p(i.user.userProfilePhoto)" alt=""/>
+                      <div class="text-sm text-gray-400 ">{{ i.user.userNickname }} • <span
+                          class="font-normal text-gray-400"> {{ i.commentUpdateTime }}</span></div>
+                    </div>
+                    <div class="space-x-1 flex justify-end items-center">
+                      <a-tooltip>
+                        <template #title>删除</template>
+                        <div
+                            v-if="comment.articleTitle.trim().length == 0"
+                            @click="commentClick(comment.commentId,i.userId)"
+                            class="p-3 bg-indigo-600 hover:bg-indigo-500 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white  shadow-lg cursor-pointer">
+                          回复+
+                        </div>
+                      </a-tooltip>
+                      <a-tooltip>
+                        <template #title>删除</template>
+                        <div
+                            v-if="i.user.userId == $store.state.user.userId" @click="deleteComment(i.commentId)"
+                            class="p-3 bg-indigo-600 hover:bg-indigo-500 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white cursor-pointer">
+                          ×
+                        </div>
+                      </a-tooltip>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
           </a-collapse-panel>
         </a-collapse>
 
