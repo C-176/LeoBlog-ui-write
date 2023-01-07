@@ -2,8 +2,15 @@
   <div id="player" style="display: block"></div>
   <!-- component -->
   <div v-show="showPlayer"
-      class=" fixed text-left z-50 md:inset-1  mx-auto md:mt-16 w-full h-screen md:w-2/3 md:h-5/6 p-2  md:rounded-xl">
-    <div class='flex w-8/12  bg-white shadow-md rounded-lg overflow-hidden mx-auto'>
+      class="fixed text-left z-50 md:inset-2 mx-auto md:mt-16 w-full h-screen md:w-screen md:h-5/6 p-2  md:rounded-xl">
+
+    <div class='relative flex  w-8/12  bg-white shadow-md rounded-lg overflow-hidden mx-auto'>
+      <a-tooltip id="close" class="absolute top-2 right-2" title="关闭">
+      <button class="rounded-xl z-20 text-white h-8 w-8 text-center bg-indigo-600 hover:bg-indigo-500"
+              @click="closePlayer">
+        ✖
+      </button>
+    </a-tooltip>
       <div class="flex flex-col w-full">
         <div class="flex p-5 border-b">
           <img class='w-20 h-20 object-cover' alt='User avatar'
@@ -82,8 +89,8 @@
                         <span class="text-sm text-indigo-600 capitalize font-semibold pt-1">
                         {{ music.name }}
                         </span>
-              <span class="text-xs text-gray-500 uppercase font-medium ">
-                            -{{ music.artist }}
+              <span class="text-xs text-gray-500  font-medium ">
+                            {{ music.artist }}
                         </span>
             </div>
           </div>
@@ -102,9 +109,10 @@ import music from "./music.vue";
 export default {
   name: "music",
   props:['showPlayer'],
+  emits:['closePlayer'],
   data() {
     return {
-      showPlayer:false,
+      // showPlayer:false,
       player: null,
       ap: null,
       music: {
@@ -139,7 +147,12 @@ export default {
       }
     }
   },
-  watch: {},
+  watch: {
+    showPlayer(val){
+      console.log(val)
+    }
+
+  },
 
   mounted() {
     this.ap = new APlayer({

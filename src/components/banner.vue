@@ -6,7 +6,7 @@
           <span class="flex rounded-lg bg-indigo-600 p-2 hover:bg-indigo-500 cursor-pointer">
             <MegaphoneIcon @click="$sa('没事不要乱点','warning')" class="h-6 w-6 text-white" aria-hidden="true" />
           </span>
-          <p class="ml-3 block h-full align-middle font-medium text-white">
+          <p class="ml-3 block text-left h-full align-middle font-medium text-white">
 <!--            <span class="md:hidden">LeoBlog</span>-->
             世界上没有一条道路是重复的，也没有一个人生是可代替的。
 <!--            <span class="hidden md:inline">世界上没有一条道路是重复的，也没有一个人生是可代替的。</span>-->

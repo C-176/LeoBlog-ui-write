@@ -18,7 +18,7 @@
               <img @click="$router.push('/index')" class="h-10 scale-140 cursor-pointer w-auto sm:h-10"
                    src="http://49.235.100.240/api/source/images/logoTest.png"
                    alt=""/>
-              <music showPlayer="showPlayer" @closePlayer="()=>{showPlayer=false}"></music>
+
             </div>
           </div>
 
@@ -197,6 +197,15 @@
 
           <!--          大屏右侧登陆注册-->
           <div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0 space-x-2">
+            <template v-if="!showPlayer">
+              <a-tooltip id="close"  title="音乐">
+                <button class="rounded-xl z-20 text-white h-8 w-8 text-center bg-indigo-100 hover:bg-indigo-200"
+                        @click="showPlayer=true">
+                  🎵
+                </button>
+              </a-tooltip>
+            </template>
+            <music v-else :show-player="showPlayer" @closePlayer="() => {showPlayer=false}"></music>
             <template v-if="!logined">
               <a @click="login"
                  class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">登陆</a>
@@ -378,15 +387,19 @@ import {ChevronDownIcon} from '@heroicons/vue/20/solid'
 import {useStore} from 'vuex'
 import Swal from "sweetalert2";
 import {encode} from '@/util/AES'
-import {useRoute, useRouter} from 'vue-router'
+import {useRouter} from 'vue-router'
 import SearchDialog from "@/components/pub/searchDialog";
 import music from "@/components/pub/music";
 import Message from "@/components/pub/message.vue";
 
 const router = useRouter()
-const route = useRoute()
 const openSearch = ref(false)
-const showPlayer = ref(false)
+const showPlayer = ref(true)
+
+function closeMusic() {
+  console.log('close ====')
+  showPlayer.value = false
+}
 
 function login() {
   store.commit('changeLogin', true)
@@ -395,7 +408,6 @@ function login() {
 
 function registerAction() {
   store.commit('changeLogin', false)
-  // console.log(store.state.login)
   router.push({path: '/LR'})
 }
 
