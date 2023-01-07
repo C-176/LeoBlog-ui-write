@@ -27,6 +27,7 @@ const routes = [
             {path: '/home/article', component: () => import('@/components/front/articles')},
             {path: '/home/picture', component: () => import('@/components/front/pictures')},
             {path: '/about/bigs', component: () => import('@/components/front/bigs')},
+            {path: '/home/tips', component: () => import('@/components/front/cards')},
             {path: '/about/team', component: () => import('@/components/front/team')},
             {path: '/about/contact', component: () => import('@/components/front/contact')},
             {path: '/about/privacy', component: () => import('@/components/front/privacy')},

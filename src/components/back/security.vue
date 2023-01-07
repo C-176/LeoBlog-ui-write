@@ -1,10 +1,12 @@
 <template>
   <bread>安全中心</bread>
-  <div class="mx-auto text-center flex-col justify-around items-center w-full md:w-2/3 bg-gray-100 rounded-xl mt-16 md:mt-16 p-2 ">
+  <div
+      class="mx-auto text-center flex-col justify-around items-center w-full md:w-2/3 bg-gray-100 rounded-xl mt-16 md:mt-16 p-2 ">
 
-    <a-carousel arrows  :dots="showDots" effect="fade" ref="carousel" >
+    <a-carousel arrows :dots="showDots" effect="fade" ref="carousel">
       <div>
         <a-descriptions title="安全信息" layout="vertical" class="text-center" bordered>
+
           <a-descriptions-item label="用户名">{{ user.userName }}</a-descriptions-item>
           <a-descriptions-item label="手机号">{{ user.userPhone }}</a-descriptions-item>
           <a-descriptions-item label="邮箱">{{ user.userEmail }}</a-descriptions-item>
@@ -21,65 +23,51 @@
 
       <div>
         <a-card title="修改手机号">
-          <a-form :form="form">
-            <a-form-item label="手机号">
-              <a-input v-model:value="user.userPhone" placeholder="请输入手机号"/>
-            </a-form-item>
-            <a-form-item label="验证码">
-              <a-input v-model:value="phoneCaptcha" placeholder="请输入验证码"/>
-            </a-form-item>
-            <a-form-item>
-              <a-button :disabled="phoneDisabled" shape="round" style="margin-left: 10px" @click="phoneCoder">
-                获取验证码
-              </a-button>
-            </a-form-item>
-            <a-form-item>
-              <a-button shape="round" @click="changePhone">保存</a-button>
-            </a-form-item>
-          </a-form>
+          <div class="flex-col justify-between space-y-1 w-2/3 mx-auto items-center">
+            <input class="input" v-model="user.userPhone" placeholder="请输入手机号"/>
+            <input v-model="phoneCaptcha" class="input" placeholder="请输入验证码"/>
+          </div>
+          <div class=" space-x-1 w-2/3 mt-1 mx-auto ">
+            <button :disabled="phoneDisabled" class="button " @click="phoneCoder">
+              获取验证码
+            </button>
+            <button class="button " @click="changePhone">保存</button>
+          </div>
+
         </a-card>
       </div>
       <div>
         <a-card title="修改邮箱">
-          <a-form>
-            <a-form-item label="邮箱">
-              <a-input v-model:value="userEmail" placeholder="请输入邮箱"/>
-            </a-form-item>
-            <a-form-item label="验证码">
-              <a-input v-model:value="emailCaptcha" placeholder="请输入验证码"/>
-            </a-form-item>
-            <a-form-item>
-              <a-button :disabled="emailDisabled" :loading="loading"
-                        shape="round" style="margin-left: 10px" @click="emailCoder">
-                获取验证码
-              </a-button>
 
-            </a-form-item>
-            <a-form-item>
+          <div class="flex-col justify-between space-y-1 w-2/3 mx-auto items-center">
+            <input class="input" v-model="userEmail" placeholder="请输入邮箱"/>
+            <input v-model="emailCaptcha" class="input" placeholder="请输入验证码"/>
+          </div>
+          <div class=" space-x-1 w-2/3 mt-1 mx-auto ">
+            <button :disabled="emailDisabled" class="button " @click="emailCoder">
+              获取验证码
+            </button>
+            <button class="button " @click="changeEmail">保存</button>
+          </div>
 
-              <a-button shape="round" @click="changeEmail">保存</a-button>
-            </a-form-item>
-          </a-form>
         </a-card>
 
 
       </div>
       <div>
         <a-card title="修改密码">
-          <a-form :form="form">
-            <a-form-item label="原密码">
-              <a-input v-model:value="passwordOld" placeholder="请输入原密码"/>
-            </a-form-item>
-            <a-form-item label="新密码">
-              <a-input v-model:value="password" placeholder="请输入新密码"/>
-            </a-form-item>
-            <a-form-item label="确认密码">
-              <a-input v-model:value="passwordConfirm" placeholder="请再次输入新密码"/>
-            </a-form-item>
-            <a-form-item>
-              <a-button shape="round" @click="changePassword">保存</a-button>
-            </a-form-item>
-          </a-form>
+
+          <div class="flex-col justify-between space-y-1 w-2/3 mx-auto items-center">
+            <input class="input" v-model="passwordOld" placeholder="请输入原密码"/>
+            <input class="input" v-model="password" placeholder="请输入新密码"/>
+            <input v-model="passwordConfirm" class="input" placeholder="请再次输入新密码"/>
+          </div>
+          <div class=" space-x-1 w-2/3 mt-1 mx-auto ">
+
+            <button class="button " @click="changePassword">保存</button>
+          </div>
+
+
         </a-card>
       </div>
 
@@ -343,6 +331,7 @@ export default {
   background: #ecf0f2;
   transition: all 0.3s;
 }
+
 .custom-slick-arrow:hover {
   cursor: pointer;
   background: #bdc3c7;
@@ -374,7 +363,7 @@ export default {
   opacity: 0.5;
 }
 
-:deep(.ant-card-grid-hoverable:hover){
+:deep(.ant-card-grid-hoverable:hover) {
   cursor: pointer;
 }
 

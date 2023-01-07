@@ -15,9 +15,10 @@
           <div class="flex justify-start hidden md:inline-block lg:w-0 lg:flex-1">
             <div>
               <span class="sr-only">LeoBlog</span>
-              <img  @click="$router.push('/index')" class="h-10 scale-140 cursor-pointer w-auto sm:h-10" src="http://49.235.100.240/api/source/images/logoTest.png"
+              <img @click="$router.push('/index')" class="h-10 scale-140 cursor-pointer w-auto sm:h-10"
+                   src="http://49.235.100.240/api/source/images/logoTest.png"
                    alt=""/>
-              <music></music>
+              <music showPlayer="showPlayer" @closePlayer="()=>{showPlayer=false}"></music>
             </div>
           </div>
 
@@ -35,7 +36,8 @@
               <ChatBubbleOvalLeftEllipsisIcon class="h-4 w-4 text-indigo-600" aria-hidden="true"/>
             </button>
             <div class="relative inline-block text-left">
-              <div class="flex items-center justify-center p-0.5 cursor-pointer   border-indigo-600 border-2  rounded-full">
+              <div
+                  class="flex items-center justify-center p-0.5 cursor-pointer   border-indigo-600 border-2  rounded-full">
 
                 <img :src="user.userProfilePhoto" id="options-menu" @click="openMenu = !openMenu"
                      class="w-8 h-8 rounded-full">
@@ -152,6 +154,43 @@
               </transition>
             </Popover>
 
+            <!--            大屏工具-->
+            <Popover class="relative" v-slot="{ open }">
+              <PopoverButton
+                  :class="[open ? 'text-gray-900' : 'text-gray-500', ' group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-0 border-none']">
+                <span class="text-base">工具</span>
+                <ChevronDownIcon
+                    v-show="!open"
+                    :class="[open ? 'text-gray-600' : 'text-gray-400', 'ml-2 h-5 w-5 group-hover:text-gray-500']"
+                    aria-hidden="true"/>
+                <ChevronUpIcon
+                    v-show="open"
+                    :class="[open ? 'text-gray-600' : 'text-gray-400', 'ml-2 h-5 w-5 group-hover:text-gray-500']"
+                    aria-hidden="true"/>
+              </PopoverButton>
+
+              <transition enter-active-class="transition ease-out duration-200"
+                          enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0"
+                          leave-active-class="transition ease-in duration-150"
+                          leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
+                <PopoverPanel
+                    class="absolute z-10 -ml-4 mt-3 w-screen max-w-md transform px-2 sm:px-0 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2">
+                  <div class="overflow-hidden rounded-lg shadow-lg ring-0 ring-black ring-opacity-5">
+                    <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+                      <a v-for="item in more" :key="item.name" @click="item.href($router)"
+                         class="-m-3 flex items-start rounded-lg p-1 hover:bg-gray-50">
+                        <component :is="item.icon" class="h-6 w-6 flex-shrink-0 text-indigo-600" aria-hidden="true"/>
+                        <div class="ml-4">
+                          <p class="text-base font-medium text-gray-900">{{ item.name }}</p>
+                          <p class="mt-1 text-sm text-gray-500">{{ item.description }}</p>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                </PopoverPanel>
+              </transition>
+            </Popover>
+
 
           </PopoverGroup>
 
@@ -184,20 +223,22 @@
 
                 <a-badge :count="$store.state.chatPoint">
 
-                <button type="button" @click="$store.commit('changeChatVisible',!$store.state.chatVisible)"
-                        class="rounded-full  duration-500 hover:bg-gray-300 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
-                  <span class="sr-only">View notifications</span>
-<!--                  <a-badge :count="$store.state.messagePoint">-->
+                  <button type="button" @click="$store.commit('changeChatVisible',!$store.state.chatVisible)"
+                          class="rounded-full  duration-500 hover:bg-gray-300 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
+                    <span class="sr-only">View notifications</span>
+                    <!--                  <a-badge :count="$store.state.messagePoint">-->
                     <ChatBubbleOvalLeftEllipsisIcon class="h-4 w-4 text-indigo-600" aria-hidden="true"/>
-<!--                  </a-badge>-->
+                    <!--                  </a-badge>-->
 
-                </button></a-badge>
+                  </button>
+                </a-badge>
                 <div class="relative inline-block text-left">
-                  <div class="flex items-center justify-center p-0.5 cursor-pointer   border-indigo-600 border-2  rounded-full">
+                  <div
+                      class="flex items-center justify-center p-0.5 cursor-pointer   border-indigo-600 border-2  rounded-full">
 
-                      <img :src="p(user.userProfilePhoto)" id="options-menu" @mouseover="openMenu = true"
+                    <img :src="p(user.userProfilePhoto)" id="options-menu" @mouseover="openMenu = true"
 
-                           class="w-8 h-8 rounded-full">
+                         class="w-8 h-8 rounded-full">
                   </div>
                   <div v-show="openMenu"
                        @mouseover="openMenu = true" @mouseleave="closeMenu"
@@ -205,8 +246,8 @@
                     <div class="py-1 " role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
 
                       <div @click="item.href($router)" v-for="item in pages" :key="item.name"
-                         class="block px-4 py-2 cursor-pointer rounded-xl text-md  hover:bg-indigo-600 hover:text-white dark:text-gray-100 dark:hover:text-white "
-                         role="menuitem">
+                           class="block px-4 py-2 cursor-pointer rounded-xl text-md  hover:bg-indigo-600 hover:text-white dark:text-gray-100 dark:hover:text-white "
+                           role="menuitem">
                 <span class="flex flex-col">
                     <span>
                         {{ item.name }}
@@ -237,7 +278,8 @@
               <div class="flex items-center justify-between">
                 <!--logo-->
                 <div>
-                  <img @click="$router.push('/index')" class="cursor-pointer h-10 pl-1  scale-140 w-auto" src="http://49.235.100.240/api/source/images/logoTest.png"
+                  <img @click="$router.push('/index')" class="cursor-pointer h-10 pl-1  scale-140 w-auto"
+                       src="http://49.235.100.240/api/source/images/logoTest.png"
                        alt="LeoBlog"/>
                 </div>
                 <!--                小屏关闭选项卡按钮-->
@@ -298,7 +340,7 @@
   <chat v-if="logined"></chat>
   <message v-if="logined"></message>
   <BgCover :showCover.sync="$store.state.chatVisible || $store.state.messageVisible || $store.state.bgCover"></BgCover>
-<!--  <search-dialog :is-open="openSearch" ></search-dialog>-->
+  <!--  <search-dialog :is-open="openSearch" ></search-dialog>-->
 </template>
 
 <script setup>
@@ -344,7 +386,7 @@ import Message from "@/components/pub/message.vue";
 const router = useRouter()
 const route = useRoute()
 const openSearch = ref(false)
-
+const showPlayer = ref(false)
 
 function login() {
   store.commit('changeLogin', true)
@@ -353,7 +395,7 @@ function login() {
 
 function registerAction() {
   store.commit('changeLogin', false)
-  console.log(store.state.login)
+  // console.log(store.state.login)
   router.push({path: '/LR'})
 }
 
@@ -450,6 +492,27 @@ const solutions = [
 const callsToAction = [
   {name: 'Watch Demo', href: '#', icon: PlayIcon},
   {name: 'Contact Sales', href: '#', icon: PhoneIcon},
+]
+
+const more = [
+  {
+    name: '代码随想录', href: function ($router) {
+      $router.push("/video/programmercarl.com")
+    }, description: '本站是一套完整的刷题计划，旨在帮助大家少走弯路，循序渐进学算法。', icon: LifebuoyIcon
+  },
+  {
+    name: '茶杯狐', href: function ($router) {
+      $router.push("/video/cupfox.app")
+    }, description: '茶杯狐最新地址：cupfox.app 请及时收藏！'
+    , icon: ShieldCheckIcon
+  },{
+    name: 'JavaGuide', href: function ($router) {
+      $router.push("/video/javaguide.cn*home.html")
+    }, description: '「Java学习+面试指南」一份涵盖大部分 Java 程序员所需要掌握的核心知识。准备 Java 面试，首选 JavaGuide！'
+    , icon: ShieldCheckIcon
+  },
+
+
 ]
 
 const about = [

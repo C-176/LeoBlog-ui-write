@@ -25,7 +25,7 @@ const mutations = {
         state.user = user;
         storage.set(encode("lb_user"), encode(JSON.stringify(user)));
     },
-    getColor(state) {
+    getColor() {
         // 生成随机柔和颜色
         let color = "#";
         for (let i = 0; i < 6; i++) {

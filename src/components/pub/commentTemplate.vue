@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full b-gray-100 p-2 my-1 rounded-xl text-left">
+  <div class="w-full b-gray-100 p-0 my-1 rounded-xl text-left">
     <template v-if="loading">
       <a-skeleton active/>
       <a-skeleton active/>
@@ -32,12 +32,12 @@
                   <div class="space-x-1 flex justify-end items-center">
 
                     <a-tooltip>
-                      <template #title>删除</template>
+                      <template #title>回复</template>
                       <div
                           v-if="comment.articleTitle.trim().length == 0"
-                          @click="commentClick(comment.commentId,i.userId)"
+                          @click="commentClick(comment.commentId,comment.userId)"
                           class="p-3 bg-indigo-600 hover:bg-indigo-500 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white  shadow-lg cursor-pointer">
-                        回复+
+                        +
                       </div>
                     </a-tooltip>
                     <a-tooltip>
@@ -65,12 +65,12 @@
                     </div>
                     <div class="space-x-1 flex justify-end items-center">
                       <a-tooltip>
-                        <template #title>删除</template>
+                        <template #title>回复</template>
                         <div
                             v-if="comment.articleTitle.trim().length == 0"
                             @click="commentClick(comment.commentId,i.userId)"
                             class="p-3 bg-indigo-600 hover:bg-indigo-500 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white  shadow-lg cursor-pointer">
-                          回复+
+                          +
                         </div>
                       </a-tooltip>
                       <a-tooltip>

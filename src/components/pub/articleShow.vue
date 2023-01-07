@@ -45,7 +45,7 @@
             />
           </div>
           <div
-              class="text-left text-gray-600 font-medium leading:6 md:leading-7   truncate  text-xs md:text-sm  justify-items-start  float-left w-full md:w-3/4 ">
+              class=" content  text-left text-gray-600 font-medium leading:6 md:leading-7   truncate  text-xs md:text-sm  justify-items-start  float-left w-full md:w-3/4 ">
               <span class="hover:cursor-pointer" @click="$router.push('/article/'+article.articleId)"
                     v-html="article.articleContent" ></span>
           </div>
@@ -199,5 +199,16 @@ export default {
   width: 60%;
   margin-left: 20%;
   border-radius: 10px;
+}
+
+:deep(.content img, .content video) {
+  max-height: 10rem !important;
+  margin: 0 auto;
+  //margin-left: 25% !important;
+  border-radius: 0;
+}
+
+:deep(.el-image){
+  border-radius: 5px;
 }
 </style>

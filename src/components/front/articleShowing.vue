@@ -1,20 +1,20 @@
 <template>
   <bread>文章</bread>
-  <div class="mx-auto w-full relative mt-16 md:w-2/3 bg-gray-100 md:rounded-xl md:mt-16 p-5  mb-2">
+  <div class="mx-auto w-full relative mt-16 md:w-2/3 bg-white md:rounded-xl md:mt-16 mb-2">
 
-    <div>
-      <template v-if="loading">
-        <a-skeleton active/>
-        <a-skeleton active/>
-        <a-skeleton active/>
-      </template>
 
-      <template v-else>
+    <template v-if="loading">
+      <a-skeleton active/>
+      <a-skeleton active/>
+      <a-skeleton active/>
+    </template>
 
-        <img v-if="article.articlePic!=''&&article.articlePic!=null" class="picture mx-auto"
-             :src="p(article.articlePic)"/>
+    <template v-else>
 
-        <div class="text md:text-xl text-left h-auto w-full font-bold mt-1">{{
+      <img v-if="article.articlePic!=''&&article.articlePic!=null" class="bg-white mb-2 rounded-xl w-full mx-auto"
+           :src="p(article.articlePic)"/>
+      <div class="p-5 bg-gray-100 rounded-xl">
+        <div class="text-xl md:text-xl text-left h-auto w-full font-bold my-1">{{
             article.articleTitle.replaceAll('<p>','').replaceAll('</p>','')}}
         </div>
         <div class="labels">
@@ -87,35 +87,34 @@
           </div>
 
         </transition>
+      </div>
 
+    </template>
 
-      </template>
-
-    </div>
     <div id="comment">
-    <comment-template  v-if="article.isArticle === 1"
-                      :comments="comments" :method="getComments">
+      <comment-template v-if="article.isArticle === 1"
+                        :comments="comments" :method="getComments">
 
-    </comment-template></div>
-
-
-
-
-
-
-    <!--  显示放大图片的组件-->
-    <big-img :visible="photoVisible" :url="bigImgUrl" @closeClick="()=>{photoVisible=false}"></big-img>
-
-
-    <a-back-top/>
-    <catlog :container="container"></catlog>
-
+      </comment-template>
+    </div>
   </div>
+
+
+
+  <!--  显示放大图片的组件-->
+  <big-img :visible="photoVisible" :url="bigImgUrl" @closeClick="()=>{photoVisible=false}"></big-img>
+
+
+  <a-back-top/>
+  <catlog :container="container"></catlog>
+
+
   <shareModal @close="()=>{showShare=false}" :showShare="showShare"></shareModal>
   <div
       class="px-2 md:px-6 my-3 w-screen mx-auto text-slate-700 dark:text-white flex flex-col items-center"
   >
-    <div class="text-left flex flex-col w-full items-center justify-center md:p-4 md:border border-slate-300 dark:border-slate-600 rounded-xl">
+    <div
+        class="text-left flex flex-col w-full items-center justify-center md:p-4 md:border border-slate-300 dark:border-slate-600 rounded-xl">
       <div class="w-full">
         <a
             href="/"
@@ -170,7 +169,8 @@
       </div>
       <div class="lg:px-4 w-full mt-2">
         <div class="flex justify-center">
-          <div class="bg-white dark:bg-slate-800 rounded-xl shadow-md flex w-full lg:w-1/2 p-2 justify-between h-12 lg:h-fit items-center">
+          <div
+              class="bg-white dark:bg-slate-800 rounded-xl shadow-md flex w-full lg:w-1/2 p-2 justify-between h-12 lg:h-fit items-center">
             <button
                 class="border-slate-500 dark:border-slate-100 hover:text-blue-500 dark:hover:text-blue-400 border hover:border-blue-500 dark:hover:border-blue-400 w-6 h-6 rounded-xl duration-150 hover:scale-105 active:scale-95"
                 onClick="handleRotation"
@@ -240,10 +240,10 @@ import shareModal from "@/components/pub/shareModal";
 
 export default {
   name: 'forward-article',
-  components: {h, commentTemplate, Divider, Tag, EnterOutlined, user, bigImg, catlog,shareModal},
+  components: {h, commentTemplate, Divider, Tag, EnterOutlined, user, bigImg, catlog, shareModal},
   data() {
     return {
-      showShare:false,
+      showShare: false,
       container: '#xxxxxxxxxxxx',
       photoVisible: false,
       bigImgUrl: "",
@@ -339,7 +339,7 @@ export default {
   },
 
   mounted() {
-    setTimeout(()=>{
+    setTimeout(() => {
       //给所有图片添加点击事件
       let imgs = document.querySelectorAll('.content img')
       if (imgs.length == 0) {
@@ -360,8 +360,7 @@ export default {
           })
         })
       }
-    },200)
-
+    }, 200)
 
 
   }
@@ -374,7 +373,7 @@ export default {
       // this.$st("分享成功", "success")
       this.showShare = true
     },
-    closeShare(){
+    closeShare() {
       this.showShare = false
 
     },
@@ -521,14 +520,6 @@ export default {
 
 <style scoped>
 
-.picture {
-  height: calc(60%);
-  /*height: calc(50%);*/
-  width: 60%;
-  overflow: hidden;
-  border-radius: 10px;
-  /*box-shadow: 1px 3px 11px #134857;*/
-}
 
 .author {
   height: 60px;
@@ -567,7 +558,6 @@ export default {
   text-align: left;
 }
 
-
 .content {
   line-height: 30px;
   font-size: 14px;
@@ -596,11 +586,16 @@ export default {
 }
 
 :deep(p img,p video) {
-  width: 80% !important;
-  margin-left: 10% !important;
+  //width: 80% !important;
+
+  //margin-left: 10% !important;
   /*height: 100%;*/
   border-radius: 10px;
+  max-height: calc(100vh - 5rem );
+  margin: 0 auto;
+  margin-bottom: 5px !important;
   box-shadow: 1px 3px 11px #134857;
+
 }
 
 :deep(p img:hover) {
