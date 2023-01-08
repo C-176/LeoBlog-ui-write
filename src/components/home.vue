@@ -1,13 +1,15 @@
 <template>
 
   <h></h>
-<!--  <shell></shell>-->
+    <shell></shell>
 
-  <router-view v-slot="{ Component }">
-    <keep-alive>
-      <component :is="Component" :key="$route.fullPath" v-if="$route.meta.keepAlive"/>
-    </keep-alive>
-    <component :is="Component" :key="$route.fullPath" v-if="!$route.meta.keepAlive"/>
+  <router-view class="router-view" v-slot="{ Component }">
+<!--    <transition :name="transitionName" mode="out-in">-->
+      <keep-alive>
+        <component :is="Component" :key="$route.fullPath" v-if="$route.meta.keepAlive"/>
+      </keep-alive>
+<!--    </transition>-->
+        <component :is="Component" :key="$route.fullPath" v-if="!$route.meta.keepAlive"/>
   </router-view>
 
 </template>
@@ -28,7 +30,10 @@ export default {
     index_main,
   },
   data() {
-    return {}
+    return {
+      routerTime: 0,
+      transitionName: "slide-left"
+    }
   },
   computed: {
     key() {
@@ -45,5 +50,26 @@ export default {
 </script>
 
 <style scoped>
+.slide-left-enter-from {
+  transform: translateX(20px);
+  opacity: 0;
+}
 
+.slide-left-enter-to {
+  transform: translateX(0px);
+}
+
+.slide-left-leave-from {
+  transform: translateX(0);
+}
+
+.slide-left-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}
+
+.slide-left-enter-active,
+.slide-left-leave-active {
+  transition: all 0.3s;
+}
 </style>
