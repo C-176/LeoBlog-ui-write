@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div v-if="showCover" class="fixed w-screen h-screen bg-black bg-opacity-30 z-40"></div>
+    <div v-if="showCover" class="fixed w-screen h-screen bg-black bg-opacity-30 z-40 backdrop-blur-sm"></div>
   </transition>
 </template>
 

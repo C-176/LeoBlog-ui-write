@@ -1,6 +1,6 @@
 <template>
 
-  <div class="fixed top-2 left-2 mt-14 max-w-20 max-h-2 ">
+  <div class="fixed top-2 z-40 left-2 mt-14 max-w-20 max-h-2 ">
 
     <ol role="list" class="flex items-center gap-1 text-sm text-gray-600">
       <li>

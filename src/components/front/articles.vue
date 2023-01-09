@@ -4,7 +4,7 @@
 
     <article-show :article-list="articleList"></article-show>
           <el-pagination
-              class="bg-white w-3/5"
+              class="bg-white w-full flex justify-center items-center  space-x-2"
               v-model:currentPage="currentPage"
               v-model:page-size="pageSize"
               :page-sizes="pageSizes"
@@ -105,17 +105,5 @@ export default {
 }
 </script>
 <style scoped>
-.wholeDiv {
-  margin: 60px 0 20px calc(17.5%);
-  /*水平居中*/
-  width: 55%;
-  float: none;
-  background-color: #fff;
-  padding-bottom: 10px;
-}
-
-.wholeDiv div {
-  width: 100%;
-}
 
 </style>

@@ -1,8 +1,9 @@
 <template>
   <!-- component -->
-  <section class="bg-black">
+  <section class="" >
     <div
-        class="max-w-lg h-screen   bg-black px-4 pt-24 py-8 mx-auto text-left md:max-w-none md:text-center"
+        class="max-w-lg h-screen bg-center  bg-black px-4 pt-24 py-8 mx-auto text-left md:max-w-none md:text-center"
+        :style="{backgroundImage:'url(http://49.235.100.240:8080/source/upload/images/c2aaf2de-e0d6-4c90-a42d-bf4c7f34e1ef.png)'}"
     >
       <h1
           class="text-3xl font-extrabold leading-10 tracking-tight text-left text-white text-center sm:leading-none md:text-6xl text-4xl lg:text-7xl"
@@ -15,27 +16,27 @@
       <div
           class="mx-auto rounded-lg font-black mt-5 text-zinc-400 md:mt-12 md:max-w-lg text-center lg:text-lg"
       >
-        <button class="bg-tkb border text-sm text-white py-3 px-7 rounded-full" @click="$sa('敬请期待','success')">
+        <button class="bg-tkb border text-sm hover:text hover:scale-105 transition duration-300 text-white py-3 px-7 rounded-full" @click="$sa('Σ(っ °Д °;)っ','success')">
           加入LeoBlog
         </button>
       </div>
     </div>
   </section>
 
-  <hr class="text-white mx-5" />
-  <footer class="bg-black pb-5">
-    <div class="max-w-screen-xl px-4 pt-8 mx-auto sm:px-6 lg:px-8">
-      <div class="sm:flex sm:items-center sm:justify-between">
-        <div class="flex justify-center text-teal-300 sm:justify-start">
-          <img class="rounded-full" src="https://sahilnetic.xyz/evilcat.png" width="40" height="40" />
-        </div>
+<!--  <hr class="text-white mx-5" />-->
+<!--  <footer class="bg-black pb-5">-->
+<!--    <div class="max-w-screen-xl px-4 pt-8 mx-auto sm:px-6 lg:px-8">-->
+<!--      <div class="sm:flex sm:items-center sm:justify-between">-->
+<!--        <div class="flex justify-center text-teal-300 sm:justify-start">-->
+<!--          <img class="rounded-full" src="https://sahilnetic.xyz/evilcat.png" width="40" height="40" />-->
+<!--        </div>-->
 
-        <p class="mt-4 text-sm text-center text-gray-400 lg:text-right lg:mt-0">
-          T&C &nbsp; Career &nbsp; Privacy & Policy &nbsp; Developers
-        </p>
-      </div>
-    </div>
-  </footer>
+<!--        <p class="mt-4 text-sm text-center text-gray-400 lg:text-right lg:mt-0">-->
+<!--          T&C &nbsp; Career &nbsp; Privacy & Policy &nbsp; Developers-->
+<!--        </p>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </footer>-->
 </template>
 
 <script>

@@ -4,7 +4,7 @@
 
     <card-show :article-list="articleList"></card-show>
     <el-pagination
-        class="bg-white w-3/5"
+        class="bg-white w-full flex justify-center items-center space-x-2"
         v-model:currentPage="currentPage"
         v-model:page-size="pageSize"
         :page-sizes="pageSizes"

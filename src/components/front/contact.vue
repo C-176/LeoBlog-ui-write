@@ -11,11 +11,8 @@
             >
               联系我们
             </h2>
-            <p class="text-body-color mb-9 text-base leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eius
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim adiqua
-              minim veniam quis nostrud exercitation ullamco
-            </p>
+<!--            <p class="text-body-color mb-9 text-base leading-relaxed">-->
+<!--            </p>-->
             <div class="mb-8 flex w-full max-w-[370px]">
               <div
                   class="bg-primary text-primary mr-6 flex h-[60px] w-full max-w-[60px] items-center justify-center overflow-hidden rounded bg-opacity-5 sm:h-[70px] sm:max-w-[70px]"
@@ -32,7 +29,7 @@
                 </svg>
               </div>
               <div class="w-full">
-                <h4 class="text-dark mb-1 text-xl font-bold">我们的地址</h4>
+                <h4 class="text-dark mb-1 text-xl font-bold">地址</h4>
                 <p class="text-body-color text-base">
                   江苏省南京市栖霞区文苑路9号南京邮电大学仙林校区
                 </p>

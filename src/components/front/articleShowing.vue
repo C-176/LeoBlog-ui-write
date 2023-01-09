@@ -1,17 +1,16 @@
 <template>
   <bread>文章</bread>
   <div class="mx-auto w-full relative mt-16 md:w-2/3 bg-white md:rounded-xl md:mt-16 mb-2">
-
-
     <template v-if="loading">
-      <a-skeleton active/>
-      <a-skeleton active/>
-      <a-skeleton active/>
+<!--      <a-skeleton active/>-->
+<!--      <a-skeleton active/>-->
+<!--      <a-skeleton active/>-->
+      <loader></loader>
     </template>
 
     <template v-else>
 
-      <img v-if="article.articlePic!=''&&article.articlePic!=null" class="bg-white mb-2 rounded-xl w-full mx-auto"
+      <img v-if="article.articlePic!=''&&article.articlePic!=null" class="p-2 md:p-0 bg-white mb-2 rounded-xl w-full mx-auto"
            :src="p(article.articlePic)"/>
       <div class="p-5 bg-gray-100 rounded-xl">
         <div class="text-xl md:text-xl text-left h-auto w-full font-bold my-1">{{
@@ -111,21 +110,21 @@
 
   <shareModal @close="()=>{showShare=false}" :showShare="showShare"></shareModal>
   <div
-      class="px-2 md:px-6 my-3 w-screen mx-auto text-slate-700 dark:text-white flex flex-col items-center"
+      class="px-2 md:px-1 my-3 w-full md:w-2/3 mx-auto text-slate-700 dark:text-white flex flex-col items-center"
   >
     <div
-        class="text-left flex flex-col w-full items-center justify-center md:p-4 md:border border-slate-300 dark:border-slate-600 rounded-xl">
+        class="text-left flex flex-col w-full items-center justify-center md:p-4  border-slate-300 dark:border-slate-600 rounded-xl">
       <div class="w-full">
         <a
             href="/"
             rel="noreferrer"
             target="_blank"
-            class="bg-white dark:bg-slate-800 rounded-xl w-full flex flex-col md:flex-row justify-start shadow-md transition-all duration-100 md:hover:scale-95"
+            class="bg-white dark:bg-slate-800 rounded-xl w-full flex flex-col md:flex-row justify-start shadow-md transition-all duration-500 md:hover:scale-95"
         >
           <!-- <div class="flex-grow"> -->
           <div
-              class="flex-grow w-full h-64 shadow bg-cover rounded-t-xl md:rounded-none md:rounded-l-xl"
-              style=' background-image: url("https://cdn.mos.cms.futurecdn.net/QDt6zbWrSc3RYSNWGiVBmS.jpg");'
+              class="flex-grow w-full h-64 md:bg-center shadow bg-cover rounded-t-xl md:rounded-none md:rounded-l-xl"
+              style=' background-image: url("http://49.235.100.240:8080/source/upload/images/c2aaf2de-e0d6-4c90-a42d-bf4c7f34e1ef.png");'
           ></div>
           <!-- </div> -->
 
@@ -167,10 +166,10 @@
           </div>
         </a>
       </div>
-      <div class="lg:px-4 w-full mt-2">
+      <div class=" w-full mt-2">
         <div class="flex justify-center">
           <div
-              class="bg-white dark:bg-slate-800 rounded-xl shadow-md flex w-full lg:w-1/2 p-2 justify-between h-12 lg:h-fit items-center">
+              class="bg-white dark:bg-slate-800 rounded-xl shadow-md flex w-full md:w-2/3 p-0 justify-between h-12 lg:h-fit items-center">
             <button
                 class="border-slate-500 dark:border-slate-100 hover:text-blue-500 dark:hover:text-blue-400 border hover:border-blue-500 dark:hover:border-blue-400 w-6 h-6 rounded-xl duration-150 hover:scale-105 active:scale-95"
                 onClick="handleRotation"
@@ -195,7 +194,7 @@
             </button>
             <button
                 onClick="handleRotation"
-                class="bg-blue-400 h-3 transition-all w-3 self-center duration-150 hover:scale-150 active:scale-125 ease-in-out rounded-md xl:p-1 shadow"
+                class="bg-indigo-600 h-3 transition-all w-3 self-center duration-300 hover:scale-150 active:scale-125 ease-in-out rounded-md xl:p-1 shadow"
             ></button>
             <button
                 class="border-slate-500 dark:border-slate-100 hover:text-blue-500 dark:hover:text-blue-400 border hover:border-blue-500 dark:hover:border-blue-400 w-6 h-6 rounded-xl duration-150 hover:scale-105 active:scale-95"

@@ -15,6 +15,7 @@ import 'element-plus/theme-chalk/dark/css-vars.css'
 import bread from "@/components/pub/bread";
 import bigImg from "@/components/pub/bigImg";
 import user from "@/components/pub/user"
+import loader from "@/components/pub/loader";
 
 
 
@@ -115,7 +116,7 @@ app.config.globalProperties.$imgOnerror = e => {
     img.onerror = null
 }
 
-app.use(router).use(store).use(ElementPlus).use(Antd).use(VueMarkdownEditor)
+app.use(router).use(store).use(ElementPlus).use(Antd).use(VueMarkdownEditor).component('loader', loader)
     .component('bread',bread).component('user',user).component('bigImg',bigImg)
 
 // app.use(APlayer, {

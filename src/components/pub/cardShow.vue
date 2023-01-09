@@ -1,9 +1,10 @@
 <template>
   <div class="  w-full ">
     <template v-if="$loading">
-      <a-skeleton active/>
-      <a-skeleton active/>
-      <a-skeleton active/>
+<!--      <a-skeleton active/>-->
+<!--      <a-skeleton active/>-->
+<!--      <a-skeleton active/>-->
+      <loader></loader>
     </template>
 
     <template v-else>
@@ -114,7 +115,7 @@
 <!--          <h2 class="text-2xl font-extrabold text-gray-900">纸条们</h2>-->
           <section class="mt-6 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-8">
             <article v-for="(article,index) in myArticles" :key="article.articleId"
-                class="relative bg-indigo-600 w-full h-64 bg-cover bg-center group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl  transition duration-300 ease-in-out"
+                class="relative bg-indigo-600 w-full h-64 bg-contain hover:scale-105 hover:shadow-xl transition duration-300 group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl  transition duration-300 ease-in-out"
 
                      :style="{backgroundImage: 'url(' + article.articlePic + ')'}">
 

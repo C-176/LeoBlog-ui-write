@@ -99,7 +99,7 @@
                           class=" w-auto rounded-xl bg-indigo-600 hover:bg-indigo-500 cursor-pointer text-white shadow text-left text-xs p-2"><span
                           v-html="record.recordContent" id="message"></span></div>
                     </div>
-                    <div class="w-10 h-10 rounded-full">
+                    <div class="min-w-10 min-h-10 rounded-full">
                       <!--                      <user v-slot="slotP" :user-id="record.userId">-->
                       <a-avatar
                           :src="p($store.state.user.userProfilePhoto)"
@@ -130,7 +130,7 @@
                           {{ slotP.text }}
                         </a-avatar>
                         <div class="flex-col space-y-1 justify-start items-start">
-                          <div v-if="talkTo.user.userId == -1" class="text-xs w-1 text-left">{{
+                          <div v-if="talkTo.user.userId == -1" class="text-xs w-0 text-left">{{
                               slotP.text
                             }}
                           </div>

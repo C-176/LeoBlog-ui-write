@@ -1,14 +1,13 @@
 <template>
   <div class="  w-full ">
     <template v-if="$loading">
-      <a-skeleton active/>
-      <a-skeleton active/>
-      <a-skeleton active/>
+<!--      <a-skeleton active/>-->
+<!--      <a-skeleton active/>-->
+<!--      <a-skeleton active/>-->
+      <loader></loader>
     </template>
 
     <template v-else>
-
-
       <el-empty v-if="articles.length===0" description="暂无文章"/>
 
       <!--      文章展示-->
@@ -16,7 +15,7 @@
            class="w-full overflow-hidden bg-gray-100 space-y-2  py-2 px-3 md:px-5 md:rounded-xl mb-2">
 
         <div class="text-left flex justify-start items-center space-x-1">
-          <img class="h-10 w-10   rounded-full" :src="article.author.userProfilePhoto"/>
+          <img class="h-10 w-10 rounded-full" :src="article.author.userProfilePhoto"/>
 
           <div class="h-full flex-col justify-around items-start">
             <div class="text-xs  lg:text-base font-bold text-black " @click="$router.push('/user/'+article.userId)">
@@ -32,7 +31,7 @@
             {{ article.articleTitle.replaceAll('<p>','').replaceAll('</p>','').replaceAll('<br>','')}}
           </router-link>
         </div>
-        <div class="h-auto max-h-20  md:max-h-40 w-full md:space-x-3 flex justify-start  overflow-hidden ">
+        <div class="h-auto max-h-20 md:max-h-40 w-full md:space-x-3 flex justify-start  overflow-hidden ">
           <div v-if="article.articlePic!='' && article.articlePic!=null"
                class=" hidden md:inline-flex items-center justify-start float-left w-1/4 ">
             <el-image
@@ -77,6 +76,13 @@ export default {
 
   name: 'articleShow',
   props: ['articleList', 'scrollBottom'],
+  watch: {
+    articles (val) {
+      if(val.length>0){
+        console.log(val[0])
+      }
+    }
+  },
 
   data() {
     return {
@@ -104,6 +110,7 @@ export default {
 
     myArticles() {
       this.articles = this.articleList
+      console.log(this.articles)
       // 根据articleList中每个article的userId获取user信息
       this.articleList.forEach((item, index) => {
         this.$axios.get("/user/" + item.userId).then((res) => {

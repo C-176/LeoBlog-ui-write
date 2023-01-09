@@ -1,14 +1,16 @@
 <template>
-
-  <div class="wholeDiv">
-    <el-tabs type="border-card" class="demo-tabs" :model-value="tag" @tab-change="b">
+  <div class="mx-auto w-full relative mt-16 md:w-2/3 bg-white md:rounded-xl md:mt-16 mb-2">
+    <el-tabs type="border-card" class="demo-tabs mb-2 rounded-xl" :model-value="tag" @tab-change="b">
       <el-tab-pane label="标题" name="title"></el-tab-pane>
       <el-tab-pane label="内容" name="content"></el-tab-pane>
       <el-tab-pane label="标签" name="label"></el-tab-pane>
       <el-tab-pane label="分类" name="sort"></el-tab-pane>
     </el-tabs>
-    <article-show :article-list="articleList"></article-show>
+    <div class="w-full ">
+      <article-show :article-list="articleList"></article-show>
+    </div>
     <el-pagination
+        class="bg-white w-full flex justify-center items-center space-x-2"
         v-model:currentPage="currentPage"
         v-model:page-size="pageSize"
         :page-sizes="pageSizes"
@@ -71,18 +73,26 @@ export default {
         this.method = this.getArticlesByKey
       } else if (name === 'content') {
         this.method = this.getArticlesByContent
-      } else if (name === 'label') {
+      }
+      else if (name === 'label') {
         this.method = this.getArticlesByLabel
       } else if (name === 'sort') {
         this.method = this.getArticlesBySort
       }
-      this.$st(name, 'success')
+      // this.$st(name, 'success')
       this.method(this.key)
     },
     getArticlesDefault() {
       this.$axios.get('/article/list/' + this.currentPage + '/' + this.pageSize).then((res) => {
         let map = res.data.data
         this.articleList = map.records
+
+        this.articleList.forEach(x => {
+          x.author = {
+            userNickname: 'admin',
+            userProfilePhoto: 'https://gitee.com/zhengyongjie/blog/raw/master/src/assets/img/author.jpg'
+          }
+        })
         this.total = map.total
         this.pageCount = map.pages
         this.pageSize = map.size
@@ -93,6 +103,12 @@ export default {
       this.$axios.get('/article/list/keyword/' + key + '/' + this.currentPage + '/' + this.pageSize).then((res) => {
         let map = res.data.data
         this.articleList = map.records
+        this.articleList.forEach(x => {
+          x.author = {
+            userNickname: 'admin',
+            userProfilePhoto: 'https://gitee.com/zhengyongjie/blog/raw/master/src/assets/img/author.jpg'
+          }
+        })
         this.total = map.total
         this.pageCount = map.pages
         this.pageSize = map.size
@@ -103,6 +119,13 @@ export default {
       this.$axios.get('/article/list/content/' + content + '/' + this.currentPage + '/' + this.pageSize).then((res) => {
         let map = res.data.data
         this.articleList = map.records
+        this.articleList.forEach(x => {
+          x.author = {
+            userNickname: 'admin',
+            userProfilePhoto: 'https://gitee.com/zhengyongjie/blog/raw/master/src/assets/img/author.jpg'
+          }
+        })
+
         this.total = map.total
         this.pageCount = map.pages
         this.pageSize = map.size
@@ -121,6 +144,12 @@ export default {
       ).then((res) => {
         let map = res.data.data
         this.articleList = map.records
+        this.articleList.forEach(x => {
+          x.author = {
+            userNickname: 'admin',
+            userProfilePhoto: 'https://gitee.com/zhengyongjie/blog/raw/master/src/assets/img/author.jpg'
+          }
+        })
         this.total = map.total
         this.pageCount = map.pages
         this.pageSize = map.size
@@ -131,6 +160,12 @@ export default {
       this.$axios.get('/article/list/sort/' + key + '/' + this.currentPage + '/' + this.pageSize).then((res) => {
         let map = res.data.data
         this.articleList = map.records
+        this.articleList.forEach(x => {
+          x.author = {
+            userNickname: 'admin',
+            userProfilePhoto: 'https://gitee.com/zhengyongjie/blog/raw/master/src/assets/img/author.jpg'
+          }
+        })
         this.total = map.total
         this.pageCount = map.pages
         this.pageSize = map.size
@@ -154,17 +189,6 @@ export default {
 }
 </script>
 <style scoped>
-.wholeDiv {
-  margin: 60px 0 20px calc(17.5%);
-  /*水平居中*/
-  width: 55%;
-  float: none;
-  background-color: #fff;
-  padding-bottom: 10px;
-}
 
-.wholeDiv div {
-  width: 100%;
-}
 
 </style>

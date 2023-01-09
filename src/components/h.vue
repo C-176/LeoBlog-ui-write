@@ -197,15 +197,15 @@
 
           <!--          大屏右侧登陆注册-->
           <div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0 space-x-2">
-            <template v-if="!showPlayer">
-              <a-tooltip id="close"  title="音乐">
+
+              <a-tooltip id="close" v-if="!showPlayer" title="音乐">
                 <button class="rounded-xl z-20 text-white h-8 w-8 text-center bg-indigo-100 hover:bg-indigo-200"
                         @click="showPlayer=true">
                   🎵
                 </button>
               </a-tooltip>
-            </template>
-            <music v-else :show-player="showPlayer" @closePlayer="() => {showPlayer=false}"></music>
+
+
             <template v-if="!logined">
               <a @click="login"
                  class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">登陆</a>
@@ -217,9 +217,11 @@
               <!--               class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">个人中心</a>-->
               <!--            <a @click="logout"-->
               <!--                class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">退出</a>-->
-              <input v-show="logined" type="text" @click="openSearch = !openSearch"
+              <button v-show="logined"  @click="openSearch = !openSearch"
                      class="hidden md:inline-flex   justify-center rounded-md bg-gray-100  px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                     placeholder="Ctrl+K 搜索"/>
+                     >Ctrl+K 搜索
+                </button>
+
               <!--          大屏菜单options-->
               <Menu as="div" v-if="logined"
                     class="z-10 space-x-2  inline-flex justify-center items-center text-left ">
@@ -246,16 +248,16 @@
                       class="flex items-center justify-center p-0.5 cursor-pointer   border-indigo-600 border-2  rounded-full">
 
                     <img :src="p(user.userProfilePhoto)" id="options-menu" @mouseover="openMenu = true"
-
+                         @click="openMenu = !openMenu"
                          class="w-8 h-8 rounded-full">
                   </div>
                   <div v-show="openMenu"
                        @mouseover="openMenu = true" @mouseleave="closeMenu"
                        class="absolute transition duration-500 p-2 right-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
-                    <div class="py-1 " role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                    <div class="py-1  transition duration-500 " role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
 
                       <div @click="item.href($router)" v-for="item in pages" :key="item.name"
-                           class="block px-4 py-2 cursor-pointer rounded-xl text-md  hover:bg-indigo-600 hover:text-white dark:text-gray-100 dark:hover:text-white "
+                           class="block px-4 py-2 transition duration-100 cursor-pointer rounded-xl text-md  hover:bg-indigo-600 hover:text-white dark:text-gray-100 dark:hover:text-white "
                            role="menuitem">
                 <span class="flex flex-col">
                     <span>
@@ -345,11 +347,11 @@
     </Popover>
 
   </div>
-
+  <music  :show-player="showPlayer" @closePlayer="() => {showPlayer=false}"></music>
   <chat v-if="logined"></chat>
   <message v-if="logined"></message>
-  <BgCover :showCover.sync="$store.state.chatVisible || $store.state.messageVisible || $store.state.bgCover"></BgCover>
-  <!--  <search-dialog :is-open="openSearch" ></search-dialog>-->
+  <BgCover :showCover="$store.state.chatVisible || $store.state.messageVisible || $store.state.bgCover || showPlayer"></BgCover>
+    <search-dialog :is-open="openSearch" @closeSearch="() => {openSearch=false}"></search-dialog>
 </template>
 
 <script setup>
@@ -394,10 +396,9 @@ import Message from "@/components/pub/message.vue";
 
 const router = useRouter()
 const openSearch = ref(false)
-const showPlayer = ref(true)
+const showPlayer = ref(false)
 
 function closeMusic() {
-  console.log('close ====')
   showPlayer.value = false
 }
 
