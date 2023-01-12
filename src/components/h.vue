@@ -260,7 +260,7 @@
                          class="w-8 h-8 rounded-full">
                   </div>
                   <div v-show="openMenu"
-                       @mouseover="openMenu = true" @mouseleave="closeMenu"
+                       @mouseover="openMenuItem = true" @mouseleave="closeMenuItem"
                        class="absolute transition duration-500 p-2 right-0 w-56 mt-2 origin-top-right
                        bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
                     <div class="py-1  transition duration-500 " role="menu" aria-orientation="vertical"
@@ -442,11 +442,21 @@ const navigation = [
 
 function closeMenu() {
   setTimeout(() => {
-    openMenu.value = false
-  }, 300)
+    if(!openMenuItem.value){
+      openMenu.value = false
+    }
+
+  }, 500)
 
 }
+function closeMenuItem() {
+  setTimeout(() => {
+    openMenu.value = false
+    openMenuItem.value = false
 
+  }, 500)
+
+}
 function logOut() {
 
   //选择框
@@ -468,6 +478,7 @@ function logOut() {
 
 const mobileMenuOpen = ref(false)
 const openMenu = ref(false)
+const openMenuItem = ref(false)
 const pages = [
   {
     name: '个人中心', href: function ($router) {
