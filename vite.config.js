@@ -6,7 +6,16 @@ import prismjs from 'vite-plugin-prismjs';
 
 import path from 'path'
 
+
 export default defineConfig({
+    themeConfig: {
+        algolia: {
+            appId: 'HKHZGVB87Z',
+            apiKey: '8c8ae109bdd517271953b6da471dcecf',
+            indexName: 'leo_blog'
+        },
+    },
+
 
     //在plugins配置数组里添加gzip插件
     plugins: [

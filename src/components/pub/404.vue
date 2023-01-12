@@ -6,8 +6,8 @@
         <h1 class="mt-4 text-5xl font-bold leading-tight text-center text-black">
           这里是孤独的荒原
         </h1>
-        <p class=" text-black text-8xl my-44 animate-bounce">
-          🪲404
+        <p class=" text-black text-8xl flex items-center my-44 animate-bounce">
+          <icon src="kudalook" trigger="loop" size="40"></icon>404
         </p>
         <div class="flex justify-center space-x-2 items-center">
           <button @click="this.$router.go(-1)" class="button font-bold p-5">返回上一页</button>

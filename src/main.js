@@ -29,6 +29,10 @@ import '@kangc/v-md-editor/lib/plugins/emoji/emoji.css';
 import createCopyCodePlugin from '@kangc/v-md-editor/lib/plugins/copy-code/index';
 import '@kangc/v-md-editor/lib/plugins/copy-code/copy-code.css';
 VueMarkdownEditor.use(vuepressTheme, {Prism}).use(createCopyCodePlugin()).use(createEmojiPlugin());
+
+import icon from '@/components/pub/icon'
+
+
 // VueMarkdownEditor
 
 // 第一步导入默认图片
@@ -117,7 +121,7 @@ app.config.globalProperties.$imgOnerror = e => {
 }
 
 app.use(router).use(store).use(ElementPlus).use(Antd).use(VueMarkdownEditor).component('loader', loader)
-    .component('bread',bread).component('user',user).component('bigImg',bigImg)
+    .component('bread',bread).component('icon',icon).component('user',user).component('bigImg',bigImg)
 
 // app.use(APlayer, {
 //     defaultCover: '',

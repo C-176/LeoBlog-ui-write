@@ -1,17 +1,12 @@
 <template>
-  <div class="shell" v-if="$store.state.shell">
-    <router-link to="/back/info"><a class="box"><i class="iconfont"><span
-        class="iconfont">&#xe647;</span></i><span>个人信息  </span></a></router-link>
-    <router-link to="/back/articles"><a class="box" ><i
-        class="iconfont "><span class="iconfont">&#xe60c;</span></i><span> 文章</span></a></router-link>
-    <router-link to="/back/scripts"><a class="box"><i class="iconfont"><span
-        class="iconfont">&#xe733;</span></i><span>草稿</span></a></router-link>
-    <router-link to="/back/comments"><a class="box" ><i class="iconfont"><span
-        class="iconfont">&#xe648;</span></i><span>评论</span></a></router-link>
-    <router-link to="/back/pictures"><a class="box" ><i class="iconfont"><span
-        class="iconfont">&#xeb98;</span></i><span>图片</span></a></router-link>
-    <router-link to="/back/security"><a class="box" ><i class="iconfont"><span class="iconfont">&#xec4d;</span></i><span>安全</span></a></router-link>
-    <router-link to="/back/backControl"><a class="box" href="#"><i class="iconfont"><span class="iconfont">&#xe62d;</span></i><span>后台管理</span></a></router-link>
+  <div class="shell invisible md:visible" v-if="$store.state.shell">
+    <a class="box" v-for="item in pages" :key="item.name"
+       @click="item.href($router)">
+      <i class="h-full flex items-center">
+        <icon :src="item.iconSrc"></icon>
+      </i>
+
+      <span>{{ item.name }}  </span></a>
   </div>
 
 
@@ -19,11 +14,42 @@
 
 <script>
 
-export default{
-  name:'shell',
-  data(){
-    return{
+export default {
+  name: 'shell',
+  data() {
+    return {
+      pages: [
+        {
+          name: '个人中心', href: function ($router) {
 
+            $router.push('/back/info')
+          }, iconSrc: 'bhfjfgqz'
+        },
+        {
+          name: '我的文章', href: function ($router) {
+
+            $router.push('/back/articles')
+          }, iconSrc: 'vufjamqa'
+        },
+        {
+          name: '我的草稿', href: function ($router) {
+
+            $router.push('/back/scripts')
+          }, iconSrc: 'nocovwne'
+        },
+        {
+          name: '评论中心', href: function ($router) {
+
+            $router.push('/back/comments')
+          }, iconSrc: 'hpivxauj'
+        },
+        {
+          name: '安全中心', href: function ($router) {
+
+            $router.push('/back/security')
+          }, iconSrc: 'huwchbks'
+        }
+      ]
     }
   }
 }
@@ -32,7 +58,7 @@ export default{
 
 <style scoped>
 .shell {
-  z-index: 80;
+  z-index: 30;
   width: 50px;
   height: 100%;
   display: flex;

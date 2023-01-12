@@ -3,9 +3,10 @@
 
   <div ref="tar" class="text-left w-full h-screen  md:w-2/3 mx-auto md:p-5 mt-14">
     <template v-if="loading">
-      <a-skeleton active/>
-      <a-skeleton active/>
-      <a-skeleton active/>
+<!--      <a-skeleton active/>-->
+<!--      <a-skeleton active/>-->
+<!--      <a-skeleton active/>-->
+      <loader></loader>
     </template>
 
     <template v-else>
@@ -35,26 +36,26 @@
            <span class="ml-3 sm:block">
         <button type="button"
                 @click="$router.push('/article/'+article.articleId)"
-                class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-          <LinkIcon class="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true"/>
-          查看
+                class="inline-flex  items-center space-x-2  rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+          <icon src="tyounuzx" size="24"></icon>
+          <span>查看</span>
         </button>
       </span>
 
           <span class="sm:block ml-3">
         <button type="button" @click="$router.push('/write/'+article.articleId)"
-                class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2
+                class="inline-flex  items-center space-x-2   rounded-md border border-gray-300 bg-white px-4 py-2
                 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-          <PencilIcon class="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true"/>
-          编辑
+          <icon src="wloilxuq" size="24"></icon>
+          <span>编辑</span>
         </button>
       </span>
           <span class="sm:ml-3">
         <button type="button" @click="deleteArticle(article.articleId)"
-                class="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2
+                class="inline-flex items-center space-x-2 rounded-md border border-gray-300 bg-white px-4 py-2
                 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-          <CheckIcon class="-ml-1 mr-2 h-5 w-5" aria-hidden="true"/>
-          删除
+          <icon src="kfzfxczd" size="24"></icon>
+          <span>删除</span>
         </button>
       </span>
 

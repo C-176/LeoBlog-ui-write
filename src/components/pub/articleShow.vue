@@ -1,9 +1,9 @@
 <template>
   <div class="  w-full ">
     <template v-if="$loading">
-<!--      <a-skeleton active/>-->
-<!--      <a-skeleton active/>-->
-<!--      <a-skeleton active/>-->
+      <!--      <a-skeleton active/>-->
+      <!--      <a-skeleton active/>-->
+      <!--      <a-skeleton active/>-->
       <loader></loader>
     </template>
 
@@ -18,7 +18,7 @@
           <img class="h-10 w-10 rounded-full" :src="article.author.userProfilePhoto"/>
 
           <div class="h-full flex-col justify-around items-start">
-            <div class="text-xs  lg:text-base font-bold text-black " @click="$router.push('/user/'+article.userId)">
+            <div class="text-xs  lg:text-sm font-medium  " @click="$router.push('/user/'+article.userId)">
               <!--              <span class="iconfont">&#xe6b3;</span> -->
               {{ article.author.userNickname }}
             </div>
@@ -46,19 +46,26 @@
           <div
               class=" content  text-left text-gray-600 font-medium leading:6 md:leading-7   truncate  text-xs md:text-sm  justify-items-start  float-left w-full md:w-3/4 ">
               <span class="hover:cursor-pointer" @click="$router.push('/article/'+article.articleId)"
-                    v-html="article.articleContent" ></span>
+                    v-html="article.articleContent"></span>
           </div>
         </div>
 
 
         <div class="flex justify-center items-center h-6 w-full space-x-2 ">
-          <a class="tools " @click="like(article.articleId,index)">点赞<span
-              class="iconfont ">&#xe605;</span>{{ article.articleLikes }} </a>
-          <a class="tools" @click="comment(article.articleId)">评论<span
-              class="iconfont">&#xe646;</span>{{ article.articleComments }} </a>
-          <a class="tools" @click="collect(article.articleId,index)">收藏<span
-              class="iconfont">&#xe8b9;</span>{{ article.articleCollects }} </a>
-          <a class="tools" @click="share(article.articleId,index)">分享<span class="iconfont">&#xe73a;</span> </a>
+
+          <a class="tools" @click="like(article.articleId,index)">
+            <icon src="gclzwloa" trigger="click" size="24" class1="transform rotate-180"></icon>
+            {{ article.articleLikes }} </a>
+          <a class="tools" @click="comment(article.articleId)">
+            <icon src="hpivxauj" trigger="click" size="24"></icon>
+            {{ article.articleComments }} </a>
+          <a class="tools" @click="collect(article.articleId,index)">
+            <icon src="whttoese" trigger="click" size="24"></icon>
+            {{ article.articleCollects }} </a>
+          <a class="tools" @click="share(article.articleId,index)">
+            <icon src="vpzjmdjv" size="24"></icon>
+          </a>
+
         </div>
       </div>
       <!--        <a-divider class="h-px my-0 bg-green-600 bg-opacity-20"/>-->
@@ -77,8 +84,8 @@ export default {
   name: 'articleShow',
   props: ['articleList', 'scrollBottom'],
   watch: {
-    articles (val) {
-      if(val.length>0){
+    articles(val) {
+      if (val.length > 0) {
         console.log(val[0])
       }
     }
@@ -110,7 +117,7 @@ export default {
 
     myArticles() {
       this.articles = this.articleList
-      console.log(this.articles)
+
       // 根据articleList中每个article的userId获取user信息
       this.articleList.forEach((item, index) => {
         this.$axios.get("/user/" + item.userId).then((res) => {
@@ -211,11 +218,10 @@ export default {
 :deep(.content img, .content video) {
   max-height: 10rem !important;
   margin: 0 auto;
-  //margin-left: 25% !important;
-  border-radius: 0;
+//margin-left: 25% !important; border-radius: 0;
 }
 
-:deep(.el-image){
+:deep(.el-image) {
   border-radius: 5px;
 }
 </style>

@@ -2,15 +2,16 @@
   <bread>文章</bread>
   <div class="mx-auto w-full relative mt-16 md:w-2/3 bg-white md:rounded-xl md:mt-16 mb-2">
     <template v-if="loading">
-<!--      <a-skeleton active/>-->
-<!--      <a-skeleton active/>-->
-<!--      <a-skeleton active/>-->
+      <!--      <a-skeleton active/>-->
+      <!--      <a-skeleton active/>-->
+      <!--      <a-skeleton active/>-->
       <loader></loader>
     </template>
 
     <template v-else>
 
-      <img v-if="article.articlePic!=''&&article.articlePic!=null" class="p-2 md:p-0 bg-white mb-2 rounded-xl w-full mx-auto"
+      <img v-if="article.articlePic!=''&&article.articlePic!=null"
+           class="p-2 md:p-0 bg-white mb-2 rounded-xl w-full mx-auto"
            :src="p(article.articlePic)"/>
       <div class="p-5 bg-gray-100 rounded-xl">
         <div class="text-xl md:text-xl text-left h-auto w-full font-bold my-1">{{
@@ -53,13 +54,17 @@
 
         <template v-if="article.isArticle === 1">
           <div class="w-full flex justify-around items-center">
-            <a class="tools" @click="like(article.articleId)">点赞<span
-                class="iconfont">&#xe605;</span>{{ article.articleLikes }} </a>
-            <a class="tools reply" @click="comment()">评论<span
-                class="iconfont">&#xe646;</span>{{ article.articleComments }} </a>
-            <a class="tools" @click="collect(article.articleId)">收藏<span
-                class="iconfont">&#xe8b9;</span>{{ article.articleCollects }} </a>
-            <a class="tools" @click="share(article.articleId)">分享<span class="iconfont">&#xe73a;</span>
+            <a class="tools" @click="like(article.articleId)">
+              <icon src="gclzwloa" size="24" class1="transform rotate-180"></icon>
+              {{ article.articleLikes }} </a>
+            <a class="tools reply" @click="comment()">
+              <icon src="hpivxauj" size="24"></icon>
+              {{ article.articleComments }} </a>
+            <a class="tools" @click="collect(article.articleId)">
+              <icon src="whttoese" size="24"></icon>
+              {{ article.articleCollects }} </a>
+            <a class="tools" @click="share(article.articleId)">
+              <icon src="vpzjmdjv" size="24"></icon>
             </a>
           </div>
         </template>
@@ -97,7 +102,6 @@
       </comment-template>
     </div>
   </div>
-
 
 
   <!--  显示放大图片的组件-->
@@ -585,12 +589,10 @@ export default {
 }
 
 :deep(p img,p video) {
-  //width: 80% !important;
-
-  //margin-left: 10% !important;
+//width: 80% !important; //margin-left: 10% !important;
   /*height: 100%;*/
   border-radius: 10px;
-  max-height: calc(100vh - 5rem );
+  max-height: calc(100vh - 5rem);
   margin: 0 auto;
   margin-bottom: 5px !important;
   box-shadow: 1px 3px 11px #134857;

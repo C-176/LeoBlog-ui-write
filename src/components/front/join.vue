@@ -16,8 +16,8 @@
       <div
           class="mx-auto rounded-lg font-black mt-5 text-zinc-400 md:mt-12 md:max-w-lg text-center lg:text-lg"
       >
-        <button class="bg-tkb border text-sm hover:text hover:scale-105 transition duration-300 text-white py-3 px-7 rounded-full" @click="$sa('Σ(っ °Д °;)っ','success')">
-          加入LeoBlog
+        <button class="bg-tkb mx-auto flex items-center justify-center  border text-sm hover:text hover:scale-105 transition duration-300 text-white py-3 px-7 rounded-full" @click="$sa('Σ(っ °Д °;)っ','success')">
+          <icon src="tyvtvbcy" trigger="loop"></icon> 加入LeoBlog
         </button>
       </div>
     </div>

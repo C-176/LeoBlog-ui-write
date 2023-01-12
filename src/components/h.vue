@@ -12,14 +12,15 @@
             </PopoverButton>
           </div>
           <!--大屏logo-->
-          <div class="flex justify-start hidden md:inline-block lg:w-0 lg:flex-1">
-            <div>
-              <span class="sr-only">LeoBlog</span>
-              <img @click="$router.push('/index')" class="h-10 scale-140 cursor-pointer w-auto sm:h-10"
-                   src="http://49.235.100.240/api/source/images/logoTest.png"
-                   alt=""/>
+          <div class="flex justify-start hidden md:inline-block h-full lg:w-0 lg:flex-1 ">
 
-            </div>
+            <span class="sr-only">LeoBlog</span>
+            <img @click="$router.push('/index')"
+                 class="h-full scale-140 transition duration-500 cursor-pointer w-auto sm:h-10"
+                 src="http://49.235.100.240/api/source/images/logoTest.png"
+                 alt=""/>
+
+
           </div>
 
           <Menu as="div" v-if="logined"
@@ -48,11 +49,13 @@
                   <a @click="item.href($router)" v-for="item in pages" :key="item.name"
                      class="block block px-4 py-2 cursor-pointer rounded-xl text-md text-gray-700 hover:bg-indigo-600 hover:text-white dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
                      role="menuitem">
-                <span class="flex flex-col">
-                    <span>
-                        {{ item.name }}
-                    </span>
-                </span>
+                    <div class="flex flex-col">
+                      <div class=" flex items-center justify-start space-x-3">
+                        <icon :src="item.iconSrc" trigger="loop"></icon>
+                        <span>{{ item.name }}</span>
+
+                      </div>
+                    </div>
                   </a>
 
                 </div>
@@ -94,7 +97,8 @@
                     <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                       <a v-for="item in solutions" :key="item.name" @click="item.href($router)"
                          class="-m-3 flex items-start rounded-lg p-1 hover:bg-gray-50">
-                        <component :is="item.icon" class="h-6 w-6 flex-shrink-0 text-indigo-600" aria-hidden="true"/>
+                        <icon :src="item.iconSrc"></icon>
+                        <!--                        <component :is="item.icon" class="h-6 w-6 flex-shrink-0 text-indigo-600" aria-hidden="true"/>-->
                         <div class="ml-4">
                           <p class="text-base font-medium text-gray-900">{{ item.name }}</p>
                           <p class="mt-1 text-sm text-gray-500">{{ item.description }}</p>
@@ -142,7 +146,8 @@
                     <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                       <a v-for="item in about" :key="item.name" @click="item.href($router)"
                          class="-m-3 flex items-start rounded-lg p-1 hover:bg-gray-50">
-                        <component :is="item.icon" class="h-6 w-6 flex-shrink-0 text-indigo-600" aria-hidden="true"/>
+                        <icon :src="item.iconSrc"></icon>
+                        <!--                        <component :is="item.icon" class="h-6 w-6 flex-shrink-0 text-indigo-600" aria-hidden="true"/>-->
                         <div class="ml-4">
                           <p class="text-base font-medium text-gray-900">{{ item.name }}</p>
                           <p class="mt-1 text-sm text-gray-500">{{ item.description }}</p>
@@ -179,7 +184,8 @@
                     <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
                       <a v-for="item in more" :key="item.name" @click="item.href($router)"
                          class="-m-3 flex items-start rounded-lg p-1 hover:bg-gray-50">
-                        <component :is="item.icon" class="h-6 w-6 flex-shrink-0 text-indigo-600" aria-hidden="true"/>
+                        <icon :src="item.iconSrc"></icon>
+                        <!--                        <component :is="item.icon" class="h-6 w-6 flex-shrink-0 text-indigo-600" aria-hidden="true"/>-->
                         <div class="ml-4">
                           <p class="text-base font-medium text-gray-900">{{ item.name }}</p>
                           <p class="mt-1 text-sm text-gray-500">{{ item.description }}</p>
@@ -198,12 +204,12 @@
           <!--          大屏右侧登陆注册-->
           <div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0 space-x-2">
 
-              <a-tooltip id="close" v-if="!showPlayer" title="音乐">
-                <button class="rounded-xl z-20 text-white h-8 w-8 text-center bg-indigo-100 hover:bg-indigo-200"
-                        @click="showPlayer=true">
-                  🎵
-                </button>
-              </a-tooltip>
+            <a-tooltip id="close" v-if="!showPlayer" title="音乐">
+              <button class="rounded-xl z-20 text-white h-8 w-8 text-center bg-indigo-100 hover:bg-indigo-200"
+                      @click="showPlayer=true">
+                <icon src="pgbyoxin"></icon>
+              </button>
+            </a-tooltip>
 
 
             <template v-if="!logined">
@@ -217,29 +223,31 @@
               <!--               class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">个人中心</a>-->
               <!--            <a @click="logout"-->
               <!--                class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">退出</a>-->
-              <button v-show="logined"  @click="openSearch = !openSearch"
-                     class="hidden md:inline-flex   justify-center rounded-md bg-gray-100  px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-                     >Ctrl+K 搜索
-                </button>
+              <button v-show="logined" @click="openSearch = !openSearch"
+                      class="hidden md:inline-flex   justify-center rounded-md bg-gray-100  px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+              >Ctrl+K 搜索
+              </button>
 
               <!--          大屏菜单options-->
               <Menu as="div" v-if="logined"
                     class="z-10 space-x-2  inline-flex justify-center items-center text-left ">
 
                 <button type="button" @click="$store.commit('changeMessageVisible',!$store.state.messageVisible)"
-                        class="rounded-full duration-500 hover:bg-gray-300 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
-                  <span class="sr-only">View notifications</span>
-                  <BellIcon class="h-4 w-4 text-indigo-600" aria-hidden="true"/>
+                        class="rounded-full duration-500  p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
+
+                  <!--                  <BellIcon class="h-4 w-4 text-indigo-600" aria-hidden="true"/>-->
+                  <icon src="psnhyobz" size="24"></icon>
                 </button>
 
                 <a-badge :count="$store.state.chatPoint">
 
                   <button type="button" @click="$store.commit('changeChatVisible',!$store.state.chatVisible)"
-                          class="rounded-full  duration-500 hover:bg-gray-300 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
+                          class="rounded-full  duration-500  p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
                     <span class="sr-only">View notifications</span>
                     <!--                  <a-badge :count="$store.state.messagePoint">-->
-                    <ChatBubbleOvalLeftEllipsisIcon class="h-4 w-4 text-indigo-600" aria-hidden="true"/>
+                    <!--                    <ChatBubbleOvalLeftEllipsisIcon class="h-4 w-4 text-indigo-600" aria-hidden="true"/>-->
                     <!--                  </a-badge>-->
+                    <icon src="mjmrmyzg"></icon>
 
                   </button>
                 </a-badge>
@@ -248,22 +256,25 @@
                       class="flex items-center justify-center p-0.5 cursor-pointer   border-indigo-600 border-2  rounded-full">
 
                     <img :src="p(user.userProfilePhoto)" id="options-menu" @mouseover="openMenu = true"
-                         @click="openMenu = !openMenu"
+                         @click="openMenu = !openMenu" @mouseleave="closeMenu"
                          class="w-8 h-8 rounded-full">
                   </div>
                   <div v-show="openMenu"
                        @mouseover="openMenu = true" @mouseleave="closeMenu"
-                       class="absolute transition duration-500 p-2 right-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
-                    <div class="py-1  transition duration-500 " role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-
+                       class="absolute transition duration-500 p-2 right-0 w-56 mt-2 origin-top-right
+                       bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
+                    <div class="py-1  transition duration-500 " role="menu" aria-orientation="vertical"
+                         aria-labelledby="options-menu">
                       <div @click="item.href($router)" v-for="item in pages" :key="item.name"
                            class="block px-4 py-2 transition duration-100 cursor-pointer rounded-xl text-md  hover:bg-indigo-600 hover:text-white dark:text-gray-100 dark:hover:text-white "
                            role="menuitem">
-                <span class="flex flex-col">
-                    <span>
-                        {{ item.name }}
-                    </span>
-                </span>
+                        <div class="flex flex-col">
+                          <div class="space-x-3 flex items-center group justify-start">
+                            <icon :src="item.iconSrc" class1=""/>
+                            <span>{{ item.name }}</span>
+
+                          </div>
+                        </div>
                       </div>
 
                     </div>
@@ -271,7 +282,10 @@
                 </div>
               </Menu>
               <a @click="logOut"
-                 class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">退出</a>
+                 class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+                退出
+                <icon src="zmkotitn"></icon>
+              </a>
 
 
             </template>
@@ -307,7 +321,8 @@
                 <nav class="grid gap-y-8">
                   <a v-for="item in solutions" :key="item.name" @click="item.href($router)"
                      class="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50">
-                    <component :is="item.icon" class="h-6 w-6 flex-shrink-0 text-indigo-600" aria-hidden="true"/>
+                    <icon :src="item.iconSrc"></icon>
+                    <!--                    <component :is="item.icon" class="h-6 w-6 flex-shrink-0 text-indigo-600" aria-hidden="true"/>-->
                     <span class="ml-3 text-base font-medium text-gray-900">{{ item.name }}</span>
                   </a>
                   <a v-for="item in navigation" :key="item.name" @click="item.href($router)"
@@ -347,11 +362,12 @@
     </Popover>
 
   </div>
-  <music  :show-player="showPlayer" @closePlayer="() => {showPlayer=false}"></music>
+  <music :show-player="showPlayer" @closePlayer="() => {showPlayer=false}"></music>
   <chat v-if="logined"></chat>
   <message v-if="logined"></message>
-  <BgCover :showCover="$store.state.chatVisible || $store.state.messageVisible || $store.state.bgCover || showPlayer"></BgCover>
-    <search-dialog :is-open="openSearch" @closeSearch="() => {openSearch=false}"></search-dialog>
+  <BgCover
+      :showCover="$store.state.chatVisible || $store.state.messageVisible || $store.state.bgCover || showPlayer || openSearch"></BgCover>
+  <search-dialog :is-open="openSearch" @closeSearch="() => {openSearch=false}"></search-dialog>
 </template>
 
 <script setup>
@@ -457,31 +473,31 @@ const pages = [
     name: '个人中心', href: function ($router) {
       openMenu.value = false
       $router.push('/back/info')
-    }
+    }, iconSrc: 'bhfjfgqz'
   },
   {
     name: '我的文章', href: function ($router) {
       openMenu.value = false
       $router.push('/back/articles')
-    }
+    }, iconSrc: 'vufjamqa'
   },
   {
     name: '我的草稿', href: function ($router) {
       openMenu.value = false
       $router.push('/back/scripts')
-    }
+    }, iconSrc: 'nocovwne'
   },
   {
     name: '评论中心', href: function ($router) {
       openMenu.value = false
       $router.push('/back/comments')
-    }
+    }, iconSrc: 'hpivxauj'
   },
   {
     name: '安全中心', href: function ($router) {
       openMenu.value = false
       $router.push('/back/security')
-    }
+    }, iconSrc: 'huwchbks'
   }
 ]
 const solutions = [
@@ -490,39 +506,34 @@ const solutions = [
     description: '认真对待自己的作品，就是认真对待所有读者、点评者和研究者。',
     href: function ($router) {
       $router.push("/write/0")
-    },
-    icon: ChartBarIcon,
+    }, iconSrc: 'puvaffet'
   },
   {
     name: '阅读',
-    description: '阅读似乎有一种无法抗拒的力量。它好似一把万能钥匙，即使是再坚不可摧的心门，只要它轻轻一撬，便会涌进去万丈光芒。',
+    description: '阅读似乎有一种无法抗拒的力量。',
     href: function ($router) {
       $router.push("/home/article")
-    },
-    icon: CursorArrowRaysIcon,
+    }, iconSrc: 'wxnxiano'
   }
 ]
-const callsToAction = [
-  {name: 'Watch Demo', href: '#', icon: PlayIcon},
-  {name: 'Contact Sales', href: '#', icon: PhoneIcon},
-]
+
 
 const more = [
   {
     name: '代码随想录', href: function ($router) {
       $router.push("/video/programmercarl.com")
-    }, description: '本站是一套完整的刷题计划，旨在帮助大家少走弯路，循序渐进学算法。', icon: LifebuoyIcon
+    }, description: '本站是一套完整的刷题计划，旨在帮助大家少走弯路，循序渐进学算法。', iconSrc: 'kkwzhxjj'
   },
   {
     name: '茶杯狐', href: function ($router) {
       $router.push("/video/cupfox.app")
     }, description: '茶杯狐最新地址：cupfox.app 请及时收藏！'
-    , icon: ShieldCheckIcon
-  },{
+    , iconSrc: 'smeqxwcv'
+  }, {
     name: 'JavaGuide', href: function ($router) {
       $router.push("/video/javaguide.cn*home.html")
-    }, description: '「Java学习+面试指南」一份涵盖大部分 Java 程序员所需要掌握的核心知识。准备 Java 面试，首选 JavaGuide！'
-    , icon: ShieldCheckIcon
+    }, description: '「Java学习+面试指南」一份涵盖大部分 Java 程序员所需要掌握的核心知识。'
+    , iconSrc: 'nobciafz'
   },
 
 
@@ -534,16 +545,14 @@ const about = [
     description: '我们的历程',
     href: function ($router) {
       $router.push("/about/bigs")
-    },
-    icon: ChartBarIcon
+    }, iconSrc: 'krmfspeu'
   },
   {
     name: '关于我们',
     description: '我们是一个小团队，致力于为大家提供一个优质的创作平台。',
     href: function ($router) {
       $router.push("/about/team")
-    },
-    icon: Bars3Icon,
+    }, iconSrc: 'jvucoldz'
   }
   ,
   {
@@ -551,16 +560,14 @@ const about = [
     description: '如果您有任何问题，欢迎联系我们。',
     href: function ($router) {
       $router.push("/about/contact")
-    },
-    icon: PhoneIcon,
+    }, iconSrc: 'rhvddzym'
   },
   {
     name: '加入我们',
     description: '如果您有兴趣加入我们，欢迎联系我们。',
     href: function ($router) {
       $router.push("/about/join")
-    },
-    icon: LifebuoyIcon,
+    }, iconSrc: 'uukerzzv'
   }
 
 
