@@ -5,6 +5,7 @@
     url('//at.alicdn.com/t/c/font_3270950_q21sl35q5at.woff?t=1667797852199') format('woff'),
     url('//at.alicdn.com/t/c/font_3270950_q21sl35q5at.ttf?t=1667797852199') format('truetype');
 }
+
 .iconfont {
     font-family: "iconfont" !important;
     /* font-size: 16px; */
@@ -18,6 +19,7 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 * a {
     text-decoration: none;
 }
@@ -25,36 +27,59 @@
 * button:hover {
     cursor: pointer;
 }
+
 * a:hover {
     cursor: pointer;
 }
 
 
-.iconfont{
+.iconfont {
     display: inline;
 }
 
 :deep( .router-link-active) {
-     color: #fff;
-     text-decoration: none;
+    color: #fff;
+    text-decoration: none;
 }
 
 .router-link-active {
     text-decoration: none;
     /*color: #fff;*/
 }
-img{
+
+img {
     -webkit-user-drag: none;
 }
+
 a {
     text-decoration: none;
     color: #111;
 }
+
 a:hover {
     color: #8e9192 !important;
 }
 
+/*!*字符选中*!*/
+/*p::selection {*/
 
+/*    background: #4f46e5;*/
+
+/*    color: #fff;*/
+
+
+/*}*/
+/*p::-moz-selection {*/
+
+/*    background: #4f46e5;*/
+
+/*    color: #fff;*/
+/*}*/
+::selection {  /*设置选中区域文字背景变化*/
+    text-shadow: none;
+    color: #fff;
+    background-color: #4f46e5;/*为选中文字设置背景颜色*/
+}
 .fade-enter-active, .fade-leave-active {
     transition: opacity .3s;
 }
@@ -64,24 +89,25 @@ a:hover {
 }
 
 
-
-
 /*引入字体*/
 @font-face {
     font-family: 'PingFang SC';  /* Project id 3270950 */
     src: url('/static/fonts/PingFang Medium.ttf')
 }
+
 /*引入字体*/
 @font-face {
     font-family: 'smileySans';  /* Project id 3270950 */
     src: url('/static/fonts/smiley-sans-v1.0.0/SmileySans-Oblique.ttf')
 }
+
 .dark {
     /* 自定义深色背景颜色 */
     /*--el-bg-color: #063432;*/
     background: #063432;
     color: #acc3cb;
 }
+
 .light {
     /* 自定义深色背景颜色 */
     background: #eef2f4;

@@ -21,7 +21,9 @@
       <div class="lg:flex lg:items-center bg-gray-100 w-full md:rounded-xl p-4 my-2 lg:justify-between"
            v-for="(article,index) in myArticles" :key="article.articleId">
         <div class="min-w-0 flex-1">
-          <h2 class="text-base font-bold leading-5 text-gray-900 sm:truncate sm:text-base sm:tracking-tight">
+          <h2 @click="$router.push('/article/'+article.articleId)"
+              :title="article.articleTitle.replaceAll('<p>','').replaceAll('</p>','').replaceAll('<br>','')"
+              class="text-base cursor-pointer hover:text-gray-600 font-bold leading-5 text-gray-900 sm:truncate sm:text-base sm:tracking-tight">
             {{ article.articleTitle.replaceAll('<p>','').replaceAll('</p>','').replaceAll('<br>','') }}
           </h2>
           <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
@@ -253,115 +255,4 @@ export default {
   display: inline-block !important;
 }
 
-.toolbar {
-  width: 100%;
-  height: 10%;
-  text-align: center;
-
-}
-
-.toolbar a {
-  font-size: 13px;
-  color: #8590a6;
-  float: left;
-  display: block;
-  width: 25%;
-  height: 100%;
-  line-height: calc(200%);
-  margin-top: 10px;
-  border-radius: 5px;
-}
-
-.toolbar a:hover {
-  background-color: #edf3f4;
-  transition: all 0.3s;
-
-}
-
-.whole {
-  margin-left: calc(22.5%);
-  background: #fff;
-  width: 55%;
-  border-radius: 5px;
-  margin-top: 60px;
-  padding: 10px;
-}
-
-.whole > div {
-  width: 100%;
-}
-
-.whole .Article {
-  position: relative;
-  border-radius: 5px;
-  height: 250px;
-  margin: 20px 0;
-}
-
-.whole .Article .img {
-  float: left;
-  margin: 40px 10px;
-  height: 67%;
-  width: 25%;
-  border-radius: 10px;
-  /*box-shadow: 1px 3px 11px #134857;*/
-  overflow: hidden;
-}
-
-.Article .img img {
-  height: 100%;
-  width: 100%;
-}
-
-.right {
-  float: left;
-  height: 100%;
-  width: 70%;
-  padding: 0 0 0 10px;
-}
-
-.right .at {
-  width: 100%;
-  height: 15%;
-  line-height: 30px;
-  font-size: 15px;
-  text-align: left;
-  -webkit-mask-image: -webkit-linear-gradient(right, rgba(0, 0, 0, 0) 5%, rgba(0, 0, 0, 1) 10%);
-
-}
-
-.right .at a {
-  display: block;
-  color: #132c33;
-  height: 100%;
-  width: 100%;
-  font-weight: 600;
-}
-
-.right .author {
-
-  height: 10%;
-  line-height: 25px;
-  font-size: 13px;
-  color: #8590a6;
-  text-align: left;
-}
-
-.right .comment {
-  height: 60%;
-  width: 100%;
-  font-size: 13px;
-  overflow: hidden;
-  text-align: left;
-  color: #8590a6;
-  line-height: 25px;
-  margin-top: -2px;
-  -webkit-mask-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0) 5%, rgba(0, 0, 0, 1) 10%);
-}
-
-.isFull {
-  width: 80%;
-  margin-left: 10%;
-
-}
 </style>

@@ -1,9 +1,10 @@
 <template>
   <div class="w-full b-gray-100 p-0 my-1 rounded-xl text-left">
     <template v-if="loading">
-      <a-skeleton active/>
-      <a-skeleton active/>
-      <a-skeleton active/>
+<!--      <a-skeleton active/>-->
+<!--      <a-skeleton active/>-->
+<!--      <a-skeleton active/>-->
+      <loader></loader>
     </template>
 
     <template v-else>
@@ -18,6 +19,7 @@
         <!-- component -->
         <a-collapse v-for="(comment,index1) in comments" v-model:activeKey="activeKey" accordion>
           <a-collapse-panel :key="index1"
+                            @dblclick="$router.push('/article/'+comment.articleId)"
                             :header="comment.articleTitle.trim().length == 0?comment.commentContent:comment.articleTitle">
             <div class=" w-full flex-col items-center justify-center space-y-1">
 
@@ -93,7 +95,7 @@
       </template>
 
 
-      <div v-if="showComment" class="relative w-full h-28 text-right">
+      <div v-if="showComment" class="relative w-full h-28 mt-2 text-right">
         <textarea v-model="commentIn"
                   class="bg-white border-2 border-gray-200 w-full h-full rounded-xl resize-none outline-0 p-2"
                   placeholder="请输入内容... | Enter键发送"
@@ -220,6 +222,9 @@ export default {
         this.loading = false
       })
     },
+  },
+  mounted() {
+    // this.$st('双击文章标题可跳转文章页面', 'success')
   }
 }
 

@@ -14,47 +14,51 @@
            class="p-2 md:p-0 bg-white mb-2 rounded-xl w-full mx-auto"
            :src="p(article.articlePic)"/>
       <div class="p-5 bg-gray-100 rounded-xl">
-        <div class="text-xl md:text-xl text-left h-auto w-full font-bold my-1">{{
+        <div class="text-xl md:text-xl text-left h-auto w-full font-bold my-0.5">{{
             article.articleTitle.replaceAll('<p>','').replaceAll('</p>','')}}
         </div>
-        <div class="labels">
+        <div class="w-full h-auto">
           <div class="text-left">
-            <Tag :color="getColor()" v-for="label in article.labels" :key="label.labelId">
+            <Tag :color="getColor()" class="cursor-pointer " v-for="label in article.labels" :key="label.labelId">
               {{ label.labelName }}
             </Tag>
           </div>
         </div>
-        <div class="author">
+        <div class="w-full flex items-center space-x-2 h-16">
           <user :user="article.user">
             <!--          <img class="left" :src="p(article.user.userProfilePhoto)"/>-->
             <a-avatar
                 :src="p(article.user.userProfilePhoto)"
                 :style="{ backgroundColor: '#067061'  ,verticalAlign: 'middle'}"
-                class="left"
+                class="left h-16 w-16 rounded-full"
                 shape="circle"
-                size="middle"
+                size="small"
             >
               {{ article.user.userNickname }}
             </a-avatar>
           </user>
-          <div class="right">
-            <div class="name">{{ article.user.userNickname }}</div>
-            <div class="detail">{{ article.user.userCertification }}</div>
-          </div>
-        </div>
+          <div class="flex-col items-start space-x-0 justify-center text-left">
+            <div class="text-sm font-bold">{{ article.user.userNickname }}</div>
+            <div class="text-xs">{{ article.user.userCertification }}</div>
 
-        <div class="content" ref="articleContent">
+          </div><div class="flex items-center text-gray-500 space-x-1 pl-2">
+          <icon src="qznlhdss" size="16"></icon>
+          <span>最后更新时间: {{ article.articleUpdateDate }}</span>
+
+        </div>
+        </div>
+        <hr>
+        <div class="text-left p-3" ref="articleContent">
           <span v-html="article.articleContent"></span>
         </div>
 
-        <div class="updateTime"><span class="iconfont">&#xe6fb;</span>最后更新时间: {{ article.articleUpdateDate }}
-        </div>
+
         <a-divider style="height: 1px"/>
         <!--      <el-affix position="bottom" target=".content" :offset="10">-->
 
         <template v-if="article.isArticle === 1">
           <div class="w-full flex justify-around items-center">
-            <a class="tools" @click="like(article.articleId)">
+            <a class="tools " @click="like(article.articleId) ">
               <icon src="gclzwloa" size="24" class1="transform rotate-180"></icon>
               {{ article.articleLikes }} </a>
             <a class="tools reply" @click="comment()">
@@ -114,16 +118,19 @@
 
   <shareModal @close="()=>{showShare=false}" :showShare="showShare"></shareModal>
   <div
-      class="px-2 md:px-1 my-3 w-full md:w-2/3 mx-auto text-slate-700 dark:text-white flex flex-col items-center"
+      class="px-2 md:px-1 my-3 w-full md:w-2/3 mx-auto text-slate-700 dark:text-white
+       flex flex-col items-center"
   >
     <div
-        class="text-left flex flex-col w-full items-center justify-center md:p-4  border-slate-300 dark:border-slate-600 rounded-xl">
+        class="text-left flex flex-col w-full items-center justify-center md:p-4
+        border-slate-300 dark:border-slate-600 rounded-xl">
       <div class="w-full">
         <a
             href="/"
             rel="noreferrer"
             target="_blank"
-            class="bg-white dark:bg-slate-800 rounded-xl w-full flex flex-col md:flex-row justify-start shadow-md transition-all duration-500 md:hover:scale-95"
+            class="bg-white dark:bg-slate-800 rounded-xl w-full flex flex-col
+            md:flex-row justify-start shadow-md transition-all duration-500 md:hover:scale-95"
         >
           <!-- <div class="flex-grow"> -->
           <div
@@ -523,64 +530,6 @@ export default {
 
 <style scoped>
 
-
-.author {
-  height: 60px;
-  width: 100%;
-  font-weight: 600;
-  margin-top: 10px;
-
-}
-
-.author .left {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  float: left;
-  margin-top: 5px;
-}
-
-.left:hover {
-  cursor: pointer;
-}
-
-.author .right {
-  float: left;
-  margin-left: 10px;
-  margin-top: 5px;
-}
-
-.right .name {
-  font-size: 20px;
-  /*margin-bottom: 5px;*/
-  text-align: left;
-}
-
-.right .detail {
-  font-size: 14px;
-  text-align: left;
-}
-
-.content {
-  line-height: 30px;
-  font-size: 14px;
-  /* font-weight: 600; */
-  margin-bottom: 20px;
-  padding: 10px 10px;
-  text-align: left;
-}
-
-.updateTime {
-  width: 100%;
-  height: 30px;
-  font-size: 14px;
-  line-height: 30px;
-  color: #8590a6;
-
-  text-align: right;
-  margin-bottom: 10px;
-}
-
 :deep(video) {
   width: 80%;
   margin-left: 10%;
@@ -615,5 +564,26 @@ export default {
 
 :deep(.content ul) {
   padding-left: 4% !important;
+}
+
+
+:deep(blockquote) {
+  background: #f9f9f9;
+  border:1px solid #ddd;
+  border-left: 10px solid #4f46e5;
+  border-radius: 5px;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+:deep(blockquote:before) {
+  color: #4f46e5;
+  content: open-quote;
+  font-size: 4em;
+  line-height: 0.1em;
+  margin-right: 0.25em;
+  vertical-align: -0.4em;
+}
+:deep(blockquote p) {
+  display: inline;
 }
 </style>

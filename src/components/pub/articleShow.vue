@@ -31,11 +31,13 @@
             {{ article.articleTitle.replaceAll('<p>','').replaceAll('</p>','').replaceAll('<br>','')}}
           </router-link>
         </div>
-        <div class="h-auto max-h-20 md:max-h-40 w-full md:space-x-3 flex justify-start  overflow-hidden ">
+        <div class="h-auto max-h-20 md:max-h-40 group w-full md:space-x-3 flex justify-start  overflow-hidden ">
           <div v-if="article.articlePic!='' && article.articlePic!=null"
-               class=" hidden md:inline-flex items-center justify-start float-left w-1/4 ">
+               class=" hidden md:inline-flex items-center justify-start float-left"
+               :class="{'w-1/4':article.articlePic!='' && article.articlePic!=null}"
+          >
             <el-image
-                :class="{invisible:article.articlePic=='' || article.articlePic==null}"
+                :class="{hidden:article.articlePic=='' || article.articlePic==null}"
                 :preview-src-list="[p(article.articlePic)]"
                 :src="p(article.articlePic)"
                 close-on-press-escape
@@ -44,7 +46,11 @@
             />
           </div>
           <div
-              class=" content  text-left text-gray-600 font-medium leading:6 md:leading-7   truncate  text-xs md:text-sm  justify-items-start  float-left w-full md:w-3/4 ">
+              class=" content p-2 rounded-xl group-hover:bg-gray-50 transition duration-500
+               text-left text-gray-600 font-medium leading:6 md:leading-7   truncate  text-xs md:text-sm
+               justify-items-start  float-left w-full "
+              :class="{'md:w-3/4':article.articlePic!='' && article.articlePic!=null}"
+          >
               <span class="hover:cursor-pointer" @click="$router.push('/article/'+article.articleId)"
                     v-html="article.articleContent"></span>
           </div>
