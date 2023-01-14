@@ -265,6 +265,14 @@
                        bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
                     <div class="py-1  transition duration-500 " role="menu" aria-orientation="vertical"
                          aria-labelledby="options-menu">
+
+                      <div  class="block text-gray-600 text-base text-center px-4 py-2 transition duration-100 rounded-xl text-md   "
+                           >
+                        {{$store.state.user.userNickname}}
+                      </div>
+                      <hr>
+
+
                       <div @click="item.href($router)" v-for="item in pages" :key="item.name"
                            class="block px-4 py-2 transition duration-100 cursor-pointer rounded-xl text-md  hover:bg-indigo-600 hover:text-white dark:text-gray-100 dark:hover:text-white "
                            role="menuitem">

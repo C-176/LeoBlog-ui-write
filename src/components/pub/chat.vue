@@ -82,50 +82,52 @@
               </div>
               <div class="">{{ talkTo.user.userPos }}</div>
             </div>
-<!--            <template v-if="$loading">-->
-<!--              <loader></loader>-->
-<!--            </template>-->
+            <!--            <template v-if="$loading">-->
+            <!--              <loader></loader>-->
+            <!--            </template>-->
 
-<!--            <template v-else>-->
-              <div v-loading="$loading" id="chat" ref="chat" class="w-full h-2/3 bg-gray-100  rounded-xl p-3 overflow-auto"
-                   @wheel.once="scrollRecord">
-                <template v-for="(record,index) in talkTo.record" :key="index">
-                  <div v-if="timeDiff(index,index-1)" class=" w-full h-auto my-1 text-center text-gray-400 text-sm"
-                       id="updateTime">
-                    {{ this.$moments(record.recordUpdateTime) }}
-                  </div>
-                  <template v-if="record.userId == $store.state.user.userId">
+            <!--            <template v-else>-->
+            <div v-loading="$loading" id="chat" ref="chat"
+                 class="w-full h-2/3 bg-gray-100  rounded-xl p-3 overflow-auto"
+                 @wheel.once="scrollRecord">
+              <template v-for="(record,index) in talkTo.record" :key="index">
+                <div v-if="timeDiff(index,index-1)" class=" w-full h-auto my-1 text-center text-gray-400 text-sm"
+                     id="updateTime">
+                  {{ this.$moments(record.recordUpdateTime) }}
+                </div>
+                <template v-if="record.userId == $store.state.user.userId">
 
-                    <div class="w-full flex-1 text-right  mb-1 flex float-right justify-end space-x-0.5  items-start"
-                         :key="record.userId">
-                      <div class="flex-col justify-start items-end space-y-0.5">
-                        <!--                      <div class="text-xs text-right">{{ $store.state.user.userNickname }}</div>-->
-                        <div
-                            class=" w-auto rounded-xl bg-indigo-600 hover:bg-indigo-500 cursor-pointer text-white shadow text-left text-xs p-2"><span
-                            v-html="record.recordContent" id="message"></span></div>
-                      </div>
-                      <div class="min-w-10 min-h-10 rounded-full">
-                        <!--                      <user v-slot="slotP" :user-id="record.userId">-->
-                        <a-avatar
-                            :src="p($store.state.user.userProfilePhoto)"
-                            :style="{ backgroundColor:'#0eb73a', verticalAlign: 'middle' ,float:'right'}"
-                            shape="circle"
-                            size="middle"
-                        >
-                          {{ $store.state.user.userNickname }}
-                        </a-avatar>
-                        <!--                      </user>-->
-                      </div>
-
-
+                  <div class="w-full flex-1 text-right  mb-1 flex float-right justify-end space-x-0.5  items-start"
+                       :key="record.userId">
+                    <div class="flex-col justify-start items-end space-y-0.5">
+                      <!--                      <div class="text-xs text-right">{{ $store.state.user.userNickname }}</div>-->
+                      <div
+                          class=" w-auto rounded-xl bg-indigo-600 hover:bg-indigo-500 cursor-pointer text-white shadow text-left text-xs p-2"><span
+                          v-html="record.recordContent" id="message"></span></div>
+                    </div>
+                    <div class="min-w-10 min-h-10 rounded-full">
+                      <!--                      <user v-slot="slotP" :user-id="record.userId">-->
+                      <a-avatar
+                          :src="p($store.state.user.userProfilePhoto)"
+                          :style="{ backgroundColor:'#0eb73a', verticalAlign: 'middle' ,float:'right'}"
+                          shape="circle"
+                          size="middle"
+                      >
+                        {{ $store.state.user.userNickname }}
+                      </a-avatar>
+                      <!--                      </user>-->
                     </div>
 
-                  </template>
-                  <template v-else>
-                    <div class="w-full  mb-2 flex float-left justify-start  items-start" :key="record.userId">
 
-                      <user v-slot="slotP" :user-id="record.userId">
-                        <div class="flex justify-start space-x-1 items-start">
+                  </div>
+
+                </template>
+                <template v-else>
+                  <div class="w-full  mb-2 flex float-left justify-start  items-start" :key="record.userId">
+
+                    <user v-slot="slotP" :user-id="record.userId">
+                      <div class="flex justify-start space-x-1 items-start">
+                        <div class="min-w-10 min-h-10 rounded-full">
                           <a-avatar
                               :src="p(slotP.photo)"
                               :style="{ backgroundColor:'#0eb73a', verticalAlign: 'middle' ,float:'right'}"
@@ -134,27 +136,28 @@
                           >
                             {{ slotP.text }}
                           </a-avatar>
-                          <div class="flex-col space-y-1 justify-start items-start">
-                            <div v-if="talkTo.user.userId == -1" class="text-xs w-0 text-left">{{
-                                slotP.text
-                              }}
-                            </div>
-                            <div
-                                class="rounded-xl bg-white hover:bg-gray-100 cursor-pointer text-black shadow text-left text-xs p-2"><span
-                                v-html="record.recordContent" id="message"></span>
-                            </div>
+                        </div>
+                        <div class="flex-col space-y-1 justify-start items-start">
+                          <div v-if="talkTo.user.userId == -1" class="text-xs w-auto text-left">{{
+                              slotP.text
+                            }}
+                          </div>
+                          <div
+                              class="rounded-xl bg-white hover:bg-gray-100 cursor-pointer text-black shadow text-left text-xs p-2"><span
+                              v-html="record.recordContent" id="message"></span>
                           </div>
                         </div>
-                      </user>
+                      </div>
+                    </user>
 
 
-                    </div>
+                  </div>
 
 
-                  </template>
                 </template>
-              </div>
-<!--            </template>-->
+              </template>
+            </div>
+            <!--            </template>-->
 
             <!--            <div id="input" ref="input" contenteditable="true"  @keyup.enter="sendMessage"-->
             <!--                 aria-placeholder='请输入文字...'  >{{message}}</div>-->

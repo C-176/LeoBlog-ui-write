@@ -207,6 +207,9 @@ export default {
       if (this.article.articlePic == null) {
         this.article.articlePic = '';
       }
+      if(this.article.articleTitle.trim()===''){
+        this.article.articleTitle='无题'
+      }
 
       this.$axios.put(this.baseURL + "/article/update", this.article).then(res => {
         if (res.data.code === 200) {

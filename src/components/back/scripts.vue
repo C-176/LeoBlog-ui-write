@@ -2,9 +2,10 @@
   <bread>我的草稿</bread>
   <div class="text-left w-full h-screen  md:w-2/3 mx-auto md:p-5 mt-14">
     <template v-if="loading">
-      <a-skeleton active/>
-      <a-skeleton active/>
-      <a-skeleton active/>
+<!--      <a-skeleton active/>-->
+<!--      <a-skeleton active/>-->
+<!--      <a-skeleton active/>-->
+      <loader></loader>
     </template>
 
     <template v-else>
@@ -48,13 +49,13 @@
       <!--      </div>-->
 
 
-      <div class="m-auto overflow-hidden rounded-lg shadow-lg cursor-pointer h-90 p-5 w-60 md:w-80"
+      <div class="m-auto overflow-hidden rounded-lg shadow-lg cursor-pointer h-90  pb-2  w-60 md:w-80"
            v-for="(article,index) in myScripts" :key="article.articleId">
         <a @click="$router.push('/article/'+article.articleId)" class="block w-full h-full">
           <img v-if="article.articlePic!=null && article.articlePic!==''" :src="p(article.articlePic)"
                class="object-cover w-full max-h-40"/>
-          <div class="w-full p-4 bg-white dark:bg-gray-800">
-            <p class="font-medium text-indigo-600 text-base">
+          <div class="w-full p-4 h-40 overflow-hidden bg-white dark:bg-gray-800">
+            <p class="font-medium text-indigo-600 hover:text-indigo-500 text-base">
               {{ article.articleTitle }}
             </p>
 
@@ -64,11 +65,18 @@
             </p>
           </div>
         </a>
-        <div class="flex justify-center items-center h-6 w-full space-x-2 ">
-          <a class="tools hover:bg-gray-200 " @click="deleteArticle(article.articleId)">删除<span class="iconfont">&#xe611;</span> </a>
-          <a class="tools hover:bg-gray-200" @click="modifyArticle(article.articleId)">修改<span class="iconfont">&#xe615;</span> </a>
-          <a class="tools hover:bg-gray-200" @click="shareArticle(article.articleId)">分享<span class="iconfont">&#xe73a;</span> </a>
-          <a class="tools hover:bg-gray-200">其他<span class="iconfont">&#xe63e;</span> </a>
+
+        <div class="w-full flex h-6  space-x-4 justify-center items-center">
+          <a class="tools hover:animate-ping"  @click="publishArticle(article.articleId)">
+            <icon src="isugonwi" size="24"></icon>
+          </a>
+          <a class="tools  hover:animate-ping"  @click="modifyArticle(article.articleId)">
+            <icon src="wloilxuq" size="24"><span>编辑</span></icon>
+            </a>
+          <a class="tools  hover:animate-ping"  @click="deleteArticle(article.articleId)">
+            <icon src="kfzfxczd" size="24"><span>删除</span></icon>
+            </a>
+
         </div>
       </div>
 
@@ -192,7 +200,7 @@ export default {
       }).then((result) => {
         if (result.value) {
           this.$axios.delete('/article/' + articleId).then((res) => {
-                console.log(res.data)
+
                 if (res.data.code !== 200) {
                   this.$sa(res.data.msg, 'error')
                   return;
@@ -205,12 +213,22 @@ export default {
       })
 
     },
-    shareArticle(articleId) {
-      this.$st("分享成功", 'success')
-    },
+
     modifyArticle(articleId) {
       this.$router.push('/write/' + articleId)
+    },
+    publishArticle(articleId){
+      this.$axios.put('/article/publish/'+articleId).then((res)=>{
+        if (res.data.code !== 200) {
+          this.$sa(res.data.msg, 'error')
+          return;
+        }
+        this.$st("发布成功", 'success')
+        this.getArticles()
+        this.$router.replace('/article/'+articleId)
+      })
     }
+
 
 
   },

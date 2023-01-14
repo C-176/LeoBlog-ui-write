@@ -49,7 +49,7 @@
         </div>
         <hr>
         <div class="text-left p-3 content" ref="articleContent">
-          <span v-html="article.articleContent"></span>
+          <span class="text-gray-600" v-html="article.articleContent"></span>
         </div>
 
 
@@ -551,7 +551,20 @@ export default {
 :deep(p img:hover) {
   cursor: pointer !important;
 }
+:deep(span img,span video) {
+//width: 80% !important; //margin-left: 10% !important;
+  /*height: 100%;*/
+  border-radius: 10px;
+  max-height: calc(100vh - 5rem);
+  margin: 0 auto;
+  margin-bottom: 5px !important;
+  box-shadow: 1px 3px 11px #134857;
 
+}
+
+:deep(span img:hover) {
+  cursor: pointer !important;
+}
 :deep(pre) {
   background: #fff !important;
   border-radius: 10px !important;
@@ -559,11 +572,16 @@ export default {
 }
 
 :deep(.content ol) {
-  padding-left: 4% !important;
+  padding-left: 1rem !important;
+  border-left: 0.1rem solid #4f46e5 !important;
+
 }
 
+
 :deep(.content ul) {
-  padding-left: 4% !important;
+  padding-left: 1rem !important;
+  border-left: 0.1rem solid #4f46e5 !important;
+
 }
 
 
@@ -585,5 +603,32 @@ export default {
 }
 :deep(blockquote p) {
   display: inline;
+}
+
+
+:deep(h1){
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-left:-0.2rem !important;
+}
+:deep(h2){
+  font-size: 1.15rem;
+  font-weight: bold;
+  margin-left:-0.2rem !important;
+}
+:deep(h3){
+  font-size: 1.05rem;
+  font-weight: bold;
+  margin-left:-0.2rem !important;
+}
+:deep(h4){
+  font-size: 0.95rem;
+  font-weight: bold;
+  margin-left:-0.2rem !important;
+}
+:deep(h5){
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-left:-0.2rem !important;
 }
 </style>
