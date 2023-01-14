@@ -48,7 +48,7 @@
         </div>
         </div>
         <hr>
-        <div class="text-left p-3" ref="articleContent">
+        <div class="text-left p-3 content" ref="articleContent">
           <span v-html="article.articleContent"></span>
         </div>
 
