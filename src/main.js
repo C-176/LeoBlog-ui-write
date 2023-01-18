@@ -11,12 +11,15 @@ import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import '/public/static/css/daemon.css'
 import '/public/static/css/loading.css'
+// import '/public/static/js/three.min'
+// import '/public/static/js/vanta.halo.min'
+// import '/public/static/js/vanta.fog.min'
+// import '/public/static/js/vanta.net.min'
 import 'element-plus/theme-chalk/dark/css-vars.css'
 import bread from "@/components/pub/bread";
 import bigImg from "@/components/pub/bigImg";
 import user from "@/components/pub/user"
 import loader from "@/components/pub/loader";
-
 
 
 import VueMarkdownEditor from '@kangc/v-md-editor';
@@ -28,6 +31,7 @@ import createEmojiPlugin from '@kangc/v-md-editor/lib/plugins/emoji/index';
 import '@kangc/v-md-editor/lib/plugins/emoji/emoji.css';
 import createCopyCodePlugin from '@kangc/v-md-editor/lib/plugins/copy-code/index';
 import '@kangc/v-md-editor/lib/plugins/copy-code/copy-code.css';
+
 VueMarkdownEditor.use(vuepressTheme, {Prism}).use(createCopyCodePlugin()).use(createEmojiPlugin());
 
 import icon from '@/components/pub/icon'
@@ -98,10 +102,10 @@ app.config.globalProperties.$moments = (stamp) => {
     let date = new Date(stamp)
     let Y = date.getFullYear() + '-';
     let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-    let D = (date.getDate()<10?'0'+date.getDate():date.getDate()) + ' ';
-    let h = (date.getHours()<10?'0'+date.getHours():date.getHours())  + ':';
-    let m = (date.getMinutes()<10?'0'+date.getMinutes():date.getMinutes()) + ':';
-    let s = date.getSeconds()<10?'0'+date.getSeconds():date.getSeconds() ;
+    let D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + ' ';
+    let h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
+    let m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+    let s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
     return Y + M + D + h + m + s;
 }
 app.config.globalProperties.p = (pic) => {
@@ -120,13 +124,11 @@ app.config.globalProperties.$imgOnerror = e => {
     img.onerror = null
 }
 
-app.use(router).use(store).use(ElementPlus).use(Antd).use(VueMarkdownEditor).component('loader', loader)
-    .component('bread',bread).component('icon',icon).component('user',user).component('bigImg',bigImg)
+import bgCover from "@/components/pub/BgCover.vue";
 
-// app.use(APlayer, {
-//     defaultCover: '',
-//     productionTip: true,
-// });
+app.use(router).use(store).use(ElementPlus).use(Antd).use(VueMarkdownEditor).component('loader', loader)
+    .component('bread', bread).component('bgCover', bgCover).component('icon', icon).component('user', user).component('bigImg', bigImg)
+
 
 app.mount('#app')
 

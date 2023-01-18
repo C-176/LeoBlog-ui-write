@@ -234,6 +234,7 @@
       </div>
     </div>
   </div>
+  <bgCover :showCover="showShare"></bgCover>
 </template>
 
 <script>

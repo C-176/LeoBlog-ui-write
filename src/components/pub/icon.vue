@@ -28,7 +28,7 @@ export default {
     },
     colors: {
       type: String,
-      default: "primary:#cb5eee,secondary:#4be1ec"
+      default: "primary:#4f46e5,secondary:#4be1ec"
     },
     trigger: {
       type: String,

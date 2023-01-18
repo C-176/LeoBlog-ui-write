@@ -13,7 +13,7 @@
           </p>
         </div>
         <div class="order-3 mt-2 w-full flex-shrink-0 sm:order-2 sm:mt-0 sm:w-auto">
-          <a @click="$router.push('xxxxx')" class="flex font-bold items-center justify-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-indigo-600 shadow-sm hover:bg-indigo-50">探索🪲</a>
+          <a @click="$router.push('a-bug')" class="flex font-bold items-center justify-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-indigo-600 shadow-sm hover:bg-indigo-50">探索🪲</a>
         </div>
         <div class="order-2 flex-shrink-0 sm:order-3 sm:ml-3">
           <button type="button" @click="show = false" class=" -mr-1 flex rounded-md p-2 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-white sm:-mr-2">

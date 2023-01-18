@@ -48,7 +48,8 @@
                           <img alt="profile" :src="p(chat.user.userProfilePhoto)"
                                class="mx-auto  object-cover rounded-full h-10 w-10 "/>
                           <span
-                              class="absolute w-3 h-3 transform -translate-x-1/2 bg-gray-500 border-2 border-white rounded-full left-1/2 -bottom-2">
+                              class="absolute w-3 h-3 transform -translate-x-1/2  border-2 border-white rounded-full left-1/2 -bottom-2"
+                          :class="{'bg-gray-500':chat.user.userStatus==0,'bg-green-500':chat.user.userStatus==1}">
 
                         </span>
                         </a>
@@ -774,8 +775,8 @@ export default {
 
       if (data.type === 1) {
         this.$st(data.message, 'info')
-        if (data.message.indexOf("已连接") !== -1) {
-          let index = data.message.indexOf("已连接")
+        if (data.message.indexOf(" 已连接") !== -1) {
+          let index = data.message.indexOf(" 已连接")
           let userName = data.message.substring(0, index)
           let index2 = this.chats.findIndex(item => item.user.userNickname == userName)
           if (index2 !== -1) {
@@ -784,10 +785,10 @@ export default {
         }
       } else if (data.type === 2) {
         this.$st(data.message, 'info')
-        if (data.message.indexOf("已断开连接") !== -1) {
-          let index = data.message.indexOf("已断开连接")
+        if (data.message.indexOf(" 已断开连接") !== -1) {
+          let index = data.message.indexOf(" 已断开连接")
           let userName = data.message.substring(0, index)
-          let index2 = this.chats.findIndex(item => item.user.userNickname == userName)
+          let index2 = this.chats.findIndex(item => item.user.userNickname === userName)
           if (index2 !== -1) {
             this.chats[index2].user.userStatus = 0
           }

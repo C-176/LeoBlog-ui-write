@@ -1,5 +1,5 @@
 <template>
-    <main class="bg-white flex h-screen space-x-3 w-full justify-center items-center">
+    <main id="show" class="bg-white flex h-screen  space-x-0 w-screen justify-center items-center">
       <div class="relative px-6 lg:px-8">
         <div class="mx-auto max-w-3xl pt-20 pb-32 sm:pt-48 sm:pb-40">
           <div>
@@ -7,7 +7,7 @@
               <div
                   class="relative overflow-hidden rounded-full py-1.5 px-4 text-sm leading-6 ring-1 ring-gray-900/10 ">
                 <span class="text-gray-600">
-                  赞助作者搞开发 <a @click="$sa('谢谢你，善良的陌生人。')" class="font-semibold text-indigo-600"><span
+                  赞助作者搞开发 <a @click="$st('谢谢你，善良的陌生人。')" class="font-semibold text-indigo-600"><span
                     class="absolute inset-0" aria-hidden="true"/>去扶贫 <span aria-hidden="true">&rarr;</span></a>
                 </span>
               </div>
@@ -19,12 +19,12 @@
 
                 <a @click="$router.push('/editor/new')"
                    class="inline-block rounded-lg flex items-center bg-indigo-600 px-4 py-1.5 text-base font-semibold leading-7 text-white shadow-sm ring-1 ring-indigo-600 hover:bg-indigo-500">
-                  <icon src="edxgdhxu"></icon>开始创作
+                  <icon src="edxgdhxu" trigger="loop"></icon>开始创作
                   <span class="text-indigo-200" aria-hidden="true">&rarr;</span>
                 </a>
                 <a @click="$router.push('/home/index')"
                    class="inline-block rounded-lg  flex items-center px-4 py-1.5 text-base font-semibold leading-7 text-gray-900 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                  <icon src="hezrwbzv"></icon>开始体验
+                  <icon src="hezrwbzv" trigger="loop"></icon>开始体验
                   <span class="text-gray-400" aria-hidden="true">&rarr;</span>
                 </a>
               </div>
@@ -50,7 +50,7 @@
 
 <script setup>
 
-import {computed, ref} from "vue";
+import {computed, ref,onMounted} from "vue";
 import {useStore} from "vuex";
 const store = useStore()
 const key = ref('')
@@ -59,6 +59,28 @@ function search() {
   window.open('https://cn.bing.com/search?form=MOZTSB&pc=MOZI&q='+key.value)
 
 }
+onMounted(()=>{
+//   VANTA.FOG({
+//     el: "#show",
+//     mouseControls: true,
+//     touchControls: true,
+//     gyroControls: false,
+//     minHeight: 200.00,
+//     minWidth: 200.00
+//   })
+//   VANTA.NET({
+//     el: "#show",
+//     mouseControls: true,
+//     touchControls: true,
+//     gyroControls: false,
+//     minHeight: 200.00,
+//     minWidth: 200.00,
+//     scale: 1.00,
+//     scaleMobile: 1.00,
+//     color: '#4f46e5',
+//     backgroundColor: '#ffffff'
+//   })
+})
 
 let logined = ref(computed(() => store.state.user != null))
 </script>

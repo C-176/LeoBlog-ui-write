@@ -48,7 +48,12 @@
                 </button>
                 <button @click="toggle"
                         class=" hover:bg-gray-200 duration-300 transition rounded-full w-10 h-10 flex items-center justify-center pl-0.5 ring-1 ring-indigo-400 focus:outline-none">
-                  <icon src="xddtsyvc" trigger="click"></icon>
+                  <template v-if="ap && ap.paused">
+                    <icon src="xddtsyvc" trigger="click"></icon>
+                  </template>
+                  <template v-else>
+                    <icon src="ensnyqet" trigger="click"></icon>
+                  </template>
                 </button>
                 <button @click="this.ap.skipForward()"
                         class="focus:outline-none">
@@ -92,19 +97,21 @@
                             {{ music.artist }}
                         </span>
               </div>
+              <button @click="getMusic">xxxx</button>
             </div>
 
           </div>
         </div>
       </div>
     </div>
+
   </transition>
 </template>
 
 <script>
 import 'APlayer/dist/APlayer.min.css';
 import APlayer from 'aplayer';
-import music from "./music.vue";
+import axios from "axios";
 
 export default {
   name: "music",
@@ -148,8 +155,8 @@ export default {
     }
   },
   watch: {
-    showPlayer(val) {
-      console.log(val)
+    ap(val) {
+      // console.log(val)
     }
 
   },
@@ -173,6 +180,7 @@ export default {
     });
     this.player = document.querySelector(".aplayer-ptime");
 
+
   },
   methods: {
 
@@ -192,7 +200,7 @@ export default {
       // if(this.ap.audio.paused)
     },
     getMusic() {
-      //
+      // //
       // this.$axios.post('http://music.163.com/api/search/pc',{
       //   params: {
       //     s: '海阔天空',
@@ -245,6 +253,53 @@ export default {
       //     lrc: lrc
       //   }
       // })
+
+
+      axios.post('/music?bizContent={keyword=海阔天空,limit=1,offset=1,appId=a301030000000000cd68e19ab49ac514}'
+      ).then(res => {
+        console.log(res.data)
+        // let name = res.data.result.songs[0].name;
+        // let artist = res.data.result.songs[0].artists[0].name;
+        // let url = res.data.result.songs[0].mp3Url;
+        // let cover = res.data.result.songs[0].album.picUrl;
+        // let lrc ='';
+        // // let lrc = res.data.result.songs[0].lyric;
+        // this.$axios.get('http://music.163.com/api/song/media', {
+        //   params: {
+        //     id: res.data.result.songs[0].id,
+        //     // lv: -1,
+        //     // kv: -1,
+        //     // tv: -1
+        //   },
+        //   headers: {
+        //     'Access-Control-Allow-Origin': '*',
+        //   }
+        // }).then(res => {
+        //   console.log(res.data.lrc.lyric)
+        //   lrc = res.data.lrc.lyric;
+        //   // this.ap = new APlayer({
+        //   //   container: document.getElementById('player'),
+        //   //   fixed: true,
+        //   //   autoplay: true,
+        //   //   audio: [
+        //   //     {
+        //   //       name: name,
+        //   //       artist: artist,
+        //   //       url: url,
+        //   //       cover: cover,
+        //   //       lrc: lrc
+        //   //     }
+        //   //   ]
+        //   // });
+        // })
+        // this.audio = {
+        //   name: name,
+        //   artist: artist,
+        //   url: url,
+        //   cover: cover,
+        //   lrc: lrc
+        // }
+      })
     }
   }
 

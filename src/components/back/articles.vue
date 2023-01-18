@@ -1,7 +1,7 @@
 <template>
   <bread>我的文章</bread>
 
-  <div ref="tar" class="text-left w-full h-screen  md:w-2/3 mx-auto md:p-5 mt-14">
+  <div ref="tar" class="text-left w-full h-screen  scroll-auto md:w-2/3 mx-auto md:p-5 mt-14">
     <template v-if="loading">
 <!--      <a-skeleton active/>-->
 <!--      <a-skeleton active/>-->

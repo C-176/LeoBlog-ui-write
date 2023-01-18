@@ -78,10 +78,12 @@ const router = createRouter({
 })
 router.beforeEach((to, from, next) => {
     //将页面设置为缓存
-    NProgress.start()
+    NProgress.configure({showSpinner: false});
+    NProgress.start();
     to.meta.keepAlive = !to.path.includes('/search');
     to.meta.transition = 'fade'
     if (to.path == '/index') {
+        store.commit('changeShell', false)
         next()
         return
     }
@@ -102,11 +104,7 @@ router.beforeEach((to, from, next) => {
     if (to.path.includes('/back')) {
         if (token == null || token.trim() == '' || token == undefined || user == null || user == undefined) {
             next('/LR')
-        } else {
-            next()
         }
-
-
         store.commit('changeShell', true)
     } else {
         store.commit('changeShell', false)

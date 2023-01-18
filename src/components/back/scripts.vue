@@ -68,7 +68,7 @@
 
         <div class="w-full flex h-6  space-x-4 justify-center items-center">
           <a class="tools hover:animate-ping"  @click="publishArticle(article.articleId)">
-            <icon src="isugonwi" size="24"></icon>
+            <icon src="isugonwi" size="24"><span>发布</span></icon>
           </a>
           <a class="tools  hover:animate-ping"  @click="modifyArticle(article.articleId)">
             <icon src="wloilxuq" size="24"><span>编辑</span></icon>

@@ -35,8 +35,24 @@ export default defineConfig({
             "@": path.resolve(__dirname, "./src"),
         },
         extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
-        // 端口
-        port: 4000,
+
+    },
+    server: {
+        port: 3000,
+        proxy: {
+            '/music': {
+                // 后台地址
+                target: 'http://openapi.music.163.com/openapi/music/basic/search/song/get/v2',
+                changeOrigin: true,
+                rewrite: path => path.replace(/^\/music/, '')
+            },
+            '/api2': {
+                // 后台地址
+                target: 'http://127.0.0.1:8956/',
+                changeOrigin: true,
+                rewrite: path => path.replace(/^\/api2/, '')
+            }
+        }
     },
     build: {
         chunkSizeWarningLimit: 1500,
@@ -47,6 +63,7 @@ export default defineConfig({
                 assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
             }
         }
-    }
+    },
+
 
 })

@@ -26,15 +26,17 @@
           <Menu as="div" v-if="logined"
                 class="md:hidden z-10 space-x-2  inline-flex justify-center items-center text-left ">
             <button type="button" @click="$store.commit('changeMessageVisible',!$store.state.messageVisible)"
-                    class="rounded-full  bg-gray-300 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
+                    class="flex items-center rounded-full  p-1 text-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
               <span class="sr-only">View notifications</span>
-              <BellIcon class="h-4 w-4 text-indigo-600" aria-hidden="true"/>
+              <!--              <BellIcon class="h-4 w-4 text-indigo-600" aria-hidden="true"/>-->
+              <icon src="psnhyobz" size="22"></icon>
             </button>
 
             <button type="button" @click="$store.commit('changeChatVisible',!$store.state.chatVisible)"
-                    class="rounded-full  bg-gray-300 p-1 text-gray-400 text-indigo-600 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
+                    class="flex items-center rounded-full   p-1 text-gray-400 text-indigo-600  focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
               <span class="sr-only">View notifications</span>
-              <ChatBubbleOvalLeftEllipsisIcon class="h-4 w-4 text-indigo-600" aria-hidden="true"/>
+              <icon src="mjmrmyzg" size="22"></icon>
+              <!--              <ChatBubbleOvalLeftEllipsisIcon class="h-4 w-4 text-indigo-600" aria-hidden="true"/>-->
             </button>
             <div class="relative inline-block text-left">
               <div
@@ -63,12 +65,17 @@
             </div>
           </Menu>
           <div v-else
-               class="flex justify-start inline-block md:hidden lg:w-0 mr-4 lg:flex-1">
+               class="flex justify-around space-x-1 inline-block md:hidden lg:w-0 mr-4 lg:flex-1">
+
             <a @click="$router.push('/index')">
               <span class="sr-only">LeoBlog</span>
               <img class="h-10 scale-140  w-auto sm:h-10" src="http://49.235.100.240/api/source/images/logoTest.png"
                    alt=""/>
             </a>
+<!--            <button @click="openSearch = !openSearch"-->
+<!--                    class="inline-flex items-center justify-center rounded-md bg-gray-100 align-center p-2 text-xs font-medium text-gray-500 hover:bg-gray-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"-->
+<!--            >Ctrl+K 搜索-->
+<!--            </button>-->
           </div>
           <!--          大屏中间导航栏-->
           <PopoverGroup as="nav" class="hidden space-x-10 md:flex items-center">
@@ -210,6 +217,10 @@
                 <icon src="pgbyoxin"></icon>
               </button>
             </a-tooltip>
+            <button @click="openSearch = !openSearch"
+                    class="hidden md:inline-flex   justify-center rounded-md bg-gray-100  px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+            >Ctrl+K 搜索
+            </button>
 
 
             <template v-if="!logined">
@@ -219,14 +230,7 @@
                  class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">注册</a>
             </template>
             <template v-else>
-              <!--            <a @click="$router.push('/back/info')"-->
-              <!--               class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">个人中心</a>-->
-              <!--            <a @click="logout"-->
-              <!--                class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">退出</a>-->
-              <button v-show="logined" @click="openSearch = !openSearch"
-                      class="hidden md:inline-flex   justify-center rounded-md bg-gray-100  px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-              >Ctrl+K 搜索
-              </button>
+
 
               <!--          大屏菜单options-->
               <Menu as="div" v-if="logined"
@@ -266,9 +270,10 @@
                     <div class="py-1  transition duration-500 " role="menu" aria-orientation="vertical"
                          aria-labelledby="options-menu">
 
-                      <div  class="block text-gray-600 text-base text-center px-4 py-2 transition duration-100 rounded-xl text-md   "
-                           >
-                        {{$store.state.user.userNickname}}
+                      <div
+                          class="block text-gray-600 text-base text-center px-4 py-2 transition duration-100 rounded-xl text-md   "
+                      >
+                        {{ $store.state.user.userNickname }}
                       </div>
                       <hr>
 
@@ -292,7 +297,6 @@
               <a @click="logOut"
                  class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
                 退出
-                <icon src="zmkotitn"></icon>
               </a>
 
 
@@ -311,7 +315,7 @@
               <div class="flex items-center justify-between">
                 <!--logo-->
                 <div>
-                  <img @click="$router.push('/index')" class="cursor-pointer h-10 pl-1  scale-140 w-auto"
+                  <img @click="$router.push('/index')" class="cursor-pointer h-10 pl-1 animate-bounce scale-140 w-auto"
                        src="http://49.235.100.240/api/source/images/logoTest.png"
                        alt="LeoBlog"/>
                 </div>
@@ -326,17 +330,20 @@
               </div>
               <!--              小屏导航栏-->
               <div class="mt-6">
-                <nav class="grid gap-y-8">
+                <nav class="grid gap-y-6">
                   <a v-for="item in solutions" :key="item.name" @click="item.href($router)"
-                     class="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50">
-                    <icon :src="item.iconSrc"></icon>
+                     class="-m-3 flex items-center rounded-md p-1 hover:bg-gray-50">
+                    <icon trigger="loop" :src="item.iconSrc"></icon>
                     <!--                    <component :is="item.icon" class="h-6 w-6 flex-shrink-0 text-indigo-600" aria-hidden="true"/>-->
                     <span class="ml-3 text-base font-medium text-gray-900">{{ item.name }}</span>
                   </a>
-                  <a v-for="item in navigation" :key="item.name" @click="item.href($router)"
-                     class="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50">
-                    <component :is="item.icon" class="h-6 w-6 flex-shrink-0 text-indigo-600" aria-hidden="true"/>
-                    <span class="ml-3 text-base font-medium text-gray-900">{{ item.name }}</span>
+
+                  <hr>
+                  <a v-for="item in more" :key="item.name" @click="item.href($router)"
+                     class="-m-3 flex items-center rounded-md p-1 hover:bg-gray-50">
+                    <!--                    <component :is="item.icon" class="h-6 w-6 flex-shrink-0 text-indigo-600" aria-hidden="true"/>-->
+                    <icon trigger="loop" :src="item.iconSrc"></icon>
+                    <span class="ml-3 text-sm font-medium text-gray-900">{{ item.name }}</span>
                   </a>
                 </nav>
               </div>
@@ -345,7 +352,10 @@
             <div class="space-y-6 py-6 px-5">
               <div class="grid grid-cols-2 gap-y-4 gap-x-8">
                 <a v-for="item in about" :key="item.name" @click="item.href($router)"
-                   class="text-base font-medium text-gray-900 hover:text-gray-700">{{ item.name }}</a>
+                   class="flex items-center space-x-2 text-sm text-center font-medium text-gray-900 p-1 rounded-xl hover:bg-gray-100">
+                  <icon trigger="loop" :src="item.iconSrc"></icon>
+                  <span class="text-gray-900">{{ item.name }}</span>
+                </a>
               </div>
               <!--              小屏登陆注册-->
               <div>
@@ -373,8 +383,8 @@
   <music :show-player="showPlayer" @closePlayer="() => {showPlayer=false}"></music>
   <chat v-if="logined"></chat>
   <message v-if="logined"></message>
-  <BgCover
-      :showCover="$store.state.chatVisible || $store.state.messageVisible || $store.state.bgCover || showPlayer || openSearch"></BgCover>
+  <bgCover
+      :showCover="$store.state.chatVisible || $store.state.messageVisible || $store.state.bgCover || showPlayer || openSearch"></bgCover>
   <search-dialog :is-open="openSearch" @closeSearch="() => {openSearch=false}"></search-dialog>
 </template>
 
@@ -382,7 +392,7 @@
 import chat from "@/components/pub/chat";
 import message from "@/components/pub/message";
 import searchDialog from '@/components/pub/searchDialog'
-import BgCover from "@/components/pub/BgCover";
+
 import {
   Menu,
   MenuButton,
@@ -443,20 +453,17 @@ const user = computed(() => store.state.user)
 const props = defineProps({
   foo: String
 })
-const navigation = [
-  {name: '纸条', href: '#', icon: ChartBarIcon},
-  {name: 'Marketplace', href: '#', icon: ChartBarIcon},
-]
 
 function closeMenu() {
   setTimeout(() => {
-    if(!openMenuItem.value){
+    if (!openMenuItem.value) {
       openMenu.value = false
     }
 
   }, 500)
 
 }
+
 function closeMenuItem() {
   setTimeout(() => {
     openMenu.value = false
@@ -465,6 +472,7 @@ function closeMenuItem() {
   }, 500)
 
 }
+
 function logOut() {
 
   //选择框
