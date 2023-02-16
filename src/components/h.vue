@@ -25,6 +25,12 @@
 
           <Menu as="div" v-if="logined"
                 class="md:hidden z-10 space-x-2  inline-flex justify-center items-center text-left ">
+
+            <button class="rounded-xl z-20 text-white h-8 w-8 text-center bg-indigo-100 hover:bg-indigo-200"
+                    @click="showPlayer=true">
+              <icon src="pgbyoxin"></icon>
+            </button>
+
             <button type="button" @click="$store.commit('changeMessageVisible',!$store.state.messageVisible)"
                     class="flex items-center rounded-full  p-1 text-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
               <span class="sr-only">View notifications</span>
@@ -72,10 +78,10 @@
               <img class="h-10 scale-140  w-auto sm:h-10" src="http://49.235.100.240/api/source/images/logoTest.png"
                    alt=""/>
             </a>
-<!--            <button @click="openSearch = !openSearch"-->
-<!--                    class="inline-flex items-center justify-center rounded-md bg-gray-100 align-center p-2 text-xs font-medium text-gray-500 hover:bg-gray-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"-->
-<!--            >Ctrl+K 搜索-->
-<!--            </button>-->
+            <!--            <button @click="openSearch = !openSearch"-->
+            <!--                    class="inline-flex items-center justify-center rounded-md bg-gray-100 align-center p-2 text-xs font-medium text-gray-500 hover:bg-gray-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"-->
+            <!--            >Ctrl+K 搜索-->
+            <!--            </button>-->
           </div>
           <!--          大屏中间导航栏-->
           <PopoverGroup as="nav" class="hidden space-x-10 md:flex items-center">

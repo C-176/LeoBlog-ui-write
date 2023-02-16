@@ -1,5 +1,7 @@
 <template>
-  <div id="player" style="display: none"></div>
+  <audio class="invisible" ref="musicElement">
+    <source :src="music.url">
+  </audio>
   <transition name="fade">
 
     <!-- component -->
@@ -14,8 +16,9 @@
           </button>
         </a-tooltip>
         <div class="flex flex-col w-full">
-          <div class="flex p-5 border-b">
-            <img class='w-20 h-20 object-cover rounded-xl' alt='User avatar'
+          <div class="flex p-5 border-b bg-cover backdrop-blur-sm bg-blend-lighten">
+            <!--               :style="{backgroundImage: 'url(' + music.cover + ')'}">-->
+            <img class='w-20 h-20 object-cover rounded-xl shadow-lg' alt='User avatar'
                  :src='music.cover'>
             <div class="flex flex-col justify-around p-2 w-full">
                     <span class="text-xs text-gray-700 uppercase font-medium ">
@@ -27,35 +30,33 @@
               <span class="text-xs text-gray-500  font-medium ">
                         {{ music.artist }}
                     </span>
-              <!--            <div class="flex justify-end">-->
-              <!--              <img class="w-5 cursor-pointer" src="https://www.iconpacks.net/icons/2/free-favourite-icon-2765-thumb.png" />-->
-              <!--              <img class="w-5 cursor-pointer mx-2" src="https://www.iconpacks.net/icons/2/free-favourite-icon-2765-thumb.png" />-->
-              <!--              <img class="w-5 cursor-pointer" src="https://www.iconpacks.net/icons/2/free-favourite-icon-2765-thumb.png" />-->
-              <!--            </div>-->
+
             </div>
           </div>
 
           <div class="flex flex-col sm:flex-row items-center p-2 md:p-5">
             <div class="flex items-center">
               <div class="flex space-x-3 p-2">
-                <button @click="this.ap.skipBack()"
-                        class="focus:outline-none">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"
+                <button @click="back()"
+                        class="focus:outline-none hover:text-gray-400">
+                  <svg class="w-4 h-4 hover:text-gray-400" viewBox="0 0 24 24" fill="none" stroke="#ef4444"
+                       stroke-width="2"
                        stroke-linecap="round" stroke-linejoin="round">
                     <polygon points="19 20 9 12 19 4 19 20"></polygon>
                     <line x1="5" y1="19" x2="5" y2="5"></line>
                   </svg>
                 </button>
-                <button @click="toggle"
-                        class=" hover:bg-gray-200 duration-300 transition rounded-full w-10 h-10 flex items-center justify-center pl-0.5 ring-1 ring-indigo-400 focus:outline-none">
-                  <template v-if="ap && ap.paused">
-                    <icon src="xddtsyvc" trigger="click"></icon>
-                  </template>
-                  <template v-else>
-                    <icon src="ensnyqet" trigger="click"></icon>
-                  </template>
+                <button @click="handlePlay"
+                        class=" text-2xl  hover:text-gray-400 duration-500 transition rounded-full w-10 h-10 flex items-center justify-center pl-0.5 focus:outline-none">
+
+                  <play-circle-outlined v-if="!playing"/>
+                  <!--                    <icon src="xddtsyvc" trigger="click"></icon>-->
+
+                  <!--                    <icon src="ensnyqet" trigger="click"></icon>-->
+                  <pause-circle-outlined v-if="playing"/>
+
                 </button>
-                <button @click="this.ap.skipForward()"
+                <button @click="forward()"
                         class="focus:outline-none">
                   <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"
                        stroke-linecap="round" stroke-linejoin="round">
@@ -65,18 +66,37 @@
                 </button>
               </div>
             </div>
-            <div class="relative w-full sm:w-1/2 md:w-7/12 lg:w-4/6 ml-2">
-              <div class="bg-indigo-300 h-2 w-full rounded-lg"></div>
-              <div class="bg-indigo-500 h-2 w-1/2 rounded-lg absolute top-0"></div>
+<!--                        <div class="relative w-full sm:w-1/2 md:w-7/12 lg:w-4/6 ml-2">-->
+<!--                          <div class="bg-indigo-300 h-2 w-full rounded-lg"></div>-->
+<!--                          <div class="bg-indigo-500 h-2 w-1/2 rounded-lg absolute top-0"></div>-->
 
-            </div>
+<!--                        </div>-->
+<!--                                    <input type="range" ref="volumeRange" step="1" value="80" min="0" max="100"-->
+<!--                                           @input="musicElement.volume = $refs.volumeRange.value/100">-->
+            <a-slider v-if="musicElement" id="test" class="relative w-full sm:w-1/2 md:w-7/12 lg:w-4/6 ml-2"
+                      ref="seekbar" v-model:value="musicElement.currentTime" :step="0.5"
+                      :tooltipVisible="false"
+                      :max="musicElement.duration"/>
+            <a-slider v-else id="test" class="relative w-full sm:w-1/2 md:w-7/12 lg:w-4/6 ml-2" value="0"
+                      ref="seekbar"/>
             <div class="flex justify-end w-full sm:w-auto pt-1 sm:pt-0">
 <span class="text-xs text-gray-700 uppercase font-medium pl-2">
-                    {{ this.currTime }}/04:00
+                    {{ this.currentTime }} / {{ this.duration }}
                 </span>
             </div>
 
+
           </div>
+          <input v-if="musicElement" type="range" class="relative mx-auto w-full px-5 bg-indigo-600"
+                 ref="volumeRange" step="1" value="80" min="0" max="100"
+                 @input="musicElement.volume = $refs.volumeRange.value/100">
+          <input v-else type="range" class="relative w-full px-5 bg-indigo-600"
+                 ref="volumeRange" step="1" value="0" min="0" max="100">
+          <!--          <a-slider v-if="musicElement" id="test" class="relative w-full sm:w-1/2 md:w-7/12 lg:w-4/6 ml-2"-->
+          <!--                    ref="volume" v-model:value="musicElement.volume" step="0.001" max="1"-->
+          <!--          />-->
+          <!--          <a-slider v-else id="test" class="relative w-full sm:w-1/2 md:w-7/12 lg:w-4/6 ml-2" value="0"-->
+          <!--                    ref="volume"/>-->
 
           <div class="flex flex-col p-5">
             <div class="border-b pb-1 flex justify-between items-center mb-2">
@@ -86,8 +106,8 @@
             </div>
 
             <div v-for="(music,index) in audio" :key="music.name"
-                 @click="this.ap.list.switch(index)"
-                 class="flex border-b py-3 cursor-pointer hover:shadow-md px-2 ">
+                 @click="to(index)"
+                 class="flex border-b py-3 cursor-pointer hover:shadow-md px-2 transition duration-300 ">
               <img class='w-10 h-10 object-cover rounded-lg' alt='User avatar' :src="music.cover">
               <div class="flex flex-col px-2 w-full">
                         <span class="text-sm text-indigo-600 capitalize font-semibold pt-1">
@@ -97,7 +117,7 @@
                             {{ music.artist }}
                         </span>
               </div>
-              <button @click="getMusic">xxxx</button>
+              <!--              <button @click="getMusic">xxxx</button>-->
             </div>
 
           </div>
@@ -109,19 +129,27 @@
 </template>
 
 <script>
-import 'APlayer/dist/APlayer.min.css';
-import APlayer from 'aplayer';
+
+
 import axios from "axios";
+import {PlayCircleOutlined, PauseCircleOutlined} from '@ant-design/icons-vue';
 
 export default {
   name: "music",
+  components: {
+    PlayCircleOutlined,
+    PauseCircleOutlined
+  },
   props: ['showPlayer'],
   emits: ['closePlayer'],
   data() {
     return {
       // showPlayer:false,
-      player: null,
-      ap: null,
+      musicElement: null,
+      seekbar: null,
+      volumeRange: null,
+      position: 0,
+      playing: false,
       music: {
         name: 'Brooklyn',
         artist: 'The Midnight',
@@ -141,52 +169,93 @@ export default {
         url: '/source/audios/Lost Boy - The Midnight.mp3',
         cover: 'http://p1.music.126.net/X0ZUXOrUi2H42Hsr5Bi5MA==/109951165111559735.jpg?param=130y130',
         // theme: '#ebd0c2'
-      }]
+      }],
+      currentTime: '00:00',
+      duration: '00:00',
     };
   },
-  computed: {
-    currTime() {
-      if (this.ap) {
-        return this.player.textContent
-        // return this.player
-      } else {
-        return '00:00'
-      }
-    }
-  },
-  watch: {
-    ap(val) {
-      // console.log(val)
-    }
+  computed: {},
+  watch: {},
 
-  },
 
   mounted() {
-    this.ap = new APlayer({
-      container: document.getElementById('player'),
-      fixed: true,
-      // mini: false,
-      autoplay: false,
-      theme: '#FADFA3',
-      loop: 'all',
-      order: 'random',
-      preload: 'auto',
-      volume: 0.7,
-      mutex: true,
-      listFolded: false,
-      listMaxHeight: 90,
-      // lrcType: 1,
-      audio: this.audio,
-    });
-    this.player = document.querySelector(".aplayer-ptime");
+    setTimeout(() => {
+      this.music = this.audio[0];
+      this.musicElement = this.$refs.musicElement
+      this.duration = this.secondToTime(this.musicElement.duration)
+      console.log(this.musicElement.volume)
+      this.seekbar = this.$refs.seekbar
+      this.volumeRange = this.$refs.volumeRange
+      // 每当音乐的播放时间更新时
+      this.musicElement.addEventListener('timeupdate', () => {
+        // 将音乐当前播放时间格式化为分钟和秒，并在HTML中显示出来
+        var cs = parseInt(this.musicElement.currentTime % 60)
+        var cm = parseInt((this.musicElement.currentTime / 60) % 60)
+        cs = cs < 10 ? '0' + cs : cs
+        cm = cm < 10 ? '0' + cm : cm
+        this.currentTime = cm + ':' + cs
+        if (this.currentTime == this.duration) {
+          this.forward()
+        }
+      }, false)
+      // this.musicElement.addEventListener('loaded', () => {
+      //   // 设置进度条最大值为音乐总时长
+      //   this.seekbar.max = this.musicElement.duration// 将音乐总时长格式化为分钟和秒，并在HTML中显示出来
+      //   console.log(this.musicElement.duration, 'duration')
+      //   var ds = parseInt(this.musicElement.duration % 60)
+      //   var dm = parseInt((this.musicElement.duration / 60) % 60)
+      //   console.log(ds, dm, 'dsdm')
+      //   ds = ds < 10 ? '0' + ds : ds
+      //   dm = dm < 10 ? '0' + dm : dm
+      //   this.duration = dm + ':' + ds
+      // }, false)
+      // this.musicElement.onloadeddata = () => {
+      //   // 设置进度条最大值为音乐总时长
+      //   this.seekbar.max = this.musicElement.duration// 将音乐总时长格式化为分钟和秒，并在HTML中显示出来
+      //   console.log(this.musicElement.duration, 'duration')
+      //   var ds = parseInt(this.musicElement.duration % 60)
+      //   var dm = parseInt((this.musicElement.duration / 60) % 60)
+      //   console.log(ds, dm, 'dsdm')
+      //   ds = ds<10?'0'+ds:ds
+      //   dm = dm<10?'0'+dm:dm
+      //   this.duration = dm + ':' + ds
+      // }
 
+    }, 1000)
 
-  },
+  }
+  ,
   methods: {
-
+    play() {
+      this.musicElement.src = this.music.url;
+      setTimeout(() => {
+        this.$nextTick(() => {
+          this.duration = this.secondToTime(this.musicElement.duration)
+          this.musicElement.play();
+          this.playing = true
+        })
+      }, 1000)
+    },
+    to(index) {
+      this.music = this.audio[index];
+      this.play()
+    },
+    back() {
+      this.position = this.position == 0 ? this.audio.length - 1 : this.position - 1;
+      this.music = this.audio[this.position];
+      this.play()
+    }
+    ,
+    forward() {
+      this.position = this.position == this.audio.length - 1 ? 0 : this.position + 1;
+      this.music = this.audio[this.position];
+      this.play()
+    }
+    ,
     closePlayer() {
       this.$emit('closePlayer')
-    },
+    }
+    ,
 
     secondToTime(e) {
       var t = Math.floor(e / 3600), n = Math.floor((e - 3600 * t) / 60),
@@ -194,11 +263,46 @@ export default {
       return (t > 0 ? [t, n, i] : [n, i]).map(function (e) {
         return e < 10 ? "0" + e : "" + e
       }).join(":")
-    },
-    toggle() {
-      this.ap.toggle();
-      // if(this.ap.audio.paused)
-    },
+    }
+    ,
+    handlePlay() {
+      // 如果音乐处于暂停状态
+      if (this.musicElement.paused) {
+        // 播放音乐，更改按钮样式为暂停图标
+        this.musicElement.play();
+        this.playing = true
+      } else {
+        // 暂停音乐，更改按钮样式为播放图标
+        this.musicElement.pause();
+        this.playing = false
+      }
+
+    }
+    ,
+    // // 定义处理进度条拖动的函数
+    // handleSeekBar() {
+    //   // 将音乐当前播放时间设为进度条的值，以实现通过拖动进度条控制音乐播放进度
+    //   this.musicElement.currentTime = this.seekbar.value
+    // },
+
+// 处理音量减小的函数
+    handleVolumeDown() {
+      // 将音量滑动条的值减少 20
+      volumeRange.value = Number(volumeRange.value) - 20;
+      // 将音乐的音量设置为音量滑动条的值除以 100
+      this.musicElement.volume = volumeRange.value / 100;
+    }
+    ,
+
+// 处理音量增加的函数
+    handleVolumeUp() {
+      // 将音量滑动条的值增加 20
+      volumeRange.value = Number(volumeRange.value) + 20;
+      // 将音乐的音量设置为音量滑动条的值除以 100
+      this.musicElement.volume = volumeRange.value / 100;
+    }
+    ,
+
     getMusic() {
       // //
       // this.$axios.post('http://music.163.com/api/search/pc',{
