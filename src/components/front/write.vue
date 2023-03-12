@@ -1,7 +1,7 @@
 <template>
 
   <bread>创作</bread>
-  <div class="w-full md:w-2/3 mx-auto md:p-5 p-2 md:rounded-xl mt-16 bg-gray-100 text-left ">
+  <div class="w-full lg:w-2/3 mx-auto lg:p-5 p-2 lg:rounded-xl mt-16 bg-gray-100 text-left ">
     <editor class="editor" :articleId="$route.params.articleId"></editor>
     <div class="labels">
       <Divider orientation="left">标签</Divider>

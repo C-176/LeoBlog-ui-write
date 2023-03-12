@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full invisible md:visible  bg-gray-100 h-auto p-4 rounded-xl">
+  <div class="w-full invisible lg:visible  bg-gray-100 h-auto p-4 rounded-xl">
 
     <a class="block text-right hover:text-gray-500 text-sm h-5 w-full" @click="$router.push('/back/scripts')">
       <!--      <span class="iconfont">&#xe823;</span> 创作中心-->

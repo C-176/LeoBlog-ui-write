@@ -33,7 +33,7 @@
           </div>
         </div>
       </div>
-      <div class="w-full rounded-lg hidden md:inline-block bg-gray-200 p-5 w-2/4">
+      <div class="w-full rounded-lg hidden lg:inline-block bg-gray-200 p-5 w-2/4">
         <div class="flex ">
 
           <icon src="xfftupfv" trigger="loop" class1="mr-0.5 "></icon>

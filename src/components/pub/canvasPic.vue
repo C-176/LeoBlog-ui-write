@@ -1,19 +1,37 @@
 <template>
-  <!--  <div style="margin-bottom: 10px;margin: 0 auto;">-->
-  <!--    <input type="file" onchange="onChange(this.files[0])">-->
-  <!--  </div>-->
-  <div class="mx-auto w-2/3 h-1/2 mt-14 rounded-xl bg-gray-100 flex-col justify-center items-center">
-    <div class="w-full h-2/3 p-2 space-x-2 flex justify-center items-center overflow-hidden">
-      <div id="contant"  class="w-4/5 h-full  overflow-hidden" >
-      <canvas id="cvs" class="w-full h-full" @wheel="rollImg" @mousedown="handleMouseDown" @mouseup="isMoving=false"
-              @mousemove="handleMouseMove"></canvas></div>
-      <canvas id="clipCvs" class="w-1/5 h-1/2" ></canvas>
+  <!--  <div class=" fixed inset-0 h-full w-full z-50">-->
+  <div
+      class="fixed bg-white text-left z-50 inset-0 mx-auto lg:mt-16 w-full lg:w-1/2 h-screen flex-col justify-center items-center lg:h-5/6 p-2  lg:rounded-xl">
+    <div class="w-full h-auto  p-2 space-y-2 lg:space-x-2 lg:flex justify-around items-end">
+      <div id="contant" class="min-w-4/5">
+        <canvas id="cvs" class="w-full shadow-lg rounded-xl"
+                @wheel="rollImg" @mousedown="handleMouseDown" @mouseup="isMoving=false"
+                @mousemove="handleMouseMove"
+        ></canvas>
+      </div>
+      <canvas id="clipCvs" class="w-28 h-1/2 shadow-lg rounded-xl"></canvas>
     </div>
-    <div class="w-full h-1/3 p-2 flex justify-center space-x-2 items-center">
-      <button id="download" class="rounded-xl bg-indigo-600 p-3 hover:bg-indigo-500 text-white text-sm" @click="downloadPic">下载图片</button>
-      <button id="download" class="rounded-xl bg-indigo-600 p-3  hover:bg-indigo-500 text-white text-sm" @click="downloadPic">下载图片</button>
+
+    <div class="w-full h-auto relative p-2 flex-col justify-center space-y-2 items-center">
+      <div class=" flex justify-center h-10 space-x-2 items-center">
+        <span class=" p-2 h-full text-xs text-gray-400">提示:滑动滚轮缩放选择区域</span>
+        <input ref="upload"
+               type="file"
+               class="rounded-xl w-1/3 cursor-pointer bg-indigo-400 p-1 hover:bg-indigo-500 text-white text-sm"
+               @change="onChange($event.target.files[0])"/>
+      </div>
+      <div class=" flex justify-around space-x-2 items-center">
+
+        <button class="rounded-xl bg-indigo-600 p-3 w-1/3 hover:bg-indigo-500 text-white text-sm"
+                @click="()=>{$emit('cancel')}">取消
+        </button>
+        <button ref="ok" class="rounded-xl bg-indigo-600 p-3 w-1/3 hover:bg-indigo-500 text-white text-sm"
+                @click="uploadProfile();">确定
+        </button>
+      </div>
     </div>
   </div>
+  <!--  </div>-->
 
 </template>
 
@@ -31,10 +49,11 @@ export default {
       clipCtx: null,
       img: new Image(),
       size: 150,
-      maxW: 400,
+      maxW: 600,
+      maxH: 400,
       p: {left: 0, top: 0, stepX: 0, stepY: 0},
       isMoving: false,
-      contant:null,
+      contant: null,
 
     }
   },
@@ -47,6 +66,7 @@ export default {
     this.clipCtx = this.clipCvs.getContext('2d')
 
     this.onInit('/source/images/index/1.jpg')
+    // this.$refs.upload.click()
   },
   methods: {
     onChange(file) {
@@ -59,25 +79,29 @@ export default {
         let width = this.img.width
         let height = this.img.height
         if (width > this.maxW) {
-
           height = this.maxW / width * height
           width = this.maxW
         }
+        if (height > this.maxH) {
+          width = this.maxH / height * width
+          height = this.maxH
+        }
         this.cvs.width = width
         this.cvs.height = height
-        // this.contant = document.getElementById('contant')
 
-        //获取contant的宽高
-        // let contantWidth = this.contant.offsetWidth
-        // let contantHeight = this.contant.offsetHeight
-        // console.log(contantWidth,contantHeight)
         this.render(width / 2 - this.size / 2, height / 2 - this.size / 2)
+
       }
     },
     // 渲染裁剪前canvas
     render(left = 0, top = 0) {
-      this.ctx.clearRect(0, 0, this.cvs.width, this.cvs.height)
-      this.ctx.drawImage(this.img, 0, 0, this.cvs.width, this.cvs.height)
+      var index = 0
+      // if (this.cvs.height === this.maxH) {
+      //   index = (this.maxW - this.cvs.width) / 2
+      // }
+      this.ctx.clearRect(index, 0, this.cvs.width, this.cvs.height)
+      // 将this.img画到this.ctx上，缩放到this.cvs的宽高
+      this.ctx.drawImage(this.img, index, 0, this.cvs.width, this.cvs.height)
       if (left < 0) {
         left = 0
       }
@@ -92,7 +116,7 @@ export default {
       }
       this.clipPic(this.ctx.getImageData(left, top, this.size, this.size))
       this.ctx.beginPath()
-      this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)'
+      this.ctx.fillStyle = 'rgba(0, 0, 0, 0.3)'
       this.ctx.fillRect(left, top, this.size, this.size)
       this.p.left = left
       this.p.top = top
@@ -106,7 +130,6 @@ export default {
       this.p.stepX = e.pageX - this.p.left
       this.p.stepY = e.pageY - this.p.top
       this.isMoving = true
-
     },
     handleMouseMove(e) {
       if (this.isMoving) {
@@ -115,23 +138,41 @@ export default {
 
 
     },
-    async downloadPic() {
-      const res = await fetch(this.clipCvs.toDataURL('image/png'))
-      const blob = await res.blob()
-      const a = document.createElement('a')
-      a.setAttribute('download', 'clip.png')
-      a.href = URL.createObjectURL(blob)
-      a.click()
+    uploadProfile() {
+      this.$refs.ok.classList.add('animate-ping')
+
+      // 将canvas转化为图片
+      const res = this.clipCvs.toDataURL('image/png')
+      // 将res转化为二进制
+      const arr = res.split(',')
+      const bstr = atob(arr[1])
+      let n = bstr.length
+      const u8arr = new Uint8Array(n)
+      while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+      }
+
+      // 转化为文件
+      const file = new File([u8arr], 'clip.png', {type: 'image/png'})
+      file.lastModifiedDate = new Date()
+      const formData = new FormData();
+      formData.append('file', file);
+      this.$axios.post('/upload/file', formData).then(res => {
+        var data = res.data.data.url
+        this.$refs.ok.classList.remove('animate-ping')
+        this.$emit('getImg', data)
+      })
 
     },
     rollImg(e) {
       this.size += e.deltaY / 10
-      // let transform = this.cvs.style.transform
-      // let zoom = transform.indexOf("scale") != -1 ? +transform.split("(")[1].split(")")[0] : 1
-      // zoom += e.wheelDelta / 1200
-      // if (zoom > 0.1 && zoom < 2) {
-      //   this.cvs.style.transform = "scale(" + zoom + ")"
-      // }
+      if (this.size < 50) {
+        this.size = 50
+      }
+      if (this.size > 200) {
+        this.size = 200
+      }
+      this.onInit(this.img.src)
     }
 
 

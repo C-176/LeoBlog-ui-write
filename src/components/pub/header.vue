@@ -1,5 +1,5 @@
 <template>
-  <div class="header invisible md:visible">
+  <div class="header invisible lg:visible">
     <div class="logo">
       <router-link to="/home/index">
         <img id="logo" :src="p(logoSrc)" alt="">

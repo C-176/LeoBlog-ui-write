@@ -1,6 +1,6 @@
 <template>
   <bread>我的草稿</bread>
-  <div class="text-left w-full h-screen  md:w-2/3 mx-auto md:p-5 mt-14">
+  <div class="text-left w-full h-screen  lg:w-2/3 mx-auto lg:p-5 mt-14">
     <template v-if="loading">
 <!--      <a-skeleton active/>-->
 <!--      <a-skeleton active/>-->
@@ -49,7 +49,7 @@
       <!--      </div>-->
 
 
-      <div class="m-auto overflow-hidden rounded-lg shadow-lg cursor-pointer h-90  pb-2  w-60 md:w-80"
+      <div class="m-auto overflow-hidden rounded-lg shadow-lg cursor-pointer h-90  pb-2  w-60 lg:w-80"
            v-for="(article,index) in myScripts" :key="article.articleId">
         <a @click="$router.push('/article/'+article.articleId)" class="block w-full h-full">
           <img v-if="article.articlePic!=null && article.articlePic!==''" :src="p(article.articlePic)"

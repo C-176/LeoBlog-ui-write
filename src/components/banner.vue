@@ -7,9 +7,9 @@
             <MegaphoneIcon @click="$sa('没事不要乱点','warning')" class="h-6 w-6 text-white" aria-hidden="true" />
           </span>
           <p class="ml-3 block text-left h-full align-middle font-medium text-white">
-<!--            <span class="md:hidden">LeoBlog</span>-->
+<!--            <span class="lg:hidden">LeoBlog</span>-->
             世界上没有一条道路是重复的，也没有一个人生是可代替的。
-<!--            <span class="hidden md:inline">世界上没有一条道路是重复的，也没有一个人生是可代替的。</span>-->
+<!--            <span class="hidden lg:inline">世界上没有一条道路是重复的，也没有一个人生是可代替的。</span>-->
           </p>
         </div>
         <div class="order-3 mt-2 w-full flex-shrink-0 sm:order-2 sm:mt-0 sm:w-auto">

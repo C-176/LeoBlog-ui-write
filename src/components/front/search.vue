@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto w-full relative mt-16 md:w-2/3 bg-white md:rounded-xl md:mt-16 mb-2">
+  <div class="mx-auto w-full relative mt-16 lg:w-2/3 bg-white lg:rounded-xl lg:mt-16 mb-2">
     <el-tabs type="border-card" class="demo-tabs mb-2 rounded-xl" :model-value="tag" @tab-change="b">
       <el-tab-pane label="标题" name="title"></el-tab-pane>
       <el-tab-pane label="内容" name="content"></el-tab-pane>

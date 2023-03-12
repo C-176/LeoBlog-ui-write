@@ -5,27 +5,26 @@ import 'nprogress/nprogress.css'
 
 
 const routes = [
-    {path: '/', redirect: '/index'},
+
     {path: '/canvas', component: () => import('@/components/pub/canvasPic.vue')},
     {path: '/canv', component: () => import('@/components/pub/canv')},
-    {path: '/avatar', component: () => import('@/components/pub/avator')},
-    {path: '/dialog', component: () => import('@/components/pub/searchDialog')},
-
 
     {path: '/test', component: () => import('@/components/test')},
 
     {path: '/user', component: () => import('@/components/pub/user')},
-    {path: '/LR', component: () => import('@/components/LR')},
+
     {
         path: '/home', component: () => import('@/components/home'), redirect: '/home/index',
         children: [
+            {path: '/', redirect: '/index'},
+            {path: '/LR', component: () => import('@/components/LR')},
             {path: '/editorMe', component: () => import('@/components/pub/editorMe.vue')},
             {path: '/index', component: () => import('@/components/index')},
             {path: '/write/:articleId', component: () => import('@/components/front/write')},
             {path: '/editor/new', component: () => import('@/components/pub/editorMe')},
             {path: '/home/index', name: 'index', component: () => import('@/components/front/index_main')},
             {path: '/home/article', component: () => import('@/components/front/articles')},
-            {path: '/home/picture', component: () => import('@/components/front/pictures')},
+            {path: '/home/picture', component: () => import('@/components/front/pictures.vue')},
             {path: '/about/bigs', component: () => import('@/components/front/bigs')},
             {path: '/home/tips', component: () => import('@/components/front/cards')},
             {path: '/about/team', component: () => import('@/components/front/team')},
@@ -33,11 +32,19 @@ const routes = [
             {path: '/about/privacy', component: () => import('@/components/front/privacy')},
             {path: '/about/join', component: () => import('@/components/front/join')},
             {path: '/video/:add', component: () => import('@/components/pub/video')},
-            {path: '/back/info', component: () => import('@/components/back/info')},
+            {
+                path: '/back/info', component: () => import('@/components/back/info'), children: [
+
+                    {path: '/back/info/article', component: () => import('@/components/back/articles.vue')},
+                    {path: '/back/info/comment', component: () => import('@/components/back/comments.vue')},
+                    {path: '/back/info/picture', component: () => import('@/components/front/pictures.vue')},
+
+                ]
+            },
             {path: '/back/articles', component: () => import('@/components/back/articles')},
             {path: '/back/scripts', component: () => import('@/components/back/scripts')},
             {path: '/back/comments', component: () => import('@/components/back/comments')},
-            {path: '/back/pictures', component: () => import('@/components/back/pictures')},
+            {path: '/back/pictures', component: () => import('@/components/front/pictures.vue')},
             {path: '/back/security', component: () => import('@/components/back/security')},
             {
                 path: '/search/:key', name: 'search', component: () => import('@/components/front/search'), meta: {

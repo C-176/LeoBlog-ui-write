@@ -24,7 +24,7 @@
             <div class=" w-full flex-col items-center justify-center space-y-1">
 
               <div class="bg-white w-full rounded-2xl px-6 py-1 shadow transition duration-500">
-                <p class=" text-xs py-0.5 md:text-sm text-gray-600"> {{ comment.commentContent }}</p>
+                <p class=" text-xs py-0.5 lg:text-sm text-gray-600"> {{ comment.commentContent }}</p>
                 <div class="flex justify-between items-center">
                   <div class=" flex items-center space-x-4 py-0">
                     <img class="w-8 h-8 rounded-full" :src="p(comment.user.userProfilePhoto)" alt=""/>
@@ -58,7 +58,7 @@
 
                 <div v-for="(i,index2) in comment.value" :key="i.commentId"
                      class="bg-white w-full  rounded-2xl px-6 pl-10 py-1 shadow transition duration-500">
-                  <p class="text-xs md:text-sm py-0.5 text-gray-600"> {{ i.commentContent }}</p>
+                  <p class="text-xs lg:text-sm py-0.5 text-gray-600"> {{ i.commentContent }}</p>
                   <div class="flex justify-between items-center">
                     <div class=" flex items-center space-x-4 py-0">
                       <img class="w-8 h-8 rounded-full" :src="p(i.user.userProfilePhoto)" alt=""/>

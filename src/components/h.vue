@@ -2,9 +2,9 @@
   <div class="top-0 w-full fixed top-0 h-12 z-20 text-left">
     <Popover class="bg-white relative">
       <div class="mx-auto max-w-8xl px-2 sm:px-2">
-        <div class="flex items-center justify-between  border-b-2 border-gray-100 py-1 md:justify-start ">
+        <div class="flex items-center justify-between  border-b-2 border-gray-100 py-1 lg:justify-start ">
           <!--          小屏三横线-->
-          <div class="-my-2 -mr-2 md:hidden">
+          <div class="-my-2 -mr-2 lg:hidden">
             <PopoverButton
                 class="inline-flex items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500">
               <span class="sr-only">Open menu</span>
@@ -12,7 +12,7 @@
             </PopoverButton>
           </div>
           <!--大屏logo-->
-          <div class="flex justify-start hidden md:inline-block h-full lg:w-0 lg:flex-1 ">
+          <div class="flex justify-start hidden lg:inline-block h-full lg:w-0 lg:flex-1 ">
 
             <span class="sr-only">LeoBlog</span>
             <img @click="$router.push('/index')"
@@ -24,7 +24,7 @@
           </div>
 
           <Menu as="div" v-if="logined"
-                class="md:hidden z-10 space-x-2  inline-flex justify-center items-center text-left ">
+                class="lg:hidden z-10 space-x-2  inline-flex justify-center items-center text-left ">
 
             <button class="rounded-xl z-20 text-white h-8 w-8 text-center bg-indigo-100 hover:bg-indigo-200"
                     @click="showPlayer=true">
@@ -54,7 +54,7 @@
               <div v-show="openMenu"
                    class="absolute p-2 right-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
                 <div class="py-1 " role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                  <a @click="item.href($router)" v-for="item in pages" :key="item.name"
+                  <a @click="goto(item,$router)" v-for="item in pages" :key="item.name"
                      class="block block px-4 py-2 cursor-pointer rounded-xl text-md text-gray-700 hover:bg-indigo-600 hover:text-white dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
                      role="menuitem">
                     <div class="flex flex-col">
@@ -71,7 +71,7 @@
             </div>
           </Menu>
           <div v-else
-               class="flex justify-around space-x-1 inline-block md:hidden lg:w-0 mr-4 lg:flex-1">
+               class="flex justify-around space-x-1 inline-block lg:hidden lg:w-0 mr-4 lg:flex-1">
 
             <a @click="$router.push('/index')">
               <span class="sr-only">LeoBlog</span>
@@ -84,19 +84,14 @@
             <!--            </button>-->
           </div>
           <!--          大屏中间导航栏-->
-          <PopoverGroup as="nav" class="hidden space-x-10 md:flex items-center">
+          <PopoverGroup as="nav" class="hidden space-x-10 lg:flex items-center">
             <!--            大屏文章-->
             <Popover class="relative" v-slot="{ open }">
               <PopoverButton
                   :class="[open ? 'text-gray-900' : 'text-gray-500', ' group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-0 border-none']">
                 <span class="text-base">文章</span>
                 <ChevronDownIcon
-                    v-show="!open"
-                    :class="[open ? 'text-gray-600' : 'text-gray-400', 'ml-2 h-5 w-5 group-hover:text-gray-500']"
-                    aria-hidden="true"/>
-                <ChevronUpIcon
-                    v-show="open"
-                    :class="[open ? 'text-gray-600' : 'text-gray-400', 'ml-2 h-5 w-5 group-hover:text-gray-500']"
+                    :class="[open ? 'text-gray-600  rotate-180 ' : 'text-gray-400', 'transform duration-500 ml-2 h-5 w-5 group-hover:text-gray-500']"
                     aria-hidden="true"/>
               </PopoverButton>
 
@@ -140,12 +135,7 @@
                   :class="[open ? 'text-gray-900' : 'text-gray-500', ' group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-0 border-none']">
                 <span class="text-base">关于</span>
                 <ChevronDownIcon
-                    v-show="!open"
-                    :class="[open ? 'text-gray-600' : 'text-gray-400', 'ml-2 h-5 w-5 group-hover:text-gray-500']"
-                    aria-hidden="true"/>
-                <ChevronUpIcon
-                    v-show="open"
-                    :class="[open ? 'text-gray-600' : 'text-gray-400', 'ml-2 h-5 w-5 group-hover:text-gray-500']"
+                    :class="[open ? 'text-gray-600  rotate-180 ' : 'text-gray-400', 'transform duration-500 ml-2 h-5 w-5 group-hover:text-gray-500']"
                     aria-hidden="true"/>
               </PopoverButton>
 
@@ -157,7 +147,7 @@
                     class="absolute z-10 -ml-4 mt-3 w-screen max-w-md transform px-2 sm:px-0 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2">
                   <div class="overflow-hidden rounded-lg shadow-lg ring-0 ring-black ring-opacity-5">
                     <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                      <a v-for="item in about" :key="item.name" @click="item.href($router)"
+                      <a v-for="item in about" :key="item.name" @click="goto(item,$router)"
                          class="-m-3 flex items-start rounded-lg p-1 hover:bg-gray-50">
                         <icon :src="item.iconSrc"></icon>
                         <!--                        <component :is="item.icon" class="h-6 w-6 flex-shrink-0 text-indigo-600" aria-hidden="true"/>-->
@@ -178,13 +168,12 @@
                   :class="[open ? 'text-gray-900' : 'text-gray-500', ' group inline-flex items-center rounded-md bg-white text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-0 border-none']">
                 <span class="text-base">工具</span>
                 <ChevronDownIcon
-                    v-show="!open"
-                    :class="[open ? 'text-gray-600' : 'text-gray-400', 'ml-2 h-5 w-5 group-hover:text-gray-500']"
+                    :class="[open ? 'text-gray-600 rotate-180 ' : 'text-gray-400', ' transform duration-500 ml-2 h-5 w-5 group-hover:text-gray-500']"
                     aria-hidden="true"/>
-                <ChevronUpIcon
-                    v-show="open"
-                    :class="[open ? 'text-gray-600' : 'text-gray-400', 'ml-2 h-5 w-5 group-hover:text-gray-500']"
-                    aria-hidden="true"/>
+<!--                <ChevronUpIcon-->
+<!--                    v-show="open"-->
+<!--                    :class="[open ? 'text-gray-600' : 'text-gray-400', 'ml-2 h-5 w-5 group-hover:text-gray-500']"-->
+<!--                    aria-hidden="true"/>-->
               </PopoverButton>
 
               <transition enter-active-class="transition ease-out duration-200"
@@ -193,9 +182,9 @@
                           leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
                 <PopoverPanel
                     class="absolute z-10 -ml-4 mt-3 w-screen max-w-md transform px-2 sm:px-0 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2">
-                  <div class="overflow-hidden rounded-lg shadow-lg ring-0 ring-black ring-opacity-5">
+                  <div class="overflow-hidden rounded-lg shadow-lg ring-0 ring-black ring-opacity-5" >
                     <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                      <a v-for="item in more" :key="item.name" @click="item.href($router)"
+                      <a v-for="item in more"  :key="item.name" @click="goto(item,$router)"
                          class="-m-3 flex items-start rounded-lg p-1 hover:bg-gray-50">
                         <icon :src="item.iconSrc"></icon>
                         <!--                        <component :is="item.icon" class="h-6 w-6 flex-shrink-0 text-indigo-600" aria-hidden="true"/>-->
@@ -215,7 +204,7 @@
 
 
           <!--          大屏右侧登陆注册-->
-          <div class="hidden items-center justify-end md:flex md:flex-1 lg:w-0 space-x-2">
+          <div class="hidden items-center justify-end lg:flex lg:flex-1 lg:w-0 space-x-2">
 
             <a-tooltip id="close" v-if="!showPlayer" title="音乐">
               <button class="rounded-xl z-20 text-white h-8 w-8 text-center bg-indigo-100 hover:bg-indigo-200"
@@ -224,7 +213,7 @@
               </button>
             </a-tooltip>
             <button @click="openSearch = !openSearch"
-                    class="hidden md:inline-flex   justify-center rounded-md bg-gray-100  px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                    class="hidden lg:inline-flex   justify-center rounded-md bg-gray-100  px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
             >Ctrl+K 搜索
             </button>
 
@@ -284,14 +273,13 @@
                       <hr>
 
 
-                      <div @click="item.href($router)" v-for="item in pages" :key="item.name"
+                      <div @click="goto(item,$router)" v-for="item in pages" :key="item.name"
                            class="block px-4 py-2 transition duration-100 cursor-pointer rounded-xl text-md  hover:bg-indigo-600 hover:text-white dark:text-gray-100 dark:hover:text-white "
                            role="menuitem">
                         <div class="flex flex-col">
                           <div class="space-x-3 flex items-center group justify-start">
                             <icon :src="item.iconSrc" class1=""/>
                             <span>{{ item.name }}</span>
-
                           </div>
                         </div>
                       </div>
@@ -315,8 +303,8 @@
       <transition enter-active-class="duration-200 ease-out" enter-from-class="opacity-0 scale-95"
                   enter-to-class="opacity-100 scale-100" leave-active-class="duration-100 ease-in"
                   leave-from-class="opacity-100 scale-100" leave-to-class="opacity-0 scale-95">
-        <PopoverPanel focus class="absolute z-50 inset-x-0 top-0 origin-top-right transform p-2 transition md:hidden">
-          <div class="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+        <PopoverPanel focus class="absolute z-50 max-w-xl inset-x-0 top-0 origin-top-right transform p-2 transition lg:hidden">
+          <div class="divide-y-2 divide-gray-50  rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
             <div class="px-5 pt-5 pb-6">
               <div class="flex items-center justify-between">
                 <!--logo-->
@@ -345,7 +333,7 @@
                   </a>
 
                   <hr>
-                  <a v-for="item in more" :key="item.name" @click="item.href($router)"
+                  <a v-for="item in more" :key="item.name" @click="goto(item,$router)"
                      class="-m-3 flex items-center rounded-md p-1 hover:bg-gray-50">
                     <!--                    <component :is="item.icon" class="h-6 w-6 flex-shrink-0 text-indigo-600" aria-hidden="true"/>-->
                     <icon trigger="loop" :src="item.iconSrc"></icon>
@@ -357,7 +345,7 @@
 
             <div class="space-y-6 py-6 px-5">
               <div class="grid grid-cols-2 gap-y-4 gap-x-8">
-                <a v-for="item in about" :key="item.name" @click="item.href($router)"
+                <a v-for="item in about" :key="item.name" @click="goto(item,$router)"
                    class="flex items-center space-x-2 text-sm text-center font-medium text-gray-900 p-1 rounded-xl hover:bg-gray-100">
                   <icon trigger="loop" :src="item.iconSrc"></icon>
                   <span class="text-gray-900">{{ item.name }}</span>
@@ -390,7 +378,9 @@
   <chat v-if="logined"></chat>
   <message v-if="logined"></message>
   <bgCover
-      :showCover="$store.state.chatVisible || $store.state.messageVisible || $store.state.bgCover || showPlayer || openSearch"></bgCover>
+      @quit="quit($store)"
+      :showCover="$store.state.chatVisible || $store.state.messageVisible || $store.state.bgCover || showPlayer || openSearch"
+  />
   <search-dialog :is-open="openSearch" @closeSearch="() => {openSearch=false}"></search-dialog>
 </template>
 
@@ -435,8 +425,28 @@ import music from "@/components/pub/music";
 import Message from "@/components/pub/message.vue";
 
 const router = useRouter()
-const openSearch = ref(false)
-const showPlayer = ref(false)
+let openSearch = ref(false)
+let showPlayer = ref(false)
+
+function quit($store) {
+
+  if ($store.state.chatVisible){
+    $store.commit('changeChatVisible', false)
+  }
+  if ($store.state.messageVisible){
+    $store.commit('changeMessageVisible', false)
+  }
+  if ($store.state.bgCover){
+    $store.commit('changeBgCover', false)
+  }
+  if(showPlayer){
+    showPlayer.value = false
+  }
+  if(openSearch){
+    openSearch.value = false
+  }
+
+}
 
 function closeMusic() {
   showPlayer.value = false
@@ -450,6 +460,15 @@ function login() {
 function registerAction() {
   store.commit('changeLogin', false)
   router.push({path: '/LR'})
+}
+
+function goto(item,$router){
+  item.href($router);
+  // 模拟按下esc键
+
+
+  var e = new KeyboardEvent('keydown',{'keyCode':27,'which':27});
+  document.dispatchEvent(e);
 }
 
 const store = useStore()
@@ -499,8 +518,8 @@ function logOut() {
 }
 
 const mobileMenuOpen = ref(false)
-const openMenu = ref(false)
-const openMenuItem = ref(false)
+let openMenu = ref(false)
+let openMenuItem = ref(false)
 const pages = [
   {
     name: '个人中心', href: function ($router) {
@@ -547,6 +566,12 @@ const solutions = [
     href: function ($router) {
       $router.push("/home/article")
     }, iconSrc: 'wxnxiano'
+  },{
+    name: '图片',
+    description: '好照片是技术和艺术的成功合成。',
+    href: function ($router) {
+      $router.push("/home/picture")
+    }, iconSrc: 'fgkmrslx'
   }
 ]
 

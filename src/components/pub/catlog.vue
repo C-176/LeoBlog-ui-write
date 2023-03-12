@@ -1,5 +1,5 @@
 <template>
-  <div class="catalog-card invisible md:visible" v-if="titles.length>0">
+  <div class="catalog-card invisible lg:visible" v-if="titles.length>0">
     <div class="catalog-card-header">
       <div>
         <!--                <span-->

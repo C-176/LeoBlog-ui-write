@@ -1,6 +1,6 @@
 <template>
 
-  <div class="hidden md:flex w-full bg-white p-1 rounded-xl">
+  <div class="hidden lg:flex w-full bg-white p-1 rounded-xl">
 
     <!--      头部滚动图-->
     <div class="flex justify-center items-center  w-full" @mouseleave="leave">

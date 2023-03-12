@@ -1,7 +1,7 @@
 <template>
   <bread>我的文章</bread>
 
-  <div ref="tar" class="text-left w-full h-full scroll-auto md:w-2/3 mx-auto md:p-5 mt-14">
+  <div ref="tar"  class="text-left w-full h-full scroll-auto lg:w-2/3 mx-auto lg:p-5 mt-14">
     <template v-if="loading">
 <!--      <a-skeleton active/>-->
 <!--      <a-skeleton active/>-->
@@ -18,7 +18,7 @@
         <button class="button w-full" @click="$router.push('/write/0')">点击进行创作</button>
       </el-empty>
 
-      <div class="lg:flex lg:items-center bg-gray-100 w-full md:rounded-xl p-4 my-2 lg:justify-between"
+      <div class="lg:flex lg:items-center bg-gray-100 w-full lg:rounded-xl p-4 my-2 lg:justify-between"
            v-for="(article,index) in myArticles" :key="article.articleId">
         <div class="min-w-0 flex-1">
           <h2 @click="$router.push('/article/'+article.articleId)"

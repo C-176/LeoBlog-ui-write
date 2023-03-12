@@ -1,7 +1,11 @@
 <template>
-  <div class="whole">
-    <img class="index" v-for="(pic,index) in pics" :style="{backgroundImage:'url('+pic+')'}" loading="lazy">
+  <bread>图片</bread>
+
+  <div class="lg:mt-14 w-full h-full">
+    <img class="pic w-full lg:h-screen h-1/2 bg-cover my-0.5 rounded-xl" src="" v-for="(pic,index) in pics" :style="{backgroundImage:'url('+pic+')'}" loading="lazy" alt="">
+    <img class="pic w-full lg:hidden  bg-cover " :src="pic" v-for="(pic,index) in pics" loading="lazy" alt="">
   </div>
+  <a-divider orientation="center" style="color: #859c9c">到底了</a-divider>
   <a-back-top/>
 </template>
 
@@ -16,14 +20,12 @@ export default {
   created() {
     let randomList = this.randomNum(1, 167, 20);
     this.pics = randomList.map((item) => {
+      // return this.baseURL + '/source/images/index/' + item + '.jpg'
       return '/source/images/zip/' + item + '.jpg'
-      // return this.baseURL+'/source/images/index/' + item + '.jpg'
     });
     this.$nextTick(() => {
       window.addEventListener('scroll', this.scrollBottom);
     })
-
-
   },
   beforeUnmount() {
     window.removeEventListener('scroll', this.scrollBottom)//页面离开后销毁监听事件
@@ -32,8 +34,8 @@ export default {
     // 监听滚动条
     scrollBottom() {
       let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-      for (let i = 0; i < document.getElementsByClassName('index').length; i++) {
-        document.getElementsByClassName('index')[i].style.backgroundPositionY = scrollTop + 'px'
+      for (let i = 0; i < document.getElementsByClassName('pic').length; i++) {
+        document.getElementsByClassName('pic')[i].style.backgroundPositionY = scrollTop + 'px'
       }
     },
     //随机产生不重复的5个数
@@ -56,22 +58,14 @@ export default {
       }
       return r;
     },
-  }
+
+  },
+
+
+
 }
 </script>
 
 <style scoped>
 
-.whole {
-  margin-top: 49px;
-  height: 100%;
-  width: 100%;
-  padding: 0 !important;
-}
-
-img {
-  width: 100vw;
-  height: calc(100vh - 50px);
-  background-size: 100% 100%;
-}
 </style>

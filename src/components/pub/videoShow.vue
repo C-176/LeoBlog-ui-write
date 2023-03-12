@@ -5,7 +5,7 @@
       <div class="-mx-4 flex flex-wrap justify-center">
         <div class="w-full px-4 lg:w-10/12">
           <div
-              class="relative z-20 h-[300px] overflow-hidden rounded-lg md:h-[450px]"
+              class="relative z-20 h-[300px] overflow-hidden rounded-lg lg:h-[450px]"
           >
             <div class="absolute top-0 left-0 h-full w-full">
               <img
@@ -20,7 +20,7 @@
               <a
                   href="javascript:void(0)"
                   @click="videoOpen = true"
-                  class="text-primary absolute z-20 flex h-20 w-20 items-center justify-center rounded-full bg-white md:h-[100px] md:w-[100px]"
+                  class="text-primary absolute z-20 flex h-20 w-20 items-center justify-center rounded-full bg-white lg:h-[100px] lg:w-[100px]"
               >
               <span
                   class="absolute top-0 right-0 z-[-1] h-full w-full animate-ping rounded-full bg-white bg-opacity-20 delay-300 duration-1000"

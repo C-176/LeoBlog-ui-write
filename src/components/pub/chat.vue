@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
     <div v-show="$store.state.chatVisible"
-         class="fixed text-left z-50 md:inset-1  mx-auto md:mt-16 w-full h-screen md:w-2/3 md:h-5/6 p-2 bg-white md:rounded-xl">
+         class="fixed text-left z-50 lg:inset-1  mx-auto lg:mt-16 w-full h-screen lg:w-2/3 lg:h-5/6 p-2 bg-white lg:rounded-xl">
       <audio ref="audio" hidden src="/source/audios/Windows%20Proximity%20Notification.wav"></audio>
       <a-tooltip id="close" class="absolute top-2 right-2" title="关闭">
         <button class="rounded-xl z-20 text-white h-8 w-8 text-center bg-indigo-600 hover:bg-indigo-500"
@@ -13,7 +13,7 @@
         <!--          <img id="logo" :src="logoSrc" alt="">-->
 
         <div class="w-full h-full flex justify-start">
-          <div class="w-1/6 md:w-2/5 h-full overflow-auto">
+          <div class="w-1/6 lg:w-2/5 h-full overflow-auto">
             <div class="w-4/5  mx-auto my-2  text-sm ">
               <el-autocomplete
                   v-model="state"
@@ -31,12 +31,12 @@
                    :class="{select:isSelected[index]}"
                    class=" p-1 w-full rounded-xl bg-gray-100 cursor-pointer transition-all focus:border-indigo-500 border-2 border-white hover:border-indigo-600"
                    @click="select(index)">
-                <div class=" hidden  md:h-1/5 md:block pr-2 text-xs text-right text-gray-400">
+                <div class=" hidden  lg:h-1/5 lg:block pr-2 text-xs text-right text-gray-400">
                   {{ this.$moments(chat.record.recordUpdateTime) }}
                 </div>
-                <div class="h-full md:h-4/5 md:pl-2 mx-auto flex justify-center md:justify-start  items-center ">
+                <div class="h-full lg:h-4/5 lg:pl-2 mx-auto flex justify-center lg:justify-start  items-center ">
                   <a-badge :count="redPoint[index]" size="small" style="float: left;line-height: 100%">
-                    <div class="h-full w-full md:w-10   text-center rounded-full ">
+                    <div class="h-full w-full lg:w-10   text-center rounded-full ">
                       <user :user="chat.user">
                         <!--                      <a-avatar :class="{online:chat.user.userStatus}"-->
                         <!--                                :src="p(chat.user.userProfilePhoto)"-->
@@ -57,12 +57,12 @@
                     </div>
                   </a-badge>
 
-                  <div class="hidden max-h-12 overflow-hidden md:block flex-col items-start p-2 justify-between">
-                    <div class="font-bold hidden md:inline text-sm">
+                  <div class="hidden max-h-12 overflow-hidden lg:block flex-col items-start p-2 justify-between">
+                    <div class="font-bold hidden lg:inline text-sm">
                       {{ chat.user.userNickname }}
                     </div>
                     <div id="uId" style="display: none">{{ chat.user.userId }}</div>
-                    <div id="content" class="  hidden md:inline  overflow-hidden text-xs text-gray-400"><span
+                    <div id="content" class="  hidden lg:inline  overflow-hidden text-xs text-gray-400"><span
                         v-html="chat.record.recordContent" class="truncate"></span></div>
                   </div>
 
@@ -72,7 +72,7 @@
           </div>
 
 
-          <div class="w-5/6 md:w-3/5 -mt-4 h-full flex-col justify-start items-center p-5">
+          <div class="w-5/6 lg:w-3/5 -mt-4 h-full flex-col justify-start items-center p-5">
             <div class="h-1/8 text-center w-full mx-auto -mt-2  space-y-0 flex-col justify-between items-center ">
               <div class="text-base font-bold h-full min-h-full cursor-pointer">
                 <router-link :to="'/user/'+talkTo.user.userId">

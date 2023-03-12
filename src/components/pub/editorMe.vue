@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-14 p-2  md:w-4/5 w-full mx-auto h-auto text-left flex-clo justify-between items-center ">
+  <div class="mt-14 p-2  lg:w-4/5 w-full mx-auto h-auto text-left flex-clo justify-between items-center ">
     <TabGroup ref="tagGroup" :selectedIndex='index'>
       <!--      <Tab-->
       <!--          v-for="i in [1]"-->

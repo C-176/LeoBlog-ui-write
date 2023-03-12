@@ -1,11 +1,9 @@
 <template>
-  <!-- component -->
-  <!-- CONTAINER MODAL-->
   <transition name="fade">
     <div v-if="showShare"
          class="h-screen fixed inset-0 w-screen bg-gray-500 bg-opacity-20 flex items-center justify-center">
       <!--MODAL ITEM-->
-      <div class="bg-gray-100 relative w-full mx-4 p-4 rounded-xl md:w-1/2 lg:w-1/3">
+      <div class="bg-gray-100 relative w-full mx-4 p-4 rounded-xl lg:w-1/2 lg:w-1/3">
         <!--MODAL HEADER-->
         <div
             class="flex justify-between items center border-b border-gray-200 py-3"

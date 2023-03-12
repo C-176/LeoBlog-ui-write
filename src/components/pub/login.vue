@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-screen  flex justify-center items-center" v-if="!forgetPwd">
-    <div class="w-2/3 md:w-1/3  p-5 rounded-xl mx-auto">
+    <div class="w-2/3 lg:w-1/3  p-5 rounded-xl mx-auto">
 
       <div class="w-full space-y-2 flex-col justify-around items-center">
         <img :src="logoSrc" @click="$router.push('/index')"
@@ -99,7 +99,7 @@
 
     </div>
   </div>
-  <main id="content" role="main" class="fixed  text-left z-50 h-auto inset-1 mx-auto mt-16 w-full   md:w-1/3  p-2 bg-white md:rounded-xl" v-if="forgetPwd">
+  <main id="content" role="main" class="fixed  text-left z-50 h-auto inset-1 mx-auto mt-16 w-full   lg:w-1/3  p-2 bg-white lg:rounded-xl" v-if="forgetPwd">
     <a-tooltip id="close" class="absolute top-2 right-2" title="关闭">
       <button class="rounded-xl z-20 text-white h-8 w-8 text-center bg-indigo-600 hover:bg-indigo-500"
               @click="forgetPwd = false">

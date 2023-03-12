@@ -1,5 +1,5 @@
 <template>
-  <div class="shell invisible md:visible" v-if="$store.state.shell">
+  <div class="shell invisible lg:visible" v-if="$store.state.shell">
     <a class="box" v-for="item in pages" :key="item.name"
        @click="item.href($router)">
       <i class="h-full flex items-center">

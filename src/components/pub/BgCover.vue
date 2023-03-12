@@ -1,6 +1,8 @@
 <template>
   <transition name="fade">
-    <div v-if="showCover" class="fixed w-screen h-screen bg-black bg-opacity-30 z-40 backdrop-blur-sm md:backdrop-blur-sm"></div>
+    <div v-if="showCover"
+         @click="quit()"
+         class="fixed w-screen h-screen bg-black bg-opacity-30 z-40 backdrop-blur-sm lg:backdrop-blur-sm"></div>
   </transition>
 </template>
 
@@ -12,7 +14,6 @@ export default {
   watch: {
     showCover(newVal) {
       if (newVal) {
-        console.log("show");
         //滚动条不可用
         document.body.style.overflow = "hidden";
       } else {
@@ -22,7 +23,14 @@ export default {
 
       }
     }
+  },
+  methods:{
+    quit(){
+      this.$emit("quit")
+    }
+
   }
+
 }
 
 </script>

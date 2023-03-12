@@ -1,6 +1,6 @@
 <template>
 
-  <div class=" flex-col justify-center  text-center mx-auto w-full sm:p-2 md:w-2/3 mt-16 md:mt-14  items-center">
+  <div class=" flex-col justify-center  text-center mx-auto w-full sm:p-2 lg:w-2/3 mt-16 lg:mt-14  items-center">
 
     <article-show :article-list="articleList"></article-show>
           <el-pagination

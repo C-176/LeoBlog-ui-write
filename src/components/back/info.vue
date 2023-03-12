@@ -1,6 +1,6 @@
 <template>
   <bread>个人信息</bread>
-  <div class="mt-14 w-full md:w-2/3 md:p-5 bg-gray-100 rounded-xl mx-auto ">
+  <div class="mt-14 w-full lg:w-2/3 lg:p-5 bg-gray-100 rounded-xl mx-auto ">
     <template v-if="loading">
       <a-skeleton active/>
       <a-skeleton active/>
@@ -20,7 +20,8 @@
           :disabled="readonly"
       >
         <img v-if="p(userx.userBgPic) && showBg" id="bg" :src="p(userx.userBgPic)" class="avatar"/>
-        <el-icon v-else class="avatar-uploader-icon bgUpload">
+        <el-icon v-else
+                 class="avatar-uploader-icon bgUpload">
           <Plus/>
         </el-icon>
       </el-upload>
@@ -28,7 +29,8 @@
 
       <div class="overflow-hidden w-full bg-white  sm:rounded-lg p-10 text-left">
 
-        <div class="flex w-full justify-start items-center">
+
+        <div class="flex w-full justify-start  items-center -mt-8">
 
           <el-upload
               class="avatar-uploader flex justify-center items-center w-20 h-20 border border-gray-100 rounded-xl overflow-hidden"
@@ -43,25 +45,38 @@
 
           >
             <img v-if="userx.userProfilePhoto && showProfile"
+                 @click.stop="()=>{if(mode === '保存'){showCanvas = true;$store.commit('changeBgCover',true)}}"
                  :src="p(userx.userProfilePhoto)" class="avatar rounded-xl w-full"/>
 
-            <el-icon v-else class="avatar-uploader-icon flex items-center justify-center">
+            <el-icon @click.stop="()=>{showCanvas = true;$store.commit('changeBgCover',true)}" v-else
+                     class="avatar-uploader-icon flex items-center justify-center">
               <Plus/>
             </el-icon>
           </el-upload>
-          <div class="px-4 py-5 sm:px-6 flex-col justify-between items-center">
+          <div class="px-4 py-3 sm:px-6 flex-col justify-between items-center">
             <h3 class="text-lg font-medium leading-6 text-gray-900">{{ userx.userNickname }}</h3>
             <div class=" inline-block  mt-1 max-w-2xl text-sm text-gray-500">{{ userx.userIntro }}</div>
           </div>
+          <div
+              class="w-2/3 h-auto float-right flex items-center justify-around space-x-2 my-2 ring-indigo-200 ring-2 rounded-xl">
+            <button v-for="key in keys" :key="key.key"
+                    class=" justify-items-end w-full h-full p-1 rounded-xl hover:bg-indigo-300 focus:bg-indigo-300  text-center transform duration-500">
+              <div class="flex items-center justify-center" @click="()=>{key.href($router);current = key.key}">
+                <icon :src="key.iconSrc" :size="20"/>
+                <span class=" text-gray-600 text-center ">{{ key.title }}</span></div>
+            </button>
+          </div>
         </div>
-        <div class="border-t border-gray-200">
+
+
+        <div v-if="current === 'info'" class="border-t border-gray-200">
           <dl>
-            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div class="bg-white px-4 py-3 sm:grid  flex items-center  sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt class="text-sm font-medium text-gray-500">昵称</dt>
               <input v-model="userx.userNickname" :readonly="readonly"
                      class="introInput">
             </div>
-            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div class="bg-gray-50 px-4 py-3 sm:grid  flex items-center  sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt class="text-sm font-medium text-gray-500">性别</dt>
               <select v-model="userx.userSex" :disabled="readonly"
                       class=" introInput w-1/2"
@@ -78,76 +93,77 @@
 
               </select>
             </div>
-            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div class="bg-white px-4 py-3 sm:grid sm:grid-cols-3  flex items-center  sm:gap-4 sm:px-6">
               <dt class="text-sm font-medium text-gray-500">生日</dt>
               <!--              <div class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">-->
               <div class="flex justify-start items-center">
-              <el-date-picker
-                  :readonly="readonly"
-                  v-model="userx.userBirthday"
-                  type="date"
-                  placeholder="选择日期"
-                  :size="size"
+                <el-date-picker
+                    :readonly="readonly"
+                    v-model="userx.userBirthday"
+                    type="date"
+                    placeholder="选择日期"
+                    :size="size"
 
-              /></div>
+                />
+              </div>
               <!--              </div>-->
             </div>
-            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div class="bg-gray-50 px-4 py-3 sm:grid flex items-center sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt class="text-sm font-medium text-gray-500">居住地</dt>
               <input v-model="userx.userPos" :readonly="readonly" class="introInput">
             </div>
-            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+            <div class="bg-white px-4 py-3 sm:grid flex items-center  sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt class="text-sm font-medium text-gray-500">所在行业</dt>
               <input v-model="userx.userIndustry" :readonly="readonly" class="introInput">
             </div>
-            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-            <dt class="text-sm font-medium text-gray-500">教育经历</dt>
-            <input v-model="userx.userEducation" :readonly="readonly" class="introInput">
-          </div>
-            <div class="bg-white px-4 py-5  sm:grid-cols-3 sm:gap-4 sm:px-6 flex-col justify-start items-center">
+            <div class="bg-gray-50 px-4 py-3 sm:grid  flex items-center sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <dt class="text-sm font-medium text-gray-500">教育经历</dt>
+              <input v-model="userx.userEducation" :readonly="readonly" class="introInput">
+            </div>
+            <div
+                class="bg-white px-4 py-3  flex items-center  sm:grid-cols-3 sm:gap-4 sm:px-6 flex-col justify-start items-center">
               <div class="text-sm font-medium text-gray-500 w-full py-2">个人介绍</div>
               <textarea v-model="userx.userIntro" :readonly="readonly" class="introInput w-full"></textarea>
             </div>
 
 
-
-<!--            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">-->
-<!--              <dt class="text-sm font-medium text-gray-500">Attachments</dt>-->
-<!--              <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">-->
-<!--                <ul role="list" class="divide-y divide-gray-200 rounded-md border border-gray-200">-->
-<!--                  <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">-->
-<!--                    <div class="flex w-0 flex-1 items-center">-->
-<!--                      &lt;!&ndash; Heroicon name: mini/paper-clip &ndash;&gt;-->
-<!--                      <svg class="h-5 w-5 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg"-->
-<!--                           viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">-->
-<!--                        <path fill-rule="evenodd"-->
-<!--                              d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"-->
-<!--                              clip-rule="evenodd"/>-->
-<!--                      </svg>-->
-<!--                      <span class="ml-2 w-0 flex-1 truncate">resume_back_end_developer.pdf</span>-->
-<!--                    </div>-->
-<!--                    <div class="ml-4 flex-shrink-0">-->
-<!--                      <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>-->
-<!--                    </div>-->
-<!--                  </li>-->
-<!--                  <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">-->
-<!--                    <div class="flex w-0 flex-1 items-center">-->
-<!--                      &lt;!&ndash; Heroicon name: mini/paper-clip &ndash;&gt;-->
-<!--                      <svg class="h-5 w-5 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg"-->
-<!--                           viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">-->
-<!--                        <path fill-rule="evenodd"-->
-<!--                              d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"-->
-<!--                              clip-rule="evenodd"/>-->
-<!--                      </svg>-->
-<!--                      <span class="ml-2 w-0 flex-1 truncate">coverletter_back_end_developer.pdf</span>-->
-<!--                    </div>-->
-<!--                    <div class="ml-4 flex-shrink-0">-->
-<!--                      <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>-->
-<!--                    </div>-->
-<!--                  </li>-->
-<!--                </ul>-->
-<!--              </dd>-->
-<!--            </div>-->
+            <!--            <div class="bg-white px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">-->
+            <!--              <dt class="text-sm font-medium text-gray-500">Attachments</dt>-->
+            <!--              <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">-->
+            <!--                <ul role="list" class="divide-y divide-gray-200 rounded-md border border-gray-200">-->
+            <!--                  <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">-->
+            <!--                    <div class="flex w-0 flex-1 items-center">-->
+            <!--                      &lt;!&ndash; Heroicon name: mini/paper-clip &ndash;&gt;-->
+            <!--                      <svg class="h-5 w-5 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg"-->
+            <!--                           viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">-->
+            <!--                        <path fill-rule="evenodd"-->
+            <!--                              d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"-->
+            <!--                              clip-rule="evenodd"/>-->
+            <!--                      </svg>-->
+            <!--                      <span class="ml-2 w-0 flex-1 truncate">resume_back_end_developer.pdf</span>-->
+            <!--                    </div>-->
+            <!--                    <div class="ml-4 flex-shrink-0">-->
+            <!--                      <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>-->
+            <!--                    </div>-->
+            <!--                  </li>-->
+            <!--                  <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">-->
+            <!--                    <div class="flex w-0 flex-1 items-center">-->
+            <!--                      &lt;!&ndash; Heroicon name: mini/paper-clip &ndash;&gt;-->
+            <!--                      <svg class="h-5 w-5 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg"-->
+            <!--                           viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">-->
+            <!--                        <path fill-rule="evenodd"-->
+            <!--                              d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"-->
+            <!--                              clip-rule="evenodd"/>-->
+            <!--                      </svg>-->
+            <!--                      <span class="ml-2 w-0 flex-1 truncate">coverletter_back_end_developer.pdf</span>-->
+            <!--                    </div>-->
+            <!--                    <div class="ml-4 flex-shrink-0">-->
+            <!--                      <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>-->
+            <!--                    </div>-->
+            <!--                  </li>-->
+            <!--                </ul>-->
+            <!--              </dd>-->
+            <!--            </div>-->
 
             <button
                 class="button w-full"
@@ -157,26 +173,40 @@
 
         </div>
 
+
+        <router-view v-else class="router-view" v-slot="{ Component }">
+          <keep-alive>
+            <component :is="Component"/>
+          </keep-alive>
+        </router-view>
       </div>
 
 
     </template>
   </div>
-
+  <canvas-pic v-if="showCanvas"
+              @cancel="showCanvas = false;$store.commit('changeBgCover',false);"
+              @getImg="(url)=>{userx.userProfilePhoto = url;showCanvas = false;$store.commit('changeBgCover',false);showProfile = true;}"></canvas-pic>
+  <bgCover v-if="$store.state.bgCover"/>
 </template>
 
 <script>
 import {Plus} from '@element-plus/icons-vue'
 import {UserOutlined} from '@ant-design/icons-vue';
+import canvasPic from "@/components/pub/canvasPic.vue";
+import bgCover from "@/components/pub/BgCover.vue";
 
 export default {
   name: 'info',
   components: {
     Plus,
-    UserOutlined
+    UserOutlined,
+    canvasPic,
+    bgCover
   },
   data() {
     return {
+      showCanvas: false,
       showBg: true,
       showProfile: true,
       loading: true,
@@ -199,19 +229,53 @@ export default {
         userIntro: '',
         userBgPic: ''
       },
+      keys: [{
+        key: 'info',
+        title: '信息',
+        iconSrc: 'puvaffet',
+        href: function ($router) {
+
+        }
+      }, {
+        key: 'article', title: '文章', iconSrc: 'puvaffet', href: function ($router) {
+          $router.push('/back/info/article')
+        }
+      }, {
+        key: 'comment',
+        title: '评论',
+        iconSrc: 'puvaffet',
+        href: function ($router) {
+          $router.push('/back/info/comment')
+
+        }
+      }, {
+        key: 'picture',
+        title: '图片',
+        iconSrc: 'puvaffet',
+        href: function ($router) {
+          $router.push('/back/info/picture')
+
+        }
+      }],
+      current: 'info',
     }
   },
-  computed: {},
+
   created() {
+    this.current = 'info'
     //将this.$store.state.user赋值给user
     this.$axios.get(this.baseURL + '/user/' + this.$store.state.user.userId,).then(res => {
       this.userx = res.data.data
       this.imageUrl = this.userx.userProfilePhoto
     })
-
   },
 
   methods: {
+    quit() {
+      this.$store.commit('changeBgCover', false)
+      this.showCanvas = false
+      console.log(this.showCanvas)
+    },
 
     todo() {
       if (this.mode === '保存') {
@@ -286,6 +350,9 @@ export default {
       this.$nextTick(() => {
         this.loading = false
       })
+    },
+    current(val) {
+      console.log(val)
     }
   },
 

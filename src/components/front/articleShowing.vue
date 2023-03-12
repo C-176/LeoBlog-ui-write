@@ -1,6 +1,6 @@
 <template>
   <bread>文章</bread>
-  <div class="mx-auto w-full relative mt-16 md:w-2/3 bg-white md:rounded-xl md:mt-16 mb-2">
+  <div class="mx-auto w-full relative mt-16 lg:w-2/3 bg-white lg:rounded-xl lg:mt-16 mb-2">
     <template v-if="loading">
       <!--      <a-skeleton active/>-->
       <!--      <a-skeleton active/>-->
@@ -11,10 +11,10 @@
     <template v-else>
 
       <img v-if="article.articlePic!=''&&article.articlePic!=null"
-           class="p-2 md:p-0 bg-white mb-2 rounded-xl w-full mx-auto"
+           class="p-2 lg:p-0 bg-white mb-2 rounded-xl w-full mx-auto"
            :src="p(article.articlePic)"/>
       <div class="p-5 bg-gray-100 rounded-xl">
-        <div class="text-xl md:text-xl text-left h-auto w-full font-bold my-0.5">{{
+        <div class="text-xl lg:text-xl text-left h-auto w-full font-bold my-0.5">{{
             article.articleTitle.replaceAll('<p>','').replaceAll('</p>','')}}
         </div>
         <div class="w-full h-auto">
@@ -41,11 +41,12 @@
             <div class="text-sm font-bold">{{ article.user.userNickname }}</div>
             <div class="text-xs">{{ article.user.userCertification }}</div>
 
-          </div><div class="flex items-center text-gray-500 space-x-1 pl-2">
-          <icon src="qznlhdss" size="16"></icon>
-          <span>最后更新时间: {{ article.articleUpdateDate }}</span>
+          </div>
+          <div class="flex items-center text-gray-500 space-x-1 pl-2">
+            <icon src="qznlhdss" size="16"></icon>
+            <span>最后更新时间: {{ article.articleUpdateDate }}</span>
 
-        </div>
+          </div>
         </div>
         <hr>
         <div class="text-left p-3 content" ref="articleContent">
@@ -118,42 +119,46 @@
 
   <shareModal @close="()=>{showShare=false}" :showShare="showShare"></shareModal>
   <div
-      class="px-2 md:px-1 my-3 w-full md:w-2/3 mx-auto text-slate-700 dark:text-white
+      class="px-2 lg:px-1 my-3 w-full lg:w-2/3 mx-auto text-slate-700 dark:text-white
        flex flex-col items-center"
   >
     <div
-        class="text-left flex flex-col w-full items-center justify-center md:p-4
+        class="text-left flex flex-col w-full items-center justify-center lg:p-4
         border-slate-300 dark:border-slate-600 rounded-xl">
       <div class="w-full">
         <a
-            href="/"
+            @click="$router.push('/article/'+articleList[otherIndex].articleId)"
             rel="noreferrer"
             target="_blank"
             class="bg-white dark:bg-slate-800 rounded-xl w-full flex flex-col
-            md:flex-row justify-start shadow-md transition-all duration-500 md:hover:scale-95"
+            lg:flex-row justify-start shadow-md transition-all duration-500 lg:hover:scale-95"
         >
           <!-- <div class="flex-grow"> -->
-          <div
-              class="flex-grow w-full h-64 md:bg-center shadow bg-cover rounded-t-xl md:rounded-none md:rounded-l-xl"
+          <div v-if="articleList[otherIndex].articlePic == null || articleList[otherIndex].articlePic == ''"
+              class="flex-grow w-full h-64 lg:bg-center shadow bg-cover rounded-t-xl lg:rounded-none lg:rounded-l-xl"
               style=' background-image: url("http://49.235.100.240:8080/source/upload/images/c2aaf2de-e0d6-4c90-a42d-bf4c7f34e1ef.png");'
-          ></div>
+          >
+          </div>
+          <div v-else
+              class="flex-grow w-full h-64 lg:bg-center shadow bg-cover rounded-t-xl lg:rounded-none lg:rounded-l-xl"
+              :style="'background-image: url(' + articleList[otherIndex].articlePic + ');'"
+          >
+          </div>
           <!-- </div> -->
 
-          <div class="w-full xl:w-1/2 p-3 flex flex-col justify-between h-40 md:h-64 overflow-auto">
+          <div class="w-full xl:w-1/2 p-3 flex flex-col justify-between h-40 lg:h-64 overflow-auto">
             <div>
-              <div class="flex flex-col md:w-full text-xs text-left">
+              <div class="flex flex-col lg:w-full text-sm text-left">
                             <span class="text-blue-700 dark:text-blue-300">
-                                24/08/2022
+                                {{ $moments(articleList[otherIndex].articleUpdateDate) }}
                             </span>
-                <h2 class="text-blue-600 dark:text-blue-400 font-bold uppercase text-md">
-                  News Article
-                </h2>
+
               </div>
-              <p class="text-left text-sm md:text-lg xl:text-xl font-bold leading-normal">
-                I hope this excites you!
+              <p class="text-left text-sm lg:text-lg xl:text-xl font-bold leading-normal">
+                连接世界
               </p>
             </div>
-            <p class="flex text-left text-xs md:text-sm text-blue-700 dark:text-blue-400 font-bold leading-normal items-center">
+            <p class="flex text-left text-xs lg:text-sm text-blue-700 dark:text-blue-400 font-bold leading-normal items-center">
               <svg
                   height="21"
                   viewBox="0 0 21 21"
@@ -172,7 +177,7 @@
                   <path d="m8.5.5-8 8"></path>
                 </g>
               </svg>
-              News Site
+              {{ articleList[otherIndex].articleTitle }}
             </p>
           </div>
         </a>
@@ -180,10 +185,10 @@
       <div class=" w-full mt-2">
         <div class="flex justify-center">
           <div
-              class="bg-white dark:bg-slate-800 rounded-xl shadow-md flex w-full md:w-2/3 p-0 justify-between h-12 lg:h-fit items-center">
+              class="bg-white dark:bg-slate-800 rounded-xl shadow-md flex w-full lg:w-2/3 p-0 justify-between h-12 lg:h-fit items-center">
             <button
                 class="border-slate-500 dark:border-slate-100 hover:text-blue-500 dark:hover:text-blue-400 border hover:border-blue-500 dark:hover:border-blue-400 w-6 h-6 rounded-xl duration-150 hover:scale-105 active:scale-95"
-                onClick="handleRotation"
+                @click="otherIndex == 0 ? otherIndex = articleList.length - 1 : otherIndex--"
             >
               <svg
                   height="22"
@@ -204,12 +209,12 @@
               </svg>
             </button>
             <button
-                onClick="handleRotation"
+                @click="$router.push('/article/'+articleList[otherIndex].articleId)"
                 class="bg-indigo-600 h-3 transition-all w-3 self-center duration-300 hover:scale-150 active:scale-125 ease-in-out rounded-md xl:p-1 shadow"
             ></button>
             <button
                 class="border-slate-500 dark:border-slate-100 hover:text-blue-500 dark:hover:text-blue-400 border hover:border-blue-500 dark:hover:border-blue-400 w-6 h-6 rounded-xl duration-150 hover:scale-105 active:scale-95"
-                onClick="handleRotation"
+                @click="otherIndex == articleList.length - 1 ? otherIndex = 0 : otherIndex++"
             >
               <svg
                   height="22"
@@ -254,6 +259,8 @@ export default {
   components: {h, commentTemplate, Divider, Tag, EnterOutlined, user, bigImg, catlog, shareModal},
   data() {
     return {
+      otherIndex: 0,
+      articleList: [],
       showShare: false,
       container: '#xxxxxxxxxxxx',
       photoVisible: false,
@@ -343,9 +350,17 @@ export default {
         this.article.articleUpdateDate = this.$moments(this.article.articleUpdateDate)
       }
     })
+    this.articleList = [this.article]
 
     //获取评论
     this.getComments()
+
+    this.getArticlesDefault()
+
+
+  },
+  computed: {
+
 
   },
 
@@ -377,6 +392,14 @@ export default {
   }
   ,
   methods: {
+    getArticlesDefault() {
+      this.$axios.get('/article/list/1/20').then((res) => {
+        let map = res.data.data
+        this.articleList = map.records
+        this.article1 = this.articleList[this.otherIndex]
+        // console.log(this.articleList)
+      })
+    },
     getColor() {
       return this.colors[Math.floor(Math.random() * this.colors.length)]
     },
@@ -539,12 +562,11 @@ export default {
 }
 
 :deep(p img,p video) {
-//width: 80% !important; //margin-left: 10% !important;
-  /*height: 100%;*/
   border-radius: 10px;
   max-height: calc(100vh - 5rem);
   margin: 0 auto;
   margin-bottom: 5px !important;
+  margin-top: 5px !important;
   box-shadow: 1px 3px 11px #134857;
 
 }
@@ -552,6 +574,7 @@ export default {
 :deep(p img:hover) {
   cursor: pointer !important;
 }
+
 :deep(span img,span video) {
 //width: 80% !important; //margin-left: 10% !important;
   /*height: 100%;*/
@@ -566,6 +589,7 @@ export default {
 :deep(span img:hover) {
   cursor: pointer !important;
 }
+
 :deep(pre) {
   background: #fff !important;
   border-radius: 10px !important;
@@ -588,12 +612,13 @@ export default {
 
 :deep(blockquote) {
   background: #f9f9f9;
-  border:1px solid #ddd;
+  border: 1px solid #ddd;
   border-left: 10px solid #4f46e5;
   border-radius: 5px;
   margin: 1.5em 10px;
   padding: 0.5em 10px;
 }
+
 :deep(blockquote:before) {
   color: #4f46e5;
   content: open-quote;
@@ -602,34 +627,39 @@ export default {
   margin-right: 0.25em;
   vertical-align: -0.4em;
 }
+
 :deep(blockquote p) {
   display: inline;
 }
 
 
-:deep(h1){
+:deep(h1) {
   font-size: 1.3rem;
   font-weight: bold;
-  margin-left:-0.2rem !important;
+  margin-left: -0.2rem !important;
 }
-:deep(h2){
+
+:deep(h2) {
   font-size: 1.15rem;
   font-weight: bold;
-  margin-left:-0.2rem !important;
+  margin-left: -0.2rem !important;
 }
-:deep(h3){
+
+:deep(h3) {
   font-size: 1.05rem;
   font-weight: bold;
-  margin-left:-0.2rem !important;
+  margin-left: -0.2rem !important;
 }
-:deep(h4){
+
+:deep(h4) {
   font-size: 0.95rem;
   font-weight: bold;
-  margin-left:-0.2rem !important;
+  margin-left: -0.2rem !important;
 }
-:deep(h5){
+
+:deep(h5) {
   font-size: 0.9rem;
   font-weight: bold;
-  margin-left:-0.2rem !important;
+  margin-left: -0.2rem !important;
 }
 </style>

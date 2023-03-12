@@ -5,5 +5,8 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="fudrjiwc" level="application" />
+    <orderEntry type="library" name="Valine" level="application" />
+    <orderEntry type="library" name="wavesurfer.js" level="application" />
   </component>
 </module>

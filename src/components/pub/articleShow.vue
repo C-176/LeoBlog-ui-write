@@ -12,7 +12,7 @@
 
       <!--      文章展示-->
       <div v-for="(article,index) in myArticles" v-else :key="article.articleId"
-           class="w-full overflow-hidden bg-gray-100 space-y-2  py-2 px-3 md:px-5 md:rounded-xl mb-2">
+           class="w-full overflow-hidden bg-gray-100 space-y-2  py-2 px-3 lg:px-5 lg:rounded-xl mb-2">
 
         <div class="text-left flex justify-start items-center space-x-1">
           <img class="h-10 w-10 rounded-full" :src="article.author.userProfilePhoto"/>
@@ -31,9 +31,9 @@
             {{ article.articleTitle.replaceAll('<p>','').replaceAll('</p>','').replaceAll('<br>','')}}
           </router-link>
         </div>
-        <div class="h-auto max-h-20 md:max-h-40 group w-full md:space-x-3 flex justify-start  overflow-hidden ">
+        <div class="h-auto max-h-20 lg:max-h-40 group w-full lg:space-x-3 flex justify-start  overflow-hidden ">
           <div v-if="article.articlePic!='' && article.articlePic!=null"
-               class=" hidden md:inline-flex items-center justify-start float-left"
+               class=" hidden lg:inline-flex items-center justify-start float-left"
                :class="{'w-1/4':article.articlePic!='' && article.articlePic!=null}"
           >
             <el-image
@@ -47,9 +47,9 @@
           </div>
           <div
               class=" content p-2 rounded-xl group-hover:bg-gray-50 transition duration-500
-               text-left text-gray-600 font-medium leading:6 md:leading-7   truncate  text-xs md:text-sm
+               text-left text-gray-600 font-medium leading:6 lg:leading-7   truncate  text-xs lg:text-sm
                justify-items-start  float-left w-full "
-              :class="{'md:w-3/4':article.articlePic!='' && article.articlePic!=null}"
+              :class="{'lg:w-3/4':article.articlePic!='' && article.articlePic!=null}"
           >
               <span class="hover:cursor-pointer" @click="$router.push('/article/'+article.articleId)"
                     v-html="article.articleContent"></span>
