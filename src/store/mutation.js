@@ -40,6 +40,9 @@ const mutations = {
             state.chatPoint = 0;
         }
     },
+    changeProject(state,project){
+        state.activeProject = project
+    },
     changeBgCover(state, val){
         state.bgCover = val
     },

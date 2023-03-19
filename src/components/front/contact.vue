@@ -2,7 +2,7 @@
   <bread>联系我们</bread>
   <!-- ====== Contact Section Start -->
   <section class="relative z-10  h-5/6 bg-white py-20 lg:py-[120px]">
-    <div class="w-full lg:w-2/3  mx-auto overflow-hidden text-left">
+    <div class="w-full mx-auto overflow-hidden text-left">
       <div class="-mx-4 flex flex-wrap lg:justify-between">
         <div class="w-full px-4 lg:w-1/2 xl:w-6/12">
           <div class="mb-12 p-4 lg:p-0 max-w-[570px] lg:mb-0">

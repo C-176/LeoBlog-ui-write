@@ -1,7 +1,7 @@
 <template>
   <bread>关于我们</bread>
-  <section class="bg-white mt-16 dark:bg-gray-900">
-    <div class="px-6 py-10 mx-auto">
+  <section class="bg-white  dark:bg-gray-900">
+    <div class=" mx-auto">
       <h1 class="text-3xl font-semibold text-center text-gray-800 capitalize lg:text-4xl dark:text-white">我们的初级团队</h1>
 
       <p class="max-w-2xl mx-auto my-6 text-center text-gray-500 dark:text-gray-300">

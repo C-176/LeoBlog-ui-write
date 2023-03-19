@@ -1,7 +1,7 @@
 <template>
   <bread>图片</bread>
 
-  <div class="lg:mt-14 w-full h-full">
+  <div class="w-full h-full">
     <img class="pic w-full lg:h-screen h-1/2 bg-cover my-0.5 rounded-xl" src="" v-for="(pic,index) in pics" :style="{backgroundImage:'url('+pic+')'}" loading="lazy" alt="">
     <img class="pic w-full lg:hidden  bg-cover " :src="pic" v-for="(pic,index) in pics" loading="lazy" alt="">
   </div>

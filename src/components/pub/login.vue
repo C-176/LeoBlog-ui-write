@@ -211,7 +211,7 @@ export default {
   },
   watch: {
     login(val) {
-      if (val == false) {
+      if (!val) {
         this.userName = ''
         this.userPassword = ''
       }
@@ -219,7 +219,7 @@ export default {
     forgetPwd(val){
       if(val){
         this.$store.commit('changeBgCover',true)
-        console.log(this.$store.state.bgCover)
+        // console.log(this.$store.state.bgCover)
       }else {
         this.$store.commit('changeBgCover',false)
       }
@@ -325,6 +325,8 @@ export default {
                       reject(res.data)
                     }
                   })
+                }else{
+                  this.$st("验证码不可为空", 'error')
                 }
               })
             }

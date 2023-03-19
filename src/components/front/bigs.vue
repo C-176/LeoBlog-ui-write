@@ -1,6 +1,6 @@
 <template>
   <bread>工程进度</bread>
-  <div class="whole">
+  <div class="mx-auto w-full relative bg-white  mb-2">
 
     <div>
       <el-steps direction="vertical" :active="stepIndex" space="100px" style="color:#111">
@@ -95,16 +95,6 @@ export default {
 </script>
 
 <style scoped>
-
-.whole {
-  margin-left: calc(22.5%);
-  margin-top: 60px;
-  width: 55%;
-  height: 100%;
-  text-align: left;
-  background-color: #fff;
-  padding: 10px;
-}
 
 :deep(.is-finish) {
   /*color: #0cba39 !important;*/

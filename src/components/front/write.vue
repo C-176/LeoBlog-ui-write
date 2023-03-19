@@ -1,7 +1,8 @@
 <template>
 
   <bread>创作</bread>
-  <div class="w-full lg:w-2/3 mx-auto lg:p-5 p-2 lg:rounded-xl mt-16 bg-gray-100 text-left ">
+
+  <div class="w-full mx-auto  lg:rounded-xl  bg-gray-100 text-left ">
     <editor class="editor" :articleId="$route.params.articleId"></editor>
     <div class="labels">
       <Divider orientation="left">标签</Divider>
@@ -40,23 +41,25 @@
         </el-icon>
       </el-upload>
     </div>
-<!--    <el-affix position="bottom" target=".editor" :offset="10">-->
+    <!--    <el-affix position="bottom" target=".editor" :offset="10">-->
 
 
+    <div class="flex -w-full justify-end items-center h-14  space-x-2">
+      <div
+          class="bg-gray-200 hover:cursor-pointer hover:bg-gray-300 transition  text-black text-medium rounded-xl px-2 py-1"
+          @click.once="saveAsScript">
+        <span>保存草稿</span>
+      </div>
+      <div
+          class=" bg-gray-200 hover:cursor-pointer hover:bg-gray-300 transition  text-black text-medium rounded-xl px-2 py-1"
+          @click.once="saveAsArticle">
+        <span>发布文章</span>
+      </div>
 
-        <div class="flex -w-full justify-end items-center h-14  space-x-2">
-          <div class="bg-gray-200 hover:cursor-pointer hover:bg-gray-300 transition  text-black text-medium rounded-xl px-2 py-1" @click.once="saveAsScript">
-          <span>保存草稿</span>
-        </div>
-          <div class=" bg-gray-200 hover:cursor-pointer hover:bg-gray-300 transition  text-black text-medium rounded-xl px-2 py-1" @click.once="saveAsArticle">
-            <span>发布文章</span>
-          </div>
-
-        </div>
+    </div>
 
 
-
-<!--    </el-affix>-->
+    <!--    </el-affix>-->
 
   </div>
   <a-back-top/>
@@ -71,7 +74,6 @@ import {Plus} from '@element-plus/icons-vue'
 
 import h from "@/components/pub/header";
 import editor from "@/components/pub/editor";
-
 
 
 export default {
@@ -172,12 +174,12 @@ export default {
     handleSelect(item) {
       //判断是否已经存在
       var flag = false;
-      if(this.article.labels.length>0){
-        this.article.labels.forEach(label=>{
-          if(label.labelId===item.labelId){
+      if (this.article.labels.length > 0) {
+        this.article.labels.forEach(label => {
+          if (label.labelId === item.labelId) {
             this.$st("标签已存在", 'error')
             this.state = '';
-            flag=true;
+            flag = true;
           }
         })
       }
@@ -207,8 +209,8 @@ export default {
       if (this.article.articlePic == null) {
         this.article.articlePic = '';
       }
-      if(this.article.articleTitle.trim()===''){
-        this.article.articleTitle='无题'
+      if (this.article.articleTitle.trim() === '') {
+        this.article.articleTitle = '无题'
       }
 
       this.$axios.put(this.baseURL + "/article/update", this.article).then(res => {
@@ -280,7 +282,7 @@ export default {
   border-radius: 10px;
 }
 
-.cover img ,.cover .avatar-uploader-icon{
+.cover img, .cover .avatar-uploader-icon {
   width: 192px;
   height: 108px;
   border-radius: 10px;

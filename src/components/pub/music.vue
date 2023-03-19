@@ -19,7 +19,7 @@
         <div class="flex flex-col w-full">
           <div class="flex p-5 border-b bg-cover backdrop-blur-sm bg-blend-lighten">
             <!--               :style="{backgroundImage: 'url(' + music.cover + ')'}">-->
-            <img class='w-20 h-20 object-cover cursor-pointer animate-bounce rounded-full duration-500  shadow-lg'
+            <img class='w-20 h-20 object-cover cursor-pointer rounded-full duration-500  shadow-lg'
                  alt='User avatar'
                  @click="handlePlay"
                  :src='music.cover'>

@@ -1,6 +1,6 @@
 <template>
   <bread>个人信息</bread>
-  <div class="mt-14 w-full lg:w-2/3 lg:p-5 bg-gray-100 rounded-xl mx-auto ">
+  <div class="w-full lg:p-5 bg-gray-100 rounded-xl mx-auto ">
     <template v-if="loading">
       <a-skeleton active/>
       <a-skeleton active/>
@@ -60,8 +60,12 @@
           <div
               class="w-2/3 h-auto float-right flex items-center justify-around space-x-2 my-2 ring-indigo-200 ring-2 rounded-xl">
             <button v-for="key in keys" :key="key.key"
-                    class=" justify-items-end w-full h-full p-1 rounded-xl hover:bg-indigo-300 focus:bg-indigo-300  text-center transform duration-500">
-              <div class="flex items-center justify-center" @click="()=>{key.href($router);current = key.key}">
+                    class=" justify-items-end w-full h-full p-1 rounded-xl hover:bg-indigo-300   text-center transform duration-500"
+                    :class="[
+
+                    activeProject == key.key ? 'bg-indigo-300' : '',
+                ]">
+              <div class="flex items-center justify-center" @click="()=>{key.href($router);this.$store.commit('changeProject',key.key) }">
                 <icon :src="key.iconSrc" :size="20"/>
                 <span class=" text-gray-600 text-center ">{{ key.title }}</span></div>
             </button>
@@ -69,7 +73,7 @@
         </div>
 
 
-        <div v-if="current === 'info'" class="border-t border-gray-200">
+        <div v-if="activeProject === 'info'" class="border-t border-gray-200">
           <dl>
             <div class="bg-white px-4 py-3 sm:grid  flex items-center  sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt class="text-sm font-medium text-gray-500">昵称</dt>
@@ -174,7 +178,7 @@
         </div>
 
 
-        <router-view v-else class="router-view" v-slot="{ Component }">
+        <router-view v-else class="router-view mt-2" v-slot="{ Component }">
           <keep-alive>
             <component :is="Component"/>
           </keep-alive>
@@ -232,37 +236,39 @@ export default {
       keys: [{
         key: 'info',
         title: '信息',
-        iconSrc: 'puvaffet',
+        iconSrc: 'bhfjfgqz',
         href: function ($router) {
 
         }
       }, {
-        key: 'article', title: '文章', iconSrc: 'puvaffet', href: function ($router) {
+        key: 'article', title: '文章', iconSrc: 'vufjamqa', href: function ($router) {
           $router.push('/back/info/article')
         }
       }, {
         key: 'comment',
         title: '评论',
-        iconSrc: 'puvaffet',
+        iconSrc: 'hpivxauj',
         href: function ($router) {
           $router.push('/back/info/comment')
 
         }
-      }, {
-        key: 'picture',
-        title: '图片',
-        iconSrc: 'puvaffet',
-        href: function ($router) {
-          $router.push('/back/info/picture')
+      }
+      // , {
+      //   key: 'picture',
+      //   title: '图片',
+      //   iconSrc: 'puvaffet',
+      //   href: function ($router) {
+      //     $router.push('/back/info/picture')
+      //
+      //   }
+      // }
+      ],
 
-        }
-      }],
-      current: 'info',
     }
   },
 
   created() {
-    this.current = 'info'
+
     //将this.$store.state.user赋值给user
     this.$axios.get(this.baseURL + '/user/' + this.$store.state.user.userId,).then(res => {
       this.userx = res.data.data
@@ -351,10 +357,13 @@ export default {
         this.loading = false
       })
     },
-    current(val) {
-      console.log(val)
-    }
+
   },
+  computed: {
+    activeProject() {
+      return this.$store.state.activeProject
+    },
+  }
 
 }
 
@@ -363,40 +372,6 @@ export default {
 
 
 <style scoped>
-
-/*:deep(.avatar-uploader,.el-upload) {*/
-/*  height: 100%;*/
-/*  width: 100%;*/
-/*}*/
-
-.profileUpload .avatar {
-  width: 178px;
-  height: 178px;
-  display: block;
-}
-
-.bgUpload .avatar {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-:deep(.bgUpload) {
-  width: 100%;
-  height: 250px;
-  /*display: block;*/
-}
-
-.bg {
-  height: 250px;
-  width: 100%;
-  overflow: hidden;
-}
-
-.bg img {
-  width: 100%;
-  height: 100%;
-}
 
 /*.avatar-uploader-icon .el-upload {*/
 /*  border: 1px dashed var(--el-border-color);*/
@@ -466,64 +441,6 @@ export default {
 .cell.current .text {
   background: #2ce751;
   color: #fff;
-}
-
-
-.whole {
-  margin-top: 60px;
-  margin-left: calc(17.5%);
-  width: 65%;
-  /*height: 100vh;*/
-  background-color: #fff;
-  border-radius: 2px;
-  margin-bottom: 20px;
-  /*box-shadow: 3px 1px 11px #869d9d;*/
-}
-
-.whole .pic {
-  height: 250px;
-  width: 100%;
-  margin-bottom: 100px; /*margin-top: 100px;*/
-}
-
-.whole .pic .head img {
-  border-radius: 10px;
-  border: 5px solid #fff;
-}
-
-
-.whole .pic .head {
-  float: left;
-  position: relative;
-  top: -75px;
-  height: 150px;
-  background: #89a0a0;
-  width: 150px;
-  margin: 0 20px;
-  border-radius: 10px;
-  line-height: 150px;
-  overflow: hidden;
-  color: #134857;
-  border-color: #fff;
-}
-
-.whole .pic .name {
-  float: left;
-  height: 50px;
-  width: 50%;
-  /*background-color: #0086b3;*/
-  margin-left: 10px;
-  padding-left: 10px;
-  text-align: left;
-  /*padding-bottom: 40px;*/
-  color: #134857;
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 50px;
-}
-
-.name {
-  margin-top: 10px;
 }
 
 :deep(.el-date-editor.el-input) {

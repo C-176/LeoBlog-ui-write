@@ -1,17 +1,20 @@
 <template>
 
   <h></h>
-    <shell></shell>
+  <shell></shell>
 
-  <router-view class="router-view" v-slot="{ Component }">
-<!--    <transition :name="transitionName" mode="out-in">-->
+
+  <div class=" w-full lg:w-2/3 lg:p-5 p-2 mt-14 mx-auto">
+
+    <router-view class="router-view" v-slot="{ Component }">
+      <!--    <transition :name="transitionName" mode="out-in">-->
       <keep-alive>
         <component :is="Component" :key="$route.fullPath" v-if="$route.meta.keepAlive"/>
       </keep-alive>
-<!--    </transition>-->
-        <component :is="Component" :key="$route.fullPath" v-if="!$route.meta.keepAlive"/>
-  </router-view>
-
+      <!--    </transition>-->
+      <component :is="Component" :key="$route.fullPath" v-if="!$route.meta.keepAlive"/>
+    </router-view>
+  </div>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-    <main id="show" class="bg-white flex h-screen  space-x-0 w-screen justify-center items-center">
+    <main id="show" class="bg-white flex h-screen space-x-0 w-screen justify-center items-center">
       <div class="relative px-6 lg:px-8">
         <div class="mx-auto max-w-3xl pt-20 pb-32 sm:pt-48 sm:pb-40">
           <div>

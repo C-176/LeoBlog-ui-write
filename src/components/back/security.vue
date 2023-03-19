@@ -1,7 +1,7 @@
 <template>
   <bread>安全中心</bread>
   <div
-      class="mx-auto text-center flex-col justify-around items-center w-full lg:w-2/3 bg-gray-100 rounded-xl mt-16 lg:mt-16 p-2 ">
+      class="mx-auto text-center flex-col justify-around items-center w-full  bg-gray-100 rounded-xl">
 
     <a-carousel arrows :dots="showDots" effect="fade" ref="carousel">
       <div>

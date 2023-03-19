@@ -1,6 +1,6 @@
 <template>
   <bread>文章</bread>
-  <div class="mx-auto w-full relative mt-16 lg:w-2/3 bg-white lg:rounded-xl lg:mt-16 mb-2">
+  <div class="mx-auto w-full relative bg-white  mb-2">
     <template v-if="loading">
       <!--      <a-skeleton active/>-->
       <!--      <a-skeleton active/>-->

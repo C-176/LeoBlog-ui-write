@@ -1,5 +1,5 @@
 <template>
-  <div class="top-0 w-full fixed top-0 h-12 z-20 text-left">
+  <div class="w-full fixed inset-0 h-12 z-20 text-left">
     <Popover class="bg-white relative">
       <div class="mx-auto max-w-8xl px-2 sm:px-2">
         <div class="flex items-center justify-between  border-b-2 border-gray-100 py-1 lg:justify-start ">

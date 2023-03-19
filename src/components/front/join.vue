@@ -2,7 +2,7 @@
   <!-- component -->
   <section class="" >
     <div
-        class="max-w-lg h-screen bg-center  bg-black px-4 pt-24 py-8 mx-auto text-left lg:max-w-none lg:text-center"
+        class="w-full h-screen bg-center  bg-black px-4 pt-24 py-8 mx-auto text-left  lg:text-center"
         :style="{backgroundImage:'url(http://49.235.100.240:8080/source/upload/images/c2aaf2de-e0d6-4c90-a42d-bf4c7f34e1ef.png)'}"
     >
       <h1

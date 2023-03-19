@@ -1,6 +1,6 @@
 <template>
   <bread>我的草稿</bread>
-  <div class="text-left w-full h-screen  lg:w-2/3 mx-auto lg:p-5 mt-14">
+  <div class="text-left w-full h-screen mx-auto">
     <template v-if="loading">
 <!--      <a-skeleton active/>-->
 <!--      <a-skeleton active/>-->

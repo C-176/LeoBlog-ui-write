@@ -29,11 +29,9 @@
             <div class="w-4/5 mx-auto  space-y-2 justify-start items-center">
               <div v-for="(chat,index) in chats" :key="chat.user.userId"
                    :class="{select:isSelected[index]}"
-                   class=" p-1 w-full rounded-xl bg-gray-100 cursor-pointer transition-all focus:border-indigo-500 border-2 border-white hover:border-indigo-600"
+                   class=" p-1 w-full rounded-xl bg-gray-100 cursor-pointer transition  transition-all focus:bg-indigo-100 border-2 border-white hover:bg-indigo-100"
                    @click="select(index)">
-                <div class=" hidden  lg:h-1/5 lg:block pr-2 text-xs text-right text-gray-400">
-                  {{ this.$moments(chat.record.recordUpdateTime) }}
-                </div>
+
                 <div class="h-full lg:h-4/5 lg:pl-2 mx-auto flex justify-center lg:justify-start  items-center ">
                   <a-badge :count="redPoint[index]" size="small" style="float: left;line-height: 100%">
                     <div class="h-full w-full lg:w-10   text-center rounded-full ">
@@ -49,7 +47,7 @@
                                class="mx-auto  object-cover rounded-full h-10 w-10 "/>
                           <span
                               class="absolute w-3 h-3 transform -translate-x-1/2  border-2 border-white rounded-full left-1/2 -bottom-2"
-                          :class="{'bg-gray-500':chat.user.userStatus==0,'bg-green-500':chat.user.userStatus==1}">
+                              :class="{'bg-gray-500':chat.user.userStatus==0,'bg-green-500':chat.user.userStatus==1}">
 
                         </span>
                         </a>
@@ -57,9 +55,12 @@
                     </div>
                   </a-badge>
 
-                  <div class="hidden max-h-12 overflow-hidden lg:block flex-col items-start p-2 justify-between">
-                    <div class="font-bold hidden lg:inline text-sm">
-                      {{ chat.user.userNickname }}
+                  <div class="hidden max-h-12 overflow-hidden w-full  lg:block flex-col items-start p-2 justify-between">
+                    <div class="font-bold hidden lg:flex w-full text-sm justify-between items-center">
+                      <span class="text-sm ">{{ chat.user.userNickname }}</span>
+                      <span class="text-xs text-gray-400">
+                        {{ this.$moments(chat.record.recordUpdateTime) }}
+                      </span>
                     </div>
                     <div id="uId" style="display: none">{{ chat.user.userId }}</div>
                     <div id="content" class="  hidden lg:inline  overflow-hidden text-xs text-gray-400"><span
@@ -974,8 +975,8 @@ export default {
 .select {
   /*width: 80%;*/
   /*height: 12%;*/
-  border: 2px solid #4f46e4;
-  /*background: #838ea4;*/
+  //border: 2px solid #4f46e4;
+  background: #e0e7ff;
 
 }
 

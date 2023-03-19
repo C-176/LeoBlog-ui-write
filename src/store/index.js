@@ -23,6 +23,7 @@ const store = createStore({
             token: storage.getToken(),
             user: storage.get(encode("lb_user")),
             users: [],
+            activeProject:'info',
             color: [
                 'magenta',
                 'red',

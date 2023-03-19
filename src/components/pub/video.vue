@@ -7,8 +7,8 @@
   <!--  </template>-->
 
   <!--  <template v-else>-->
-  <div v-loading="loading" style="margin-top: 49px;">
-    <iframe :src="'https://'+add.replaceAll('*','/')" style="width:100vw; height: calc(100vh - 55px)"></iframe>
+  <div v-loading="loading" class="">
+    <iframe :src="'https://'+add.replaceAll('*','/')" class="fixed left-0 w-screen h-screen "></iframe>
     <!--  </template>--></div>
 </template>
 

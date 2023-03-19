@@ -1,9 +1,13 @@
 <template>
-<h></h>
+  <!--<h></h>-->
 
-  <banner></banner>
 
-  <homePage></homePage>
+  <div class="fixed inset-0 w-screen">
+
+    <banner></banner>
+
+    <homePage></homePage>
+  </div>
 
 </template>
 
@@ -13,7 +17,6 @@
 import h from "@/components/h";
 import homePage from "@/components/pub/homePage";
 import banner from "@/components/banner";
-
 
 
 </script>
