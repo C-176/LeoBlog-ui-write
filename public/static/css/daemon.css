@@ -174,3 +174,55 @@ body {
 /*    background:#869d9d;*/
 /*    color:#134857;*/
 /*}*/
+
+
+/* WebKit */
+::-webkit-scrollbar {
+    width: 3px;
+    height: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(102, 102, 102, 0.56);
+    border-radius: 3px;
+}
+
+/* Firefox */
+/* 请注意：Firefox 目前不支持在滚动条上添加样式 */
+/* 您可以尝试使用 JavaScript 模拟自定义滚动条 */
+
+/* IE */
+/* 请注意：IE 浏览器只支持在 IE11 及以上版本上添加样式 */
+/* 在 IE11 中，滚动条默认宽度为 17px */
+/* 在 IE 中，您需要使用 -ms- 前缀来指定样式 */
+/* 以下样式仅为演示用途，您可以自定义这些值 */
+/* 在IE中，滚动条的尺寸是由一系列的属性控制的 */
+/* 您可以通过设置他们来控制滚动条的外观 */
+/* 以下样式在IE中设置了较小的滚动条宽度和滑块高度 */
+/* 但您可以根据您的需要来自定义它们 */
+/* 您还可以通过更改颜色、背景色等属性来自定义它们 */
+/* IE 10+ */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    /* 垂直滚动条 */
+    .ie-scrollbar-vertical {
+        width: 10px;
+    }
+    .ie-scrollbar-vertical::-webkit-scrollbar-thumb {
+        background-color: #666;
+        border-radius: 10px;
+    }
+    .ie-scrollbar-vertical::-webkit-scrollbar-thumb:hover {
+        background-color: #333;
+    }
+    /* 水平滚动条 */
+    .ie-scrollbar-horizontal {
+        height: 10px;
+    }
+    .ie-scrollbar-horizontal::-webkit-scrollbar-thumb {
+        background-color: #666;
+        border-radius: 10px;
+    }
+    .ie-scrollbar-horizontal::-webkit-scrollbar-thumb:hover {
+        background-color: #333;
+    }
+}

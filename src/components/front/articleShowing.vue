@@ -135,13 +135,13 @@
         >
           <!-- <div class="flex-grow"> -->
           <div v-if="articleList[otherIndex].articlePic == null || articleList[otherIndex].articlePic == ''"
-              class="flex-grow w-full h-64 lg:bg-center shadow bg-cover rounded-t-xl lg:rounded-none lg:rounded-l-xl"
-              style=' background-image: url("http://49.235.100.240:8080/source/upload/images/c2aaf2de-e0d6-4c90-a42d-bf4c7f34e1ef.png");'
+               class="flex-grow w-full h-64 lg:bg-center shadow bg-cover rounded-t-xl lg:rounded-none lg:rounded-l-xl"
+               style=' background-image: url("http://49.235.100.240:8080/source/upload/images/c2aaf2de-e0d6-4c90-a42d-bf4c7f34e1ef.png");'
           >
           </div>
           <div v-else
-              class="flex-grow w-full h-64 lg:bg-center shadow bg-cover rounded-t-xl lg:rounded-none lg:rounded-l-xl"
-              :style="'background-image: url(' + articleList[otherIndex].articlePic + ');'"
+               class="flex-grow w-full h-64 lg:bg-center shadow bg-cover rounded-t-xl lg:rounded-none lg:rounded-l-xl"
+               :style="'background-image: url(' + articleList[otherIndex].articlePic + ');'"
           >
           </div>
           <!-- </div> -->
@@ -359,10 +359,7 @@ export default {
 
 
   },
-  computed: {
-
-
-  },
+  computed: {},
 
   mounted() {
     setTimeout(() => {
@@ -596,27 +593,55 @@ export default {
   padding: 10px !important;
 }
 
-:deep(.content ol) {
-  padding-left: 1rem !important;
-  border-left: 0.1rem solid #4f46e5 !important;
+:deep(li) {
+  //font-size: 16px; /* 设置字体大小 */
+  color: #666; /* 设置字体颜色 */
+  margin-bottom: 4px; /* 设置下方的间距 */
+  //list-style-color: #4f46e5; /* 设置列表标记颜色 */
+}
 
+:deep(.content ol) {
+  list-style-type: decimal; /* 设置列表标记为数字 */
+  margin-left: 20px; /* 设置左边距 */
 }
 
 
 :deep(.content ul) {
-  padding-left: 1rem !important;
-  border-left: 0.1rem solid #4f46e5 !important;
+  list-style-type: disc; /* 设置列表标记为圆点 */
+  margin-left: 20px;
 
 }
 
+:deep(pre) {
+  padding: 1em;
+  overflow: auto;
+  font-family: 'Courier New', Courier, monospace;
+  background-color: #f8f9fa;
+  border-radius: 0.25rem;
+}
+:deep(a){
+  color: #4f46e5;
+  text-decoration: none;
+}
+
+:deep(code) {
+  font-weight: bold;
+  font-family: 'Courier New', Courier, monospace;
+}
 
 :deep(blockquote) {
   background: #f9f9f9;
   border: 1px solid #ddd;
-  border-left: 10px solid #4f46e5;
+  border-left: 0.5rem solid #4f46e5;
   border-radius: 5px;
   margin: 1.5em 10px;
   padding: 0.5em 10px;
+
+  //padding: 1em;
+  //margin: 0 0 1em;
+  //color: #555;
+  //border-left: 0.25em solid #dfe2e5;
+  //background-color: #f8f9fa;
 }
 
 :deep(blockquote:before) {
