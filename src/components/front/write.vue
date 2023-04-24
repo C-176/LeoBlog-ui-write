@@ -2,7 +2,7 @@
 
   <bread>创作</bread>
 
-  <div class="w-full mx-auto  lg:rounded-xl  bg-gray-100 text-left ">
+  <div class="w-full mx-auto  lg:rounded-xl p-2 bg-gray-100 text-left ">
     <editor class="editor" :articleId="$route.params.articleId"></editor>
     <div class="labels">
       <Divider orientation="left">标签</Divider>
