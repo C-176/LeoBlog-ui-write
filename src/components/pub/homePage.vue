@@ -7,7 +7,7 @@
               <div
                   class="relative overflow-hidden rounded-full py-1.5 px-4 text-sm leading-6 ring-1 ring-gray-900/10 ">
                 <span class="text-gray-600">
-                  赞助作者搞开发 <a @click="$st('谢谢你，善良的陌生人。')" class="font-semibold text-indigo-600"><span
+                  赞助作者搞开发 <a @click="$st('谢谢你，善良的陌生人。','success')" class="font-semibold text-indigo-600"><span
                     class="absolute inset-0" aria-hidden="true"/>去扶贫 <span aria-hidden="true">&rarr;</span></a>
                 </span>
               </div>

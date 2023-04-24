@@ -60,14 +60,20 @@
           <div
               class="w-2/3 h-auto float-right flex items-center justify-around space-x-2 my-2 ring-indigo-200 ring-2 rounded-xl">
             <button v-for="key in keys" :key="key.key"
-                    class=" justify-items-end w-full h-full p-1 rounded-xl hover:bg-indigo-300   text-center transform duration-500"
+                    class=" justify-items-end w-full h-full p-1 rounded-xl hover:bg-indigo-500 group hover:text-white  text-center transform duration-500"
                     :class="[
 
-                    activeProject == key.key ? 'bg-indigo-300' : '',
+                    activeProject == key.key ? 'bg-indigo-500' : '',
                 ]">
-              <div class="flex items-center justify-center" @click="()=>{key.href($router);this.$store.commit('changeProject',key.key) }">
+              <div class="flex items-center justify-center"
+                   @click="()=>{key.href($router);this.$store.commit('changeProject',key.key) }">
                 <icon :src="key.iconSrc" :size="20"/>
-                <span class=" text-gray-600 text-center ">{{ key.title }}</span></div>
+                <span class="text-center group-hover:text-white  "
+                      :class="[
+
+                    activeProject == key.key ? 'text-white' : 'text-gray-600',
+                ]"
+                >{{ key.title }}</span></div>
             </button>
           </div>
         </div>
@@ -253,15 +259,15 @@ export default {
 
         }
       }
-      // , {
-      //   key: 'picture',
-      //   title: '图片',
-      //   iconSrc: 'puvaffet',
-      //   href: function ($router) {
-      //     $router.push('/back/info/picture')
-      //
-      //   }
-      // }
+        // , {
+        //   key: 'picture',
+        //   title: '图片',
+        //   iconSrc: 'puvaffet',
+        //   href: function ($router) {
+        //     $router.push('/back/info/picture')
+        //
+        //   }
+        // }
       ],
 
     }

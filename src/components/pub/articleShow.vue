@@ -12,7 +12,7 @@
 
       <!--      文章展示-->
       <div v-for="(article,index) in myArticles" v-else :key="article.articleId"
-           class="w-full overflow-hidden bg-gray-100 space-y-2  py-2 px-3 lg:px-5 lg:rounded-xl mb-2">
+           class="w-full overflow-hidden bg-gray-100 space-y-2  py-2 px-3 lg:px-5 rounded-xl mb-2">
 
         <div class="text-left flex justify-start items-center space-x-1">
           <img class="h-10 w-10 rounded-full" :src="article.author.userProfilePhoto"/>

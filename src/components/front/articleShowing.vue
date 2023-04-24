@@ -119,7 +119,7 @@
 
   <shareModal @close="()=>{showShare=false}" :showShare="showShare"></shareModal>
   <div
-      class="px-2 lg:px-1 my-3 w-full lg:w-2/3 mx-auto text-slate-700 dark:text-white
+      class="px-2 lg:px-1 my-3 w-full mx-auto text-slate-700 dark:text-white
        flex flex-col items-center"
   >
     <div
@@ -185,7 +185,7 @@
       <div class=" w-full mt-2">
         <div class="flex justify-center">
           <div
-              class="bg-white dark:bg-slate-800 rounded-xl shadow-md flex w-full lg:w-2/3 p-0 justify-between h-12 lg:h-fit items-center">
+              class="bg-white dark:bg-slate-800 rounded-xl shadow-md flex w-full p-0 justify-between h-12 lg:h-fit items-center">
             <button
                 class="border-slate-500 dark:border-slate-100 hover:text-blue-500 dark:hover:text-blue-400 border hover:border-blue-500 dark:hover:border-blue-400 w-6 h-6 rounded-xl duration-150 hover:scale-105 active:scale-95"
                 @click="otherIndex == 0 ? otherIndex = articleList.length - 1 : otherIndex--"
