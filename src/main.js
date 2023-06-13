@@ -42,38 +42,9 @@ import icon from '@/components/pub/icon'
 // 第一步导入默认图片
 import IMG_SRC from '/source/images/index/1.jpg'
 
+
 //全局注册一个a函数
 const app = createApp(App)
-//1.开发 2.生产
-let env = 2
-let host = ''
-if (env === 1) {
-    host = 'localhost'
-    app.config.globalProperties.baseURL = 'http://localhost:8080'
-    axios.defaults.baseURL = 'http://localhost:8080'
-} else if (env === 2) {
-    host = '49.235.100.240'
-    app.config.globalProperties.baseURL = 'http://' + host + '/api'
-    axios.defaults.baseURL = 'http://' + host + '/api'
-}
-app.config.globalProperties.$host = host
-
-axios.interceptors.request.use(
-    config => {
-        const token = localStorage.getItem('token')
-        if (token) {
-            config.headers.Authorization = token;
-        } else {
-            console.log("token不存在")
-        }
-        return config
-    },
-    error => {
-        return Promise.reject(error)
-    }
-);
-
-app.config.globalProperties.$axios = axios
 app.config.globalProperties.$sa = (msg, icon) => {
     Swal.fire({
         title: msg,
@@ -98,6 +69,35 @@ app.config.globalProperties.$st = (title, icon) => {
         title
     })
 }
+//1.开发 2.生产
+let env = 1
+let host = ''
+if (env === 1) {
+    host = 'localhost'
+    app.config.globalProperties.baseURL = 'http://localhost:8080'
+    axios.defaults.baseURL = 'http://localhost:8080'
+} else if (env === 2) {
+    host = '49.235.100.240'
+    app.config.globalProperties.baseURL = 'http://' + host + '/api'
+    axios.defaults.baseURL = 'http://' + host + '/api'
+}
+app.config.globalProperties.$host = host
+axios.interceptors.response.use(res => {
+        if (res.data.code === 401) {
+            app.config.globalProperties.$st('请先登录', 'error')
+        }
+        return res
+    }
+)
+axios.interceptors.request.use(config => {
+        const token = localStorage.getItem('token')
+           if(token) config.headers['Authorization'] = token
+        return config
+    }
+)
+
+app.config.globalProperties.$axios = axios
+
 app.config.globalProperties.$moments = (stamp) => {
     let date = new Date(stamp)
     let Y = date.getFullYear() + '-';
@@ -125,9 +125,16 @@ app.config.globalProperties.$imgOnerror = e => {
 }
 
 import bgCover from "@/components/pub/BgCover.vue";
+import badge from "@/components/pub/badge.vue";
+import myModal from "@/components/pub/myModal.vue";
 
 app.use(router).use(store).use(ElementPlus).use(Antd).use(VueMarkdownEditor).component('loader', loader)
-    .component('bread', bread).component('bgCover', bgCover).component('icon', icon).component('user', user).component('bigImg', bigImg)
+    .component('bread', bread).component('bgCover', bgCover)
+    .component('icon', icon)
+    .component('user', user)
+    .component('bigImg', bigImg)
+    .component('badge',badge)
+    .component('myModal', myModal)
 
 
 app.mount('#app')

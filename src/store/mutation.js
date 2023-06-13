@@ -89,13 +89,20 @@ const mutations = {
     },
 
     addUser(state, user) {  // 添加用户
-        for (let i = 0; i < state.users.length; i++) {
-            if (state.users[i].userId == user.userId) {
-                return
-            }
-        }
+        // q:如何保证唯一性？？？
+        // a:在添加用户之前，先判断用户是否存在
+        let u = state.users.find(u => u.userId === user.userId);
+        if (u) return;
         state.users.push(user);
-    }
+    },
+    // 在 mutations 中添加以下代码
+    addLock(state, userId) {
+        state.lock.push(userId);
+    },
+
+    removeLock(state, userId) {
+        state.lock = state.lock.filter(u => u !== userId);
+    },
 
 
 }

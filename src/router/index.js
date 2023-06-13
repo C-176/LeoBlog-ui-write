@@ -12,6 +12,7 @@ const routes = [
     {path: '/test', component: () => import('@/components/test')},
 
     {path: '/user', component: () => import('@/components/pub/user')},
+    {path: '/tag', component: () => import('@/components/pub/tagController.vue')},
 
     {
         path: '/home', component: () => import('@/components/home'), redirect: '/home/index',
@@ -52,6 +53,7 @@ const routes = [
                     title: '搜索'
                 }
             },
+            {path: '/badgeShow', component: () => import('@/components/pub/badgeShow.vue')},
             {path: '/article/:articleId', component: () => import('@/components/front/articleShowing')},
             {path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('@/components/pub/404')},
         ]

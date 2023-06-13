@@ -414,7 +414,7 @@ export default {
             if (!this.checkLogin()) {
                 return
             }
-            this.$axios.get("/article/collect/" + articleId).then((res) => {
+            this.$axios.put("/article/collect/" + articleId).then((res) => {
                 if (res.data.code === 200) {
                     if (res.data.data == "取消收藏成功") {
                         this.article.articleCollects -= 1
@@ -431,7 +431,7 @@ export default {
             if (!this.checkLogin()) {
                 return
             }
-            this.$axios.get("/article/like/" + articleId).then((res) => {
+            this.$axios.put("/article/like/" + articleId).then((res) => {
                 if (res.data.code === 200) {
 
                     if (res.data.data == "取消点赞成功") {

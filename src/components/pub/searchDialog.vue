@@ -27,7 +27,7 @@
               leave-to="opacity-0 scale-95"
           >
             <DialogPanel
-                class="w-full max-w-md transform text-center rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
+                class="w-full max-w-md transform  rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all"
             >
 
               <div class=" w-full">

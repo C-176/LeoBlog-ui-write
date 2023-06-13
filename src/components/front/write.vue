@@ -7,7 +7,7 @@
     <div class="labels">
       <Divider orientation="left">标签</Divider>
       <div>
-        <Tag :color="getColor()" closable="closable" v-for="label in article.labels" :key="label.labelId">
+        <Tag class="flex-col items-center" :color="getColor()" closable v-for="label in article.labels" :key="label.labelId">
           {{ label.labelName }}
         </Tag>
         <el-autocomplete

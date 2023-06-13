@@ -19,6 +19,7 @@
           :on-error="handleAvatarError"
           :disabled="readonly"
       >
+
         <img v-if="p(userx.userBgPic) && showBg" id="bg" :src="p(userx.userBgPic)" class="avatar"/>
         <el-icon v-else
                  class="avatar-uploader-icon bgUpload">
@@ -31,7 +32,7 @@
 
 
         <div class="flex w-full justify-start  items-center -mt-8">
-
+            <badge :badge-src=testSrc :size="50"></badge>
           <el-upload
               class="avatar-uploader flex justify-center items-center w-20 h-20 border border-gray-100 rounded-xl overflow-hidden"
               method="post"
@@ -216,6 +217,7 @@ export default {
   },
   data() {
     return {
+        testSrc:'https://assets9.lottiefiles.com/packages/lf20_stozcwgt.json',
       showCanvas: false,
       showBg: true,
       showProfile: true,
