@@ -1,6 +1,7 @@
 <template>
     <myModal :visible="$store.state.chatVisible" :size="'lg'"
              @closeModal="()=>{$store.commit('changeChatVisible',!$store.state.chatVisible)}">
+        <audio class="hidden" ref="audio" src="/public/source/audios/Windows%20Proximity%20Notification.wav"></audio>
         <div class="w-full h-full flex justify-start">
             <div class="w-1/6 lg:w-2/5 h-full overflow-auto">
                 <div class="w-4/5  mx-auto my-2  text-sm ">
@@ -630,20 +631,22 @@ export default {
             //更新聊天记录
             //TODO:从localstorage中获取聊天记录
             this.talkTo.record = this.getChatRecord(this.$store.state.user.userId, this.talkTo.user.userId)
-            this.$axios.get(this.baseURL + '/chat/connect/' + this.$store.state.user.userId + '/' + this.talkTo.user.userId).then(res => {
-                if (res.data.code === 200) {
-                    this.currentPage = res.data.data.current;
-                    this.pages = res.data.data.pages;
-                    this.talkTo.record = res.data.data.records;
-                    this.talkTo.record.forEach(record => {
-                        record.recordContent = this.replaceURL(record.recordContent)
-                    })
-                    this.saveChatRecord(this.$store.state.user.userId, this.talkTo.user.userId, this.talkTo.record)
+            if (this.talkTo.user.userId != 1) {
+                this.$axios.get(this.baseURL + '/chat/connect/' + this.$store.state.user.userId + '/' + this.talkTo.user.userId).then(res => {
+                    if (res.data.code === 200) {
+                        this.currentPage = res.data.data.current;
+                        this.pages = res.data.data.pages;
+                        this.talkTo.record = res.data.data.records;
+                        this.talkTo.record.forEach(record => {
+                            record.recordContent = this.replaceURL(record.recordContent)
+                        })
+                        this.saveChatRecord(this.$store.state.user.userId, this.talkTo.user.userId, this.talkTo.record)
 
-                } else {
-                    this.$st(res.data.data, "error")
-                }
-            })
+                    } else {
+                        this.$st(res.data.data, "error")
+                    }
+                })
+            }
             this.editor.focus()
         }
         ,
@@ -652,11 +655,16 @@ export default {
             let value = JSON.stringify(record)
             localStorage.setItem(key, value)
         },
+        addAndSaveChatRecord(userId, talkToId, record) {
+            var recordList = this.getChatRecord(userId, talkToId);
+            recordList.push(record)
+            this.saveChatRecord(userId, talkToId, recordList);
+        },
         getChatRecord(userId, talkToId) {
             let key = 'chatRecord#' + userId + '#' + talkToId
             let value = localStorage.getItem(key)
             if (value === null) {
-                return null
+                return []
             }
             return JSON.parse(value)
         }
@@ -753,12 +761,6 @@ export default {
                 "isSaw": 0
             }
 
-            // if (this.ws.readyState !== 1) {
-            //   this.ws = this.connectSocket()
-            //   this.$nextTick(() => {
-            //     console.log(this.ws.readyState)
-            //   })
-            // }
             this.toDown = true
             // if (this.ws.readyState !== 1) {
             //     this.ws = this.connectSocket()
@@ -774,13 +776,18 @@ export default {
                 // console.log(e)
                 this.$st("连接失败，请刷新页面重试", 'error')
             }
-
-            this.talkTo.record.push({
+            let d = {
                 recordContent: this.replaceURL(msg),
                 recordUpdateTime: new Date().getTime(),
                 userId: this.$store.state.user.userId,
                 receiverId: this.talkTo.user.userId
-            })
+            }
+            this.talkTo.record.push(d)
+            if (this.talkTo.user.userId === 1) {
+                this.addAndSaveChatRecord(d.userId, d.receiverId, d)
+                // return
+
+            }
             this.$nextTick(() => {
                 this.submitting = false
                 this.editor.clear()
@@ -817,6 +824,17 @@ export default {
             } else {
                 const userId = data.userId;
                 const receiverId = data.receiverId;
+                if (userId === 1) {
+                    this.addAndSaveChatRecord(receiverId, userId, {
+                        recordContent: data.recordContent,
+                        recordUpdateTime: data.recordUpdateTime,
+                        userId: userId,
+                        receiverId: receiverId,
+                        recordId: new Date().getTime()
+                    })
+                    // return
+
+                }
                 if (this.$store.state.chatVisible == false) {
                     this.$store.commit('changeChatPoint', this.$store.state.chatPoint + 1)
                     //查找是否有该用户
@@ -854,7 +872,7 @@ export default {
                         userId: data.userId,
                         receiverId: data.receiverId
                     })
-                    this.saveChatRecord(data.userId, data.receiverId, this.talkTo.record)
+                    if (data.userId !== 1) this.saveChatRecord(data.userId, data.receiverId, this.talkTo.record)
                 } else {
                     if (receiverId == -1 && this.$store.state.user.userId != userId) {
                         if (this.redPoint[0] == undefined) {
