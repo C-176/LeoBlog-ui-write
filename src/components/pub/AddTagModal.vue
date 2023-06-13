@@ -71,6 +71,6 @@ export default {
 </script>
 
 <style scoped>
-/*紧急修复*/
+//bug修复
 /* 在这里添加样式 */
 </style>
