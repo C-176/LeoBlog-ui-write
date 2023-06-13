@@ -70,6 +70,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 /* 在这里添加样式 */
 </style>
