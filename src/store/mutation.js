@@ -40,10 +40,10 @@ const mutations = {
             state.chatPoint = 0;
         }
     },
-    changeProject(state,project){
+    changeProject(state, project) {
         state.activeProject = project
     },
-    changeBgCover(state, val){
+    changeBgCover(state, val) {
         state.bgCover = val
     },
     changeMessageVisible(state, messageVisible) {
@@ -51,6 +51,8 @@ const mutations = {
         if (messageVisible) {
             state.messagePoint = 0;
         }
+    },changeMusicVisible(state, musicVisible) {
+        state.musicVisible = musicVisible;
     },
     changeChatPoint(state, chatPoint) {
         state.chatPoint = chatPoint
@@ -71,11 +73,11 @@ const mutations = {
 
     },
     changeValueContent(state, valueContent) {
-        if (valueContent == null  || valueContent == undefined) {
+        if (valueContent == null || valueContent == undefined) {
             return
         }
         state.valueContent = valueContent;
-        storage.set("valueContent", valueContent,20);
+        storage.set("valueContent", valueContent, 20);
     },
     initSocket(state) {
         const host = main.config.globalProperties.$host
@@ -103,6 +105,27 @@ const mutations = {
     removeLock(state, userId) {
         state.lock = state.lock.filter(u => u !== userId);
     },
+    addFan(state, fan) {
+        if (state.fans == null) state.fans = []
+        if (fan instanceof Array) {
+            state.fans.push(...fan)
+        } else {
+            state.fans.push(fan);
+        }
+
+    },
+    addFollow(state, follow) {
+        if (state.follows == null) state.follows = []
+        if (follow instanceof Array) {
+            state.follows.push(...follow)
+        } else {
+            state.follows.push(follow);
+        }
+
+    },
+    deleteFollow(state, follow) {
+        state.follows = state.follows.filter(f => f != follow);
+    }
 
 
 }

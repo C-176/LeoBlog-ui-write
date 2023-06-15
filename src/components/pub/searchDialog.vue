@@ -174,28 +174,28 @@ function closeModal() {
 
 }
 
+//
+// const people = [
+//   {id: 1, name: 'Wade Cooper'},
+//   {id: 2, name: 'Arlene Mccoy'},
+//   {id: 3, name: 'Devon Webb'},
+//   {id: 4, name: 'Tom Cook'},
+//   {id: 5, name: 'Tanya Fox'},
+//   {id: 6, name: 'Hellen Schmidt'},
+// ]
 
-const people = [
-  {id: 1, name: 'Wade Cooper'},
-  {id: 2, name: 'Arlene Mccoy'},
-  {id: 3, name: 'Devon Webb'},
-  {id: 4, name: 'Tom Cook'},
-  {id: 5, name: 'Tanya Fox'},
-  {id: 6, name: 'Hellen Schmidt'},
-]
 
-let selected = ref(people[0])
 let query = ref('')
-
-let filteredPeople = computed(() =>
-    query.value === ''
-        ? people
-        : people.filter((person) =>
-            person.name
-                .toLowerCase()
-                .replace(/\s+/g, '')
-                .includes(query.value.toLowerCase().replace(/\s+/g, ''))
-        )
-)
+//
+// let filteredPeople = computed(() =>
+//     query.value === ''
+//         ? people
+//         : people.filter((person) =>
+//             person.name
+//                 .toLowerCase()
+//                 .replace(/\s+/g, '')
+//                 .includes(query.value.toLowerCase().replace(/\s+/g, ''))
+//         )
+// )
 
 </script>

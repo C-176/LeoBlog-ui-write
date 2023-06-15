@@ -86,6 +86,8 @@ axios.interceptors.response.use(res => {
         if (res.data.code === 401) {
             app.config.globalProperties.$st('请先登录', 'error')
         }
+        // 给res添加cors
+        // res.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
         return res
     }
 )
@@ -98,15 +100,16 @@ axios.interceptors.request.use(config => {
 
 app.config.globalProperties.$axios = axios
 
-app.config.globalProperties.$moments = (stamp) => {
+app.config.globalProperties.$moments = (stamp,format) => {
     let date = new Date(stamp)
-    let Y = date.getFullYear() + '-';
-    let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
-    let D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + ' ';
-    let h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) + ':';
-    let m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes()) + ':';
+    let Y = date.getFullYear()
+    let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)
+    let D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate())
+    let h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours())
+    let m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
     let s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
-    return Y + M + D + h + m + s;
+    if(format == null) return Y+'-'+M+'-'+D+' '+h+':'+m+':'+s
+    return format.replace('Y',Y).replace('M',M).replace('D',D).replace('h',h).replace('m',m).replace('s',s)
 }
 app.config.globalProperties.p = (pic) => {
     if (pic == '') return pic
