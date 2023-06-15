@@ -4,7 +4,7 @@
     <audio class="hidden" ref="audio" src="/source/audios/Windows%20Proximity%20Notification.wav"></audio>
     <div class="w-full h-full flex justify-start">
       <div class="w-1/6 lg:w-2/5 h-full overflow-auto">
-        <div class="w-4/5  mx-auto my-2  text-sm ">
+        <div class="w-4/5  mx-auto my-2  text-sm invisible lg:visible">
           <el-autocomplete
               v-model="state"
               style="width: 100%; border-radius: 10px"
@@ -230,8 +230,8 @@ export default {
   },
   data() {
     return {
-      showUserId:-2,
-      showUserCard:false,
+      showUserId: -2,
+      showUserCard: false,
       showLoading: false,
       currentPage: 1,
       pageSize: 50,
@@ -709,7 +709,7 @@ export default {
     },
 
     connectSocket() {
-      if(this.connecting) return
+      if (this.connecting || (this.ws != null && this.ws.readyState === 1)) return
       this.connecting = true;
       this.$store.commit('initSocket')
       let ws = this.$store.state.socket

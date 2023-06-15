@@ -24,7 +24,7 @@
               </template>
               <template #avatar>
                 <user :user-id="item.userId" v-slot="userP">
-                  <a class="relative block ">
+                  <a class="relative block">
                     <img alt="profile" :src="userP.photo"
                          class="mx-auto object-cover rounded-full h-10 w-10 "/>
                     <span
@@ -86,7 +86,11 @@ export default {
       this.$store.commit('changeMessageVisible', false)
     },
     getScrollMsgs() {
-      if (this.lastScore == null) this.lastScore = new Date().getTime();
+      if (this.lastScore == null){
+        this.lastScore = new Date().getTime();
+        this.messages = []
+      }
+
       this.$axios.get(`\/message/${this.offset}/${this.lastScore}`).then(res => {
         if (res.data.code === 200) {
           let msgs = res.data.data.messages;
@@ -98,9 +102,7 @@ export default {
           }
           this.offset = res.data.data.offset;
           this.lastScore = res.data.data.lastScore;
-          console.log(this.messages)
           this.messages = this.messages.concat(msgs);
-          console.log(this.messages)
 
         } else {
           this.$st(res.data.data, 'error')
