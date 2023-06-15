@@ -111,9 +111,9 @@ export default {
         message: this.message,
       }).then(res => {
         if (res.code === 200) {
-          this.$st('提交成功')
+          this.$st('提交成功','success')
         } else {
-          this.$st('提交失败')
+          this.$st('提交失败','error')
         }
       })
 

@@ -29,10 +29,10 @@
         </div>
     </div>
 
-    <my-modal :visible="visible" @closeModal="visible=false">
+    <my-modal :visible="visible" @closeModal="visible=false" >
 
-        <div class="relative flex w-full items-center overflow-hidden bg-white  sm:px-6 sm:pt-8 md:p-6 lg:p-8">
-            <div class="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
+        <div class="relative flex w-full items-center overflow-hidden bg-white  sm:px-2 sm:pt-2 p-3">
+            <div class="grid w-full grid-cols-1 items-start gap-x-6 gap-y-6 sm:grid-cols-12 lg:gap-x-8">
                 <div class="flex justify-center aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
 <!--                    <badge :badge-src="focusBadge.badgeIcon" :size="300"></badge>-->
                     <lottie-player ref="lottie" autoplay  loop mode="normal" style="width: 320px">
@@ -73,10 +73,6 @@
                                             <span id="size-choice-0-label">{{
                                                 focusBadge.badgeType == 1 ? '限量' : '非限量'
                                                 }}</span>
-                                            <!--
-                                              Active: "border", Not Active: "border-2"
-                                              Checked: "border-indigo-500", Not Checked: "border-transparent"
-                                            -->
                                             <span class="pointer-events-none absolute -inset-px rounded-md"
                                                   aria-hidden="true"></span>
                                         </label>
@@ -141,10 +137,6 @@ export default {
             this.focusBadge = badge
                 try {
                     this.lottie.load(this.focusBadge.badgeIcon);
-                    // or load via a Bodymovin JSON string/object
-                    // this.lottie.load(
-                    //     '{"v":"5.3.4","fr":30,"ip":0,"op":38,"w":315,"h":600,"nm":"new", ... }'
-                    // );
                 }catch (e) {
                     console.error(e)
                 }

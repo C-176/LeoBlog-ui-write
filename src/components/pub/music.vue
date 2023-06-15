@@ -3,146 +3,130 @@
     <source :src="music.url">
   </audio>
 
-  <transition name="fade">
+  <!--  <transition name="fade">-->
+  <my-modal :visible="$store.state.musicVisible" size="md" @closeModal="closePlayer">
 
-    <!-- component -->
-    <div v-show="showPlayer"
-         class="fixed text-left z-50 lg:inset-0 mx-auto lg:mt-16 w-full lg:w-1/2 h-screen flex justify-center items-center lg:h-5/6 p-2  lg:rounded-xl">
 
-      <div class='relative flex w-full bg-white shadow-md rounded-lg overflow-hidden mx-auto'>
-        <a-tooltip id="close" class="absolute top-2 right-2" title="关闭">
-          <button class="rounded-xl z-50 text-white h-8 w-8 text-center bg-indigo-600 hover:bg-indigo-500"
-                  @click="closePlayer">
-            ✖
-          </button>
-        </a-tooltip>
-        <div class="flex flex-col w-full">
-          <div class="flex p-5 border-b bg-cover backdrop-blur-sm bg-blend-lighten">
-            <!--               :style="{backgroundImage: 'url(' + music.cover + ')'}">-->
-            <img class='w-20 h-20 object-cover cursor-pointer rounded-full duration-500  shadow-lg'
-                 alt='User avatar'
-                 @click="handlePlay"
-                 :src='music.cover'>
-            <div class="flex flex-col justify-around p-2 w-1/2">
+    <div class="flex flex-col w-full h-full">
+      <div class="flex p-5 border-b bg-cover backdrop-blur-sm bg-blend-lighten">
+        <!--               :style="{backgroundImage: 'url(' + music.cover + ')'}">-->
+        <img class='w-20 h-20 object-cover cursor-pointer rounded-full duration-500  shadow-lg'
+             alt='User avatar'
+             @click="handlePlay"
+             :src='music.cover'>
+        <div class="flex flex-col justify-around p-2 w-1/3">
                     <span class="text-xs text-gray-700 uppercase font-medium ">
                         正在播放
                     </span>
-              <span class="text-sm text-indigo-600 capitalize font-semibold pt-1">
+          <span class="text-sm text-indigo-600 capitalize font-semibold pt-1">
                        {{ music.name }}
                     </span>
-              <span class="text-xs text-gray-500  font-medium ">
+          <span class="text-xs text-gray-500  font-medium ">
                         {{ music.artist }}
                     </span>
 
-            </div>
-            <!--            <div id="waveform" class="w-1/2"></div>-->
+        </div>
+        <div class="w-1/3 h-full flex-col items-center justify-center mr-1">
+          <div class="flex w-full h-1/2">
+            <button @click="back"
+                    class="w-1/3 h-full hover:text-gray-800 text-2xl  text-gray-400 duration-500 transition rounded-full  flex items-center justify-center  focus:outline-none">
+              <StepBackwardOutlined/>
+            </button>
+            <button @click="handlePlay"
+                    class="w-1/3 h-full  hover:text-gray-800 text-2xl  text-gray-400 duration-500 transition rounded-full  flex items-center justify-center  focus:outline-none">
+              <play-circle-outlined v-if="!playing"/>
+              <pause-circle-outlined v-if="playing"/>
+            </button>
+            <button @click="forward"
+                    class="w-1/3 h-full hover:text-gray-800 text-2xl  text-gray-400 duration-500 transition rounded-full flex items-center justify-center  focus:outline-none">
+              <StepForwardOutlined/>
+            </button>
           </div>
-
-          <div class="flex flex-col sm:flex-row items-center p-2 lg:p-5">
-            <div class="flex items-center">
-              <div class="flex space-x-3 p-2">
-                <button @click="back()"
-                        class="focus:outline-none hover:text-gray-400">
-                  <svg class="w-4 h-4 hover:text-gray-400" viewBox="0 0 24 24" fill="none" stroke="#ef4444"
-                       stroke-width="2"
-                       stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="19 20 9 12 19 4 19 20"></polygon>
-                    <line x1="5" y1="19" x2="5" y2="5"></line>
-                  </svg>
-                </button>
-                <button @click="handlePlay"
-                        class=" text-2xl  hover:text-gray-400 duration-500 transition rounded-full w-10 h-10 flex items-center justify-center pl-0.5 focus:outline-none">
-
-                  <play-circle-outlined v-if="!playing"/>
-                  <!--                    <icon src="xddtsyvc" trigger="click"></icon>-->
-
-                  <!--                    <icon src="ensnyqet" trigger="click"></icon>-->
-                  <pause-circle-outlined v-if="playing"/>
-
-                </button>
-                <button @click="forward()"
-                        class="focus:outline-none">
-                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"
-                       stroke-linecap="round" stroke-linejoin="round">
-                    <polygon points="5 4 15 12 5 20 5 4"></polygon>
-                    <line x1="19" y1="5" x2="19" y2="19"></line>
-                  </svg>
-                </button>
-              </div>
-            </div>
-            <!--                        <div class="relative w-full sm:w-1/2 lg:w-7/12 lg:w-4/6 ml-2">-->
-            <!--                          <div class="bg-indigo-300 h-2 w-full rounded-lg"></div>-->
-            <!--                          <div class="bg-indigo-500 h-2 w-1/2 rounded-lg absolute top-0"></div>-->
-
-            <!--                        </div>-->
-            <!--                                    <input type="range" ref="volumeRange" step="1" value="80" min="0" max="100"-->
-            <!--                                           @input="musicElement.volume = $refs.volumeRange.value/100">-->
-            <a-slider v-if="musicElement" id="test" class="relative w-full sm:w-1/2 lg:w-7/12 lg:w-4/6 ml-2"
-                      ref="seekbar" v-model:value="musicElement.currentTime" :step="0.5"
-                      :tooltipVisible="false"
-                      :max="musicElement.duration"/>
-            <a-slider v-else id="test" class="relative w-full sm:w-1/2 lg:w-7/12 lg:w-4/6 ml-2" value="0"
-                      ref="seekbar"/>
-            <div class="flex justify-end w-full sm:w-auto pt-1 sm:pt-0">
-<span class="text-xs text-gray-700 uppercase font-medium pl-2">
-                    {{ this.currentTime }} / {{ this.duration }}
-                </span>
-            </div>
-
-
-          </div>
-          <input v-if="musicElement" type="range" class="relative mx-auto w-1/2 px-5 bg-indigo-600"
-                 ref="volumeRange" step="1" value="80" min="0" max="100"
-                 @input="musicElement.volume = $refs.volumeRange.value/100">
-          <input v-else type="range" class="relative w-full px-5 bg-indigo-600"
-                 ref="volumeRange" step="1" value="0" min="0" max="100">
+          <div class=" w-full h-1/2 flex justify-center items-center">
+            <SoundOutlined class="w-1/4 text-gray-400" />
+            <input v-if="musicElement" type="range" class="cursor-pointer  w-3/4 bg-indigo-600"
+                   ref="volumeRange" step="1" value="80" min="0" max="100"
+                   @input="()=>{musicElement.volume = $refs.volumeRange.value/100}">
+            <input v-else type="range" class="cursor-pointer  w-3/4 bg-indigo-600"
+                   ref="volumeRange" step="1" value="0" min="0" max="100"></div>
           <!--          <a-slider v-if="musicElement" id="test" class="relative w-full sm:w-1/2 lg:w-7/12 lg:w-4/6 ml-2"-->
           <!--                    ref="volume" v-model:value="musicElement.volume" step="0.001" max="1"-->
           <!--          />-->
           <!--          <a-slider v-else id="test" class="relative w-full sm:w-1/2 lg:w-7/12 lg:w-4/6 ml-2" value="0"-->
           <!--                    ref="volume"/>-->
+          <!--            <div id="waveform" class="w-1/2"></div>-->
+        </div>
+        </div>
 
-          <div class="flex flex-col p-5 max-h-1/2">
-            <div class="border-b pb-1 flex justify-between items-center mb-2">
-              <span class=" text-base font-semibold uppercase text-gray-700"> 播放列表 </span>
-              <img class="w-4 cursor-pointer"
-                   src="https://p.kindpng.com/picc/s/152-1529312_filter-ios-filter-icon-png-transparent-png.png"/>
-            </div>
 
-            <div v-for="(music,index) in audio" :key="music.name"
-                 @click="to(index)"
-                 class="flex border-b py-3 cursor-pointer hover:shadow-md hover:bg-gray-100 rounded-xl px-2 transition duration-300 ">
-              <img class='w-10 h-10 object-cover rounded-lg' alt='User avatar' :src="music.cover">
-              <div class="flex flex-col px-2 w-full">
+      <div class="flex flex-col sm:flex-row items-center p-1  justify-center">
+
+        <a-slider v-if="musicElement" id="test" class="relative w-full sm:w-1/2 lg:w-7/12 lg:w-4/6 "
+                  ref="seekbar" v-model:value="musicElement.currentTime" :step="0.5"
+                  :tooltipVisible="false"
+                  :max="musicElement.duration"/>
+        <a-slider v-else id="test" class="relative w-full sm:w-1/2 lg:w-7/12 lg:w-4/6 ml-2" value="0"
+                  ref="seekbar"/>
+        <div class="flex justify-end w-full sm:w-auto pt-1 sm:pt-0">
+            <span class="text-xs text-gray-700 uppercase font-medium pl-2">
+                    {{ this.currentTime }} / {{ this.duration }}
+                </span>
+        </div>
+
+
+      </div>
+
+      <div class="border-b pb-1 flex justify-between items-center mb-2">
+        <span class=" text-base font-semibold uppercase text-gray-700"> 播放列表 </span>
+        <img class="w-4 cursor-pointer"
+             src="https://p.kindpng.com/picc/s/152-1529312_filter-ios-filter-icon-png-transparent-png.png"/>
+      </div>
+      <div class="overflow-x-hidden overflow-y-scroll">
+        <div class="flex flex-col p-3 max-h-1/2 ">
+          <div v-for="(music,index) in audio" :key="music.name"
+               @click="to(index)"
+               :class="{
+                 'bg-gray-100': index === currentIndex,
+               }"
+               class="flex border-b py-3 cursor-pointer hover:shadow-md hover:bg-gray-100 rounded-xl px-2 transition duration-300 ">
+            <img class='w-10 h-10 object-cover rounded-lg' alt='User avatar' :src="music.cover">
+            <div class="flex flex-col px-2 w-full">
                         <span class="text-sm text-indigo-600 capitalize font-semibold pt-1">
                         {{ music.name }}
                         </span>
-                <span class="text-xs text-gray-500  font-medium ">
+              <span class="text-xs text-gray-500  font-medium ">
                             {{ music.artist }}
                         </span>
-              </div>
-              <!--              <button @click="getMusic">xxxx</button>-->
             </div>
-
+            <!--            <button @click="getMusic">xxxx</button>-->
           </div>
+
         </div>
       </div>
     </div>
-
-  </transition>
+  </my-modal>
 </template>
 
 <script>
 
 
-import axios from "axios";
-import {PlayCircleOutlined, PauseCircleOutlined} from '@ant-design/icons-vue';
+import {
+  PlayCircleOutlined,
+  PauseCircleOutlined,
+  StepForwardOutlined,
+  StepBackwardOutlined, SoundOutlined
+} from '@ant-design/icons-vue';
+import MyModal from "@/components/pub/myModal.vue";
 
 export default {
   name: "music",
   components: {
+    MyModal,
     PlayCircleOutlined,
-    PauseCircleOutlined
+    PauseCircleOutlined,
+    StepForwardOutlined,
+    StepBackwardOutlined,
+    SoundOutlined
   },
   props: ['showPlayer'],
   emits: ['closePlayer'],
@@ -180,7 +164,7 @@ export default {
           url: '/source/audios/Los Angeles - The Midnight.mp3',
           cover: 'http://p1.music.126.net/X0ZUXOrUi2H42Hsr5Bi5MA==/109951165111559735.jpg?param=130y130',
           // theme: '#ebd0c2'
-        },{
+        }, {
           name: 'Sunset',
           artist: 'The Midnight',
           url: '/source/audios/Sunset - The Midnight.mp3',
@@ -199,6 +183,7 @@ export default {
       ],
       currentTime: '00:00',
       duration: '00:00',
+      currentIndex: 0,
     };
   },
   computed: {},
@@ -271,6 +256,7 @@ export default {
     },
     to(index) {
       this.music = this.audio[index];
+      this.currentIndex = index;
       this.play()
     },
     back() {
@@ -286,7 +272,7 @@ export default {
     }
     ,
     closePlayer() {
-      this.$emit('closePlayer')
+      this.$store.commit('changeMusicVisible', false)
     }
     ,
 
@@ -391,8 +377,12 @@ export default {
       //   }
       // })
 
-
-      axios.post('/music?bizContent={keyword=海阔天空,limit=1,offset=1,appId=a301030000000000cd68e19ab49ac514}'
+      // POST http://music.163.com/api/search/pc
+      //     BODY s:PAPISM offset:0 limit:1 type:1
+      this.$axios.post('https://music.163.com/weapi/cloudsearch/get/web?csrf_token=6b5ba7488f659f36b5b21dd4403be079', {
+            encSecKey: "5ef64c823d6679236229971fc57a468ea523b2722e4ac6399a97e8e3852646e98ec08789cd5cda3f596c163858ffed08fc12fa2122ca92d103ea340f73f29e70ca695bff81a468b72630dc02ca09953198474a4d691ceb14a1ee342d5d9e4731494b769dd7411c55390540ad8ae37ae92ac0f876c2d99432dd3b6338e8fbc04e",
+            params: "lzeAZ6ZHuQYxvym8FQIvOI6gl/ok2VA0dz5rmgVgrJS+c7x2aZF+WKOFMDse1wWAd1y1VpKMk+AAQru6Y213D0/eo/6UyX7SwOI+7aNu+mAQZo8J8dtIJuJeo1VaMl89uQ0gA+DTOSGoixjuLu44kEqcVgbrX710BY3E5Kq6DRVle/uMpymGEvtAppUxF2ITc+YVyQ2JjruzYRBC2zb4H1EAnF/DKQ5RJzugRVszwSmYorSJDGCE3hJJkuzgHZ4W0ayFijPsH4mfzQhwwQMso4JD+S64rgGk7Y84gTol12hWBLayol+RUft8TP1y4WIF9yQxAX+kwaerlbybjTBGSSTgPQ7LLQUHbn/fj89V7pRrRNHg+9Jur5zAlIqYFW5F"
+          }
       ).then(res => {
         console.log(res.data)
         // let name = res.data.result.songs[0].name;
