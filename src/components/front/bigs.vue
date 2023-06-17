@@ -1,15 +1,17 @@
 <template>
   <bread>工程进度</bread>
-  <div class="mx-auto w-full relative bg-white  mb-2">
+  <MyCompostion>
+    <div class="mx-auto w-full relative bg-white  mb-2">
 
-    <div>
-      <el-steps direction="vertical" :active="stepIndex" space="100px" style="color:#111">
-        <el-step v-for="(step,index) in steps"
-                 :title="step.title"
-                 :description="step.desc"/>
-      </el-steps>
+      <div>
+        <el-steps direction="vertical" :active="stepIndex" space="100px" style="color:#111">
+          <el-step v-for="(step,index) in steps"
+                   :title="step.title"
+                   :description="step.desc"/>
+        </el-steps>
+      </div>
     </div>
-  </div>
+  </MyCompostion>
 </template>
 
 
@@ -18,10 +20,12 @@
 
 import {ArrowRight} from '@element-plus/icons-vue'
 import Bread from "@/components/pub/bread";
+import MyCompostion from "@/components/pub/MyCompostion.vue";
 
 export default {
   name: "about",
   components: {
+    MyCompostion,
     Bread,
     ArrowRight
   },
@@ -75,8 +79,8 @@ export default {
           desc: '更换Logo，增加关于页面'
         },
         {
-          title:'2022-10-26',
-          desc:'增加文章搜索功能(标签、分类、标题、内容)，标签和分类过滤稍复杂一些。'
+          title: '2022-10-26',
+          desc: '增加文章搜索功能(标签、分类、标题、内容)，标签和分类过滤稍复杂一些。'
         },
         {
           title: '2022-10-27',

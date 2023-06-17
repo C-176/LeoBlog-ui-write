@@ -2,67 +2,70 @@
 
   <bread>创作</bread>
 
-  <div class="w-full mx-auto  lg:rounded-xl p-2 bg-gray-100 text-left ">
-    <editor class="editor" :articleId="$route.params.articleId"></editor>
-    <div class="labels">
-      <Divider orientation="left">标签</Divider>
-      <div>
-        <Tag class="flex-col items-center" :color="getColor()" closable v-for="label in article.labels" :key="label.labelId">
-          {{ label.labelName }}
-        </Tag>
-        <el-autocomplete
-            v-model="state"
-            :fetch-suggestions="querySearch"
-            clearable
-            class="inline-input w-50"
-            placeholder="+ 添加标签"
-            @select="handleSelect"
-            value-key="labelName"
-        />
+  <MyCompostion >
+
+    <div class="w-full mx-auto  lg:rounded-xl p-2 bg-gray-100 text-left ">
+      <editor class="editor" :articleId="$route.params.articleId"></editor>
+      <div class="labels">
+        <Divider orientation="left">标签</Divider>
+        <div>
+          <Tag class="flex-col items-center" :color="getColor()" closable v-for="label in article.labels"
+               :key="label.labelId">
+            {{ label.labelName }}
+          </Tag>
+          <el-autocomplete
+              v-model="state"
+              :fetch-suggestions="querySearch"
+              clearable
+              class="inline-input w-50"
+              placeholder="+"
+              @select="handleSelect"
+              value-key="labelName"
+          />
+
+        </div>
+
+      </div>
+      <Divider orientation="left">封面添加</Divider>
+      <div class="cover">
+        <el-upload
+            class="avatar-uploader"
+            method="post"
+            name="file"
+            :action="action"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
+            :on-error="handleAvatarError"
+        >
+          <img v-if="imgUrl!=null && imgUrl != ''" :src="p(imgUrl)" class="avatar"/>
+          <el-icon v-else class="avatar-uploader-icon">
+            <Plus/>
+          </el-icon>
+        </el-upload>
+      </div>
+      <!--    <el-affix position="bottom" target=".editor" :offset="10">-->
+
+
+      <div class="flex -w-full justify-end items-center h-14  space-x-2">
+        <div
+            class="bg-gray-200 hover:cursor-pointer hover:bg-gray-300 transition  text-black text-medium rounded-xl px-2 py-1"
+            @click.once="saveAsScript">
+          <span>保存草稿</span>
+        </div>
+        <div
+            class=" bg-gray-200 hover:cursor-pointer hover:bg-gray-300 transition  text-black text-medium rounded-xl px-2 py-1"
+            @click.once="saveAsArticle">
+          <span>发布文章</span>
+        </div>
 
       </div>
 
-    </div>
-    <Divider orientation="left">封面添加</Divider>
-    <div class="cover">
-      <el-upload
-          class="avatar-uploader"
-          method="post"
-          name="file"
-          :action="action"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload"
-          :on-error="handleAvatarError"
-      >
-        <img v-if="imgUrl!=null && imgUrl != ''" :src="p(imgUrl)" class="avatar"/>
-        <el-icon v-else class="avatar-uploader-icon">
-          <Plus/>
-        </el-icon>
-      </el-upload>
-    </div>
-    <!--    <el-affix position="bottom" target=".editor" :offset="10">-->
 
-
-    <div class="flex -w-full justify-end items-center h-14  space-x-2">
-      <div
-          class="bg-gray-200 hover:cursor-pointer hover:bg-gray-300 transition  text-black text-medium rounded-xl px-2 py-1"
-          @click.once="saveAsScript">
-        <span>保存草稿</span>
-      </div>
-      <div
-          class=" bg-gray-200 hover:cursor-pointer hover:bg-gray-300 transition  text-black text-medium rounded-xl px-2 py-1"
-          @click.once="saveAsArticle">
-        <span>发布文章</span>
-      </div>
+      <!--    </el-affix>-->
 
     </div>
-
-
-    <!--    </el-affix>-->
-
-  </div>
-  <a-back-top/>
+  </MyCompostion>
 
 
 </template>
@@ -74,11 +77,12 @@ import {Plus} from '@element-plus/icons-vue'
 
 import h from "@/components/pub/header";
 import editor from "@/components/pub/editor";
+import MyCompostion from "@/components/pub/MyCompostion.vue";
 
 
 export default {
   name: 'write',
-  components: {h, editor, Divider, Tag, Plus},
+  components: {MyCompostion, h, editor, Divider, Tag, Plus},
   data() {
     return {
       state: '',

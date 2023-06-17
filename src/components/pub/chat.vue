@@ -4,7 +4,7 @@
     <audio class="hidden" ref="audio" src="/source/audios/Windows%20Proximity%20Notification.wav"></audio>
     <div class="w-full h-full flex justify-start">
       <div class="w-1/6 lg:w-2/5 h-full overflow-auto">
-        <div class="w-4/5  mx-auto my-2  text-sm ">
+        <div class="w-4/5  mx-auto my-2  text-sm invisible lg:visible">
           <el-autocomplete
               v-model="state"
               style="width: 100%; border-radius: 10px"
@@ -16,23 +16,18 @@
               value-key="userNickname"
           />
         </div>
-        <div class="w-4/5 mx-auto  space-y-2 justify-start items-center">
+        <div class="w-4/5 mx-auto  justify-start items-center">
           <div v-for="(chat,index) in chats" :key="chat.user.userId"
                :class="{select:isSelected[index]}"
-               class=" p-1 w-full rounded-xl bg-gray-100 cursor-pointer transition   focus:bg-indigo-100 border-2 border-white hover:bg-indigo-100"
+               class=" p-1 w-full rounded-xl  cursor-pointer transition
+                border-2 border-white hover:bg-gray-100"
                @click="select(index)">
 
-            <div class="h-full lg:h-4/5 lg:pl-2 mx-auto flex justify-center lg:justify-start  items-center ">
+            <div class="h-full lg:h-4/5 lg:pl-2 mx-auto group flex justify-center lg:justify-start  items-center ">
               <a-badge :count="redPoint[index]" size="small"
                        style="float: left;line-height: 100%">
-                <div class="h-full w-full lg:w-10   text-center rounded-full ">
+                <div class="h-full w-full  lg:w-10 lg:h-10 text1-center rounded-full ">
                   <user :user-id="chat.user.userId" :visible='showUserCard' :showUserId="showUserId">
-                    <!--                      <a-avatar :class="{online:chat.user.userStatus}"-->
-                    <!--                                :src="p(chat.user.userProfilePhoto)"-->
-                    <!--                                :style="{backgroundColor:'#067061'}"-->
-                    <!--                                size="middle">-->
-                    <!--                        {{ chat.user.userNickname }}-->
-                    <!--                      </a-avatar>-->
                     <a class="relative block"
                        @mouseover="()=>{
                          showUserCard = true
@@ -46,20 +41,18 @@
                       <span
                           class="absolute w-3 h-3 transform -translate-x-1/2  border-2 border-white rounded-full left-1/2 -bottom-2"
                           :class="{'bg-gray-500':chat.user.userStatus==0,'bg-green-500':chat.user.userStatus==1}">
-
                         </span>
                     </a>
                   </user>
                 </div>
+
               </a-badge>
 
               <div class="hidden h-16 overflow-hidden w-full  lg:block flex-col items-start p-2 justify-between">
                 <div class="font-bold hidden lg:flex w-full text-sm justify-between items-center">
-                  <span class="text-sm ">{{ chat.user.userNickname }}</span>
+                  <span class="text-sm group-hover:text-indigo-600">{{ chat.user.userNickname }}</span>
                   <span class="text-xs text-gray-400">
-                        {{
-                      new Date().getTime() - new Date(chat.record.recordUpdateTime).getTime() < 1000 * 60 * 60 * 24 ? this.$moments(chat.record.recordUpdateTime, 'h:m:s') : this.$moments(chat.record.recordUpdateTime, 'Y/M/D')
-                    }}
+                        {{ this.$moments(chat.record.recordUpdateTime, '', true) }}
                       </span>
                 </div>
                 <div id="uId" style="display: none">{{ chat.user.userId }}</div>
@@ -70,13 +63,14 @@
               </div>
 
             </div>
+            <hr>
           </div>
         </div>
       </div>
 
 
       <div class="w-5/6 lg:w-3/5 -mt-4 h-full flex-col justify-start items-center p-5">
-        <div class="min-h-1/8 text-center w-full mx-auto -mt-2  space-y-0 flex-col justify-between items-center ">
+        <div class="min-h-1/8  text-center w-full mx-auto -mt-2  space-y-0 flex-col justify-between items-center ">
           <div @click="()=>{this.$router.push('/user/'+talkTo.user.userId)}"
                class="text-base font-bold h-full min-h-full cursor-pointer">
             {{ talkTo.user.userNickname }}
@@ -230,8 +224,8 @@ export default {
   },
   data() {
     return {
-      showUserId:-2,
-      showUserCard:false,
+      showUserId: -2,
+      showUserCard: false,
       showLoading: false,
       currentPage: 1,
       pageSize: 50,
@@ -709,7 +703,7 @@ export default {
     },
 
     connectSocket() {
-      if(this.connecting) return
+      if (this.connecting || (this.ws != null && this.ws.readyState === 1)) return
       this.connecting = true;
       this.$store.commit('initSocket')
       let ws = this.$store.state.socket
@@ -1021,9 +1015,7 @@ export default {
 
 
 .select {
-  /*width: 80%;*/
-  /*height: 12%;*/
-//border: 2px solid #4f46e4; background: #e0e7ff;
+  background: #f3f4f6;
 
 }
 

@@ -1,43 +1,54 @@
 <template>
-  <!--  <div class=" fixed inset-0 h-full w-full z-50">-->
-  <div
-      class="fixed bg-white text-left z-50 inset-0 mx-auto lg:mt-16 w-full lg:w-1/2 h-screen flex-col justify-center items-center lg:h-5/6 p-2  lg:rounded-xl">
-    <div class="w-full h-auto  p-2 space-y-2 lg:space-x-2 lg:flex justify-around items-end">
-      <div id="contant" class="min-w-4/5">
-        <canvas id="cvs" class="w-full shadow-lg rounded-xl"
-                @wheel="rollImg" @mousedown="handleMouseDown" @mouseup="isMoving=false"
-                @mousemove="handleMouseMove"
-        ></canvas>
+  <MyModal size="lg" :visible="visible" @closeModal="()=>{$emit('cancel')}">
+    <div
+        class=" bg-white text-left  mx-auto  w-full lg:w-1/2n flex-col justify-center items-center  p-2  lg:rounded-xl">
+      <div class="w-full h-auto  p-2 space-y-2 lg:space-x-2 lg:flex justify-around items-end">
+        <div id="contant" class="min-w-4/5">
+          <canvas id="cvs" class="w-full shadow-lg rounded-xl"
+                  @wheel="rollImg" @mousedown="handleMouseDown" @mouseup="isMoving=false"
+                  @mousemove="handleMouseMove"
+          ></canvas>
+        </div>
+        <canvas id="clipCvs" class="w-28 h-1/2 shadow-lg rounded-xl"></canvas>
       </div>
-      <canvas id="clipCvs" class="w-28 h-1/2 shadow-lg rounded-xl"></canvas>
-    </div>
 
-    <div class="w-full h-auto relative p-2 flex-col justify-center space-y-2 items-center">
-      <div class=" flex justify-center h-10 space-x-2 items-center">
-        <span class=" p-2 h-full text-xs text-gray-400">提示:滑动滚轮缩放选择区域</span>
-        <input ref="upload"
-               type="file"
-               class="rounded-xl w-1/3 cursor-pointer bg-indigo-400 p-1 hover:bg-indigo-500 text-white text-sm"
-               @change="onChange($event.target.files[0])"/>
-      </div>
-      <div class=" flex justify-around space-x-2 items-center">
+      <div class="w-full h-auto relative p-2 flex-col justify-center space-y-2 items-center">
+        <div class=" flex justify-center h-10 space-x-2 items-center">
+          <span class=" p-2 h-full text-xs text-gray-400">提示:滑动滚轮缩放选择区域</span>
+          <input ref="upload"
+                 type="file"
+                 class="rounded-xl w-1/3 cursor-pointer bg-indigo-400 p-1 hover:bg-indigo-500 text-white text-sm"
+                 @change="onChange($event.target.files[0])"/>
+        </div>
+        <div class=" flex justify-around space-x-2 items-center">
 
-        <button class="rounded-xl bg-indigo-600 p-3 w-1/3 hover:bg-indigo-500 text-white text-sm"
-                @click="()=>{$emit('cancel')}">取消
-        </button>
-        <button ref="ok" class="rounded-xl bg-indigo-600 p-3 w-1/3 hover:bg-indigo-500 text-white text-sm"
-                @click="uploadProfile();">确定
-        </button>
+          <button class="rounded-xl bg-indigo-600 p-3 w-1/3 hover:bg-indigo-500 text-white text-sm"
+                  @click="()=>{$emit('cancel')}">取消
+          </button>
+          <button ref="ok" class="rounded-xl bg-indigo-600 p-3 w-1/3 hover:bg-indigo-500 text-white text-sm"
+                  @click="uploadProfile();">确定
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-  <!--  </div>-->
+  </MyModal>
 
 </template>
 
 <script>
+
+import MyModal from "@/components/pub/myModal.vue";
+
 export default {
   name: "canvasPic",
+  components: {MyModal},
+  props: {
+    visible: {
+      type: Boolean,
+      default: false
+    }
+  },
+  Components: {MyModal},
 
   data() {
     return {
@@ -158,14 +169,14 @@ export default {
       const formData = new FormData();
       formData.append('file', file);
       this.$axios.post('/upload/file', formData).then(res => {
-        var data = res.data.data.url
+        var data = res.data.url
         this.$refs.ok.classList.remove('animate-ping')
         this.$emit('getImg', data)
       })
 
     },
     rollImg(e) {
-      this.size += e.deltaY / 10
+      this.size -= e.deltaY / 10
       if (this.size < 50) {
         this.size = 50
       }

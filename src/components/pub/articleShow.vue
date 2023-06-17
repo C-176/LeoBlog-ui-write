@@ -14,7 +14,7 @@
       <div v-for="(article,index) in myArticles" v-else :key="article.articleId"
            class="w-full overflow-hidden bg-gray-100 space-y-2  py-2 px-3 lg:px-5 rounded-xl mb-2">
 
-        <div class="text-left flex justify-start items-center space-x-1">
+        <div v-if="!mySelf" class="text-left flex justify-start items-center space-x-1">
           <img class="h-10 w-10 rounded-full" :src="article.author.userProfilePhoto"/>
 
           <div class="h-full flex-col justify-around items-start">
@@ -26,9 +26,9 @@
           </div>
         </div>
         <div class="text-left lg:text-base font-bold text-sm "
-             :title="article.articleTitle.replaceAll('<p>','').replaceAll('</p>','').replaceAll('<br>','')">
+             :title="article.articleTitle">
           <router-link :to="'/article/'+article.articleId">
-            {{ article.articleTitle.replaceAll('<p>','').replaceAll('</p>','').replaceAll('<br>','')}}
+            {{ article.articleTitle }}
           </router-link>
         </div>
         <div class="h-auto max-h-20 lg:max-h-40 group w-full lg:space-x-3 flex justify-start  overflow-hidden ">
@@ -57,7 +57,7 @@
         </div>
 
 
-        <div class="flex justify-center items-center h-6 w-full space-x-2 ">
+        <div v-if="!mySelf" class="flex justify-center items-center h-6 w-full space-x-2 ">
 
           <a class="tools" @click="like(article.articleId,index)">
             <icon src="gclzwloa" trigger="click" size="24" class1="transform rotate-180"></icon>
@@ -88,7 +88,15 @@
 export default {
 
   name: 'articleShow',
-  props: ['articleList', 'scrollBottom'],
+  props: {
+    articleList: {
+      type: Array,
+      default: () => []
+    }, mySelf: {
+      type: Boolean,
+      default: false
+    }
+  },
   watch: {
     // articles(val) {
     //   if (val.length > 0) {

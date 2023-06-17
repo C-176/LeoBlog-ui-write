@@ -1,28 +1,29 @@
 <template>
 
-  <MyCompostion slider=true>
-      <article-show :article-list="articleList"></article-show>
-      <el-pagination
-          class="bg-white w-full flex justify-center items-center  space-x-2"
-          v-model:currentPage="currentPage"
-          v-model:page-size="pageSize"
-          :page-sizes="pageSizes"
-          :small="small"
-          :disabled="disabled"
-          :background="background"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-          :default-current-page="defaultCurrentPage"
-          :page-count="pageCount"
-          :hide-on-single-page="hideOnSinglePage"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
+  <MyCompostion :size="false">
+    <article-show :article-list="articleList" :my-self=true />
 
-      />
+    <el-pagination
+        class="bg-white w-full flex justify-center items-center  space-x-2"
+        v-model:currentPage="currentPage"
+        v-model:page-size="pageSize"
+        :page-sizes="pageSizes"
+        :small="small"
+        :disabled="disabled"
+        :background="background"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        :default-current-page="defaultCurrentPage"
+        :page-count="pageCount"
+        :hide-on-single-page="hideOnSinglePage"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
 
-    <template #slider >
-      <account></account>
-    </template>
+    />
+
+    <!--    <template #slider >-->
+    <!--      <account></account>-->
+    <!--    </template>-->
 
   </MyCompostion>
 </template>
@@ -55,7 +56,7 @@ export default {
       total: 30,
       defaultCurrentPage: 1,
       pageCount: 1,
-      hideOnSinglePage: true,
+      hideOnSinglePage: false,
 
     };
   },
@@ -63,13 +64,8 @@ export default {
     this.getArticlesDefault();
 
   }, methods: {
-    b(name) {
-      if (name == 'title') {
-        this.getArticlesByKey()
-      }
-    },
     getArticlesDefault() {
-      this.$axios.get('/article/list/' + this.currentPage + '/' + this.pageSize).then((res) => {
+      this.$axios.get('/article/list/user/' + this.$store.state.user.userId + '/' + this.currentPage + '/' + this.pageSize).then((res) => {
         let map = res.data.data
         this.articleList = map.records
         this.articleList.forEach(x => {
@@ -84,16 +80,7 @@ export default {
         this.currentPage = map.current
       })
     },
-    getArticlesByKey() {
-      this.$axios.get('/article/key/' + this.currentPage + '/' + this.pageSize).then((res) => {
-        let map = res.data.data
-        this.articleList = map.records
-        this.total = map.total
-        this.pageCount = map.pages
-        this.pageSize = map.size
-        this.currentPage = map.current
-      })
-    },
+
     handleSizeChange(val) {
       this.pageSize = val
       this.currentPage = 1

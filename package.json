@@ -25,6 +25,7 @@
     "cropperjs": "^1.5.13",
     "crypto-js": "^4.1.1",
     "element-plus": "^2.2.17",
+    "lodash": "^4.17.21",
     "nprogress": "^0.2.0",
     "sweetalert2": "^11.4.35",
     "vite-plugin-prismjs": "^0.0.8",

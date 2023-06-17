@@ -8,5 +8,6 @@
     <orderEntry type="library" name="fudrjiwc" level="application" />
     <orderEntry type="library" name="Valine" level="application" />
     <orderEntry type="library" name="wavesurfer.js" level="application" />
+    <orderEntry type="library" name="@lottiefiles/lottie-player" level="application" />
   </component>
 </module>

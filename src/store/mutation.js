@@ -54,6 +54,9 @@ const mutations = {
     },changeMusicVisible(state, musicVisible) {
         state.musicVisible = musicVisible;
     },
+    changeSliderVisible(state, sliderVisible) {
+        state.sliderVisible = sliderVisible;
+    },
     changeChatPoint(state, chatPoint) {
         state.chatPoint = chatPoint
 

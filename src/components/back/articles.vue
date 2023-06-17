@@ -1,40 +1,41 @@
 <template>
   <bread>我的文章</bread>
-
-  <div ref="tar"  class="text-left w-full h-full scroll-auto mx-auto ">
-    <template v-if="loading">
-<!--      <a-skeleton active/>-->
-<!--      <a-skeleton active/>-->
-<!--      <a-skeleton active/>-->
-      <loader></loader>
-    </template>
-
-    <template v-else>
-
-      <el-empty v-if="articleList.length===0">
-        <template #description>
-          <span>暂无文章</span>
+  <MyCompostion>
+    <div class="w-full h-full mx-auto">
+      <div ref="tar" class="text-left w-full h-full scroll-auto  ">
+        <template v-if="loading">
+          <!--      <a-skeleton active/>-->
+          <!--      <a-skeleton active/>-->
+          <!--      <a-skeleton active/>-->
+          <loader></loader>
         </template>
-        <button class="button w-full" @click="$router.push('/write/0')">点击进行创作</button>
-      </el-empty>
 
-      <div class="lg:flex lg:items-center bg-gray-100 w-full lg:rounded-xl p-4 my-2 lg:justify-between"
-           v-for="(article,index) in myArticles" :key="article.articleId">
-        <div class="min-w-0 flex-1">
-          <h2 @click="$router.push('/article/'+article.articleId)"
-              :title="article.articleTitle.replaceAll('<p>','').replaceAll('</p>','').replaceAll('<br>','')"
-              class="text-base cursor-pointer hover:text-gray-600 font-bold leading-5 text-gray-900 sm:truncate sm:text-base sm:tracking-tight">
-            {{ article.articleTitle.replaceAll('<p>','').replaceAll('</p>','').replaceAll('<br>','') }}
-          </h2>
-          <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
+        <template v-else>
 
-            <div class="mt-2 flex items-center text-sm text-gray-500">
-              <CalendarIcon class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true"/>
-              {{ article.articleUpdateDate }}
+          <el-empty v-if="articleList.length===0">
+            <template #description>
+              <span>暂无文章</span>
+            </template>
+            <button class="button w-full" @click="$router.push('/write/0')">点击进行创作</button>
+          </el-empty>
+
+          <div class="lg:flex lg:items-center bg-gray-100 w-full lg:rounded-xl p-4 my-2 lg:justify-between"
+               v-for="(article,index) in myArticles" :key="article.articleId">
+            <div class="min-w-0 flex-1">
+              <h2 @click="$router.push('/article/'+article.articleId)"
+                  :title="article.articleTitle.replaceAll('<p>','').replaceAll('</p>','').replaceAll('<br>','')"
+                  class="text-base cursor-pointer hover:text-gray-600 font-bold leading-5 text-gray-900 sm:truncate sm:text-base sm:tracking-tight">
+                {{ article.articleTitle.replaceAll('<p>','').replaceAll('</p>','').replaceAll('<br>','') }}
+              </h2>
+              <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
+
+                <div class="mt-2 flex items-center text-sm text-gray-500">
+                  <CalendarIcon class="mr-1.5 h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true"/>
+                  {{ article.articleUpdateDate }}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="mt-5 flex lg:mt-0 space-x-2 lg:ml-4">
+            <div class="mt-5 flex lg:mt-0 space-x-2 lg:ml-4">
            <span class="ml-3 sm:block">
         <button type="button"
                 @click="$router.push('/article/'+article.articleId)"
@@ -44,7 +45,7 @@
         </button>
       </span>
 
-          <span class="sm:block ml-3">
+              <span class="sm:block ml-3">
         <button type="button" @click="$router.push('/write/'+article.articleId)"
                 class="inline-flex  items-center space-x-2   rounded-md border border-gray-300 bg-white px-4 py-2
                 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
@@ -52,7 +53,7 @@
           <span>编辑</span>
         </button>
       </span>
-          <span class="sm:ml-3">
+              <span class="sm:ml-3">
         <button type="button" @click="deleteArticle(article.articleId)"
                 class="inline-flex items-center space-x-2 rounded-md border border-gray-300 bg-white px-4 py-2
                 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
@@ -61,26 +62,27 @@
         </button>
       </span>
 
-        </div>
+            </div>
+          </div>
+          <el-pagination
+              v-model:currentPage="currentPage"
+              v-model:page-size="pageSize"
+              :page-sizes="pageSizes"
+              :small="small"
+              :disabled="disabled"
+              :background="background"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="total"
+              :default-current-page="defaultCurrentPage"
+              :page-count="pageCount"
+              :hide-on-single-page="hideOnSinglePage"
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+          />
+        </template>
       </div>
-      <el-pagination
-          v-model:currentPage="currentPage"
-          v-model:page-size="pageSize"
-          :page-sizes="pageSizes"
-          :small="small"
-          :disabled="disabled"
-          :background="background"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-          :default-current-page="defaultCurrentPage"
-          :page-count="pageCount"
-          :hide-on-single-page="hideOnSinglePage"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-      />
-    </template>
-  </div>
-  <a-back-top/>
+    </div>
+  </MyCompostion>
 
 </template>
 
@@ -98,10 +100,12 @@ import {
   PencilIcon,
 } from '@heroicons/vue/20/solid'
 import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/vue'
+import MyCompostion from "@/components/pub/MyCompostion.vue";
 
 export default {
   name: 'articles',
   components: {
+    MyCompostion,
 
     BriefcaseIcon,
     CalendarIcon,

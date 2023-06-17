@@ -11,6 +11,7 @@ import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import '/public/static/css/daemon.css'
 import '/public/static/css/loading.css'
+import '/public/static/css/compiled.css'
 // import '/public/static/js/three.min'
 // import '/public/static/js/vanta.halo.min'
 // import '/public/static/js/vanta.fog.min'
@@ -93,14 +94,14 @@ axios.interceptors.response.use(res => {
 )
 axios.interceptors.request.use(config => {
         const token = localStorage.getItem('token')
-           if(token) config.headers['Authorization'] = token
+        if (token) config.headers['Authorization'] = token
         return config
     }
 )
 
 app.config.globalProperties.$axios = axios
 
-app.config.globalProperties.$moments = (stamp,format) => {
+app.config.globalProperties.$moments = (stamp, format = '', short = false) => {
     let date = new Date(stamp)
     let Y = date.getFullYear()
     let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)
@@ -108,8 +109,12 @@ app.config.globalProperties.$moments = (stamp,format) => {
     let h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours())
     let m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
     let s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
-    if(format == null) return Y+'-'+M+'-'+D+' '+h+':'+m+':'+s
-    return format.replace('Y',Y).replace('M',M).replace('D',D).replace('h',h).replace('m',m).replace('s',s)
+    var result;
+
+    if (format === '') result = Y + '-' + M + '-' + D + ' ' + h + ':' + m + ':' + s
+    else result = format.replace('Y', Y).replace('M', M).replace('D', D).replace('h', h).replace('m', m).replace('s', s)
+    if (short) result = (new Date().getTime() - date.getTime() > 1000 * 60 * 60 * 24 ? Y + '/' + M + '/' + D : '') + ' ' + h + ':' + m
+    return result
 }
 app.config.globalProperties.p = (pic) => {
     if (pic == '') return pic
@@ -136,7 +141,7 @@ app.use(router).use(store).use(ElementPlus).use(Antd).use(VueMarkdownEditor).com
     .component('icon', icon)
     .component('user', user)
     .component('bigImg', bigImg)
-    .component('badge',badge)
+    .component('badge', badge)
     .component('myModal', myModal)
 
 
