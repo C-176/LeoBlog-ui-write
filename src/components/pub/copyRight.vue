@@ -1,6 +1,7 @@
 <template>
-  <div class="w-full mt-2 invisible lg:visible bg-gray-100 h-60 p-4 rounded-xl invisible lg:visible">
-    <a-carousel autoplay :dots="false" effect="fade">
+  <div class="w-1/4 overscroll-contain bg-gray-50 overflow-y-auto  rounded-xl pb-20 fixed flex-col justify-start items-center space-y-2">
+
+  <a-carousel autoplay :dots="false" effect="fade">
 
       <div>
         <a-row :gutter="16">
@@ -109,7 +110,7 @@ export default {
   },
   mounted() {
     //过年倒计时
-    this.deadline = Date.parse("2023-01-22 00:00:00");
+    this.deadline = Date.parse("2024-01-22 00:00:00");
   },
 }
 </script>

@@ -36,7 +36,7 @@
 
     </transition>
 
-    <bg-cover :show-cover="$store.state.bgCover"></bg-cover>
+    <bg-cover :show-cover="$store.state.bgCover" />
 
 
 </template>
@@ -62,6 +62,7 @@ export default {
     components: {DialogPanel, TransitionChild, TransitionRoot, Dialog},
     watch: {
         visible(val,oldVal){
+          console.log(val)
             if (val) {
                 this.$store.commit('changeBgCover', true)
             }

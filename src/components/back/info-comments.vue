@@ -1,6 +1,6 @@
 <template>
   <bread>我的评论</bread>
-  <MyCompostion>
+  <MyCompostion :size="false">
     <div class="w-full  bg-gray-100 rounded-xl mx-auto">
       <comment-template :comments="comments"></comment-template>
     </div>
@@ -12,7 +12,7 @@ import commentTemplate from "@/components/pub/commentTemplate";
 import MyCompostion from "@/components/pub/MyCompostion.vue";
 
 export default {
-  name: 'comments',
+  name: 'info-comments',
   components: {
     MyCompostion,
     commentTemplate

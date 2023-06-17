@@ -12,7 +12,7 @@ const routes = [
     {path: '/test', component: () => import('@/components/test')},
 
     {path: '/user', component: () => import('@/components/pub/user')},
-    {path: '/tag', component: () => import('@/components/pub/tagController.vue')},
+    // {path: '/tag', component: () => import('@/components/pub/tag')},
 
     {
         path: '/home', component: () => import('@/components/home'), redirect: '/home/index',
@@ -20,6 +20,7 @@ const routes = [
             {path: '/', redirect: '/index'},
             {path: '/LR', component: () => import('@/components/LR')},
             {path: '/editorMe', component: () => import('@/components/pub/editorMe.vue')},
+            {path: '/account', component: () => import('@/components/pub/account.vue')},
             {path: '/index', component: () => import('@/components/index')},
             {path: '/write/:articleId', component: () => import('@/components/front/write')},
             {path: '/editor/new', component: () => import('@/components/pub/editorMe')},
@@ -36,8 +37,8 @@ const routes = [
             {
                 path: '/back/info', component: () => import('@/components/back/info'), children: [
 
-                    {path: '/back/info/article', component: () => import('@/components/back/articles.vue')},
-                    {path: '/back/info/comment', component: () => import('@/components/back/comments.vue')},
+                    {path: '/back/info/article', component: () => import('@/components/back/info-articles.vue')},
+                    {path: '/back/info/comment', component: () => import('@/components/back/info-comments.vue')},
                     {path: '/back/info/picture', component: () => import('@/components/front/pictures.vue')},
 
                 ]

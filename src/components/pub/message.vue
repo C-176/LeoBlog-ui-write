@@ -95,7 +95,7 @@ export default {
         if (res.data.code === 200) {
           let msgs = res.data.data.messages;
           if (msgs.length === 0) {
-            this.$st.info('没有更多消息了')
+            this.$st('没有更多消息了','info')
             this.lastScore = null
             this.offset = 0
             return;

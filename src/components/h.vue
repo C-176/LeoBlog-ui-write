@@ -340,7 +340,6 @@ import {useRouter} from 'vue-router'
 import SearchDialog from "@/components/pub/searchDialog";
 import music from "@/components/pub/music";
 import Message from "@/components/pub/message.vue";
-import {mount} from '@vue/test-utils'
 
 const router = useRouter()
 let openSearch = ref(false)

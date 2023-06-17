@@ -1,5 +1,6 @@
 <template>
   <bread>关于我们</bread>
+  <MyCompostion >
   <section class="bg-white  dark:bg-gray-900">
     <div class=" mx-auto">
       <h1 class="text-3xl font-semibold text-center text-gray-800 capitalize lg:text-4xl dark:text-white">我们的初级团队</h1>
@@ -158,14 +159,18 @@
       </div>
     </div>
   </section>
+  </MyCompostion>
 </template>
 
 <script>
 
 
+import MyCompostion from "@/components/pub/MyCompostion.vue";
+
 export default {
   name: "team",
   components: {
+    MyCompostion
 
   },
 }

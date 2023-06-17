@@ -1,4 +1,5 @@
 <template>
+  <MyCompostion>
     <div class="mx-auto w-full relative  bg-white lg:rounded-xl  mb-2">
         <el-tabs type="border-card" class="demo-tabs  rounded-xl" :model-value="tag" @tab-change="b">
             <el-tab-pane label="标题" name="title"></el-tab-pane>
@@ -27,15 +28,17 @@
                 @current-change="handleCurrentChange"
         />
     </div>
-    <a-back-top/>
+  </MyCompostion>
 </template>
 
 <script>
 import articleShow from "@/components/pub/articleShow";
+import MyCompostion from "@/components/pub/MyCompostion.vue";
 
 export default {
     name: "articles",
     components: {
+      MyCompostion,
         articleShow
     },
     data() {

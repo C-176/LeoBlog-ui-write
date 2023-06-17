@@ -1,99 +1,103 @@
 <template>
   <bread>安全中心</bread>
-  <div
-      class="mx-auto text-center flex-col justify-around items-center w-full  bg-gray-100 rounded-xl">
+  <my-compostion>
+    <div
+        class="mx-auto text-center flex-col justify-around items-center w-full  bg-gray-100 rounded-xl">
 
-    <a-carousel arrows :dots="showDots" effect="fade" ref="carousel">
-      <div>
-        <a-descriptions title="安全信息" layout="vertical" class="text-center" bordered>
+      <a-carousel arrows :dots="showDots" effect="fade" ref="carousel">
+        <div>
+          <a-descriptions title="安全信息" layout="vertical" class="text-center" bordered>
 
-          <a-descriptions-item label="用户名">{{ user.userName }}</a-descriptions-item>
-          <a-descriptions-item label="手机号">{{ user.userPhone }}</a-descriptions-item>
-          <a-descriptions-item label="邮箱">{{ user.userEmail }}</a-descriptions-item>
-          <a-descriptions-item label="密码">******</a-descriptions-item>
-          <a-descriptions-item label="注册时间" :span="2">{{
-              this.$moments(user.userRegisterDate)
-            }}
-          </a-descriptions-item>
-          <a-descriptions-item label="账号状态" :span="3">
-            <a-badge status="processing" text="Running"/>
-          </a-descriptions-item>
-        </a-descriptions>
-      </div>
+            <a-descriptions-item label="用户名">{{ user.userName }}</a-descriptions-item>
+            <a-descriptions-item label="手机号">{{ user.userPhone }}</a-descriptions-item>
+            <a-descriptions-item label="邮箱">{{ user.userEmail }}</a-descriptions-item>
+            <a-descriptions-item label="密码">******</a-descriptions-item>
+            <a-descriptions-item label="注册时间" :span="2">{{
+                this.$moments(user.userRegisterDate)
+              }}
+            </a-descriptions-item>
+            <a-descriptions-item label="账号状态" :span="3">
+              <a-badge status="processing" text="Running"/>
+            </a-descriptions-item>
+          </a-descriptions>
+        </div>
 
-      <div>
-        <a-card title="修改手机号">
-          <div class="flex-col justify-between space-y-1 w-2/3 mx-auto items-center">
-            <input class="input" v-model="user.userPhone" placeholder="请输入手机号"/>
-            <input v-model="phoneCaptcha" class="input" placeholder="请输入验证码"/>
-          </div>
-          <div class=" space-x-1 w-2/3 mt-1 mx-auto ">
-            <button :disabled="phoneDisabled" class="button " @click="phoneCoder">
-              获取验证码
-            </button>
-            <button class="button " @click="changePhone">保存</button>
-          </div>
+        <div>
+          <a-card title="修改手机号">
+            <div class="flex-col justify-between space-y-1 w-2/3 mx-auto items-center">
+              <input class="input" v-model="user.userPhone" placeholder="请输入手机号"/>
+              <input v-model="phoneCaptcha" class="input" placeholder="请输入验证码"/>
+            </div>
+            <div class=" space-x-1 w-2/3 mt-1 mx-auto ">
+              <button :disabled="phoneDisabled" class="button " @click="phoneCoder">
+                获取验证码
+              </button>
+              <button class="button " @click="changePhone">保存</button>
+            </div>
 
-        </a-card>
-      </div>
-      <div>
-        <a-card title="修改邮箱">
+          </a-card>
+        </div>
+        <div>
+          <a-card title="修改邮箱">
 
-          <div class="flex-col justify-between space-y-1 w-2/3 mx-auto items-center">
-            <input class="input" v-model="userEmail" placeholder="请输入邮箱"/>
-            <input v-model="emailCaptcha" class="input" placeholder="请输入验证码"/>
-          </div>
-          <div class=" space-x-1 w-2/3 mt-1 mx-auto ">
-            <button :disabled="emailDisabled" class="button " @click="emailCoder">
-              获取验证码
-            </button>
-            <button class="button " @click="changeEmail">保存</button>
-          </div>
+            <div class="flex-col justify-between space-y-1 w-2/3 mx-auto items-center">
+              <input class="input" v-model="userEmail" placeholder="请输入邮箱"/>
+              <input v-model="emailCaptcha" class="input" placeholder="请输入验证码"/>
+            </div>
+            <div class=" space-x-1 w-2/3 mt-1 mx-auto ">
+              <button :disabled="emailDisabled" class="button " @click="emailCoder">
+                获取验证码
+              </button>
+              <button class="button " @click="changeEmail">保存</button>
+            </div>
 
-        </a-card>
-
-
-      </div>
-      <div>
-        <a-card title="修改密码">
-
-          <div class="flex-col justify-between space-y-1 w-2/3 mx-auto items-center">
-            <input class="input" v-model="passwordOld" placeholder="请输入原密码"/>
-            <input class="input" v-model="password" placeholder="请输入新密码"/>
-            <input v-model="passwordConfirm" class="input" placeholder="请再次输入新密码"/>
-          </div>
-          <div class=" space-x-1 w-2/3 mt-1 mx-auto ">
-
-            <button class="button " @click="changePassword">保存</button>
-          </div>
+          </a-card>
 
 
-        </a-card>
-      </div>
+        </div>
+        <div>
+          <a-card title="修改密码">
 
-      <div>
-        <a-card title="安全信息">
-          <a-card-grid style="width: 50%; text-align: center" @click="$refs.carousel.goTo(1)">修改手机号</a-card-grid>
-          <a-card-grid style="width: 50%; text-align: center" @click="$refs.carousel.goTo(2)">修改邮箱</a-card-grid>
-          <a-card-grid style="width: 50%; text-align: center" @click="$refs.carousel.goTo(3)">修改密码</a-card-grid>
-        </a-card>
-      </div>
+            <div class="flex-col justify-between space-y-1 w-2/3 mx-auto items-center">
+              <input class="input" v-model="passwordOld" placeholder="请输入原密码"/>
+              <input class="input" v-model="password" placeholder="请输入新密码"/>
+              <input v-model="passwordConfirm" class="input" placeholder="请再次输入新密码"/>
+            </div>
+            <div class=" space-x-1 w-2/3 mt-1 mx-auto ">
 
-    </a-carousel>
-    <button class="w-2/3 button" @click="move">
-      {{ modify ? '取消' : '修改' }}
-    </button>
+              <button class="button " @click="changePassword">保存</button>
+            </div>
 
-  </div>
+
+          </a-card>
+        </div>
+
+        <div>
+          <a-card title="安全信息">
+            <a-card-grid style="width: 50%; text-align: center" @click="$refs.carousel.goTo(1)">修改手机号</a-card-grid>
+            <a-card-grid style="width: 50%; text-align: center" @click="$refs.carousel.goTo(2)">修改邮箱</a-card-grid>
+            <a-card-grid style="width: 50%; text-align: center" @click="$refs.carousel.goTo(3)">修改密码</a-card-grid>
+          </a-card>
+        </div>
+
+      </a-carousel>
+      <button class="w-2/3 button" @click="move">
+        {{ modify ? '取消' : '修改' }}
+      </button>
+
+    </div>
+  </my-compostion>
 
 </template>
 
 <script>
 import {LeftCircleOutlined, RightCircleOutlined} from '@ant-design/icons-vue';
+import MyCompostion from "@/components/pub/MyCompostion.vue";
 
 export default {
   name: 'security',
   components: {
+    MyCompostion,
     LeftCircleOutlined,
     RightCircleOutlined,
   },

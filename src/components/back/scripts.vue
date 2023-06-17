@@ -1,113 +1,116 @@
 <template>
   <bread>我的草稿</bread>
-  <div class="text-left w-full h-screen mx-auto">
-    <template v-if="loading">
-<!--      <a-skeleton active/>-->
-<!--      <a-skeleton active/>-->
-<!--      <a-skeleton active/>-->
-      <loader></loader>
-    </template>
+  <MyCompostion>
+    <div class="text-left w-full h-screen mx-auto">
+      <template v-if="loading">
+        <!--      <a-skeleton active/>-->
+        <!--      <a-skeleton active/>-->
+        <!--      <a-skeleton active/>-->
+        <loader></loader>
+      </template>
 
-    <template v-else>
+      <template v-else>
 
-      <el-empty v-if="articleList.length===0">
-        <template #description>
-          <span>暂无草稿</span>
-        </template>
-        <button class="button w-full mx-auto " @click="$router.push('/write/0')">去创作</button>
-      </el-empty>
-      <!--      文章展示-->
-      <!--      <div class="Article" v-for="(article,index) in myScripts" :key="article.articleId">-->
+        <el-empty v-if="articleList.length===0">
+          <template #description>
+            <span>暂无草稿</span>
+          </template>
+          <button class="button w-full mx-auto " @click="$router.push('/write/0')">去创作</button>
+        </el-empty>
+        <!--      文章展示-->
+        <!--      <div class="Article" v-for="(article,index) in myScripts" :key="article.articleId">-->
 
-      <!--        <div v-if="article.articlePic!=null && article.articlePic!==''" class="img">-->
-      <!--          <img alt="文章头部图" :src="p(article.articlePic)"/>-->
-      <!--        </div>-->
+        <!--        <div v-if="article.articlePic!=null && article.articlePic!==''" class="img">-->
+        <!--          <img alt="文章头部图" :src="p(article.articlePic)"/>-->
+        <!--        </div>-->
 
-      <!--        <div class="right"-->
-      <!--             :class="{isFull:article.articlePic==null || article.articlePic===''}">-->
-      <!--          <div class="at"><a>-->
-      <!--            <router-link :to="'/article/'+article.articleId"><span class="iconfont"-->
-      <!--                                                                   v-html="'&#xe630;'+article.articleTitle"></span>-->
-      <!--            </router-link>-->
-      <!--          </a>-->
-      <!--          </div>-->
+        <!--        <div class="right"-->
+        <!--             :class="{isFull:article.articlePic==null || article.articlePic===''}">-->
+        <!--          <div class="at"><a>-->
+        <!--            <router-link :to="'/article/'+article.articleId"><span class="iconfont"-->
+        <!--                                                                   v-html="'&#xe630;'+article.articleTitle"></span>-->
+        <!--            </router-link>-->
+        <!--          </a>-->
+        <!--          </div>-->
 
-      <!--          <div class="author"><span class="iconfont">&#xe6fb;</span> 更新时间: {{ article.articleUpdateDate }}-->
-      <!--          </div>-->
-      <!--          <div class="comment"><span v-html="article.articleContent"></span></div>-->
+        <!--          <div class="author"><span class="iconfont">&#xe6fb;</span> 更新时间: {{ article.articleUpdateDate }}-->
+        <!--          </div>-->
+        <!--          <div class="comment"><span v-html="article.articleContent"></span></div>-->
 
-      <!--          <div class="toolbar">-->
-      <!--            <a class="like" @click="deleteArticle(article.articleId)">删除<span class="iconfont">&#xe611;</span> </a>-->
-      <!--            <a class="reply" @click="modifyArticle(article.articleId)">修改<span class="iconfont">&#xe615;</span> </a>-->
-      <!--            <a class="collect" @click="shareArticle(article.articleId)">分享<span class="iconfont">&#xe73a;</span> </a>-->
-      <!--            <a class="share">其他<span class="iconfont">&#xe63e;</span> </a>-->
-      <!--          </div>-->
+        <!--          <div class="toolbar">-->
+        <!--            <a class="like" @click="deleteArticle(article.articleId)">删除<span class="iconfont">&#xe611;</span> </a>-->
+        <!--            <a class="reply" @click="modifyArticle(article.articleId)">修改<span class="iconfont">&#xe615;</span> </a>-->
+        <!--            <a class="collect" @click="shareArticle(article.articleId)">分享<span class="iconfont">&#xe73a;</span> </a>-->
+        <!--            <a class="share">其他<span class="iconfont">&#xe63e;</span> </a>-->
+        <!--          </div>-->
 
-      <!--        </div>-->
-      <!--        <a-divider style="height: 2px; background-color: #afb2b2"/>-->
+        <!--        </div>-->
+        <!--        <a-divider style="height: 2px; background-color: #afb2b2"/>-->
 
-      <!--      </div>-->
+        <!--      </div>-->
 
 
-      <div class="m-auto overflow-hidden rounded-lg shadow-lg cursor-pointer h-90  pb-2  w-60 lg:w-80"
-           v-for="(article,index) in myScripts" :key="article.articleId">
-        <a @click="$router.push('/article/'+article.articleId)" class="block w-full h-full">
-          <img v-if="article.articlePic!=null && article.articlePic!==''" :src="p(article.articlePic)"
-               class="object-cover w-full max-h-40"/>
-          <div class="w-full p-4 h-40 overflow-hidden bg-white dark:bg-gray-800">
-            <p class="font-medium text-indigo-600 hover:text-indigo-500 text-base">
-              {{ article.articleTitle }}
-            </p>
+        <div class="m-auto overflow-hidden rounded-lg shadow-lg cursor-pointer h-90  pb-2  w-60 lg:w-80"
+             v-for="(article,index) in myScripts" :key="article.articleId">
+          <a @click="$router.push('/article/'+article.articleId)" class="block w-full h-full">
+            <img v-if="article.articlePic!=null && article.articlePic!==''" :src="p(article.articlePic)"
+                 class="object-cover w-full max-h-40"/>
+            <div class="w-full p-4 h-40 overflow-hidden bg-white dark:bg-gray-800">
+              <p class="font-medium text-indigo-600 hover:text-indigo-500 text-base">
+                {{ article.articleTitle }}
+              </p>
 
-            <p class="font-light truncate text-gray-400 dark:text-gray-300 text-md">
-              <span v-html="article.articleContent"></span>
+              <p class="font-light truncate text-gray-400 dark:text-gray-300 text-md">
+                <span v-html="article.articleContent"></span>
 
-            </p>
-          </div>
-        </a>
-
-        <div class="w-full flex h-6  space-x-4 justify-center items-center">
-          <a class="tools hover:animate-ping"  @click="publishArticle(article.articleId)">
-            <icon src="isugonwi" size="24"><span>发布</span></icon>
+              </p>
+            </div>
           </a>
-          <a class="tools  hover:animate-ping"  @click="modifyArticle(article.articleId)">
-            <icon src="wloilxuq" size="24"><span>编辑</span></icon>
+
+          <div class="w-full flex h-6  space-x-4 justify-center items-center">
+            <a class="tools hover:animate-ping" @click="publishArticle(article.articleId)">
+              <icon src="isugonwi" size="24"><span>发布</span></icon>
             </a>
-          <a class="tools  hover:animate-ping"  @click="deleteArticle(article.articleId)">
-            <icon src="kfzfxczd" size="24"><span>删除</span></icon>
+            <a class="tools  hover:animate-ping" @click="modifyArticle(article.articleId)">
+              <icon src="wloilxuq" size="24"><span>编辑</span></icon>
+            </a>
+            <a class="tools  hover:animate-ping" @click="deleteArticle(article.articleId)">
+              <icon src="kfzfxczd" size="24"><span>删除</span></icon>
             </a>
 
+          </div>
         </div>
-      </div>
 
 
-      <el-pagination
-          v-model:currentPage="currentPage"
-          v-model:page-size="pageSize"
-          :page-sizes="pageSizes"
-          :small="small"
-          :disabled="disabled"
-          :background="background"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="total"
-          :default-current-page="defaultCurrentPage"
-          :page-count="pageCount"
-          :hide-on-single-page="hideOnSinglePage"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-      />
-    </template>
-  </div>
-  <a-back-top/>
+        <el-pagination
+            v-model:currentPage="currentPage"
+            v-model:page-size="pageSize"
+            :page-sizes="pageSizes"
+            :small="small"
+            :disabled="disabled"
+            :background="background"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="total"
+            :default-current-page="defaultCurrentPage"
+            :page-count="pageCount"
+            :hide-on-single-page="hideOnSinglePage"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+        />
+      </template>
+    </div>
+  </MyCompostion>
 
 
 </template>
 
 <script>
 import Swal from 'sweetalert2'
+import MyCompostion from "@/components/pub/MyCompostion.vue";
 
 export default {
   name: 'scripts',
+  components: {MyCompostion},
   // props: [],
   data() {
     return {
@@ -217,18 +220,17 @@ export default {
     modifyArticle(articleId) {
       this.$router.push('/write/' + articleId)
     },
-    publishArticle(articleId){
-      this.$axios.put('/article/publish/'+articleId).then((res)=>{
+    publishArticle(articleId) {
+      this.$axios.put('/article/publish/' + articleId).then((res) => {
         if (res.data.code !== 200) {
           this.$sa(res.data.msg, 'error')
           return;
         }
         this.$st("发布成功", 'success')
         this.getArticles()
-        this.$router.replace('/article/'+articleId)
+        this.$router.replace('/article/' + articleId)
       })
     }
-
 
 
   },

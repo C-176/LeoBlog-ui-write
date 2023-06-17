@@ -19,7 +19,7 @@ const store = createStore({
                 chatVisible: false,
                 messageVisible: false,
                 musicVisible: false,
-
+                sliderVisible: true,
                 chatPoint: 0,
                 messagePoint: 0,
                 token: storage.getToken(),
