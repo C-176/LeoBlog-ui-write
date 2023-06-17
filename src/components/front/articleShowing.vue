@@ -17,7 +17,8 @@
              :src="p(article.articlePic)"/>
         <div class="p-5 bg-gray-100 rounded-xl">
           <div class="text-xl lg:text-xl text-left h-auto w-full font-bold my-0.5">{{
-              article.articleTitle.replaceAll('<p>','').replaceAll('</p>','')}}
+              article.articleTitle
+            }}
           </div>
           <div class="w-full h-auto">
             <div class="text-left">
@@ -28,18 +29,20 @@
             </div>
           </div>
           <div class="w-full flex items-center space-x-2 h-16">
-            <user :user="article.user">
-              <!--          <img class="left" :src="p(article.user.userProfilePhoto)"/>-->
+            <!--            <user :user="article.user">-->
+            <!--          <img class="left" :src="p(article.user.userProfilePhoto)"/>-->
+            <avatar :user-id="article.userId">
               <a-avatar
                   :src="p(article.user.userProfilePhoto)"
                   :style="{ backgroundColor: '#067061'  ,verticalAlign: 'middle'}"
-                  class="left h-16 w-16 rounded-full"
+                  class="left  rounded-full "
                   shape="circle"
                   size="small"
               >
                 {{ article.user.userNickname }}
               </a-avatar>
-            </user>
+            </avatar>
+            <!--            </user>-->
             <div class="flex-col items-start space-x-0 justify-center text-left">
               <div class="text-sm font-bold">{{ article.user.userNickname }}</div>
               <div class="text-xs">{{ article.user.userCertification }}</div>
@@ -232,23 +235,24 @@
     <!--        </div>-->
     <!--      </div>-->
 
-    <div class="gs tv ard ces dcx">
+    <div class="gs tv px-1">
       <div class="gs tq csw cxc">
         <div class="ls yu za">
-          <h2 class="avt awb awl axq">最新文章</h2>
-          <!--          <a href="#" class="avv awb awk ayc bla">View-->
-          <!--            all<span class="t">, clients</span></a>-->
+          <a-divider orientation="center">最新文章</a-divider>
         </div>
+        <a @click="$router.push('/home/article')" class="avv awb awk ayc bla">查看全部</a>
         <ul role="list" class="lf lw yb aar cyi space-x-1">
           <li class="adb ads aeu afp hover:shadow-xl duration-300 transition" v-for="(a1,index) in articleList"
               :id="a1.articleId">
             <div class="ls yu aab afa afx ail aqq bg-auto box "
                  :style="{'background-image':'url('+a1.articlePic+')'}"
             >
-              <img :src="userList[index].userProfilePhoto"
-                   @click="$router.push('/user/'+userList[index].userId)"
-                   alt="Tuple"
-                   class="ne rg uj ado alj apz bbo bcj">
+              <avatar :user-id="userList[index].userId">
+                <!--                     @click="$router.push('/user/'+userList[index].userId)"-->
+                <img :src="userList[index].userProfilePhoto"
+
+                     alt="Tuple"
+                     class="ne rg uj ado alj apz bbo bcj"></avatar>
               <div class="avv avz awk axq">{{ userList[index].userNickname }}</div>
             </div>
             <dl class="gh abx aca arf arx avv awk text-left cursor-pointer"

@@ -23,8 +23,10 @@
                 </div>
               </template>
               <template #avatar>
+                <avatar :user-id="item.userId">
                 <user :user-id="item.userId" v-slot="userP">
                   <a class="relative block">
+
                     <img alt="profile" :src="userP.photo"
                          class="mx-auto object-cover rounded-full h-10 w-10 "/>
                     <span
@@ -32,6 +34,7 @@
                         :class="{'hidden':item.isSaw !== 0}">
                         </span>
                   </a></user>
+                </avatar>
               </template>
             </a-list-item-meta>
           </a-list-item>

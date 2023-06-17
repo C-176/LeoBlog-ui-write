@@ -27,8 +27,9 @@
 
                                 <div class="flex justify-between items-center">
                                     <div class=" flex items-center space-x-4 py-0">
+                                      <avatar :user-id="comment.user.userId">
                                         <img class="w-8 h-8 rounded-full" :src="p(comment.user.userProfilePhoto)"
-                                             alt=""/>
+                                             alt=""/></avatar>
                                         <div class="text-sm text-gray-400 ">{{ comment.user.userNickname }} • <span
                                                 class="font-normal text-gray-400"> {{
                                             comment.commentUpdateTime
@@ -62,7 +63,8 @@
                                  class="bg-white w-full group rounded-2xl px-6 pl-10 py-1 hover:shadow transition duration-500">
                                 <div class="flex justify-between items-center">
                                     <div class=" flex items-center space-x-4 py-0">
-                                        <img class="w-8 h-8 rounded-full" :src="p(i.user.userProfilePhoto)" alt=""/>
+                                      <avatar :user-id="i.user.userId">
+                                        <img class="w-8 h-8 rounded-full" :src="p(i.user.userProfilePhoto)" alt=""/></avatar>
                                         <div class="text-sm text-gray-400 ">{{ i.user.userNickname }} • <span
                                                 class="font-normal text-gray-400"> {{ i.commentUpdateTime }}</span>
                                         </div>

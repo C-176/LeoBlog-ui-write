@@ -3,7 +3,7 @@
   <h></h>
   <!--  <shell></shell>-->
 
-  <div class="w-full lg:p-5 p-2 flex justify-center gap-x-1">
+  <div class="w-full lg:p-5 p-2 flex justify-center space-x-1  transition duration-300 ease-in-out">
     <div class="w-full  mt-14 ">
       <router-view class="router-view" v-slot="{ Component }">
         <keep-alive>

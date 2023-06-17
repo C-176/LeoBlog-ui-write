@@ -1,7 +1,8 @@
 <template>
   <MyCompostion :slider="true">
     <div ref="show" class="w-full lg:flex p-2 justify-center space-x-2 items-start z-10  " @wheel="scrollBottom">
-      <div class="w-full min-w-full lg:my-0  ">
+
+      <div class="w-full min-w-full lg:my-0 ">
         <article-show :article-list="articleList"></article-show>
       </div>
     </div>

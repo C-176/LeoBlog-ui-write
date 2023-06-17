@@ -15,7 +15,10 @@
            class="w-full overflow-hidden bg-gray-100 space-y-2  py-2 px-3 lg:px-5 rounded-xl mb-2">
 
         <div v-if="!mySelf" class="text-left flex justify-start items-center space-x-1">
-          <img class="h-10 w-10 rounded-full" :src="article.author.userProfilePhoto"/>
+          <avatar :user-id="article.userId">
+            <img class="h-10 w-10 rounded-full "
+                 :src="article.author.userProfilePhoto"/>
+          </avatar>
 
           <div class="h-full flex-col justify-around items-start">
             <div class="text-xs  lg:text-sm font-medium  " @click="$router.push('/user/'+article.userId)">
@@ -85,9 +88,12 @@
 
 <script>
 
+import Avatar from "@/components/pub/avatar.vue";
+
 export default {
 
   name: 'articleShow',
+  components: {Avatar},
   props: {
     articleList: {
       type: Array,

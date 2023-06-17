@@ -27,23 +27,19 @@
               <a-badge :count="redPoint[index]" size="small"
                        style="float: left;line-height: 100%">
                 <div class="h-full w-full  lg:w-10 lg:h-10 text1-center rounded-full ">
-                  <user :user-id="chat.user.userId" :visible='showUserCard' :showUserId="showUserId">
-                    <a class="relative block"
-                       @mouseover="()=>{
-                         showUserCard = true
-                         showUserId=chat.user.userId
-                       }" @mouseleave="()=>{
-                         showUserCard = false
-                          showUserId=-2
-                       }">
-                      <img alt="profile" :src="p(chat.user.userProfilePhoto)"
-                           class="mx-auto object-cover rounded-full h-10 w-10 "/>
-                      <span
-                          class="absolute w-3 h-3 transform -translate-x-1/2  border-2 border-white rounded-full left-1/2 -bottom-2"
-                          :class="{'bg-gray-500':chat.user.userStatus==0,'bg-green-500':chat.user.userStatus==1}">
+                  <avatar :user-id="chat.user.userId">
+                    <user :user-id="chat.user.userId" :visible='showUserCard' :showUserId="showUserId">
+
+                      <a class="relative block">
+                        <img alt="profile" :src="p(chat.user.userProfilePhoto)"
+                             class="mx-auto object-cover rounded-full h-10 w-10 "/>
+                        <span
+                            class="absolute w-3 h-3 transform -translate-x-1/2  border-2 border-white rounded-full left-1/2 -bottom-2"
+                            :class="{'bg-gray-500':chat.user.userStatus==0,'bg-green-500':chat.user.userStatus==1}">
                         </span>
-                    </a>
-                  </user>
+                      </a>
+                    </user>
+                  </avatar>
                 </div>
 
               </a-badge>

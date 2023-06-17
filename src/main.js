@@ -136,6 +136,7 @@ app.config.globalProperties.$imgOnerror = e => {
 import bgCover from "@/components/pub/BgCover.vue";
 import badge from "@/components/pub/badge.vue";
 import myModal from "@/components/pub/myModal.vue";
+import Avatar from "@/components/pub/avatar.vue";
 
 app.use(router).use(store).use(ElementPlus).use(Antd).use(VueMarkdownEditor).component('loader', loader)
     .component('bread', bread).component('bgCover', bgCover)
@@ -144,6 +145,7 @@ app.use(router).use(store).use(ElementPlus).use(Antd).use(VueMarkdownEditor).com
     .component('bigImg', bigImg)
     .component('badge', badge)
     .component('myModal', myModal)
+    .component('avatar', Avatar)
 
 
 app.mount('#app')

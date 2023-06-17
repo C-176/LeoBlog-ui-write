@@ -293,11 +293,14 @@
   <music/>
   <chat v-if="logined"></chat>
   <message v-if="logined"></message>
+  <userProfile/>
   <bgCover
       @quit="quit($store)"
       :showCover="$store.state.chatVisible || $store.state.messageVisible || $store.state.bgCover || $store.state.musicVisible || openSearch"
   />
   <search-dialog :is-open="openSearch" @closeSearch="() => {openSearch=false}"></search-dialog>
+
+
 </template>
 
 <script setup>
@@ -305,6 +308,7 @@ import chat from "@/components/pub/chat";
 import message from "@/components/pub/message";
 import searchDialog from '@/components/pub/searchDialog'
 import bgCover from "@/components/pub/bgCover";
+import userProfile from "@/components/pub/userProfile";
 
 import {
   Menu,

@@ -12,6 +12,7 @@ const routes = [
     {path: '/test', component: () => import('@/components/test')},
 
     {path: '/user', component: () => import('@/components/pub/user')},
+    {path: '/userProfile', component: () => import('@/components/pub/userProfile.vue')},
     // {path: '/tag', component: () => import('@/components/pub/tag')},
 
     {
