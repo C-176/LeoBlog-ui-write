@@ -23,7 +23,7 @@
                                       :header="comment.articleTitle.trim().length == 0?comment.commentContent:comment.articleTitle">
                         <div class=" w-full flex-col items-center justify-center space-y-1">
 
-                            <div class="bg-white w-full rounded-2xl px-6 py-1 shadow transition duration-500">
+                            <div class="bg-white w-full group rounded-2xl px-6 py-1 hover:shadow transition duration-500">
 
                                 <div class="flex justify-between items-center">
                                     <div class=" flex items-center space-x-4 py-0">
@@ -34,13 +34,12 @@
                                             comment.commentUpdateTime
                                             }}</span></div>
                                     </div>
-                                    <div class="space-x-1 flex justify-end items-center">
+                                    <div class="space-x-1 flex group-hover:opacity-100 opacity-0 transition duration-300 justify-end items-center">
                                         <a-tooltip>
                                             <template #title>回复</template>
-                                            <div
-                                                    v-if="comment.articleTitle.trim().length == 0"
+                                            <div  v-if="comment.articleTitle.trim().length == 0"
                                                     @click="commentClick(comment.commentId,comment.userId)"
-                                                    class="p-3 bg-indigo-600 hover:bg-indigo-500 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white  shadow-lg cursor-pointer">
+                                                    class="p-3 bg-indigo-300  rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white  shadow-lg cursor-pointer">
                                                 +
                                             </div>
                                         </a-tooltip>
@@ -49,18 +48,18 @@
                                             <div
                                                     v-if="comment.user.userId == $store.state.user.userId"
                                                     @click="deleteComment(comment.commentId)"
-                                                    class="p-3 bg-indigo-600 hover:bg-indigo-500 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white cursor-pointer">
+                                                    class="p-3 bg-indigo-300  rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white cursor-pointer">
                                                 ×
                                             </div>
                                         </a-tooltip>
                                     </div>
                                 </div>
-                                <p class=" text-xs py-0.5 lg:text-sm text-gray-600"> {{ comment.commentContent }}</p>
+                                <p class=" text-xs py-0.5  lg:text-sm text-gray-400"> {{ comment.commentContent }}</p>
                             </div>
 
 
                             <div v-for="(i,index2) in comment.value" :key="i.commentId"
-                                 class="bg-white w-full  rounded-2xl px-6 pl-10 py-1 shadow transition duration-500">
+                                 class="bg-white w-full group rounded-2xl px-6 pl-10 py-1 hover:shadow transition duration-500">
                                 <div class="flex justify-between items-center">
                                     <div class=" flex items-center space-x-4 py-0">
                                         <img class="w-8 h-8 rounded-full" :src="p(i.user.userProfilePhoto)" alt=""/>
@@ -68,13 +67,13 @@
                                                 class="font-normal text-gray-400"> {{ i.commentUpdateTime }}</span>
                                         </div>
                                     </div>
-                                    <div class="space-x-1 flex justify-end items-center">
+                                    <div class="space-x-1 group-hover:opacity-100 opacity-0 flex justify-end items-center">
                                         <a-tooltip>
                                             <template #title>回复</template>
                                             <div
                                                     v-if="comment.articleTitle.trim().length == 0"
                                                     @click="commentClick(comment.commentId,i.userId)"
-                                                    class="p-3 bg-indigo-600 hover:bg-indigo-500 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white  shadow-lg cursor-pointer">
+                                                    class="p-3 bg-indigo-300 group:hover:invisible  transition duration-300 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white  shadow-lg cursor-pointer">
                                                 +
                                             </div>
                                         </a-tooltip>
@@ -83,13 +82,13 @@
                                             <div
                                                     v-if="i.user.userId == $store.state.user.userId"
                                                     @click="deleteComment(i.commentId)"
-                                                    class="p-3 bg-indigo-600 hover:bg-indigo-500 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white cursor-pointer">
+                                                    class="p-3 bg-indigo-300 group:hover:invisible  transition duration-300 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white cursor-pointer">
                                                 ×
                                             </div>
                                         </a-tooltip>
                                     </div>
                                 </div>
-                                <p class="text-xs lg:text-sm py-0.5 text-gray-600"> {{ i.commentContent }}</p>
+                                <p class="text-xs lg:text-sm  py-0.5 text-gray-400"> {{ i.commentContent }}</p>
 
                             </div>
                         </div>
@@ -103,7 +102,7 @@
 
             <div v-if="showComment" class="relative w-full h-28 mt-2 text-right">
         <textarea v-model="commentIn"
-                  class="bg-white border-2 border-gray-200 w-full h-full rounded-xl resize-none outline-0 p-2"
+                  class="bg-white border-2 border-gray-200 text-gray-400 w-full h-full text-xs rounded-xl resize-none outline-0 p-2"
                   placeholder="请输入内容... | Enter键发送"
                   @keyup.enter="saveComment()">
         </textarea>
