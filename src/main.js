@@ -86,6 +86,7 @@ app.config.globalProperties.$host = host
 axios.interceptors.response.use(res => {
         if (res.data.code === 401) {
             app.config.globalProperties.$st('请先登录', 'error')
+            router.push('/LR')
         }
         // 给res添加cors
         // res.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
