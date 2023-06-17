@@ -106,7 +106,6 @@
       <div id="comment">
         <comment-template v-if="article.isArticle === 1"
                           :comments="comments" :method="getComments">
-
         </comment-template>
       </div>
     </div>
@@ -388,7 +387,6 @@ export default {
     this.$axios.get(this.baseURL + "/article/" + this.$route.params.articleId).then((res) => {
       if (res.data.code === 200) {
         this.article = res.data.data
-        this.article.user = JSON.parse(this.article.user)
         //将articleUpdateDate转换为yyyy-MM-dd HH:mm:ss格式
         this.article.articleUpdateDate = this.$moments(this.article.articleUpdateDate)
       }
@@ -437,21 +435,24 @@ export default {
     getArticlesDefault() {
       this.$axios.get('/article/list/1/20').then((res) => {
         let map = res.data.data
-        this.articleList = map.records
-        this.articleList = this.articleList.filter(x => x.articleId !== this.article.articleId)
+        var articleList = map.records
+        articleList = articleList.filter(x => x.articleId !== this.article.articleId)
         // 在articleList中随机取出三个元素
-        this.articleList = this.articleList.sort(() => {
+        articleList = articleList.sort(() => {
           return 0.5 - Math.random()
         })
-        this.articleList = this.articleList.slice(0, 3)
-        for (let i = 0; i < this.articleList.length; i++) {
-          this.$store.dispatch('getUserById', this.articleList[i].userId).then((res) => {
+        articleList = articleList.slice(0, 3)
+        for (let i = 0; i < articleList.length; i++) {
+          this.$store.dispatch('getUserById', articleList[i].userId).then((res) => {
             this.userList.push(res)
           })
         }
-        console.log(this.userList)
-        // console.log(this.articleList)
-        this.article1 = this.articleList[this.otherIndex]
+        setTimeout(() => {
+          this.articleList = articleList
+        }, 1000)
+
+
+        // this.article1 = this.articleList[this.otherIndex]
         // console.log(this.articleList)
       })
     },
@@ -606,10 +607,6 @@ export default {
 </script>
 
 <style scoped>
-.box {
-  background: var(--background)
-}
-
 :deep(video) {
   width: 80%;
   margin-left: 10%;

@@ -71,7 +71,7 @@ app.config.globalProperties.$st = (title, icon) => {
     })
 }
 //1.开发 2.生产
-let env = 1
+let env = 2
 let host = ''
 if (env === 1) {
     host = 'localhost'
