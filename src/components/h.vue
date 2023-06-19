@@ -348,10 +348,8 @@ function registerAction() {
 }
 
 function goto(item, $router) {
-
+  openMenu.value = false
   item.href($router);
-
-  openMenu.value = !openMenu.value
   // // 模拟按下esc键
   //
   // setTimeout(() => {
