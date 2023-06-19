@@ -76,15 +76,17 @@
         <div id="chat" ref="chat"
              class="w-full h-2/3 bg-gray-100  rounded-xl p-3 overflow-auto"
              @wheel.once="scrollRecord">
+
           <template v-for="(record,index) in talkTo.record" :key="index">
             <div v-if="timeDiff(index,index-1)"
                  class=" w-full h-auto my-1 text-center text-gray-400 text-sm"
                  id="updateTime">
               {{ this.$moments(record.recordUpdateTime) }}
             </div>
+
             <template v-if="record.userId == $store.state.user.userId">
 
-              <div class="w-full flex-1 text-right  mb-1 flex float-right justify-end space-x-0.5  items-start"
+              <div class="w-full transition duration-300 ease-in flex-1 text-right  mb-1 flex float-right justify-end space-x-0.5  items-start"
                    :key="record.userId">
                 <div class="flex-col justify-start items-end space-y-0.5">
                   <!--                      <div class="text-xs text-right">{{ $store.state.user.userNickname }}</div>-->
@@ -206,6 +208,7 @@ import ctrlEnterModule from '@wangeditor/plugin-ctrl-enter'
 import {mapState} from "vuex";
 import bigImg from "@/components/pub/bigImg";
 import {SlateTransforms} from '@wangeditor/editor'
+import app from "@/main";
 
 // Boot.use(ctrlEnterModule)
 export default {
@@ -500,33 +503,48 @@ export default {
 
 
     getUsers() {
-      this.getChatList(this.$store.state.user.userId)
+      // this.getChatList(this.$store.state.user.userId)
       this.$axios.get(this.baseURL + '/chat/list/' + this.$store.state.user.userId).then(res => {
         if (res.data.code === 200) {
-          // if (res.data.data == "暂无聊天对象") {
-          //     this.$st("暂无聊天对象，快去找人聊天吧", "info");
-          // } else {
           this.chats = res.data.data;
           this.chats.forEach(chat => {
             if (chat.record == null) {
               chat.record = {
                 userId: -1,
                 receiverId: -1,
-                recordContent: '暂无消息记录',
+                recordContent: '暂无消息记录，去找Ryker小助手聊聊吧！',
                 recordUpdateTime: new Date().getTime(),
               }
             }
           })
           // console.log(this.chats)
-          if (this.chats.length === 1) {
-            this.chats[1].record = {
-              userId: this.chats[0].user.userId,
-              receiverId: this.chats[0].user.userId,
-              recordContent: 'hello',
-              recordUpdateTime: '2021-05-01 12:00:00',
-            }
-          }
+          // TODO:这一段干啥的。。。
+          // if (this.chats.length === 1) {
+          //   this.chats[1].record = {
+          //     userId: this.chats[0].user.userId,
+          //     receiverId: this.chats[0].user.userId,
+          //     recordContent: 'hello',
+          //     recordUpdateTime: '2021-05-01 12:00:00',
+          //   }
           // }
+          // }
+          var Ryker = [
+            {
+              user: {
+                userId: 1,
+                userNickname: 'Ryker小助手',
+                userProfilePhoto: `${app.config.globalProperties.baseURL}/source/images/favicon.ico`,
+                userStatus: 1,
+              },
+              record: {
+                userId: 0,
+                receiverId: 0,
+                recordContent: '我是Ryker，有什么问题可以问我哦！',
+                recordUpdateTime: new Date().getTime(),
+              }
+            }
+          ]
+          this.chats = Ryker.concat(this.chats)
           this.saveChatList(this.$store.state.user.userId, this.chats)
 
           this.$nextTick(() => {

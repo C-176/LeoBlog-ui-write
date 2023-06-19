@@ -1,15 +1,14 @@
 <template>
   <div class="w-full h-full flex justify-center space-x-2 items-start">
 
-    <div class=" flex-col justify-center  text-center  items-center"
-    :class="{
-      'w-2/3':size,
+    <div class=" flex-col justify-center w-full text-center  items-center"
+         :class="{
+      'md:w-2/3':size,
       'w-full':!size
     }">
       <slot></slot>
     </div>
-    <div v-if="slider" class="w-1/4 h-full ">
-      <!--      <button class="button">收起</button>-->
+    <div v-if="slider" class="md:w-1/4 h-full ">
       <slot name="slider"></slot>
     </div>
   </div>
@@ -28,9 +27,9 @@ export default {
       type: Boolean,
       default: false,
     },
-    size:{
-      type:Boolean,
-      default:true
+    size: {
+      type: Boolean,
+      default: true
     }
 
   },

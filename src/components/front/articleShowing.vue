@@ -80,28 +80,64 @@
             </div>
           </template>
           <!--      </el-affix>-->
-          <transition name="fade">
-            <div v-if="showComment " class="relative w-full h-28 text-right">
-            <textarea v-model="commentIn"
-                      class="bg-white border-2 border-gray-200 w-full h-full rounded-xl resize-none outline-0 p-2"
-                      placeholder="请输入内容... | Enter键发送"
-                      @keyup.enter="saveComment(-1)">
-            </textarea>
+          <!--          <transition name="fade">-->
+          <!--            <div v-if="showComment " class="relative w-full h-28 text-right">-->
+          <!--            <textarea v-model="commentIn"-->
+          <!--                      class="bg-white border-2 border-gray-200 w-full h-full rounded-xl resize-none outline-0 p-2"-->
+          <!--                      placeholder="请输入内容... | Enter键发送"-->
+          <!--                      v-model="commentIn"@keyup.enter="saveComment(-1)">-->
+          <!--            </textarea>-->
 
 
-              <div class="absolute bottom-1 right-1 space-x-1 flex justify-around items-center">
-                <button class="  button p-1  "
-                        @click="saveComment(-1,article.user.userId)">
-                  发送
-                </button>
-                <button class=" p-1  button"
-                        @click="showComment =false">
-                  取消
-                </button>
+          <!--              <div class="absolute bottom-1 right-1 space-x-1 flex justify-around items-center">-->
+          <!--                <button class="  button p-1  "-->
+          <!--                        @click="saveComment(-1,article.user.userId)">-->
+          <!--                  发送-->
+          <!--                </button>-->
+          <!--                <button class=" p-1  button"-->
+          <!--                        @click="showComment =false">-->
+          <!--                  取消-->
+          <!--                </button>-->
+          <!--              </div>-->
+          <!--            </div>-->
+
+          <!--          </transition>-->
+          <div
+               :class="{
+            'opacity-100 h-auto': showComment,
+            'opacity-0 h-0': !showComment
+               }"
+               class="gs ti uf w-full flex justify-start transition duration-500">
+            <div class="w-full ls ys abe mt-2">
+              <div class="uk">
+                <img class="lq nc re adn border border-indigo-600"
+
+                     :src="$store.state.user.userProfilePhoto"
+                                   alt=""></div>
+              <div class="tl uh">
+                <div  class="ab">
+                  <div class="focus-within:bg-white adb ado bbi bbo bbs bca bgu bgz"><label for="comment" class="t">Add your
+                    comment</label>
+                    <textarea v-model="commentIn"
+                              @keyup.enter.stop="saveComment(-1)"
+                        rows="3" name="comment" id="comment"
+                                             class=" lp ti xo aev alh arl axq bfy bmx cht chv"
+                                             placeholder="添加评论..."></textarea>
+                    <div class="arq" aria-hidden="true">
+                      <div class="asb">
+                        <div class="od"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="aa aj bx ls za arq ath flex justify-end atv">
+                      <button  @click="saveComment(-1,article.user.userId)"
+                          class="lt yu adp ajm ara arq avv awb bac bbi bin bot bou bow bpf">发送
+                      </button>
+                  </div>
+                </div>
               </div>
             </div>
-
-          </transition>
+          </div>
         </div>
 
       </template>

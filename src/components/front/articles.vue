@@ -1,6 +1,6 @@
 <template>
 
-  <MyCompostion slider=true>
+  <MyCompostion slider=true >
       <article-show :article-list="articleList"></article-show>
       <el-pagination
           class="bg-white w-full flex justify-center items-center  space-x-2"

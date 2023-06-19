@@ -1,122 +1,27 @@
 <template>
-  <MyCompostion>
-      <div class="w-2/3 mx-auto bg-white py-24 sm:py-32">
-        <div class="mx-auto grid max-w-7xl gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-3">
-          <div class="max-w-2xl">
-            <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">徽章展馆</h2>
-            <p class="mt-6 text-lg leading-8 text-gray-600">Libero fames augue nisl porttitor nisi, quis. Id ac elit
-              odio vitae elementum enim vitae ullamcorper suspendisse.</p>
-            <div class="flex items-center justify-center">
-              <icon src="sayrryhe" trigger="loop"/>
-              <span class="text-gray-600">
-                    剩余: {{ myMoney }}
-                  </span>
+  <MyCompostion :slider=true :size="true">
+    <div class="p-2">
+      <div class="text-left text-xl font-bold">徽章展馆</div>
+      <div class="text-left text-sm">购买过的徽章可以选择在个人头像旁显示</div>
+      <div class="gs tv ard asa ces dcx">
+        <ul role="list" class="lw yd aab aar cak cbp cyj dkq ">
+          <li class="ab bg-white hover:bg-gray-50 rounded-xl transition duration-300 group" v-for="badge in badges"
+              :key="badge.badgeId">
+            <div class="bpw h j lp ti adb ado  bgu bgy bhc bhd  group-hover:opacity-75 flex items-center justify-center">
+              <badge @click="showBadge(badge)" :badge-src="badge.badgeIcon" :size="150"></badge>
             </div>
-          </div>
-          <ul role="list" class="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
-            <li v-for="badge in badges" :key="badge.badgeId">
-              <div class="flex items-center gap-x-6 ">
-                <badge @click="showBadge(badge)" :badge-src="badge.badgeIcon" :size="100"></badge>
-                <div>
-                  <h3 class="text-base font-semibold leading-7 tracking-tight text-gray-900"
-                      :class="{
-                                'animate-ring': badge.badgeType === 1,
-                                'text-red-300': badge.badgeType === 1,
-                            }">
-                    {{ badge.badgeName }}</h3>
-                  <p class="text-sm font-semibold leading-6 text-indigo-600">{{ badge.badgeValue }}</p>
-                </div>
-                <div v-if="!hasKey(badge)" class="button cursor-pointer" @click="purchase(badge)">
-                  {{ badge.badgeType == 1 ? '抢购限量徽章' : '购买' }}
-                </div>
-              </div>
-            </li>
-          </ul>
-        </div>
+
+            <p class="u kw lp adg avv avz axq">{{ badge.badgeName }}</p>
+            <p class="u lp avv avz axm">{{ badge.badgeValue }}</p></li>
+
+        </ul>
       </div>
+    </div>
+    <template #slider>
+      <account></account>
+    </template>
   </MyCompostion>
-
-
-  <!--  <transition appear-->
-  <!--              appear-active-class="ease-in-out duration-3000 transition-all"-->
-  <!--              appear-to-class="translate-x-0 "-->
-  <!--              appear-from-class="translate-x-80 ">-->
-
-  <!--    <div :class="{-->
-
-  <!--    // 'translate-x-0 ': visible-->
-  <!--  }" v-if=false class=" relative z-10  " aria-labelledby="slide-over-title" role="dialog" aria-modal="true">-->
-  <!--      &lt;!&ndash;-->
-  <!--        Background backdrop, show/hide based on slide-over state.-->
-
-  <!--        Entering: "ease-in-out duration-500"-->
-  <!--          From: "opacity-0"-->
-  <!--          To: "opacity-100"-->
-  <!--        Leaving: "ease-in-out duration-500"-->
-  <!--          From: "opacity-100"-->
-  <!--          To: "opacity-0"-->
-  <!--      &ndash;&gt;-->
-  <!--      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>-->
-
-  <!--      <div class="fixed inset-0 overflow-hidden-->
-  <!--     ">-->
-  <!--        <div class="absolute inset-0 overflow-hidden">-->
-
-  <!--          <div class=" pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10 mt-14">-->
-  <!--            &lt;!&ndash;-->
-  <!--              Slide-over panel, show/hide based on slide-over state.-->
-
-  <!--              Entering: "transform transition ease-in-out duration-500 sm:duration-700"-->
-  <!--                From: "translate-x-full"-->
-  <!--                To: "translate-x-0"-->
-  <!--              Leaving: "transform transition ease-in-out duration-500 sm:duration-700"-->
-  <!--                From: "translate-x-0"-->
-  <!--                To: "translate-x-full"-->
-  <!--            &ndash;&gt;-->
-  <!--            <div class="pointer-events-auto relative w-screen max-w-md">-->
-  <!--              &lt;!&ndash;-->
-  <!--                Close button, show/hide based on slide-over state.-->
-
-  <!--                Entering: "ease-in-out duration-500"-->
-  <!--                  From: "opacity-0"-->
-  <!--                  To: "opacity-100"-->
-  <!--                Leaving: "ease-in-out duration-500"-->
-  <!--                  From: "opacity-100"-->
-  <!--                  To: "opacity-0"-->
-  <!--              &ndash;&gt;-->
-  <!--              <div class="absolute left-0 top-0 -ml-8 flex pr-2 pt-4 sm:-ml-10 sm:pr-4">-->
-  <!--                <button type="button" @click="visible = false"-->
-  <!--                        class="rounded-md bg-indigo-600  text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white">-->
-  <!--                  <span class="sr-only">Close panel</span>-->
-  <!--                  <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"-->
-  <!--                       aria-hidden="true">-->
-  <!--                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>-->
-  <!--                  </svg>-->
-  <!--                </button>-->
-  <!--              </div>-->
-
-  <!--              <div class="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl">-->
-  <!--                <div class="px-4 sm:px-6">-->
-  <!--                  <h2 class="text-base font-semibold leading-6 text-gray-900" id="slide-over-title">Panel title</h2>-->
-  <!--                </div>-->
-  <!--                <div class="relative mt-6 flex-1 px-4 sm:px-6">-->
-  <!--                  &lt;!&ndash; Your content &ndash;&gt;-->
-  <!--                  <button-->
-  <!--                      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-all duration-500 ease-in-out">-->
-  <!--                    点击我-->
-  <!--                  </button>-->
-
-  <!--                </div>-->
-  <!--              </div>-->
-  <!--            </div>-->
-  <!--          </div>-->
-
-  <!--        </div>-->
-  <!--      </div>-->
-  <!--    </div>-->
-  <!--  </transition>-->
   <my-modal :visible="visible" @closeModal="visible=false">
-
     <div class="relative flex w-full items-center overflow-hidden bg-white  sm:px-2 sm:pt-2 p-3">
       <div class="grid w-full grid-cols-1 items-start gap-x-6 gap-y-6 sm:grid-cols-12 lg:gap-x-8">
         <div
@@ -169,11 +74,14 @@
                 </fieldset>
               </div>
 
-              <button type="submit"
-                      v-if="!hasKey(focusBadge)"
-                      class="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                购买徽章
-              </button>
+              <div
+                  @click="purchase(focusBadge)"
+                  :class="{
+                    'cursor-not-allowed opacity-50': focusBadge.badgeType === 1,
+                  }"
+                  class="mt-6 cursor-pointer flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                {{hasKey(focusBadge) ? '已拥有' : '购买'}}
+              </div>
             </form>
           </section>
         </div>
@@ -191,10 +99,12 @@
 import Badge from "@/components/pub/badge.vue";
 import MyModal from "@/components/pub/myModal.vue";
 import bgCover from "@/components/pub/bgCover.vue";
+import Account from "@/components/pub/account.vue";
+import MyCompostion from "@/components/pub/MyCompostion.vue";
 
 export default {
   name: "badgeShow",
-  components: {MyModal, Badge, bgCover},
+  components: {MyCompostion, Account, MyModal, Badge, bgCover},
   data() {
     return {
       lottie: null,
@@ -268,6 +178,10 @@ export default {
       })
     },
     purchase(badge) {
+      if(this.hasKey(badge)){
+        this.$st("已拥有","error")
+        return
+      }
       let badgeType = badge.badgeType
       let badgeId = badge.badgeId
       let url = badgeType === 0 ? `/badge/buy/${badgeId}` : `/badge/buy/limited/${badgeId}`
@@ -284,7 +198,10 @@ export default {
             this.$st(res.data.data, "error")
           }
         })
+      }else{
+        this.$st("暂未开放","error")
       }
+
 
     },
   }

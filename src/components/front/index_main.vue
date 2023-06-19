@@ -1,15 +1,15 @@
 <template>
-  <MyCompostion :slider="true">
+  <MyCompostion >
     <div ref="show" class="w-full lg:flex p-2 justify-center space-x-2 items-start z-10  " @wheel="scrollBottom">
 
       <div class="w-full min-w-full lg:my-0 ">
         <article-show :article-list="articleList"></article-show>
       </div>
     </div>
-    <template #slider>
-      <right-self></right-self>
-<!--      <copy-right></copy-right>-->
-    </template>
+<!--    <template #slider>-->
+<!--      <right-self></right-self>-->
+<!--&lt;!&ndash;      <copy-right></copy-right>&ndash;&gt;-->
+<!--    </template>-->
 
     <!--  <el-slider-->
     <!--      v-model="value"-->

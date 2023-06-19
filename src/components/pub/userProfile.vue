@@ -1,9 +1,10 @@
 <template>
-  <div :class="{
+  <div
+      :class="{
     'translate-x-full ': !visible,
     'translate-0': visible
-  }" class="z-50 u  z an cz ls text-left tw atb cfz ease-in-out transition duration-500">
-    <div class="v tk tz vr" id="headlessui-dialog-panel-11" data-headlessui-state="open">
+  }" class="z-50 u  z an cz lg:flex hidden text-left tw atb cfz ease-in-out transition duration-500">
+    <div class="v tz w-screen vr" id="headlessui-dialog-panel-11" data-headlessui-state="open">
       <div class="ls pc ym adf alj bbj">
         <div class="ard arz ces">
           <div class="ls ys za">

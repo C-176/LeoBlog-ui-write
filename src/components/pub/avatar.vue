@@ -1,6 +1,8 @@
 <template>
-  <div @click="showUser" class="cursor-pointer">
+  <div @click="showUser" class= "cursor-pointer">
+<!--    <div class="hidden lg:visible">-->
     <slot></slot>
+<!--  </div>-->
   </div>
 
 </template>

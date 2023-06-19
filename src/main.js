@@ -102,6 +102,56 @@ axios.interceptors.request.use(config => {
 
 app.config.globalProperties.$axios = axios
 
+app.config.globalProperties.$simpleFormat = (stamp) => {
+    let date = new Date(stamp)
+    let Y = date.getFullYear()
+    let M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1)
+    let D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate())
+    let h = (date.getHours() < 10 ? '0' + date.getHours() : date.getHours())
+    let m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
+    let s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
+    var result;
+    var time_diff = new Date().getTime() - date.getTime();
+    if (time_diff < 1000 * 60 * 60 * 24) {
+        // 计算相差小时数
+        var leave1 = time_diff % (24 * 3600 * 1000);    // 计算天数后剩余的毫秒数
+        var hours = Math.floor(leave1 / (3600 * 1000));
+        // 计算相差分钟数
+        var leave2 = leave1 % (3600 * 1000);        // 计算小时数后剩余的毫秒数
+        var minutes = Math.floor(leave2 / (60 * 1000));
+        // 计算相差秒数
+        var leave3 = leave2 % (60 * 1000);      // 计算分钟数后剩余的毫秒数
+        var seconds = Math.round(leave3 / 1000);
+        if (hours > 0) {
+            result = hours + '小时前'
+        } else if (minutes > 0) {
+            result = minutes + '分钟前'
+
+        } else if (seconds > 0) {
+            result = seconds + '秒前'
+        } else {
+            result = '刚刚'
+        }
+        return result
+    }
+    if (time_diff < 30 * 1000 * 60 * 60 * 24) {
+        // 计算相差天数
+        var days = Math.floor(time_diff / (24 * 3600 * 1000));
+        if (days === 1) {
+            result = '昨天'
+        }
+        if (days === 2) {
+            result = '前天'
+        }
+        if (days > 2) {
+            result = days + '天前'
+        }
+        return result
+    }
+    return Y + '-' + M + '-' + D
+
+
+}
 app.config.globalProperties.$moments = (stamp, format = '', short = false) => {
     let date = new Date(stamp)
     let Y = date.getFullYear()
