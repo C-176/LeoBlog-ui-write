@@ -156,23 +156,14 @@
                         {{ $store.state.user.userNickname }}
                       </div>
                       <hr>
-
-
-                      <!--                      <div @click="goto(item,$router)" v-for="item in pages" :key="item.name"-->
-                      <!--                           class="block px-4 py-2 transition duration-100 cursor-pointer rounded-xl text-md  hover:bg-indigo-600 hover:text-white dark:text-gray-100 dark:hover:text-white "-->
-                      <!--                           role="menuitem">-->
-                      <!--                        <div class="flex flex-col">-->
-                      <!--                          <div class="space-x-3 flex items-center group justify-start">-->
-                      <!--                            <icon :src="item.iconSrc" class1=""/>-->
-                      <!--                            <span>{{ item.name }}</span>-->
-                      <!--                          </div>-->
-                      <!--                        </div>-->
-                      <!--                      </div>-->
                       <div class="gs ">
                         <nav class="ls uh ym" aria-label="Sidebar">
                           <ul role="list" class="fv abj">
-                            <li><div @click="goto(item,$router)" v-for="item in pages" :key="item.name"
-                                   class="cursor-pointer axo blb bic bpw ls aaa adp aql ath avv awk awb">{{ item.name }}</div></li>
+                            <li>
+                              <div @click="goto(item,$router)" v-for="item in pages" :key="item.name"
+                                   class="cursor-pointer axo blb bic bpw ls aaa adp aql ath avv awk awb">{{ item.name }}
+                              </div>
+                            </li>
                           </ul>
                         </nav>
                       </div>
@@ -233,13 +224,6 @@
                       </a>
                     </div>
                   </template>
-                  <!--                  -->
-                  <!--                  <a v-for="item in tools" :key="item.name" @click="goto(item,$router)"-->
-                  <!--                     class=" flex items-center rounded-md py-0.5 hover:bg-gray-50">-->
-                  <!--                    &lt;!&ndash;                    <component :is="item.icon" class="h-6 w-6 flex-shrink-0 text-indigo-600" aria-hidden="true"/>&ndash;&gt;-->
-                  <!--                    <icon trigger="loop" :src="item.iconSrc"></icon>-->
-                  <!--                    <span class="ml-3 text-sm font-medium text-gray-900">{{ item.name }}</span>-->
-                  <!--                  </a>-->
                 </nav>
               </div>
             </div>
@@ -364,10 +348,10 @@ function registerAction() {
 }
 
 function goto(item, $router) {
-  this.openMenu = !this.openMenu
+
   item.href($router);
 
-
+  openMenu.value = !openMenu.value
   // // 模拟按下esc键
   //
   // setTimeout(() => {
