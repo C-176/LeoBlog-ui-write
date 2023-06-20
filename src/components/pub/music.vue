@@ -61,11 +61,11 @@
 
       <div class="flex flex-col sm:flex-row items-center p-1  justify-center">
 
-        <a-slider v-if="musicElement" id="test" class="relative w-full sm:w-1/2 lg:w-7/12 lg:w-4/6 "
+        <a-slider v-if="musicElement" id="test" class="relative w-full sm:w-1/2 lg:w-2/3 "
                   ref="seekbar" v-model:value="musicElement.currentTime" :step="0.5"
                   :tooltipVisible="false"
                   :max="musicElement.duration"/>
-        <a-slider v-else id="test" class="relative w-full sm:w-1/2 lg:w-7/12 lg:w-4/6 ml-2" value="0"
+        <a-slider v-else id="test" class="relative w-full sm:w-1/2  lg:w-2/3 ml-2" value="0"
                   ref="seekbar"/>
         <div class="flex justify-end w-full sm:w-auto pt-1 sm:pt-0">
             <span class="text-xs text-gray-700 uppercase font-medium pl-2">
@@ -78,8 +78,8 @@
 
       <div class="border-b pb-1 flex justify-between items-center mb-2">
         <span class=" text-base font-semibold uppercase text-gray-700"> 播放列表 </span>
-        <img class="w-4 cursor-pointer"
-             src="https://p.kindpng.com/picc/s/152-1529312_filter-ios-filter-icon-png-transparent-png.png"/>
+<!--        <img class="w-4 cursor-pointer"-->
+<!--             src="https://p.kindpng.com/picc/s/152-1529312_filter-ios-filter-icon-png-transparent-png.png"/>-->
       </div>
       <div class="overflow-x-hidden overflow-y-scroll">
         <div class="flex flex-col p-3 max-h-1/2 ">

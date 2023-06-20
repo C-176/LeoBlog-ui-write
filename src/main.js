@@ -148,7 +148,10 @@ app.config.globalProperties.$simpleFormat = (stamp) => {
         }
         return result
     }
-    return Y + '-' + M + '-' + D
+    if (time_diff < 365 * 1000 * 60 * 60 * 24) {
+        return Y + '-' + M + '-' + D
+    }
+    return "很久以前"
 
 
 }

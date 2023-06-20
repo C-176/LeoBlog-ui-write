@@ -56,7 +56,7 @@ export default {
       total: 30,
       defaultCurrentPage: 1,
       pageCount: 1,
-      hideOnSinglePage: false,
+      hideOnSinglePage: true,
 
     };
   },

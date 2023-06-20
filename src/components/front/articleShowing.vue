@@ -148,7 +148,12 @@
         </comment-template>
       </div>
     </div>
-    <shareModal @close="()=>{showShare=false}" :showShare="showShare"></shareModal>
+    <shareModal :class="{
+      'opacity-100 ': showShare,
+      'opacity-0 hidden': !showShare
+    }"
+                class="ease-in-out transition-all duration-500"
+        @close="()=>{showShare=false}" :showShare="showShare"></shareModal>
     <!--      <div-->
     <!--          class="hidden px-2 lg:px-1 my-3 w-full  mx-auto text-slate-700 dark:text-white-->
     <!--       flex flex-col items-center"-->
@@ -658,7 +663,7 @@ export default {
   border-radius: 10px;
   max-height: calc(100vh - 5rem);
   margin: 0 auto;
-  margin-bottom: 5px !important;
+  margin-bottom: 10px !important;
   margin-top: 5px !important;
   box-shadow: 1px 3px 11px #134857;
 

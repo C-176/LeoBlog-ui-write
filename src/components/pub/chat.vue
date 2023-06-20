@@ -48,7 +48,7 @@
                 <div class="font-bold hidden lg:flex w-full text-sm justify-between items-center">
                   <span class="text-sm group-hover:text-indigo-600">{{ chat.user.userNickname }}</span>
                   <span class="text-xs text-gray-400">
-                        {{ this.$moments(chat.record.recordUpdateTime, '', true) }}
+                        {{ this.$simpleFormat(chat.record.recordUpdateTime) }}
                       </span>
                 </div>
                 <div id="uId" style="display: none">{{ chat.user.userId }}</div>
@@ -75,7 +75,7 @@
         </div>
         <div id="chat" ref="chat"
              class="w-full h-2/3 bg-gray-100  rounded-xl p-3 overflow-auto"
-             @wheel.once="scrollRecord">
+             @wheel.capture="scrollRecord">
 
           <template v-for="(record,index) in talkTo.record" :key="index">
             <div v-if="timeDiff(index,index-1)"
@@ -86,8 +86,9 @@
 
             <template v-if="record.userId == $store.state.user.userId">
 
-              <div class="w-full transition duration-300 ease-in flex-1 text-right  mb-1 flex float-right justify-end space-x-0.5  items-start"
-                   :key="record.userId">
+              <div
+                  class="w-full transition duration-300 ease-in flex-1 text-right  mb-1 flex float-right justify-end space-x-0.5  items-start"
+                  :key="record.userId">
                 <div class="flex-col justify-start items-end space-y-0.5">
                   <!--                      <div class="text-xs text-right">{{ $store.state.user.userNickname }}</div>-->
                   <div
@@ -559,6 +560,9 @@ export default {
                 }
               }
               this.isSelected = isSelected
+              this.$nextTick(() => {
+                this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight
+              })
             }
 
 
