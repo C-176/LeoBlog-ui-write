@@ -1,6 +1,6 @@
 <template>
   <bread>个人信息</bread>
-  <MyCompostion>
+  <MyCompostion slider=true>
 
     <div class="w-full h-full lg:p-5 bg-gray-100 rounded-xl mx-auto ">
       <template v-if="loading">
@@ -180,6 +180,10 @@
                 @cancel="showCanvas = false;this.$store.commit('changeBgCover',false)"
                 @getImg="url => getImg(url)">
     </canvas-pic>
+
+    <template #slider>
+      <activity></activity>
+    </template>
   </MyCompostion>
 
 </template>
@@ -190,10 +194,12 @@ import {UserOutlined} from '@ant-design/icons-vue';
 import canvasPic from "@/components/pub/canvasPic.vue";
 import MyCompostion from "@/components/pub/MyCompostion.vue";
 import {isEqual} from 'lodash'
+import Activity from "@/components/pub/activity.vue";
 
 export default {
   name: 'info',
   components: {
+    Activity,
     MyCompostion,
     Plus,
     UserOutlined,

@@ -3,15 +3,15 @@
   <div
       class="w-1/4 text-left bg-gray-50 p-3 invisible lg:visible overscroll-contain overflow-y-auto h-screen rounded-xl pb-20 fixed flex-col justify-start items-center space-y-2">
 
-    <div class="flex justify-between items-center text-left ">
+    <div class="flex justify-between items-center text-xl italic text-left ">
       <div>
-        <span class="text-gray-400">目录</span>
+        <span class="text-gray-500">目录</span>
       </div>
       <div class="w-2/3">
         <!--      // 增加一条进度条-->
-        <div class="duration-1000 border-b-2 border-indigo-600 transition-all"
+        <div class="duration-1000 border-b-4 border-indigo-600 transition-all"
              :class="{
-        'w-0':progress==0,
+        'w-0':progress===0,
         'w-1/4':progress>0&&progress<25,
         'w-1/2':progress>=25&&progress<50,
         'w-3/4':progress>=50&&progress<75,
@@ -26,12 +26,12 @@
           v-for="title in titles"
           :key="title.id"
           @click="scrollToView(title.scrollTop+180)"
-          :class="{'text-indigo-600 bg-white':
+          :class="{'text-indigo-600 font-bold bg-white':
                     currentTitle.id == title.id }"
           :style="{ marginLeft: title.level * 20 + 'px' }"
           v-show="title.isVisible"
           :title="title.rawName"
-          class="cursor-pointer transition duration-300 text-gray-400 hover:text-indigo-600 hover:font-bold rounded-xl hover:bg-white p-1"
+          class="cursor-pointer transition duration-300  hover:text-indigo-600 hover:font-bold rounded-xl hover:bg-white p-1"
       >
         {{ title.name }}
       </div>

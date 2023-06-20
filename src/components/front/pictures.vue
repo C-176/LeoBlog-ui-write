@@ -1,17 +1,21 @@
 <template>
   <bread>图片</bread>
-
-  <div class="w-full h-full">
-    <img class="pic w-full lg:h-screen h-1/2 bg-cover my-0.5 rounded-xl" src="" v-for="(pic,index) in pics" :style="{backgroundImage:'url('+pic+')'}" loading="lazy" alt="">
-    <img class="pic w-full lg:hidden  bg-cover " :src="pic" v-for="(pic,index) in pics" loading="lazy" alt="">
-  </div>
-  <a-divider orientation="center" style="color: #859c9c">到底了</a-divider>
-  <a-back-top/>
+  <MyCompostion>
+    <div class="w-full h-full">
+      <img class="pic w-full lg:h-screen h-1/2 bg-cover my-0.5 rounded-xl" src="" v-for="(pic,index) in pics"
+           :style="{backgroundImage:'url('+pic+')'}" loading="lazy" alt="">
+      <img class="pic w-full lg:hidden  bg-cover " :src="pic" v-for="(pic,index) in pics" loading="lazy" alt="">
+    </div>
+    <a-divider orientation="center" style="color: #859c9c">到底了</a-divider>
+  </MyCompostion>
 </template>
 
 <script>
+import MyCompostion from "@/components/pub/MyCompostion.vue";
+
 export default {
   name: "pictures",
+  components: {MyCompostion},
   data() {
     return {
       pics: [],
@@ -60,7 +64,6 @@ export default {
     },
 
   },
-
 
 
 }

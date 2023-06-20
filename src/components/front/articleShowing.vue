@@ -17,7 +17,8 @@
              :src="p(article.articlePic)"/>
         <div class="p-5 bg-gray-100 rounded-xl">
           <div class="text-xl lg:text-xl text-left h-auto w-full font-bold my-0.5">{{
-              article.articleTitle.replaceAll('<p>','').replaceAll('</p>','')}}
+              article.articleTitle
+            }}
           </div>
           <div class="w-full h-auto">
             <div class="text-left">
@@ -28,18 +29,20 @@
             </div>
           </div>
           <div class="w-full flex items-center space-x-2 h-16">
-            <user :user="article.user">
-              <!--          <img class="left" :src="p(article.user.userProfilePhoto)"/>-->
+            <!--            <user :user="article.user">-->
+            <!--          <img class="left" :src="p(article.user.userProfilePhoto)"/>-->
+            <avatar :user-id="article.userId">
               <a-avatar
                   :src="p(article.user.userProfilePhoto)"
                   :style="{ backgroundColor: '#067061'  ,verticalAlign: 'middle'}"
-                  class="left h-16 w-16 rounded-full"
+                  class="left  rounded-full "
                   shape="circle"
                   size="small"
               >
                 {{ article.user.userNickname }}
               </a-avatar>
-            </user>
+            </avatar>
+            <!--            </user>-->
             <div class="flex-col items-start space-x-0 justify-center text-left">
               <div class="text-sm font-bold">{{ article.user.userNickname }}</div>
               <div class="text-xs">{{ article.user.userCertification }}</div>
@@ -77,28 +80,64 @@
             </div>
           </template>
           <!--      </el-affix>-->
-          <transition name="fade">
-            <div v-if="showComment " class="relative w-full h-28 text-right">
-            <textarea v-model="commentIn"
-                      class="bg-white border-2 border-gray-200 w-full h-full rounded-xl resize-none outline-0 p-2"
-                      placeholder="请输入内容... | Enter键发送"
-                      @keyup.enter="saveComment(-1)">
-            </textarea>
+          <!--          <transition name="fade">-->
+          <!--            <div v-if="showComment " class="relative w-full h-28 text-right">-->
+          <!--            <textarea v-model="commentIn"-->
+          <!--                      class="bg-white border-2 border-gray-200 w-full h-full rounded-xl resize-none outline-0 p-2"-->
+          <!--                      placeholder="请输入内容... | Enter键发送"-->
+          <!--                      v-model="commentIn"@keyup.enter="saveComment(-1)">-->
+          <!--            </textarea>-->
 
 
-              <div class="absolute bottom-1 right-1 space-x-1 flex justify-around items-center">
-                <button class="  button p-1  "
-                        @click="saveComment(-1,article.user.userId)">
-                  发送
-                </button>
-                <button class=" p-1  button"
-                        @click="showComment =false">
-                  取消
-                </button>
+          <!--              <div class="absolute bottom-1 right-1 space-x-1 flex justify-around items-center">-->
+          <!--                <button class="  button p-1  "-->
+          <!--                        @click="saveComment(-1,article.user.userId)">-->
+          <!--                  发送-->
+          <!--                </button>-->
+          <!--                <button class=" p-1  button"-->
+          <!--                        @click="showComment =false">-->
+          <!--                  取消-->
+          <!--                </button>-->
+          <!--              </div>-->
+          <!--            </div>-->
+
+          <!--          </transition>-->
+          <div
+               :class="{
+            'opacity-100 h-auto': showComment,
+            'opacity-0 h-0': !showComment
+               }"
+               class="gs ti uf w-full flex justify-start transition duration-500">
+            <div class="w-full ls ys abe mt-2">
+              <div class="uk">
+                <img class="lq nc re adn border border-indigo-600"
+
+                     :src="$store.state.user.userProfilePhoto"
+                                   alt=""></div>
+              <div class="tl uh">
+                <div  class="ab">
+                  <div class="focus-within:bg-white adb ado bbi bbo bbs bca bgu bgz"><label for="comment" class="t">Add your
+                    comment</label>
+                    <textarea v-model="commentIn"
+                              @keyup.enter.stop="saveComment(-1)"
+                        rows="3" name="comment" id="comment"
+                                             class=" lp ti xo aev alh arl axq bfy bmx cht chv"
+                                             placeholder="添加评论..."></textarea>
+                    <div class="arq" aria-hidden="true">
+                      <div class="asb">
+                        <div class="od"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="aa aj bx ls za arq ath flex justify-end atv">
+                      <button  @click="saveComment(-1,article.user.userId)"
+                          class="lt yu adp ajm ara arq avv awb bac bbi bin bot bou bow bpf">发送
+                      </button>
+                  </div>
+                </div>
               </div>
             </div>
-
-          </transition>
+          </div>
         </div>
 
       </template>
@@ -106,11 +145,15 @@
       <div id="comment">
         <comment-template v-if="article.isArticle === 1"
                           :comments="comments" :method="getComments">
-
         </comment-template>
       </div>
     </div>
-    <shareModal @close="()=>{showShare=false}" :showShare="showShare"></shareModal>
+    <shareModal :class="{
+      'opacity-100 ': showShare,
+      'opacity-0 hidden': !showShare
+    }"
+                class="ease-in-out transition-all duration-500"
+        @close="()=>{showShare=false}" :showShare="showShare"></shareModal>
     <!--      <div-->
     <!--          class="hidden px-2 lg:px-1 my-3 w-full  mx-auto text-slate-700 dark:text-white-->
     <!--       flex flex-col items-center"-->
@@ -233,23 +276,24 @@
     <!--        </div>-->
     <!--      </div>-->
 
-    <div class="gs tv ard ces dcx">
+    <div class="gs tv px-1">
       <div class="gs tq csw cxc">
         <div class="ls yu za">
-          <h2 class="avt awb awl axq">最新文章</h2>
-          <!--          <a href="#" class="avv awb awk ayc bla">View-->
-          <!--            all<span class="t">, clients</span></a>-->
+          <a-divider orientation="center">最新文章</a-divider>
         </div>
+        <a @click="$router.push('/home/article')" class="avv awb awk ayc bla">查看全部</a>
         <ul role="list" class="lf lw yb aar cyi space-x-1">
           <li class="adb ads aeu afp hover:shadow-xl duration-300 transition" v-for="(a1,index) in articleList"
               :id="a1.articleId">
             <div class="ls yu aab afa afx ail aqq bg-auto box "
                  :style="{'background-image':'url('+a1.articlePic+')'}"
             >
-              <img :src="userList[index].userProfilePhoto"
-                   @click="$router.push('/user/'+userList[index].userId)"
-                   alt="Tuple"
-                   class="ne rg uj ado alj apz bbo bcj">
+              <avatar :user-id="userList[index].userId">
+                <!--                     @click="$router.push('/user/'+userList[index].userId)"-->
+                <img :src="userList[index].userProfilePhoto"
+
+                     alt="Tuple"
+                     class="ne rg uj ado alj apz bbo bcj"></avatar>
               <div class="avv avz awk axq">{{ userList[index].userNickname }}</div>
             </div>
             <dl class="gh abx aca arf arx avv awk text-left cursor-pointer"
@@ -388,7 +432,6 @@ export default {
     this.$axios.get(this.baseURL + "/article/" + this.$route.params.articleId).then((res) => {
       if (res.data.code === 200) {
         this.article = res.data.data
-        this.article.user = JSON.parse(this.article.user)
         //将articleUpdateDate转换为yyyy-MM-dd HH:mm:ss格式
         this.article.articleUpdateDate = this.$moments(this.article.articleUpdateDate)
       }
@@ -437,21 +480,24 @@ export default {
     getArticlesDefault() {
       this.$axios.get('/article/list/1/20').then((res) => {
         let map = res.data.data
-        this.articleList = map.records
-        this.articleList = this.articleList.filter(x => x.articleId !== this.article.articleId)
+        var articleList = map.records
+        articleList = articleList.filter(x => x.articleId !== this.article.articleId)
         // 在articleList中随机取出三个元素
-        this.articleList = this.articleList.sort(() => {
+        articleList = articleList.sort(() => {
           return 0.5 - Math.random()
         })
-        this.articleList = this.articleList.slice(0, 3)
-        for (let i = 0; i < this.articleList.length; i++) {
-          this.$store.dispatch('getUserById', this.articleList[i].userId).then((res) => {
+        articleList = articleList.slice(0, 3)
+        for (let i = 0; i < articleList.length; i++) {
+          this.$store.dispatch('getUserById', articleList[i].userId).then((res) => {
             this.userList.push(res)
           })
         }
-        console.log(this.userList)
-        // console.log(this.articleList)
-        this.article1 = this.articleList[this.otherIndex]
+        setTimeout(() => {
+          this.articleList = articleList
+        }, 1000)
+
+
+        // this.article1 = this.articleList[this.otherIndex]
         // console.log(this.articleList)
       })
     },
@@ -606,10 +652,6 @@ export default {
 </script>
 
 <style scoped>
-.box {
-  background: var(--background)
-}
-
 :deep(video) {
   width: 80%;
   margin-left: 10%;
@@ -621,7 +663,7 @@ export default {
   border-radius: 10px;
   max-height: calc(100vh - 5rem);
   margin: 0 auto;
-  margin-bottom: 5px !important;
+  margin-bottom: 10px !important;
   margin-top: 5px !important;
   box-shadow: 1px 3px 11px #134857;
 

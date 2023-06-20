@@ -62,7 +62,6 @@ export default {
     components: {DialogPanel, TransitionChild, TransitionRoot, Dialog},
     watch: {
         visible(val,oldVal){
-          console.log(val)
             if (val) {
                 this.$store.commit('changeBgCover', true)
             }

@@ -11,6 +11,8 @@ const store = createStore({
                 shell: false,
                 mode: 'light',
                 addChat: -1,
+                userProfileId: -1,
+                userProfileVisible: false,
                 socket: null,
                 valueTitle: storage.get("valueTitle"),
                 valueContent: storage.get("valueContent"),

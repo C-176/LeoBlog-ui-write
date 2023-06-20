@@ -1,6 +1,7 @@
 <template>
   <div ref="h" class="w-full fixed inset-0 h-12 z-20 text-left">
     <Popover class="bg-white relative">
+
       <div class="mx-auto max-w-8xl px-2 sm:px-2">
         <div class="flex items-center justify-between  border-b-2 border-gray-100 py-1 lg:justify-start ">
           <!--          小屏三横线-->
@@ -17,74 +18,26 @@
             <span class="sr-only">LeoBlog</span>
             <img @click="$router.push('/index')"
                  class="h-full scale-140 transition duration-500 cursor-pointer w-auto sm:h-10"
-                 src="http://49.235.100.240/api/source/images/logoTest.png"
+                 :src="app.config.globalProperties.baseURL+'/source/images/logoTest.png'"
                  alt=""/>
 
 
           </div>
 
-          <Menu as="div" v-if="logined"
-                class="lg:hidden z-10 space-x-2  inline-flex justify-center items-center text-left ">
 
-            <button class="rounded-xl z-20 text-white  text-center "
-                    @click="openMusic">
-              <icon src="wayquqmn"></icon>
-            </button>
+          <!--          <div-->
+          <!--               class="flex justify-around space-x-1 inline-block lg:hidden lg:w-0 mr-4 lg:flex-1">-->
 
-            <button type="button" @click="$store.commit('changeMessageVisible',!$store.state.messageVisible)"
-                    class="flex items-center rounded-full  p-1 text-gray-400 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
-              <icon src="psnhyobz" size="22"></icon>
-            </button>
-
-            <button type="button" @click="$store.commit('changeChatVisible',!$store.state.chatVisible)"
-                    class="flex items-center rounded-full   p-1 text-gray-400   focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
-              <icon src="mjmrmyzg" size="22"></icon>
-            </button>
-            <div class="relative inline-block text-left">
-              <div
-                  class="flex items-center justify-center p-0.5 cursor-pointer   border-indigo-600 border-2  rounded-full">
-
-                <img :src="user.userProfilePhoto" id="options-menu" @click="openMenu = !openMenu"
-                     class="w-8 h-8 rounded-full">
-              </div>
-              <div v-show="openMenu"
-                   class="absolute p-2 right-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
-                <div class="py-1 " role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                  <div
-                      class="block text-gray-600  text-center px-4 py-0 transition duration-100 rounded-xl text-sm   "
-                  >
-                    {{ $store.state.user.userNickname }}
-                  </div>
-                  <hr>
-                  <a @click="goto(item,$router)" v-for="item in pages" :key="item.name"
-                     class="block  px-4 py-2 cursor-pointer rounded-xl text-md text-gray-700 hover:bg-indigo-600 hover:text-white dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
-                     role="menuitem">
-                    <div class="flex flex-col">
-                      <div class=" flex items-center justify-start space-x-3">
-                        <icon :src="item.iconSrc" trigger="loop"></icon>
-                        <span>{{ item.name }}</span>
-
-                      </div>
-                    </div>
-                  </a>
-
-                </div>
-              </div>
-            </div>
-          </Menu>
-          <div v-else
-               class="flex justify-around space-x-1 inline-block lg:hidden lg:w-0 mr-4 lg:flex-1">
-
-            <a @click="$router.push('/index')">
-              <span class="sr-only">LeoBlog</span>
-              <img class="h-10 scale-140  w-auto sm:h-10" src="http://49.235.100.240/api/source/images/logoTest.png"
-                   alt=""/>
-            </a>
-            <!--            <button @click="openSearch = !openSearch"-->
-            <!--                    class="inline-flex items-center justify-center rounded-md bg-gray-100 align-center p-2 text-xs font-medium text-gray-500 hover:bg-gray-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"-->
-            <!--            >Ctrl+K 搜索-->
-            <!--            </button>-->
-          </div>
+          <!--            <a @click="$router.push('/index')">-->
+          <!--              <span class="sr-only">LeoBlog</span>-->
+          <!--              <img class="h-10 scale-140  w-auto sm:h-10" src="http://49.235.100.240/api/source/images/logoTest.png"-->
+          <!--                   alt=""/>-->
+          <!--            </a>-->
+          <!--            &lt;!&ndash;            <button @click="openSearch = !openSearch"&ndash;&gt;-->
+          <!--            &lt;!&ndash;                    class="inline-flex items-center justify-center rounded-md bg-gray-100 align-center p-2 text-xs font-medium text-gray-500 hover:bg-gray-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"&ndash;&gt;-->
+          <!--            &lt;!&ndash;            >Ctrl+K 搜索&ndash;&gt;-->
+          <!--            &lt;!&ndash;            </button>&ndash;&gt;-->
+          <!--          </div>-->
           <!--          大屏中间导航栏-->
           <PopoverGroup as="nav" class="hidden space-x-10 lg:flex items-center">
             <Popover class="relative" v-slot="{ open }" v-for="nav in navList">
@@ -119,18 +72,17 @@
               </transition>
             </Popover>
           </PopoverGroup>
-
           <!--          大屏右侧登陆注册-->
-          <div class="hidden items-center justify-end lg:flex lg:flex-1 lg:w-0 space-x-2">
+          <div class=" items-center justify-end flex flex-1 w-0 space-x-2 z-20">
 
             <a-tooltip id="close" title="音乐">
-              <button class="rounded-xl z-20 text-white h-8 w-8 text-center "
+              <button class="rounded-xl  text-white h-8 w-8 text-center "
                       @click="openMusic">
                 <icon src="wayquqmn"></icon>
               </button>
             </a-tooltip>
             <button @click="openSearch = !openSearch"
-                    class="hidden lg:inline-flex   justify-center rounded-md bg-gray-100  px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                    class="inline-flex   justify-center rounded-md bg-gray-100  px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-300 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
             >Ctrl+K 搜索
             </button>
 
@@ -144,14 +96,24 @@
             <template v-else>
 
 
-              <!--          大屏菜单options-->
+              <!--          options-->
               <Menu as="div" v-if="logined"
-                    class="z-10 space-x-2  inline-flex justify-center items-center text-left ">
+                    class="z-20 space-x-2  inline-flex justify-center items-center text-left ">
 
-                <button type="button" @click="$store.commit('changeMessageVisible',!$store.state.messageVisible)"
-                        class="rounded-full duration-500  p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
-                  <icon src="psnhyobz" size="24"></icon>
-                </button>
+                <div class="js lv avv cpv" data-headlessui-state="open">
+                  <button type="button" @click="$store.commit('changeMessageVisible',!$store.state.messageVisible)"
+                          class=" bpw fn ls yu aql ">
+                    <icon src="psnhyobz" size="22"></icon>
+                  </button>
+                  <div :class="{
+                        '-translate-y-full invisible': !open,
+                        'translate-0 ': open
+                      }"
+                       class="duration-500 py-2 translate ease-in-out  bg-white transition aa aj dm ll bbg cen cqq cqr crf ctf cuf cwk daw dfx dfy dga "
+                       id="headlessui-popover-panel-15" tabindex="-1" data-headlessui-state="open">
+                    <message></message>
+                  </div>
+                </div>
 
                 <!--                <a-badge :count="$store.state.chatPoint">-->
 
@@ -170,13 +132,20 @@
                   <div
                       class="flex items-center justify-center p-0.5 cursor-pointer   border-indigo-600 border-2  rounded-full">
 
-                    <img :src="p(user.userProfilePhoto)" id="options-menu" @mouseover="openMenu = true"
-                         @click="openMenu = !openMenu" @mouseleave="closeMenu"
+                    <img :src="p(user.userProfilePhoto)" id="options-menu"
+                         @click="openMenu = !openMenu"
                          class="w-8 h-8 rounded-full">
                   </div>
-                  <div v-show="openMenu"
-                       @mouseover="openMenuItem = true" @mouseleave="closeMenuItem"
-                       class="absolute transition duration-500 p-2 right-0 w-56 mt-2 origin-top-right
+                  <!--                  @mouseover="openMenuItem = true" @mouseleave="closeMenuItem"-->
+                  <div
+                      :class="{
+
+                    'translate-y-0 opacity-100': openMenu,
+                    '-translate-y-full invisible': !openMenu
+                       }"
+
+
+                      class="absolute ease-in-out transition duration-500 p-2 right-0 w-56 mt-2 origin-top-right
                        bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
                     <div class="py-1  transition duration-500 " role="menu" aria-orientation="vertical"
                          aria-labelledby="options-menu">
@@ -187,17 +156,16 @@
                         {{ $store.state.user.userNickname }}
                       </div>
                       <hr>
-
-
-                      <div @click="goto(item,$router)" v-for="item in pages" :key="item.name"
-                           class="block px-4 py-2 transition duration-100 cursor-pointer rounded-xl text-md  hover:bg-indigo-600 hover:text-white dark:text-gray-100 dark:hover:text-white "
-                           role="menuitem">
-                        <div class="flex flex-col">
-                          <div class="space-x-3 flex items-center group justify-start">
-                            <icon :src="item.iconSrc" class1=""/>
-                            <span>{{ item.name }}</span>
-                          </div>
-                        </div>
+                      <div class="gs ">
+                        <nav class="ls uh ym" aria-label="Sidebar">
+                          <ul role="list" class="fv abj">
+                            <li>
+                              <div @click="goto(item,$router)" v-for="item in pages" :key="item.name"
+                                   class="cursor-pointer axo blb bic bpw ls aaa adp aql ath avv awk awb">{{ item.name }}
+                              </div>
+                            </li>
+                          </ul>
+                        </nav>
                       </div>
 
                     </div>
@@ -212,6 +180,8 @@
 
             </template>
           </div>
+
+
         </div>
       </div>
 
@@ -229,7 +199,7 @@
                 <!--logo-->
                 <div>
                   <img @click="$router.push('/index')" class="cursor-pointer h-10 pl-1 animate-bounce scale-140 w-auto"
-                       src="http://49.235.100.240/api/source/images/logoTest.png"
+                       :src="app.config.globalProperties.baseURL+'/source/images/logoTest.png'"
                        alt="LeoBlog"/>
                 </div>
                 <!--                小屏关闭选项卡按钮-->
@@ -254,13 +224,6 @@
                       </a>
                     </div>
                   </template>
-                  <!--                  -->
-                  <!--                  <a v-for="item in tools" :key="item.name" @click="goto(item,$router)"-->
-                  <!--                     class=" flex items-center rounded-md py-0.5 hover:bg-gray-50">-->
-                  <!--                    &lt;!&ndash;                    <component :is="item.icon" class="h-6 w-6 flex-shrink-0 text-indigo-600" aria-hidden="true"/>&ndash;&gt;-->
-                  <!--                    <icon trigger="loop" :src="item.iconSrc"></icon>-->
-                  <!--                    <span class="ml-3 text-sm font-medium text-gray-900">{{ item.name }}</span>-->
-                  <!--                  </a>-->
                 </nav>
               </div>
             </div>
@@ -292,12 +255,15 @@
   </div>
   <music/>
   <chat v-if="logined"></chat>
-  <message v-if="logined"></message>
+  <!--  <message v-if="logined"></message>-->
+  <userProfile/>
   <bgCover
       @quit="quit($store)"
-      :showCover="$store.state.chatVisible || $store.state.messageVisible || $store.state.bgCover || $store.state.musicVisible || openSearch"
+      :showCover="$store.state.chatVisible  || $store.state.bgCover || $store.state.musicVisible || openSearch"
   />
   <search-dialog :is-open="openSearch" @closeSearch="() => {openSearch=false}"></search-dialog>
+
+
 </template>
 
 <script setup>
@@ -305,6 +271,7 @@ import chat from "@/components/pub/chat";
 import message from "@/components/pub/message";
 import searchDialog from '@/components/pub/searchDialog'
 import bgCover from "@/components/pub/bgCover";
+import userProfile from "@/components/pub/userProfile";
 
 import {
   Menu,
@@ -340,6 +307,7 @@ import {useRouter} from 'vue-router'
 import SearchDialog from "@/components/pub/searchDialog";
 import music from "@/components/pub/music";
 import Message from "@/components/pub/message.vue";
+import app from "@/main";
 
 const router = useRouter()
 let openSearch = ref(false)
@@ -380,15 +348,15 @@ function registerAction() {
 }
 
 function goto(item, $router) {
+  openMenu.value = false
   item.href($router);
-
-  // 模拟按下esc键
-
-  setTimeout(() => {
-    var e = new KeyboardEvent('keydown', {'keyCode': 27, 'which': 27});
-    document.dispatchEvent(e);
-
-  }, 500)
+  // // 模拟按下esc键
+  //
+  // setTimeout(() => {
+  //   var e = new KeyboardEvent('keydown', {'keyCode': 27, 'which': 27});
+  //   document.dispatchEvent(e);
+  //
+  // }, 500)
 
 }
 
@@ -576,5 +544,10 @@ const navList = ref([{name: '文章', list: article},
   {name: '关于', list: about},
   {name: '工具', list: tools},
   {name: '商城', list: goods}])
+
+// 一个计算属性 ref
+const open = computed(() => {
+  return store.state.messageVisible
+})
 
 </script>

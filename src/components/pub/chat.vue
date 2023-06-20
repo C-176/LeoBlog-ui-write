@@ -27,23 +27,19 @@
               <a-badge :count="redPoint[index]" size="small"
                        style="float: left;line-height: 100%">
                 <div class="h-full w-full  lg:w-10 lg:h-10 text1-center rounded-full ">
-                  <user :user-id="chat.user.userId" :visible='showUserCard' :showUserId="showUserId">
-                    <a class="relative block"
-                       @mouseover="()=>{
-                         showUserCard = true
-                         showUserId=chat.user.userId
-                       }" @mouseleave="()=>{
-                         showUserCard = false
-                          showUserId=-2
-                       }">
-                      <img alt="profile" :src="p(chat.user.userProfilePhoto)"
-                           class="mx-auto object-cover rounded-full h-10 w-10 "/>
-                      <span
-                          class="absolute w-3 h-3 transform -translate-x-1/2  border-2 border-white rounded-full left-1/2 -bottom-2"
-                          :class="{'bg-gray-500':chat.user.userStatus==0,'bg-green-500':chat.user.userStatus==1}">
+                  <avatar :user-id="chat.user.userId">
+                    <user :user-id="chat.user.userId" :visible='showUserCard' :showUserId="showUserId">
+
+                      <a class="relative block">
+                        <img alt="profile" :src="p(chat.user.userProfilePhoto)"
+                             class="mx-auto object-cover rounded-full h-10 w-10 "/>
+                        <span
+                            class="absolute w-3 h-3 transform -translate-x-1/2  border-2 border-white rounded-full left-1/2 -bottom-2"
+                            :class="{'bg-gray-500':chat.user.userStatus==0,'bg-green-500':chat.user.userStatus==1}">
                         </span>
-                    </a>
-                  </user>
+                      </a>
+                    </user>
+                  </avatar>
                 </div>
 
               </a-badge>
@@ -52,7 +48,7 @@
                 <div class="font-bold hidden lg:flex w-full text-sm justify-between items-center">
                   <span class="text-sm group-hover:text-indigo-600">{{ chat.user.userNickname }}</span>
                   <span class="text-xs text-gray-400">
-                        {{ this.$moments(chat.record.recordUpdateTime, '', true) }}
+                        {{ this.$simpleFormat(chat.record.recordUpdateTime) }}
                       </span>
                 </div>
                 <div id="uId" style="display: none">{{ chat.user.userId }}</div>
@@ -79,17 +75,20 @@
         </div>
         <div id="chat" ref="chat"
              class="w-full h-2/3 bg-gray-100  rounded-xl p-3 overflow-auto"
-             @wheel.once="scrollRecord">
+             @wheel.capture="scrollRecord">
+
           <template v-for="(record,index) in talkTo.record" :key="index">
             <div v-if="timeDiff(index,index-1)"
                  class=" w-full h-auto my-1 text-center text-gray-400 text-sm"
                  id="updateTime">
               {{ this.$moments(record.recordUpdateTime) }}
             </div>
+
             <template v-if="record.userId == $store.state.user.userId">
 
-              <div class="w-full flex-1 text-right  mb-1 flex float-right justify-end space-x-0.5  items-start"
-                   :key="record.userId">
+              <div
+                  class="w-full transition duration-300 ease-in flex-1 text-right  mb-1 flex float-right justify-end space-x-0.5  items-start"
+                  :key="record.userId">
                 <div class="flex-col justify-start items-end space-y-0.5">
                   <!--                      <div class="text-xs text-right">{{ $store.state.user.userNickname }}</div>-->
                   <div
@@ -210,6 +209,7 @@ import ctrlEnterModule from '@wangeditor/plugin-ctrl-enter'
 import {mapState} from "vuex";
 import bigImg from "@/components/pub/bigImg";
 import {SlateTransforms} from '@wangeditor/editor'
+import app from "@/main";
 
 // Boot.use(ctrlEnterModule)
 export default {
@@ -504,33 +504,48 @@ export default {
 
 
     getUsers() {
-      this.getChatList(this.$store.state.user.userId)
+      // this.getChatList(this.$store.state.user.userId)
       this.$axios.get(this.baseURL + '/chat/list/' + this.$store.state.user.userId).then(res => {
         if (res.data.code === 200) {
-          // if (res.data.data == "暂无聊天对象") {
-          //     this.$st("暂无聊天对象，快去找人聊天吧", "info");
-          // } else {
           this.chats = res.data.data;
           this.chats.forEach(chat => {
             if (chat.record == null) {
               chat.record = {
                 userId: -1,
                 receiverId: -1,
-                recordContent: '暂无消息记录',
+                recordContent: '暂无消息记录，去找Ryker小助手聊聊吧！',
                 recordUpdateTime: new Date().getTime(),
               }
             }
           })
           // console.log(this.chats)
-          if (this.chats.length === 1) {
-            this.chats[1].record = {
-              userId: this.chats[0].user.userId,
-              receiverId: this.chats[0].user.userId,
-              recordContent: 'hello',
-              recordUpdateTime: '2021-05-01 12:00:00',
-            }
-          }
+          // TODO:这一段干啥的。。。
+          // if (this.chats.length === 1) {
+          //   this.chats[1].record = {
+          //     userId: this.chats[0].user.userId,
+          //     receiverId: this.chats[0].user.userId,
+          //     recordContent: 'hello',
+          //     recordUpdateTime: '2021-05-01 12:00:00',
+          //   }
           // }
+          // }
+          var Ryker = [
+            {
+              user: {
+                userId: 1,
+                userNickname: 'Ryker小助手',
+                userProfilePhoto: `${app.config.globalProperties.baseURL}/source/images/favicon.ico`,
+                userStatus: 1,
+              },
+              record: {
+                userId: 0,
+                receiverId: 0,
+                recordContent: '我是Ryker，有什么问题可以问我哦！',
+                recordUpdateTime: new Date().getTime(),
+              }
+            }
+          ]
+          this.chats = Ryker.concat(this.chats)
           this.saveChatList(this.$store.state.user.userId, this.chats)
 
           this.$nextTick(() => {
@@ -545,6 +560,9 @@ export default {
                 }
               }
               this.isSelected = isSelected
+              this.$nextTick(() => {
+                this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight
+              })
             }
 
 

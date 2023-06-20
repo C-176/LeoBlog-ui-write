@@ -15,7 +15,10 @@
            class="w-full overflow-hidden bg-gray-100 space-y-2  py-2 px-3 lg:px-5 rounded-xl mb-2">
 
         <div v-if="!mySelf" class="text-left flex justify-start items-center space-x-1">
-          <img class="h-10 w-10 rounded-full" :src="article.author.userProfilePhoto"/>
+          <avatar :user-id="article.userId">
+            <img class="h-10 w-10 rounded-full "
+                 :src="article.author.userProfilePhoto"/>
+          </avatar>
 
           <div class="h-full flex-col justify-around items-start">
             <div class="text-xs  lg:text-sm font-medium  " @click="$router.push('/user/'+article.userId)">
@@ -25,11 +28,11 @@
             <div class="text-gray-500 text-xs">{{ $moments(article.articleUpdateDate) }}</div>
           </div>
         </div>
-        <div class="text-left lg:text-base font-bold text-sm "
+        <div class="text-left lg:text-base font-bold text-sm cursor-pointer group"
+             @click="$router.push('/article/'+article.articleId)"
              :title="article.articleTitle">
-          <router-link :to="'/article/'+article.articleId">
-            {{ article.articleTitle }}
-          </router-link>
+          <span class="group-hover:text-gray-500 lg:group-hover:text-xl duration-300 transition-all">
+          {{ article.articleTitle }}</span>
         </div>
         <div class="h-auto max-h-20 lg:max-h-40 group w-full lg:space-x-3 flex justify-start  overflow-hidden ">
           <div v-if="article.articlePic!='' && article.articlePic!=null"
@@ -46,12 +49,13 @@
             />
           </div>
           <div
-              class=" content p-2 rounded-xl group-hover:bg-gray-50 transition duration-500
+              @click="$router.push('/article/'+article.articleId)"
+              class=" content p-2 rounded-xl group-hover:bg-white transition duration-500
                text-left text-gray-600 font-medium leading:6 lg:leading-7   truncate  text-xs lg:text-sm
                justify-items-start  float-left w-full "
               :class="{'lg:w-3/4':article.articlePic!='' && article.articlePic!=null}"
           >
-              <span class="hover:cursor-pointer" @click="$router.push('/article/'+article.articleId)"
+              <span class="hover:cursor-pointer"
                     v-html="article.articleContent"></span>
           </div>
         </div>
@@ -85,9 +89,12 @@
 
 <script>
 
+import Avatar from "@/components/pub/avatar.vue";
+
 export default {
 
   name: 'articleShow',
+  components: {Avatar},
   props: {
     articleList: {
       type: Array,

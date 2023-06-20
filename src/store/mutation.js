@@ -67,6 +67,12 @@ const mutations = {
     changeAddChat(state, addChat) {
         state.addChat = addChat
     },
+    changeUserProfileId(state, userProfileId) {
+        state.userProfileId = userProfileId
+    },
+    changeUserProfileVisible(state, userProfileVisible) {
+        state.userProfileVisible = userProfileVisible
+    },
     changeValueTitle(state, valueTitle) {
         if (valueTitle == null || valueTitle == undefined) {
             return
