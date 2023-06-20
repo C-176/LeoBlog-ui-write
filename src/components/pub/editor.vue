@@ -16,7 +16,7 @@
     </el-affix>
     <textarea
         id="title"
-        class=" h-10 w-full px-2 leading-10 resize-none outline-none text-left font-bold text-xl"
+        class=" h-10 border-0  w-full px-2  resize-none outline-none text-left font-bold text-xl"
         v-model="valueTitle" placeholder="请输入标题...（最多100字）"
     />
     <Editor

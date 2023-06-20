@@ -1,27 +1,24 @@
 <template>
-  <div ref="show" class="w-full lg:flex p-2 justify-center space-x-2 items-start z-10  " @wheel="scrollBottom">
+  <MyCompostion >
+    <div ref="show" class="w-full lg:flex p-2 justify-center space-x-2 items-start z-10  " @wheel="scrollBottom">
 
-    <div class="w-full min-w-full lg:my-0 float-left ">
-<!--      <scroll-pics></scroll-pics>-->
-      <article-show :article-list="articleList"></article-show>
+      <div class="w-full min-w-full lg:my-0 ">
+        <article-show :article-list="articleList"></article-show>
+      </div>
     </div>
-    <div class="w-1/4 float-left invisible lg:visible">
-      <right-self></right-self>
-      <copy-right></copy-right>
-    </div>
+<!--    <template #slider>-->
+<!--      <right-self></right-self>-->
+<!--&lt;!&ndash;      <copy-right></copy-right>&ndash;&gt;-->
+<!--    </template>-->
 
-  </div>
-
-  <a-back-top/>
-
-  <!--  <el-slider-->
-  <!--      v-model="value"-->
-  <!--      :max="max"-->
-  <!--      :format-tooltip="formatTooltip"-->
-  <!--      @input="inputSlider"-->
-  <!--      style="color: #fff;height:10px;margin-bottom: 10px"-->
-  <!--  />-->
-
+    <!--  <el-slider-->
+    <!--      v-model="value"-->
+    <!--      :max="max"-->
+    <!--      :format-tooltip="formatTooltip"-->
+    <!--      @input="inputSlider"-->
+    <!--      style="color: #fff;height:10px;margin-bottom: 10px"-->
+    <!--  />-->
+  </MyCompostion>
 </template>
 
 <script>
@@ -31,11 +28,13 @@ import rightSelf from "@/components/pub/rightSelf";
 import chat from "@/components/pub/chat";
 import BgCover from "@/components/pub/BgCover";
 import copyRight from "@/components/pub/copyRight";
+import MyCompostion from "@/components/pub/MyCompostion.vue";
 
 
 export default {
   name: 'index_main',
   components: {
+    MyCompostion,
     scrollPics,
     articleShow,
     rightSelf,
@@ -84,10 +83,10 @@ export default {
       this.$axios.get('/article/list/' + this.currentPage + '/' + this.pageSize).then((res) => {
         let map = res.data.data
         let articleList = map.records
-        articleList.forEach(x=>{
-          x.author={
-            userNickname:'admin',
-            userProfilePhoto:'https://gitee.com/zhengyongjie/blog/raw/master/src/assets/img/author.jpg'
+        articleList.forEach(x => {
+          x.author = {
+            userNickname: 'admin',
+            userProfilePhoto: 'https://gitee.com/zhengyongjie/blog/raw/master/src/assets/img/author.jpg'
           }
         })
         this.articleList = this.articleList.concat(articleList)

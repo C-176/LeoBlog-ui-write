@@ -195,8 +195,8 @@ export default {
   created() {
     this.logoSrc = this.baseURL + '/source/images/logoTest.png'
     //记住密码  恢复密码
-    let uname = localStorage.getItem(encode('userName'))
-    let upwd = localStorage.getItem(encode('userPassword'))
+    let uname = localStorage.getItem(encode('lb_userName'))
+    let upwd = localStorage.getItem(encode('lb_userPassword'))
     if (uname && upwd) {
       this.userName = decode(uname)
       this.userPassword = decode(upwd)
@@ -248,8 +248,8 @@ export default {
             if (res.data.code === 200) {
               if (this.rememberMe) {
                 // 向localStorage中存储Md5加密后的用户名和密码
-                localStorage.setItem(encode('userName'), encode(this.userName))
-                localStorage.setItem(encode('userPassword'), encode(this.userPassword))
+                localStorage.setItem(encode('lb_userName'), encode(this.userName))
+                localStorage.setItem(encode('lb_userPassword'), encode(this.userPassword))
               }
               this.$st("登陆成功", "success")
               let map = res.data.data

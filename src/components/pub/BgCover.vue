@@ -2,13 +2,13 @@
   <transition name="fade">
     <div v-if="showCover"
          @click="quit()"
-         class="fixed w-screen h-screen bg-black bg-opacity-30 z-40 backdrop-blur-sm lg:backdrop-blur-sm"></div>
+         class="fixed bg-opacity-10 bg-indigo-300 w-screen h-screen  backdrop-blur-lg z-40 "></div>
   </transition>
 </template>
 
 <script>
 export default {
-  name: "BgCover",
+  name: "bgCover",
 
   props: ["showCover"],
   watch: {
@@ -19,8 +19,6 @@ export default {
       } else {
         document.body.style.overflowX = "hidden";
         document.body.style.overflowY = "auto";
-
-
       }
     }
   },

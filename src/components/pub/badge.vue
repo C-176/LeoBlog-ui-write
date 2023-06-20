@@ -1,7 +1,7 @@
 <template>
 
     <lottie-player
-            class="cursor-pointer "
+            class="cursor-pointer mx-auto"
             @click="()=>{ this.$router.push('/badgeShow')}"
             :src=badgeSrc
             background="transparent" speed="1" :style="{'width':size+'px','height':size+'px'}" loop

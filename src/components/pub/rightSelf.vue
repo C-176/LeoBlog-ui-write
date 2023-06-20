@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full invisible lg:visible  bg-gray-100 h-auto p-4 rounded-xl">
+  <div class="w-1/4 overscroll-contain bg-gray-50 overflow-y-auto  rounded-xl pb-20 fixed flex-col justify-start items-center space-y-2">
 
-    <a class="block text-right hover:text-gray-500 text-sm h-5 w-full" @click="$router.push('/back/scripts')">
+    <a class="block text-right hover:text-gray-500  text-sm h-5 w-full" @click="$router.push('/back/scripts')">
       <!--      <span class="iconfont">&#xe823;</span> 创作中心-->
       <span class="iconfont">&#xe7c4;</span>草稿箱 ({{ scriptSize }})
     </a>

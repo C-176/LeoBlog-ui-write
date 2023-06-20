@@ -1,29 +1,37 @@
 <template>
-  <div class="catalog-card invisible lg:visible" v-if="titles.length>0">
-    <div class="catalog-card-header">
+  <!--  <div class="catalog-card invisible lg:visible" v-if="titles.length>0">-->
+  <div
+      class="w-1/4 text-left bg-gray-50 p-3 invisible lg:visible overscroll-contain overflow-y-auto h-screen rounded-xl pb-20 fixed flex-col justify-start items-center space-y-2">
+
+    <div class="flex justify-between items-center text-xl italic text-left ">
       <div>
-        <!--                <span-->
-        <!--                ><font-awesome-icon-->
-        <!--                    :icon="['fas', 'bars-staggered']"-->
-        <!--                    class="catalog-icon"-->
-        <!--                /></span>-->
-        <span>目录</span>
+        <span class="text-gray-500">目录</span>
       </div>
-      <span class="progress">{{ progress }}</span>
+      <div class="w-2/3">
+        <!--      // 增加一条进度条-->
+        <div class="duration-1000 border-b-4 border-indigo-600 transition-all"
+             :class="{
+        'w-0':progress===0,
+        'w-1/4':progress>0&&progress<25,
+        'w-1/2':progress>=25&&progress<50,
+        'w-3/4':progress>=50&&progress<75,
+        'w-full':progress>=75,
+      }"></div>
+      </div>
+      <span class="text-indigo-600 ">{{ progress }}%</span>
     </div>
 
-    <div class="catalog-content">
+    <div class="flex-col justify-center items-center space-y-1">
       <div
           v-for="title in titles"
           :key="title.id"
           @click="scrollToView(title.scrollTop+180)"
-          :class="[
-                    'catalog-item',
-                    currentTitle.id == title.id ? 'active' : 'not-active',
-                ]"
+          :class="{'text-indigo-600 font-bold bg-white':
+                    currentTitle.id == title.id }"
           :style="{ marginLeft: title.level * 20 + 'px' }"
           v-show="title.isVisible"
           :title="title.rawName"
+          class="cursor-pointer transition duration-300  hover:text-indigo-600 hover:font-bold rounded-xl hover:bg-white p-1"
       >
         {{ title.name }}
       </div>
@@ -39,7 +47,7 @@ export default {
     return {
       titles: [],
       currentTitle: {},
-      progress: 0+ "%",
+      progress: 0,
       scrollTop: 0,
       scrollHeight: 0,
       clientHeight: 0,
@@ -49,11 +57,10 @@ export default {
     setTimeout(() => {
       this.getTitles();
       // this.$nextTick(() => {
-        // 监听滚动事件并更新样式
-        window.addEventListener("scroll", this.handleScroll);
+      // 监听滚动事件并更新样式
+      window.addEventListener("scroll", this.handleScroll);
       // });
     }, 1000);
-
 
 
   },
@@ -65,9 +72,9 @@ export default {
       this.progress =
           parseInt(
               // (window.scrollY / document.documentElement.scrollHeight) *
-              (window.scrollY /( document.documentElement.scrollHeight-document.documentElement.clientHeight)) *
+              (window.scrollY / (document.documentElement.scrollHeight - document.documentElement.clientHeight)) *
               100
-          ) + "%";
+          );
 
 
       let visibleTitles = [];
@@ -179,7 +186,7 @@ export default {
 
         node.isVisible = node.parent == null;
         // node.name = serialNumber + ". " + element.innerText;
-        node.name =  element.innerText;
+        node.name = element.innerText;
         titles.push(node);
       }
 
@@ -210,77 +217,6 @@ export default {
 </script>
 
 <style scoped>
-.catalog-card {
-  /*background: #fdfdfd;*/
-  border-radius: 10px;
-  /*box-shadow: 0 3px 8px 6px rgba(7, 17, 27, 0.05);*/
-  padding: 0 24px;
-  width: 14%;
-  position: fixed;
-  top: 100px;
-  left: 2%;
-  box-sizing: border-box;
-  text-align: left;
-  border: 1px solid #e8e8e8;
-}
 
-.catalog-card-header {
-  text-align: left !important;
-  /*margin-bottom: 5px;*/
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
-.catalog-icon {
-  font-size: 18px;
-  margin-right: 10px;
-  /*color: dodgerblue;*/
-}
-
-.catalog-card-header div > span {
-  font-size: 100%;
-  color: #4c4948;
-}
-
-.progress {
-  color: #a9a9a9;
-  /*font-style: bold;*/
-  font-size: 100%;
-}
-
-.catalog-content {
-  max-height: calc(100vh - 120px);
-  overflow: auto;
-  margin-right: -20px;
-  padding-right: 16px;
-}
-
-.catalog-item {
-  color: #666261;
-  /*margin: 5px 0;*/
-  line-height: 20px;
-  cursor: pointer;
-  /*transition: all 0.2s ease-in-out;*/
-  font-size: 12px;
-  padding: 2px 6px;
-  display: -webkit-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-
-}
-
-.active {
-  background-color: #f1f2f5;
-  color: #111111;
-  border-radius: 3px;
-}
-
-.not-active:hover, .active:hover {
-  background-color: #f1f2f5;
-  color: #111111;
-  border-radius: 3px;
-}
 </style>

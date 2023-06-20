@@ -1,230 +1,221 @@
 <template>
   <bread>个人信息</bread>
-  <div class="w-full lg:p-5 bg-gray-100 rounded-xl mx-auto ">
-    <template v-if="loading">
-      <a-skeleton active/>
-      <a-skeleton active/>
-      <a-skeleton active/>
-    </template>
+  <MyCompostion slider=true>
 
-    <template v-else>
-      <el-upload
-          class="avatar-uploader  border border-gray-100 max-h-56 rounded-xl w-full overflow-hidden"
-          method="post"
-          name="file"
-          :action="action"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccessBg"
-          :before-upload="beforeAvatarUpload"
-          :on-error="handleAvatarError"
-          :disabled="readonly"
-      >
+    <div class="w-full h-full lg:p-5 bg-gray-100 rounded-xl mx-auto ">
+      <template v-if="loading">
+        <a-skeleton active/>
+        <a-skeleton active/>
+        <a-skeleton active/>
+      </template>
 
-        <img v-if="p(userx.userBgPic) && showBg" id="bg" :src="p(userx.userBgPic)" class="avatar"/>
-        <el-icon v-else
-                 class="avatar-uploader-icon bgUpload">
-          <Plus/>
-        </el-icon>
-      </el-upload>
+      <template v-else>
+        <el-upload
+            class="
+            border border-gray-100 min-h-20 max-h-56 rounded-xl w-full overflow-hidden"
+            method="post"
+            name="file"
+            :action="action"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccessBg"
+            :before-upload="beforeAvatarUpload"
+            :on-error="handleAvatarError"
+            :disabled="readonly"
+        >
+
+          <img v-if="p(userx.userBgPic) && showBg" id="bg" :src="p(userx.userBgPic)"
+               class="w-full  bg-auto"/>
+          <el-icon v-else
+                   class="avatar-uploader-icon bgUpload">
+            <Plus/>
+          </el-icon>
+        </el-upload>
 
 
-      <div class="overflow-hidden w-full bg-white  sm:rounded-lg p-10 text-left">
+        <div class="overflow-hidden w-full bg-white  sm:rounded-lg p-10 text-left">
 
 
-        <div class="flex w-full justify-start  items-center -mt-8">
-            <badge :badge-src=testSrc :size="50"></badge>
-          <el-upload
-              class="avatar-uploader flex justify-center items-center w-20 h-20 border border-gray-100 rounded-xl overflow-hidden"
-              method="post"
-              name="file"
-              :action="action"
-              :show-file-list="false"
-              :on-success="handleAvatarSuccessProfile"
-              :before-upload="beforeAvatarUpload"
-              :on-error="handleAvatarError"
-              :disabled="readonly"
+          <div class="flex w-full justify-start  items-center -mt-8">
+            <!--            <badge :badge-src=testSrc :size="50"></badge>-->
+            <!--          <lottie-player ref="bad" autoplay loop mode="normal" style="width: 50px">-->
+            <!--          </lottie-player>-->
+            <div class="relative">
+              <el-upload
+                  class="avatar-uploader flex justify-center items-center w-16 h-16 border border-gray-100 rounded-xl overflow-hidden"
+                  method="post"
+                  name="file"
+                  :action="action"
+                  :show-file-list="false"
+                  :on-success="handleAvatarSuccessProfile"
+                  :before-upload="beforeAvatarUpload"
+                  :on-error="handleAvatarError"
+                  :disabled="readonly"
 
-          >
-            <img v-if="userx.userProfilePhoto && showProfile"
-                 @click.stop="()=>{if(mode === '保存'){showCanvas = true;$store.commit('changeBgCover',true)}}"
-                 :src="p(userx.userProfilePhoto)" class="avatar rounded-xl w-full"/>
+              >
+                <img v-if="userx.userProfilePhoto && showProfile"
+                     @click.stop="()=>{if(changing){showCanvas = true;}}"
+                     :src="p(userx.userProfilePhoto)" class="avatar relative rounded-xl w-full"/>
 
-            <el-icon @click.stop="()=>{showCanvas = true;$store.commit('changeBgCover',true)}" v-else
-                     class="avatar-uploader-icon flex items-center justify-center">
-              <Plus/>
-            </el-icon>
-          </el-upload>
-          <div class="px-4 py-3 sm:px-6 flex-col justify-between items-center">
-            <h3 class="text-lg font-medium leading-6 text-gray-900">{{ userx.userNickname }}</h3>
-            <div class=" inline-block  mt-1 max-w-2xl text-sm text-gray-500">{{ userx.userIntro }}</div>
-          </div>
-          <div
-              class="w-2/3 h-auto float-right flex items-center justify-around space-x-2 my-2 ring-indigo-200 ring-2 rounded-xl">
-            <button v-for="key in keys" :key="key.key"
-                    class=" justify-items-end w-full h-full p-1 rounded-xl hover:bg-indigo-500 group hover:text-white  text-center transform duration-500"
-                    :class="[
+                <el-icon v-else @click.stop="()=>{showCanvas = true;}"
+                         class="avatar-uploader-icon flex items-center justify-center">
+                  <Plus/>
+                </el-icon>
+              </el-upload>
+              <span class="absolute  w-3 h-3 transform -translate-x-0
+             rounded-full left-2/3 -top-4">
+                      <badge :badge-src=testSrc :size="50"></badge>
+          </span>
+            </div>
 
+            <div class="px-4 py-3 sm:px-6 flex-col justify-between items-center">
+              <h3 class="text-lg font-medium leading-6 text-gray-900">{{ userx.userNickname }}</h3>
+              <div class=" inline-block  mt-1 max-w-2xl text-sm text-gray-500">{{ userx.userIntro }}</div>
+            </div>
+            <div
+                class="w-2/3 h-auto float-right flex items-center justify-around space-x-2 my-2 ring-indigo-200 ring-2 rounded-xl">
+              <button v-for="key in keys" :key="key.key"
+                      class=" justify-items-end w-full h-full p-1 rounded-xl hover:bg-indigo-500 group hover:text-white  text-center transform duration-500"
+                      :class="[
                     activeProject == key.key ? 'bg-indigo-500' : '',
                 ]">
-              <div class="flex items-center justify-center"
-                   @click="()=>{key.href($router);this.$store.commit('changeProject',key.key) }">
-                <icon :src="key.iconSrc" :size="20"/>
-                <span class="text-center group-hover:text-white  "
-                      :class="[
+                <div class="flex items-center justify-center"
+                     :class="{
+                  'cursor-not-allowed':changing
+                     }"
+                     @click="()=>{
+                       if(this.changing) return;
+                       key.href($router);
+                       this.$store.commit('changeProject',key.key)
+                     }">
+                  <icon class="hidden lg:block" :src="key.iconSrc" :size="20"/>
+                  <span class="text-center group-hover:text-white  "
+                        :class="[
 
                     activeProject == key.key ? 'text-white' : 'text-gray-600',
                 ]"
-                >{{ key.title }}</span></div>
-            </button>
+                  >{{ key.title }}</span></div>
+              </button>
+            </div>
           </div>
-        </div>
 
 
-        <div v-if="activeProject === 'info'" class="border-t border-gray-200">
-          <dl>
-            <div class="bg-white px-4 py-3 sm:grid  flex items-center  sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class="text-sm font-medium text-gray-500">昵称</dt>
-              <input v-model="userx.userNickname" :readonly="readonly"
-                     class="introInput">
-            </div>
-            <div class="bg-gray-50 px-4 py-3 sm:grid  flex items-center  sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class="text-sm font-medium text-gray-500">性别</dt>
-              <select v-model="userx.userSex" :disabled="readonly"
-                      class=" introInput w-1/2"
-              >
-                <option value="1">
-                  男
-                </option>
-                <option value="0">
-                  女
-                </option>
-                <option value="2">
-                  未知
-                </option>
-
-              </select>
-            </div>
-            <div class="bg-white px-4 py-3 sm:grid sm:grid-cols-3  flex items-center  sm:gap-4 sm:px-6">
-              <dt class="text-sm font-medium text-gray-500">生日</dt>
-              <!--              <div class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">-->
-              <div class="flex justify-start items-center">
-                <el-date-picker
-                    :readonly="readonly"
-                    v-model="userx.userBirthday"
-                    type="date"
-                    placeholder="选择日期"
-                    :size="size"
-
-                />
+          <div v-if="activeProject === 'info'" class="border-t border-gray-200">
+            <dl>
+              <div class="bg-white px-4 py-3 sm:grid  flex items-center  sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">昵称</dt>
+                <input v-model="userx.userNickname" :readonly="readonly"
+                       class="introInput">
               </div>
-              <!--              </div>-->
-            </div>
-            <div class="bg-gray-50 px-4 py-3 sm:grid flex items-center sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class="text-sm font-medium text-gray-500">居住地</dt>
-              <input v-model="userx.userPos" :readonly="readonly" class="introInput">
-            </div>
-            <div class="bg-white px-4 py-3 sm:grid flex items-center  sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class="text-sm font-medium text-gray-500">所在行业</dt>
-              <input v-model="userx.userIndustry" :readonly="readonly" class="introInput">
-            </div>
-            <div class="bg-gray-50 px-4 py-3 sm:grid  flex items-center sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt class="text-sm font-medium text-gray-500">教育经历</dt>
-              <input v-model="userx.userEducation" :readonly="readonly" class="introInput">
-            </div>
-            <div
-                class="bg-white px-4 py-3  flex items-center  sm:grid-cols-3 sm:gap-4 sm:px-6 flex-col justify-start items-center">
-              <div class="text-sm font-medium text-gray-500 w-full py-2">个人介绍</div>
-              <textarea v-model="userx.userIntro" :readonly="readonly" class="introInput w-full"></textarea>
-            </div>
+              <div class="bg-gray-50 px-4 py-3 sm:grid  flex items-center  sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">性别</dt>
+                <select v-model="userx.userSex" :disabled="readonly"
+                        class=" introInput w-1/2"
+                >
+                  <option value="1">
+                    男
+                  </option>
+                  <option value="0">
+                    女
+                  </option>
+                  <option value="2">
+                    未知
+                  </option>
+
+                </select>
+              </div>
+              <div class="bg-white px-4 py-3 sm:grid sm:grid-cols-3  flex items-center  sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">生日</dt>
+                <!--              <div class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">-->
+                <div class="flex justify-start items-center">
+                  <el-date-picker
+                      :readonly="readonly"
+                      v-model="userx.userBirthday"
+                      type="date"
+                      placeholder="选择日期"
+                      :size="size"
+
+                  />
+                </div>
+                <!--              </div>-->
+              </div>
+              <div class="bg-gray-50 px-4 py-3 sm:grid flex items-center sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">居住地</dt>
+                <input v-model="userx.userPos" :readonly="readonly" class="introInput">
+              </div>
+              <div class="bg-white px-4 py-3 sm:grid flex items-center  sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">所在行业</dt>
+                <input v-model="userx.userIndustry" :readonly="readonly" class="introInput">
+              </div>
+              <div class="bg-gray-50 px-4 py-3 sm:grid  flex items-center sm:grid-cols-3 sm:gap-4 sm:px-6">
+                <dt class="text-sm font-medium text-gray-500">教育经历</dt>
+                <input v-model="userx.userEducation" :readonly="readonly" class="introInput">
+              </div>
+              <div
+                  class="bg-white px-4 py-3  flex items-center  sm:grid-cols-3 sm:gap-4 sm:px-6 flex-col justify-start items-center">
+                <div class="text-sm font-medium text-gray-500 w-full py-2">个人介绍</div>
+                <textarea v-model="userx.userIntro" :readonly="readonly" class="introInput w-full"></textarea>
+              </div>
 
 
-            <!--            <div class="bg-white px-4 py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">-->
-            <!--              <dt class="text-sm font-medium text-gray-500">Attachments</dt>-->
-            <!--              <dd class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">-->
-            <!--                <ul role="list" class="divide-y divide-gray-200 rounded-md border border-gray-200">-->
-            <!--                  <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">-->
-            <!--                    <div class="flex w-0 flex-1 items-center">-->
-            <!--                      &lt;!&ndash; Heroicon name: mini/paper-clip &ndash;&gt;-->
-            <!--                      <svg class="h-5 w-5 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg"-->
-            <!--                           viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">-->
-            <!--                        <path fill-rule="evenodd"-->
-            <!--                              d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"-->
-            <!--                              clip-rule="evenodd"/>-->
-            <!--                      </svg>-->
-            <!--                      <span class="ml-2 w-0 flex-1 truncate">resume_back_end_developer.pdf</span>-->
-            <!--                    </div>-->
-            <!--                    <div class="ml-4 flex-shrink-0">-->
-            <!--                      <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>-->
-            <!--                    </div>-->
-            <!--                  </li>-->
-            <!--                  <li class="flex items-center justify-between py-3 pl-3 pr-4 text-sm">-->
-            <!--                    <div class="flex w-0 flex-1 items-center">-->
-            <!--                      &lt;!&ndash; Heroicon name: mini/paper-clip &ndash;&gt;-->
-            <!--                      <svg class="h-5 w-5 flex-shrink-0 text-gray-400" xmlns="http://www.w3.org/2000/svg"-->
-            <!--                           viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">-->
-            <!--                        <path fill-rule="evenodd"-->
-            <!--                              d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"-->
-            <!--                              clip-rule="evenodd"/>-->
-            <!--                      </svg>-->
-            <!--                      <span class="ml-2 w-0 flex-1 truncate">coverletter_back_end_developer.pdf</span>-->
-            <!--                    </div>-->
-            <!--                    <div class="ml-4 flex-shrink-0">-->
-            <!--                      <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Download</a>-->
-            <!--                    </div>-->
-            <!--                  </li>-->
-            <!--                </ul>-->
-            <!--              </dd>-->
-            <!--            </div>-->
+              <button
+                  class="button w-full"
+                  @click="todo">{{ changing ? '保存' : '修改' }}
+              </button>
+            </dl>
 
-            <button
-                class="button w-full"
-                @click="todo">{{ mode }}
-            </button>
-          </dl>
+          </div>
 
+
+          <router-view v-else class="router-view mt-2" v-slot="{ Component }">
+            <keep-alive>
+              <component :is="Component"/>
+            </keep-alive>
+          </router-view>
         </div>
 
 
-        <router-view v-else class="router-view mt-2" v-slot="{ Component }">
-          <keep-alive>
-            <component :is="Component"/>
-          </keep-alive>
-        </router-view>
-      </div>
+      </template>
+    </div>
+    <canvas-pic :visible="showCanvas"
+                @cancel="showCanvas = false;this.$store.commit('changeBgCover',false)"
+                @getImg="url => getImg(url)">
+    </canvas-pic>
 
-
+    <template #slider>
+      <activity></activity>
     </template>
-  </div>
-  <canvas-pic v-if="showCanvas"
-              @cancel="showCanvas = false;$store.commit('changeBgCover',false);"
-              @getImg="(url)=>{userx.userProfilePhoto = url;showCanvas = false;$store.commit('changeBgCover',false);showProfile = true;}"></canvas-pic>
-  <bgCover v-if="$store.state.bgCover"/>
+  </MyCompostion>
+
 </template>
 
 <script>
 import {Plus} from '@element-plus/icons-vue'
 import {UserOutlined} from '@ant-design/icons-vue';
 import canvasPic from "@/components/pub/canvasPic.vue";
-import bgCover from "@/components/pub/BgCover.vue";
+import MyCompostion from "@/components/pub/MyCompostion.vue";
+import {isEqual} from 'lodash'
+import Activity from "@/components/pub/activity.vue";
 
 export default {
   name: 'info',
   components: {
+    Activity,
+    MyCompostion,
     Plus,
     UserOutlined,
     canvasPic,
-    bgCover
   },
   data() {
     return {
-        testSrc:'https://assets9.lottiefiles.com/packages/lf20_stozcwgt.json',
+      lottie: null,
+      testSrc: 'https://assets9.lottiefiles.com/packages/lf20_stozcwgt.json',
       showCanvas: false,
       showBg: true,
       showProfile: true,
       loading: true,
       action: this.baseURL + "/upload/file",
       // imageUrl: '',
-      mode: '修改',
+      changing: false,
       readonly: true,
       size: 'small',
       userx: {
@@ -261,16 +252,10 @@ export default {
 
         }
       }
-        // , {
-        //   key: 'picture',
-        //   title: '图片',
-        //   iconSrc: 'puvaffet',
-        //   href: function ($router) {
-        //     $router.push('/back/info/picture')
-        //
-        //   }
-        // }
+
       ],
+      badge: {badgeIcon: '', badgeName: '', badgeDesc: ''},
+      badgeVisible: false,
 
     }
   },
@@ -282,31 +267,60 @@ export default {
       this.userx = res.data.data
       this.imageUrl = this.userx.userProfilePhoto
     })
+
+
+  },
+  mounted() {
+
+    this.badge = {
+      badgeIcon: this.testSrc,
+      badgeName: '测试',
+      badgeDesc: '测试'
+    }
+
+    this.showBadge()
+
   },
 
   methods: {
+    getImg(url) {
+      this.userx.userProfilePhoto = url;
+      this.$store.commit('changeBgCover', false);
+      this.showCanvas = false;
+      this.showProfile = true;
+    },
+
+    showBadge() {
+      this.$nextTick(() => {
+
+        this.lottie = this.$refs.bad
+        if (this.lottie == null) return
+        console.log(this.lottie)
+        this.badgeVisible = true
+        try {
+          console.log(this.badge)
+
+          this.lottie.load(this.badge.badgeIcon);
+        } catch (e) {
+          console.error(e)
+        }
+      })
+
+
+    },
     quit() {
-      this.$store.commit('changeBgCover', false)
       this.showCanvas = false
-      console.log(this.showCanvas)
     },
 
     todo() {
-      if (this.mode === '保存') {
+      if (this.changing) {
         // 检查数据是否变化
-        if (this.userx.userNickname == this.$store.state.user.userNickname &&
-            this.userx.userSex === this.$store.state.user.userSex &&
-            this.userx.userPos === this.$store.state.user.userPos &&
-            this.userx.userIndustry === this.$store.state.user.userIndustry &&
-            this.userx.userBirthday === this.$store.state.user.userBirthday &&
-            this.userx.userEducation === this.$store.state.user.userEducation &&
-            this.userx.userCertification === this.$store.state.user.userCertification &&
-            this.userx.userIntroduction === this.$store.state.user.userIntroduction &&
-            this.userx.userProfilePhoto === this.$store.state.user.userProfilePhoto &&
-            this.userx.userIntro === this.$store.state.user.userIntro &&
-            this.userx.userBgPic === this.$store.state.user.userBgPic) {
+        // 比较两个对象是否相等
+        // console.log(this.userx.userProfilePhoto,this.$store.state.user.userProfilePhoto)
+        // console.log(isEqual(this.userx, this.$store.state.user))
+        if (isEqual(this.userx, this.$store.state.user)) {
           this.$st('您未做任何修改', 'warning');
-          this.mode = '修改';
+          this.changing = false;
           this.readonly = true;
           this.showBg = true;
           this.showProfile = true;
@@ -316,7 +330,7 @@ export default {
             if (res.data.code === 200) {
               this.$st('修改成功', 'success');
               this.$store.commit('setUser', this.userx)
-              this.mode = '修改';
+              this.changing = false;
               this.readonly = true;
               this.showBg = true;
               this.showProfile = true;
@@ -326,7 +340,7 @@ export default {
           })
         }
       } else {
-        this.mode = '保存';
+        this.changing = true;
         this.readonly = false;
         this.showBg = false;
         this.showProfile = false;
@@ -339,13 +353,13 @@ export default {
       this.showProfile = true
     },
     handleAvatarSuccessBg(res, file) {
-      this.userx.userBgPic = res.data.url;
+      this.userx.userBgPic = res.url;
       this.showBg = true
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg' || 'image/png' || 'image/gif' || 'image/bmp' || 'image/webp';
       const isLt2M = file.size / 1024 / 1024 < 2;
-
+      //TODO:bug: Cannot set property lastModifiedDate of #<File> which has only a getter
       if (!isJPG) {
         this.$st('上传头像图片只能是 JPG 格式!', 'error');
       }
@@ -364,6 +378,9 @@ export default {
       this.$nextTick(() => {
         this.loading = false
       })
+    },
+    showCanvas(val) {
+      console.log(val)
     },
 
   },
