@@ -53,7 +53,7 @@ const store = createStore({
                 let user = context.state.users.find(u => u.userId === userId);
                 if (user) return user;
                 if (!context.state.lock.find(u => u === prefix + userId)) {
-                    context.commit('addLock', 'info' + userId); // 添加到 lock 列表中
+                    context.commit('addLock', prefix + userId); // 添加到 lock 列表中
                     user = context.state.users.find(u => u.userId === userId);
                     if (user) return user;
                     try {
