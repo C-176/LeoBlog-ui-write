@@ -75,7 +75,8 @@
         </div>
         <div id="chat" ref="chat"
              class="w-full h-2/3 bg-gray-100  rounded-xl p-3 overflow-auto"
-             @wheel.capture="scrollRecord">
+        >
+          <!--             @wheel.capture="scrollRecord">-->
 
           <template v-for="(record,index) in talkTo.record" :key="index">
             <div v-if="timeDiff(index,index-1)"
@@ -294,7 +295,10 @@ export default {
             // 选择文件时的类型限制，默认为 ['image/*'] 。如不想限制，则设置为 []
             allowedFileTypes: ['image/*'],
             // 小于该值就插入 base64 格式（而不上传），默认为 0
-            base64LimitSize: 0.5 * 1024 * 1024, // 2M
+            base64LimitSize: 0.5 * 1024 * 1024, // 2M,
+            onFailed(file, res) {
+              console.log(`${file.name} 上传失败`, res)
+            },
           },
           uploadVideo: {
             server: "http:localhost:8080/upload/file", // 上传图片的服务器地址
@@ -651,21 +655,23 @@ export default {
       //更新聊天记录
       //TODO:从localstorage中获取聊天记录
       this.talkTo.record = this.getChatRecord(this.$store.state.user.userId, this.talkTo.user.userId)
-      if (this.talkTo.user.userId != 1) {
-        this.$axios.get(this.baseURL + '/chat/connect/' + this.$store.state.user.userId + '/' + this.talkTo.user.userId).then(res => {
-          if (res.data.code === 200) {
-            this.currentPage = res.data.data.current;
-            this.pages = res.data.data.pages;
-            this.talkTo.record = res.data.data.records;
-            this.talkTo.record.forEach(record => {
-              record.recordContent = this.replaceURL(record.recordContent)
-            })
-            this.saveChatRecord(this.$store.state.user.userId, this.talkTo.user.userId, this.talkTo.record)
+      if (this.talkTo.record.length == 0) {
+        if (this.talkTo.user.userId !== 1) {
+          this.$axios.get(this.baseURL + '/chat/connect/' + this.$store.state.user.userId + '/' + this.talkTo.user.userId).then(res => {
+            if (res.data.code === 200) {
+              this.currentPage = res.data.data.current;
+              this.pages = res.data.data.pages;
+              this.talkTo.record = res.data.data.records;
+              this.talkTo.record.forEach(record => {
+                record.recordContent = this.replaceURL(record.recordContent)
+              })
+              this.saveChatRecord(this.$store.state.user.userId, this.talkTo.user.userId, this.talkTo.record)
 
-          } else {
-            this.$st(res.data.data, "error")
-          }
-        })
+            } else {
+              this.$st(res.data.data, "error")
+            }
+          })
+        }
       }
       this.editor.focus()
     }
@@ -683,9 +689,7 @@ export default {
     getChatRecord(userId, talkToId) {
       let key = 'chatRecord#' + userId + '#' + talkToId
       let value = localStorage.getItem(key)
-      if (value === null) {
-        return []
-      }
+      if (value === null) return []
       return JSON.parse(value)
     }
     ,
@@ -756,17 +760,12 @@ export default {
       }
     },
     insertNode() {
-      console.log('insertNode')
       this.editor.insertBreak()
     },
 
     sendMessage() {
-      // console.log('sendMessage')
-      // return;
       this.insertNode()
       this.$nextTick(() => {
-
-
         let msg = this.message.replaceAll('<p><br></p>', '').trim()
         if (msg === '' || msg === '<p><br></p>') {
           this.$st("消息不能为空", 'error')
@@ -785,18 +784,9 @@ export default {
         }
 
         this.toDown = true
-        // if (this.ws.readyState !== 1) {
-        //     this.ws = this.connectSocket()
-        //     this.$nextTick(() => {
-        //         this.sendMessage()
-        //         return
-        //     })
-        // }
-
         try {
           this.ws.send(JSON.stringify(data))
         } catch (e) {
-          // console.log(e)
           this.$st("连接失败，请刷新页面重试", 'error')
         }
         let d = {
@@ -806,9 +796,7 @@ export default {
           receiverId: this.talkTo.user.userId
         }
         this.talkTo.record.push(d)
-        if (this.talkTo.user.userId === 1) {
-          this.addAndSaveChatRecord(d.userId, d.receiverId, d)
-        }
+        this.addAndSaveChatRecord(d.userId, d.receiverId, d)
         try {
           this.editor.clear()
           this.editor.focus()
@@ -823,7 +811,7 @@ export default {
       // console.log(data)
 
       if (data.type === 1) {
-        this.$st(data.recordContent, 'info')
+        // this.$st(data.recordContent, 'info')
         if (data.recordContent.indexOf(" 已上线") !== -1) {
           let index = data.recordContent.indexOf(" 已上线")
           let userName = data.recordContent.substring(0, index)
@@ -833,7 +821,7 @@ export default {
           }
         }
       } else if (data.type === 2) {
-        this.$st(data.recordContent, 'info')
+        // this.$st(data.recordContent, 'info')
         if (data.recordContent.indexOf(" 已下线") !== -1) {
           let index = data.recordContent.indexOf(" 已下线")
           let userName = data.recordContent.substring(0, index)
@@ -844,80 +832,44 @@ export default {
         }
       } else {
         const userId = data.userId;
-        const receiverId = data.receiverId;
-        if (userId === 1) {
-          this.addAndSaveChatRecord(receiverId, userId, {
-            recordContent: data.recordContent,
-            recordUpdateTime: data.recordUpdateTime,
-            userId: userId,
-            receiverId: receiverId,
-            recordId: new Date().getTime()
-          })
-          // return
-
-        }
-        if (this.$store.state.chatVisible == false) {
-          this.$store.commit('changeChatPoint', this.$store.state.chatPoint + 1)
-          //查找是否有该用户
-          let index = this.chats.findIndex(item => item.user.userId == userId)
-          if (index == -1 && receiverId != -1) {
-            this.getUsers()
-            // this.$nextTick(() => {
-            //   // this.talkTo = this.chats[this.chats.length - 1]
-            //   let index = this.chats.findIndex(item => item.user.userId == val)
-            //   if (index != -1) {
-            //     this.select(index)
-            //     return
-            //   } else {
-            //     console.log('没找到要聊天的用户')
-            //   }
-            // })
-          }
-
-
-        } else {
-          this.$store.commit('changeChatPoint', 0)
-          let index = this.chats.findIndex(item => item.user.userId == userId)
-          if (index == -1 && receiverId != -1) {
-            this.getUsers()
-          }
-        }
-
-
-        if ((userId == this.talkTo.user.userId && receiverId == this.$store.state.user.userId) || (this.talkTo.user.userId == -1 && data.receiverId == -1 && this.$store.state.user.userId != userId)) {
-          //如果是当前聊天对象发来的消息
-          // this.select(this.chats.findIndex(item => item.user.userId === this.talkTo.user.userId))
-          this.talkTo.record.push({
-            recordContent: this.replaceURL(data.recordContent),
-            recordUpdateTime: new Date().getTime(),
-            userId: data.userId,
-            receiverId: data.receiverId
-          })
-          if (data.userId !== 1) this.saveChatRecord(data.userId, data.receiverId, this.talkTo.record)
-        } else {
-          if (receiverId == -1 && this.$store.state.user.userId != userId) {
-            if (this.redPoint[0] == undefined) {
-              this.redPoint[0] = 1
-            } else {
-              this.redPoint[0]++
-            }
-          } else {
-            this.chats.forEach((item, index) => {
-              if (item.user.userId === userId) {
-                if (this.redPoint[index] == undefined) {
-                  this.redPoint[index] = 1
-                } else {
-                  this.redPoint[index]++
-                }
-              }
-            })
-          }
-
-        }
         if (userId != this.$store.state.user.userId) {
           //提示音效
           this.$refs.audio.play()
         }
+        const receiverId = data.receiverId;
+        //查找是否有该用户
+        let index = this.chats.findIndex(item => item.user.userId == userId)
+        // 如果没有该用户，重新向后台查询聊天用户
+        if (index === -1 && receiverId !== -1) {
+          this.getUsers()
+        }
+        if (!this.$store.state.chatVisible) {
+          this.$store.commit('changeChatPoint', this.$store.state.chatPoint + 1)
+        }
+        // 保存聊天记录
+        // 保存收到的消息
+        if (receiverId !== -1) {
+          this.addAndSaveChatRecord(receiverId, userId, data)
+        } else {
+          if(userId !== this.$store.state.user.userId) this.addAndSaveChatRecord(this.$store.state.user.userId, -1, data)
+        }
+        //向对应的聊天框中添加消息
+        if ((userId == this.talkTo.user.userId && receiverId == this.$store.state.user.userId)
+            || (this.talkTo.user.userId == -1 && data.receiverId == -1 && this.$store.state.user.userId != userId)) {
+          this.talkTo.record.push(data)
+        } else {
+          var uid;
+          if (receiverId === -1 && this.$store.state.user.userId !== userId) {
+            uid = -1;
+          } else {
+            uid = userId;
+          }
+          let index = this.chats.findIndex(item => item.user.userId == uid)
+          if (index !== -1) {
+            this.redPoint[index] = this.redPoint[index] == undefined ? 1 : this.redPoint[index] + 1
+          }
+        }
+
 
       }
     },

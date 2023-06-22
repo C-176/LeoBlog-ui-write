@@ -46,7 +46,7 @@
                   <div v-for="item in history" :key="item.id"
                        class="w-full hover:text-white hover:bg-indigo-600 relative flex items-center justify-between p-3 pl-5 bg-gray-100 transition duration-300 rounded-xl text-left">
                     <span class="text cursor-pointer"
-                          @click="search(item.searchText)"><span class="text-base">{{ item.searchText }}</span>·<span class="text-gray-500">{{ item.searchTime }}</span></span>
+                          @click="search(item.searchText)"><span class="text-base">{{ item.searchText }}</span>·<span class="text-gray-500">{{ this.$simpleFormat(item.searchTime) }}</span></span>
                     <button class="rounded-xl z-20 hover:text-white h-8 w-8 text-center hover:bg-indigo-500"
                             @click="deleteHistory(item.searchText)">
                       ✖

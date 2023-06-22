@@ -50,7 +50,7 @@
             </div>
             <div class="flex items-center text-gray-500 space-x-1 pl-2">
               <icon src="qznlhdss" size="16"></icon>
-              <span>最后更新时间: {{ article.articleUpdateDate }}</span>
+              <span>最后更新时间: {{ this.$simpleFormat(article.articleUpdateDate) }}</span>
 
             </div>
           </div>
@@ -79,29 +79,6 @@
               </a>
             </div>
           </template>
-          <!--      </el-affix>-->
-          <!--          <transition name="fade">-->
-          <!--            <div v-if="showComment " class="relative w-full h-28 text-right">-->
-          <!--            <textarea v-model="commentIn"-->
-          <!--                      class="bg-white border-2 border-gray-200 w-full h-full rounded-xl resize-none outline-0 p-2"-->
-          <!--                      placeholder="请输入内容... | Enter键发送"-->
-          <!--                      v-model="commentIn"@keyup.enter="saveComment(-1)">-->
-          <!--            </textarea>-->
-
-
-          <!--              <div class="absolute bottom-1 right-1 space-x-1 flex justify-around items-center">-->
-          <!--                <button class="  button p-1  "-->
-          <!--                        @click="saveComment(-1,article.user.userId)">-->
-          <!--                  发送-->
-          <!--                </button>-->
-          <!--                <button class=" p-1  button"-->
-          <!--                        @click="showComment =false">-->
-          <!--                  取消-->
-          <!--                </button>-->
-          <!--              </div>-->
-          <!--            </div>-->
-
-          <!--          </transition>-->
           <div
                :class="{
             'opacity-100 h-auto': showComment,
@@ -628,9 +605,9 @@ export default {
           this.comments.forEach((item) => {
             item.articleTitle = ''
             item.articleId = this.article.articleId
-            item.commentUpdateTime = this.$moments(item.commentUpdateTime)
+            item.commentUpdateTime = this.$simpleFormat(item.commentUpdateTime)
             item.value.forEach((item3) => {
-              item3.commentUpdateTime = this.$moments(item3.commentUpdateTime)
+              item3.commentUpdateTime = this.$simpleFormat(item3.commentUpdateTime)
             })
           })
 

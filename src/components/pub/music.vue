@@ -181,8 +181,8 @@ export default {
 
 
       ],
-      currentTime: '00:00',
-      duration: '00:00',
+      currentTime: '0:00',
+      duration: '-:--',
       currentIndex: 0,
     };
   },

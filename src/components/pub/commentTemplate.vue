@@ -121,54 +121,41 @@
       <!--                </div>-->
 
       <!--            </div>-->
-      <div  v-if="showComment" class="gs ti uf">
-        <div class="ls ys abe">
-          <div class="uk"><img class="lq nc re adn"
-                               src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80"
-                               alt=""></div>
+      <div
+          :class="{
+            'opacity-100 h-auto': showComment,
+            'opacity-0 h-0': !showComment
+               }"
+          class="gs ti uf w-full flex justify-start ">
+        <div class="w-full ls ys abe mt-2">
+          <div class="uk">
+            <img class="lq nc re adn border border-indigo-600"
+                 :src="$store.state.user.userProfilePhoto"
+                 alt=""></div>
           <div class="tl uh">
-            <form action="#" class="ab">
-              <div class="adb ado bbi bbo bbs bca bgu bgz"><label for="comment" class="t">Add your
-                comment</label><textarea rows="3" name="comment" id="comment"
-                                         class="lp ti xo aev alh arl axq bfy bmx cht chv"
-                                         placeholder="Add your comment..."></textarea>
+            <div class="ab">
+              <div class="focus-within:bg-white adb ado bbi bbo bbs bca bgu bgz"><label for="comment" class="t">Add your
+                comment</label>
+                <textarea v-model="commentIn"
+                          @keyup.enter.stop="saveComment()"
+                          rows="3" name="comment" id="comment"
+                          class=" lp ti xo aev alh arl axq bfy bmx cht chv"
+                          placeholder="添加评论..."></textarea>
                 <div class="arq" aria-hidden="true">
                   <div class="asb">
                     <div class="od"></div>
                   </div>
                 </div>
               </div>
-              <div class="aa aj bx ls za arq ath atv">
-                <div class="ls yu abf">
-                  <div class="ls yu">
-                    <button type="button" class="fo ls nc re yu yz adn axk bks">
-                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"
-                           class="nu rw">
-                        <path fill-rule="evenodd"
-                              d="M15.621 4.379a3 3 0 00-4.242 0l-7 7a3 3 0 004.241 4.243h.001l.497-.5a.75.75 0 011.064 1.057l-.498.501-.002.002a4.5 4.5 0 01-6.364-6.364l7-7a4.5 4.5 0 016.368 6.36l-3.455 3.553A2.625 2.625 0 119.52 9.52l3.45-3.451a.75.75 0 111.061 1.06l-3.45 3.451a1.125 1.125 0 001.587 1.595l3.454-3.553a3 3 0 000-4.242z"
-                              clip-rule="evenodd"></path>
-                      </svg>
-                      <span class="t">Attach a file</span></button>
-                  </div>
-                  <div class="ls yu"><label class="t" id="headlessui-listbox-label-1" data-headlessui-state="">Your
-                    mood</label>
-                    <div class="ab">
-                      <button class="ab fo ls nc re yu yz adn axk bks" id="headlessui-listbox-button-2" type="button"
-                              aria-haspopup="listbox" aria-expanded="false" data-headlessui-state=""
-                              aria-labelledby="headlessui-listbox-label-1 headlessui-listbox-button-2"><span
-                          class="ls yu yz"><span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
-                                                      fill="currentColor" aria-hidden="true" class="nu rw uk"><path
-                          fill-rule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.536-4.464a.75.75 0 10-1.061-1.061 3.5 3.5 0 01-4.95 0 .75.75 0 00-1.06 1.06 5 5 0 007.07 0zM9 8.5c0 .828-.448 1.5-1 1.5s-1-.672-1-1.5S7.448 7 8 7s1 .672 1 1.5zm3 1.5c.552 0 1-.672 1-1.5S12.552 7 12 7s-1 .672-1 1.5.448 1.5 1 1.5z"
-                          clip-rule="evenodd"></path></svg><span class="t">Add your mood</span></span></span></button>
-                    </div>
-                  </div>
-                </div>
-                <div class="uk">
-                  <button type="submit" class="lt yu adp ajm ara arq avv awb bac bbi bin bot bou bow bpf">Post</button>
-                </div>
+              <div class="aa aj bx ls za arq ath flex justify-end atv">
+                <button @click="showComment = false"
+                        class="lt yu adp ajm ara arq avv awb bac bbi bin bot bou bow bpf">取消
+                </button>
+                <button @click="saveComment()"
+                        class="lt yu adp ajm ara arq avv awb bac bbi bin bot bou bow bpf">发送
+                </button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
@@ -223,7 +210,7 @@ export default {
           for (let i = 0; i < this.comments.length; i++) {
             this.comments[i].value = this.comments[i].value.filter(item => item.commentId !== id);
           }
-          this.$st('删除成功', 'success')
+          // this.$st('删除成功', 'success')
         } else {
           this.$st('删除失败', 'error')
         }
@@ -246,7 +233,7 @@ export default {
         receiverId: this.receiverId
       }).then((res) => {
         if (res.data.code === 200) {
-          this.$st(res.data.data, 'success')
+          // this.$st(res.data.data, 'success')
           this.commentIn = ""
           this.method()
           this.submitting = false
