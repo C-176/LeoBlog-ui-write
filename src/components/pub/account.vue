@@ -75,6 +75,9 @@ export default defineComponent({
       myMoney: 0
     }
   },
+  created() {
+    this.getMyMoney()
+  },
   methods: {
     getMyMoney() {
       let userId = this.$store.state.user.userId

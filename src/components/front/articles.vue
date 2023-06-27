@@ -1,6 +1,6 @@
 <template>
 
-  <MyCompostion slider=true >
+  <MyCompostion >
       <article-show :article-list="articleList"></article-show>
       <el-pagination
           class="bg-white w-full flex justify-center items-center  space-x-2"
@@ -20,9 +20,9 @@
 
       />
 
-    <template #slider >
-      <account></account>
-    </template>
+<!--    <template #slider >-->
+<!--      <account></account>-->
+<!--    </template>-->
 
   </MyCompostion>
 </template>
@@ -63,11 +63,6 @@ export default {
     this.getArticlesDefault();
 
   }, methods: {
-    b(name) {
-      if (name == 'title') {
-        this.getArticlesByKey()
-      }
-    },
     getArticlesDefault() {
       this.$axios.get('/article/list/' + this.currentPage + '/' + this.pageSize).then((res) => {
         let map = res.data.data
@@ -78,16 +73,6 @@ export default {
             userProfilePhoto: 'https://gitee.com/zhengyongjie/blog/raw/master/src/assets/img/author.jpg'
           }
         })
-        this.total = map.total
-        this.pageCount = map.pages
-        this.pageSize = map.size
-        this.currentPage = map.current
-      })
-    },
-    getArticlesByKey() {
-      this.$axios.get('/article/key/' + this.currentPage + '/' + this.pageSize).then((res) => {
-        let map = res.data.data
-        this.articleList = map.records
         this.total = map.total
         this.pageCount = map.pages
         this.pageSize = map.size

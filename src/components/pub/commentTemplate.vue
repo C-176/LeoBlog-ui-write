@@ -45,10 +45,10 @@
                         +
                       </div>
                     </a-tooltip>
-                    <a-tooltip>
+                    <a-tooltip v-if="logined && comment.user.userId == $store.state.user.userId">
                       <template #title>删除</template>
                       <div
-                          v-if="comment.user.userId == $store.state.user.userId"
+
                           @click="deleteComment(comment.commentId)"
                           class="p-3 bg-indigo-300  rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white cursor-pointer">
                         ×
@@ -80,10 +80,10 @@
                         +
                       </div>
                     </a-tooltip>
-                    <a-tooltip>
+                    <a-tooltip v-if=" logined && i.user.userId == $store.state.user.userId">
                       <template #title>删除</template>
                       <div
-                          v-if="i.user.userId == $store.state.user.userId"
+
                           @click="deleteComment(i.commentId)"
                           class="p-3 bg-indigo-300 group:hover:invisible  transition duration-300 rounded-full h-4 w-4 flex items-center justify-center text-2xl text-white cursor-pointer">
                         ×
@@ -122,6 +122,7 @@
 
       <!--            </div>-->
       <div
+          v-if="logined"
           :class="{
             'opacity-100 h-auto': showComment,
             'opacity-0 h-0': !showComment
@@ -196,6 +197,11 @@ export default {
     };
   },
 
+  computed:{
+    logined() {
+      return this.$store.state.user != null
+    }
+  },
   methods: {
     deleteComment(id) {
       this.$axios.delete('/comment/' + id).then(res => {

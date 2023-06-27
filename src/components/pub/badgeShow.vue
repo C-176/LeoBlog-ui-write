@@ -7,7 +7,8 @@
         <ul role="list" class="lw yd aab aar cak cbp cyj dkq ">
           <li class="ab bg-white hover:bg-gray-50 rounded-xl transition duration-300 group" v-for="badge in badges"
               :key="badge.badgeId">
-            <div class="bpw h j lp ti adb ado  bgu bgy bhc bhd  group-hover:opacity-75 flex items-center justify-center">
+            <div
+                class="bpw h j lp ti adb ado  bgu bgy bhc bhd  group-hover:opacity-75 flex items-center justify-center">
               <badge @click="showBadge(badge)" :badge-src="badge.badgeIcon" :size="150"></badge>
             </div>
 
@@ -18,7 +19,7 @@
       </div>
     </div>
     <template #slider>
-      <account></account>
+      <account v-if="$store.state.user!=null"></account>
     </template>
   </MyCompostion>
   <my-modal :visible="visible" @closeModal="visible=false">
@@ -80,7 +81,7 @@
                     'cursor-not-allowed opacity-50': focusBadge.badgeType === 1,
                   }"
                   class="mt-6 cursor-pointer flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                {{hasKey(focusBadge) ? '已拥有' : '购买'}}
+                {{ hasKey(focusBadge) ? '已拥有' : '购买' }}
               </div>
             </form>
           </section>
@@ -118,14 +119,17 @@ export default {
         badgeType: 1
       }, {}],
       focusBadge: {},
-      owns: [1, 2],
+      owns: [],
       myMoney: 0
     }
   },
   mounted() {
     this.getBadges()
-    this.getMyBadges()
-    this.getMyMoney()
+
+    if(this.$store.state.user!=null){
+      this.getMyMoney()
+      this.getMyBadges()
+    }
     this.lottie = this.$refs.lottie
   }
   ,
@@ -178,8 +182,8 @@ export default {
       })
     },
     purchase(badge) {
-      if(this.hasKey(badge)){
-        this.$st("已拥有","error")
+      if (this.hasKey(badge)) {
+        this.$st("已拥有", "error")
         return
       }
       let badgeType = badge.badgeType
@@ -198,8 +202,8 @@ export default {
             this.$st(res.data.data, "error")
           }
         })
-      }else{
-        this.$st("暂未开放","error")
+      } else {
+        this.$st("暂未开放", "error")
       }
 
 

@@ -105,11 +105,6 @@ export default {
     }
   },
   watch: {
-    // articles(val) {
-    //   if (val.length > 0) {
-    //     console.log(val[0])
-    //   }
-    // }
   },
 
   data() {
