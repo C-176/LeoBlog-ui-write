@@ -11,7 +11,7 @@
                class="input"
                :placeholder="login ? '用户名/邮箱' : '用户名' " autocomplete="off" autofocus name="userName">
         <template v-if="!login">
-          <input v-model="userEmail" class="input" placeholder="邮箱" autocomplete="off" id="userEmail" type="email">
+          <input v-model="userEmail" class="input" placeholder="邮箱" autocomplete="off" id="userEmail" >
         </template>
         <!--        <input v-model="userPassword" class="input" placeholder="密码" autocomplete="new-password" required-->
         <!--               type="password">-->
@@ -61,7 +61,7 @@
 
 
         <template v-if="login">
-          <input v-model="captcha" @keyup.enter="LR" class="input" placeholder="验证码" type="text" autocomplete="off">
+          <input v-model="captcha" @keyup.enter="LR" class="input" placeholder="验证码" autocomplete="off">
           <img id="codeImg" class="block w-1/3  border-1 border-gray-100 cursor-pointer mx-auto my-2 "
                :src="captchaUrl"
                @click="refreshCaptCha">

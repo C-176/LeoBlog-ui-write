@@ -61,6 +61,9 @@ const storage = {
     remove(key) {
         localStorage.removeItem(key);
     },
+    clear(){
+        localStorage.clear();
+    },
 };
 
 export default storage;

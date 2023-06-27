@@ -42,7 +42,7 @@
       <div class="flex ">
 
         <icon src="xfftupfv" trigger="loop" class1="mr-0.5 "></icon>
-        <input type="text" @keyup.enter="search" v-model="key"
+        <input  @keyup.enter="search" v-model="key"
                class="w-3/4 bg-white pl-2 text-base font-bold outline-0 border-2 border-indigo-600 rounded-bl rounded-tl"
                placeholder='用文字连接世界'/>
         <button @click="search"

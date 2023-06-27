@@ -23,8 +23,15 @@ const mutations = {
     // 设置用户并保存到storage
     setUser(state, user) {
         state.user = user;
+        if(user == null){
+            // 清空localStorage
+            storage.clear();
+            return;
+        }
+
         storage.set(encode("lb_user"), encode(JSON.stringify(user)));
     },
+
     getColor() {
         // 生成随机柔和颜色
         let color = "#";
