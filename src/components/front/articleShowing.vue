@@ -50,7 +50,7 @@
             </div>
             <div class="flex items-center text-gray-500 space-x-1 pl-2">
               <icon src="qznlhdss" size="16"></icon>
-              <span>最后更新时间: {{ article.articleUpdateDate }}</span>
+              <span>最后更新时间: {{ this.$simpleFormat(article.articleUpdateDate) }}</span>
 
             </div>
           </div>
@@ -79,50 +79,29 @@
               </a>
             </div>
           </template>
-          <!--      </el-affix>-->
-          <!--          <transition name="fade">-->
-          <!--            <div v-if="showComment " class="relative w-full h-28 text-right">-->
-          <!--            <textarea v-model="commentIn"-->
-          <!--                      class="bg-white border-2 border-gray-200 w-full h-full rounded-xl resize-none outline-0 p-2"-->
-          <!--                      placeholder="请输入内容... | Enter键发送"-->
-          <!--                      v-model="commentIn"@keyup.enter="saveComment(-1)">-->
-          <!--            </textarea>-->
-
-
-          <!--              <div class="absolute bottom-1 right-1 space-x-1 flex justify-around items-center">-->
-          <!--                <button class="  button p-1  "-->
-          <!--                        @click="saveComment(-1,article.user.userId)">-->
-          <!--                  发送-->
-          <!--                </button>-->
-          <!--                <button class=" p-1  button"-->
-          <!--                        @click="showComment =false">-->
-          <!--                  取消-->
-          <!--                </button>-->
-          <!--              </div>-->
-          <!--            </div>-->
-
-          <!--          </transition>-->
           <div
-               :class="{
+              v-if="logined"
+              :class="{
             'opacity-100 h-auto': showComment,
             'opacity-0 h-0': !showComment
                }"
-               class="gs ti uf w-full flex justify-start transition duration-500">
+              class="gs ti uf w-full flex justify-start transition duration-500">
             <div class="w-full ls ys abe mt-2">
               <div class="uk">
                 <img class="lq nc re adn border border-indigo-600"
 
                      :src="$store.state.user.userProfilePhoto"
-                                   alt=""></div>
+                     alt=""></div>
               <div class="tl uh">
-                <div  class="ab">
-                  <div class="focus-within:bg-white adb ado bbi bbo bbs bca bgu bgz"><label for="comment" class="t">Add your
+                <div class="ab">
+                  <div class="focus-within:bg-white adb ado bbi bbo bbs bca bgu bgz"><label for="comment" class="t">Add
+                    your
                     comment</label>
                     <textarea v-model="commentIn"
                               @keyup.enter.stop="saveComment(-1)"
-                        rows="3" name="comment" id="comment"
-                                             class=" lp ti xo aev alh arl axq bfy bmx cht chv"
-                                             placeholder="添加评论..."></textarea>
+                              rows="3" name="comment" id="comment"
+                              class=" lp ti xo aev alh arl axq bfy bmx cht chv"
+                              placeholder="添加评论..."></textarea>
                     <div class="arq" aria-hidden="true">
                       <div class="asb">
                         <div class="od"></div>
@@ -130,9 +109,9 @@
                     </div>
                   </div>
                   <div class="aa aj bx ls za arq ath flex justify-end atv">
-                      <button  @click="saveComment(-1,article.user.userId)"
-                          class="lt yu adp ajm ara arq avv awb bac bbi bin bot bou bow bpf">发送
-                      </button>
+                    <button @click="saveComment(-1,article.user.userId)"
+                            class="lt yu adp ajm ara arq avv awb bac bbi bin bot bou bow bpf">发送
+                    </button>
                   </div>
                 </div>
               </div>
@@ -153,7 +132,7 @@
       'opacity-0 hidden': !showShare
     }"
                 class="ease-in-out transition-all duration-500"
-        @close="()=>{showShare=false}" :showShare="showShare"></shareModal>
+                @close="()=>{showShare=false}" :showShare="showShare"></shareModal>
     <!--      <div-->
     <!--          class="hidden px-2 lg:px-1 my-3 w-full  mx-auto text-slate-700 dark:text-white-->
     <!--       flex flex-col items-center"-->
@@ -305,7 +284,7 @@
               <div class="ls za aab aru">
                 <div class="axm">发布时间</div>
                 <div class="ls ys zx space-x-0.5">
-                  <div class="avz axq">{{ this.$moments(a1.articleUpdateDate, '', true) }}</div>
+                  <div class="avz axq">{{ this.$simpleFormat(a1.articleUpdateDate, '', true) }}</div>
                   <!--                  <div class="ayy akj bdf adp ark aqy avx avz bbo bbs">Overdue</div>-->
                 </div>
               </div>
@@ -433,7 +412,7 @@ export default {
       if (res.data.code === 200) {
         this.article = res.data.data
         //将articleUpdateDate转换为yyyy-MM-dd HH:mm:ss格式
-        this.article.articleUpdateDate = this.$moments(this.article.articleUpdateDate)
+        this.article.articleUpdateDate = this.$simpleFormat(this.article.articleUpdateDate)
       }
     })
     // 取出this.article 前三个元素
@@ -447,7 +426,11 @@ export default {
 
 
   },
-  computed: {},
+  computed: {
+    logined() {
+      return this.$store.state.user != null
+    }
+  },
 
   mounted() {
     setTimeout(() => {
@@ -628,9 +611,9 @@ export default {
           this.comments.forEach((item) => {
             item.articleTitle = ''
             item.articleId = this.article.articleId
-            item.commentUpdateTime = this.$moments(item.commentUpdateTime)
+            item.commentUpdateTime = this.$simpleFormat(item.commentUpdateTime)
             item.value.forEach((item3) => {
-              item3.commentUpdateTime = this.$moments(item3.commentUpdateTime)
+              item3.commentUpdateTime = this.$simpleFormat(item3.commentUpdateTime)
             })
           })
 

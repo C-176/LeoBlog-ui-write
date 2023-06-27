@@ -12,7 +12,7 @@
 
       <!--      文章展示-->
       <div v-for="(article,index) in myArticles" v-else :key="article.articleId"
-           class="w-full overflow-hidden bg-gray-100 space-y-2  py-2 px-3 lg:px-5 rounded-xl mb-2">
+           class="w-full overflow-hidden  hover:shadow-xl transition-all duration-500 bg-gray-100 space-y-2  py-2 px-3 lg:px-5 rounded-xl mb-2">
 
         <div v-if="!mySelf" class="text-left flex justify-start items-center space-x-1">
           <avatar :user-id="article.userId">
@@ -28,10 +28,10 @@
             <div class="text-gray-500 text-xs">{{ $moments(article.articleUpdateDate) }}</div>
           </div>
         </div>
-        <div class="text-left lg:text-base font-bold text-sm cursor-pointer group"
+        <div class="text-left lg:text-base min-h-20 font-bold text-sm cursor-pointer group"
              @click="$router.push('/article/'+article.articleId)"
              :title="article.articleTitle">
-          <span class="group-hover:text-gray-500 lg:group-hover:text-xl duration-300 transition-all">
+          <span class="group-hover:text-gray-500 lg:group-hover:text-indigo-600 duration-300 transition-all">
           {{ article.articleTitle }}</span>
         </div>
         <div class="h-auto max-h-20 lg:max-h-40 group w-full lg:space-x-3 flex justify-start  overflow-hidden ">
@@ -105,11 +105,6 @@ export default {
     }
   },
   watch: {
-    // articles(val) {
-    //   if (val.length > 0) {
-    //     console.log(val[0])
-    //   }
-    // }
   },
 
   data() {

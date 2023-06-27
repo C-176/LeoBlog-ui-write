@@ -399,9 +399,12 @@ function logOut() {
   }).then((result) => {
     if (result.value) {
       // this.$store.commit('removeToken')
+      localStorage.removeItem(encode("lb_user"))
       localStorage.removeItem(encode("lb_userName"))
       localStorage.removeItem(encode("lb_userPassword"))
       localStorage.removeItem('token')
+      store.commit('setUser', null)
+
       router.push('/LR')
 
     }
