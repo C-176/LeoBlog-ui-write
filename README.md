@@ -105,5 +105,6 @@ npm run build
 - Vue.js
 - Tailwind CSS
 - Vite
-
+- vuex
+- vue router
 
