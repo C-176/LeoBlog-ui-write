@@ -142,7 +142,7 @@ const store = createStore({
                     return new Promise((resolve, reject) => {
                         setTimeout(() => {
                             resolve(context.dispatch('getFollows'));
-                        }, 50);
+                        }, 10000);
                     });
                 }
 

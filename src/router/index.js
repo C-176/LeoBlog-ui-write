@@ -68,7 +68,7 @@ const router = createRouter({
     // 4. 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
     history: createWebHistory(),
     routes,
-    scrollBehavior(to, from) {
+    scrollBehavior(to, from,savedPosition){
         // console.log(to, from)
 
 
@@ -77,12 +77,10 @@ const router = createRouter({
                 el: to.hash,
                 behavior: 'smooth'
             }
-        } else {
-            //获取from的滚动条位置
-            if (from.meta.keepAlive) {
-                from.meta.savedPosition = document.body.scrollTop;
-            }
-            return {x: 0, y: to.meta.savedPosition || 0}
+        } else if(savedPosition){
+           return savedPosition;
+        }else{
+            return {top: 0}
         }
 
     }

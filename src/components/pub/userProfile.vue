@@ -152,9 +152,11 @@ export default {
 
   },
   mounted() {
-    this.$store.dispatch('getUserById', this.userId).then(res => {
-      this.userx = res
-    })
+    if (this.userId !== -1) {
+      this.$store.dispatch('getUserById', this.userId).then(res => {
+        this.userx = res
+      })
+    }
   }
 }
 </script>

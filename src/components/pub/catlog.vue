@@ -9,7 +9,7 @@
       </div>
       <div class="w-2/3">
         <!--      // 增加一条进度条-->
-        <div class="duration-1000 border-b-4 border-indigo-600 transition-all"
+        <div class="duration-1000 flex justify-start border-b-4 border-indigo-600 transition-all"
              :class="{
         'w-0':progress===0,
         'w-1/4':progress>0&&progress<25,

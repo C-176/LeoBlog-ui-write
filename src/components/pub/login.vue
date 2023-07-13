@@ -11,7 +11,7 @@
                class="input"
                :placeholder="login ? '用户名/邮箱' : '用户名' " autocomplete="off" autofocus name="userName">
         <template v-if="!login">
-          <input v-model="userEmail" class="input" placeholder="邮箱" autocomplete="off" id="userEmail" >
+          <input v-model="userEmail" class="input" placeholder="邮箱" autocomplete="off" id="userEmail">
         </template>
         <!--        <input v-model="userPassword" class="input" placeholder="密码" autocomplete="new-password" required-->
         <!--               type="password">-->
@@ -76,7 +76,8 @@
           <div class="cursor-pointer flex justify-center items-center space-x-2">
             <!--            <input v-model="rememberMe" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"-->
             <!--                   type="checkbox">-->
-            <input type="radio" @click="rememberMe = !rememberMe"  :checked="rememberMe" name="radio-2" class="radio radio-primary"/>
+            <input type="radio" @click="rememberMe = !rememberMe" :checked="rememberMe" name="radio-2"
+                   class="radio radio-primary"/>
             <span @click="rememberMe = !rememberMe">记住密码</span></div>
           <div class="text-indigo-500 px-2 py-1 rounded-xl cursor-pointer hover:bg-gray-100" @click="alertTest">
             测试用户
@@ -99,64 +100,47 @@
 
     </div>
   </div>
-  <main id="content" role="main" class="fixed  text-left z-50 h-auto inset-1 mx-auto mt-16 w-full   lg:w-1/3  p-2 bg-white lg:rounded-xl" v-if="forgetPwd">
-    <a-tooltip id="close" class="absolute top-2 right-2" title="关闭">
-      <button class="rounded-xl z-20 text-white h-8 w-8 text-center bg-indigo-600 hover:bg-indigo-500"
-              @click="forgetPwd = false">
-        ✖
-      </button>
-    </a-tooltip>
-    <div class="mt-2 h-auto rounded-xl dark:bg-gray-800 dark:border-gray-700">
-      <div class="p-4 sm:p-7">
-        <div class="text-center">
-          <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">忘记密码?</h1>
-          <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            又想起来了?
-            <a class="text-indigo-600 decoration-2 hover:underline font-medium" @click="forgetPwd = false">
-              去登陆
-            </a>
-          </p>
-        </div>
+  <my-modal :size="'md'"  :visible="forgetPwd" @closeModal="forgetPwd = false">
 
-        <div class="mt-5">
-<!--          <form >-->
-            <div class="grid gap-y-4">
-              <div>
-                <label for="email" class="block text-sm font-bold ml-1 mb-2 dark:text-white">邮箱</label>
-                <div class="relative">
-                  <input type="email" v-model="forgetEmail" id="email" name="email" class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-indigo-600 focus:ring-indigo-600 shadow-sm" required aria-describedby="email-error">
-                </div>
-                <label for="userPassword" class="block text-sm font-bold ml-1 mb-2 dark:text-white">新密码</label>
-                <div class="relative">
-                  <input type="password" v-model="userPassword" id="userPassword"  class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-indigo-600 focus:ring-indigo-600 shadow-sm" required aria-describedby="email-error">
-                </div>
-                <label for="reUserPassword" class="block text-sm font-bold ml-1 mb-2 dark:text-white">确认密码</label>
-                <div class="relative">
-                  <input type="password" v-model="reUserPassword" id="reUserPassword" class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-indigo-600 focus:ring-indigo-600 shadow-sm" required aria-describedby="email-error">
-                </div>
-                <p class="hidden text-xs text-red-600 mt-2" id="email-error">请输入有效邮箱</p>
+<!--      <div class="p-4 sm:p-7">-->
+<!--        <div class="text-center">-->
+<!--          <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">忘记密码?</h1>-->
+<!--          <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">-->
+<!--            又想起来了?-->
+<!--            <a class="text-indigo-600 decoration-2 hover:underline font-medium" @click="forgetPwd = false">-->
+<!--              去登陆-->
+<!--            </a>-->
+<!--          </p>-->
+<!--        </div>-->
+
+          <div class="grid gap-y-4">
+            <div>
+              <label for="email" class="block text-sm font-bold ml-1 mb-2 dark:text-white">邮箱</label>
+              <div class="relative">
+                <input type="email" v-model="forgetEmail" id="email" name="email"
+                       class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-indigo-600 focus:ring-indigo-600 shadow-sm"
+                       required aria-describedby="email-error">
               </div>
-              <button @click="changePwd" class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-indigo-600 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-base dark:focus:ring-offset-gray-800">重置密码</button>
+              <label for="userPassword" class="block text-sm font-bold ml-1 mb-2 dark:text-white">新密码</label>
+              <div class="relative">
+                <input type="password" v-model="userPassword" id="userPassword"
+                       class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-indigo-600 focus:ring-indigo-600 shadow-sm"
+                       required aria-describedby="email-error">
+              </div>
+              <label for="reUserPassword" class="block text-sm font-bold ml-1 mb-2 dark:text-white">确认密码</label>
+              <div class="relative">
+                <input type="password" v-model="reUserPassword" id="reUserPassword"
+                       class="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-indigo-600 focus:ring-indigo-600 shadow-sm"
+                       required aria-describedby="email-error">
+              </div>
+              <p class="hidden text-xs text-red-600 mt-2" id="email-error">请输入有效邮箱</p>
             </div>
-<!--          </form>-->
-        </div>
-      </div>
-    </div>
-
-    <p class="mt-3 flex justify-center items-center text-center divide-x divide-gray-300 dark:divide-gray-700">
-      <a class="pr-3.5 inline-flex items-center gap-x-2 text-sm text-gray-600 decoration-2 hover:underline hover:text-indigo-600 dark:text-gray-500 dark:hover:text-gray-200" href="#" target="_blank">
-        <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
-        </svg>
-        View Github
-      </a>
-      <a class="pl-3 inline-flex items-center gap-x-2 text-sm text-gray-600 decoration-2 hover:underline hover:text-indigo-600 dark:text-gray-500 dark:hover:text-gray-200" href="#">
-
-        联系我们
-      </a>
-    </p>
-  </main>
-  <bgCover :showCover.sync="$store.state.bgCover"></bgCover>
+            <button @click="changePwd"
+                    class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-indigo-600 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-base dark:focus:ring-offset-gray-800">
+              重置密码
+            </button>
+          </div>
+  </my-modal>
 
 </template>
 
@@ -165,18 +149,20 @@ import Swal from 'sweetalert2'
 import axios from "axios";
 import {decode, encode} from '@/util/AES'
 import bgCover from "@/components/pub/BgCover";
+import MyModal from "@/components/pub/myModal.vue";
 
 
 export default {
   name: 'login',
   // props:[''],
-  components:{
+  components: {
+    MyModal,
     bgCover,
   },
   data() {
     return {
-      forgetEmail:'',
-      forgetPwd:false,
+      forgetEmail: '',
+      forgetPwd: false,
       message: 'test',
       userName: '',
       name: 'userName',
@@ -216,12 +202,12 @@ export default {
         this.userPassword = ''
       }
     },
-    forgetPwd(val){
-      if(val){
-        this.$store.commit('changeBgCover',true)
+    forgetPwd(val) {
+      if (val) {
+        this.$store.commit('changeBgCover', true)
         // console.log(this.$store.state.bgCover)
-      }else {
-        this.$store.commit('changeBgCover',false)
+      } else {
+        this.$store.commit('changeBgCover', false)
       }
     }
 
@@ -325,7 +311,7 @@ export default {
                       reject(res.data)
                     }
                   })
-                }else{
+                } else {
                   this.$st("验证码不可为空", 'error')
                 }
               })
@@ -341,7 +327,7 @@ export default {
       this.captchaUrl = this.baseURL + "/user/getCaptcha?time=" + new Date().getTime() + '&token=' + localStorage.getItem("token")
     },
     changePwd() {
-      if(this.forgetEmail.trim().length == 0){
+      if (this.forgetEmail.trim().length == 0) {
         this.$st("邮箱不能为空", 'error')
         return
       }
@@ -382,24 +368,24 @@ export default {
             cancelButtonText: '取消',
           }).then((result) => {
             console.log(result)
-              axios.post("/user/changePwd", {
-                userPassword: this.userPassword,
-                // userNewPassword: this.userPassword,
-                userEmail: this.forgetEmail,
-                captcha: result.value
-              }).then(res => {
-                if (res.data.code === 200) {
-                  this.forgetPwd = false
-                  this.$sa("密码修改成功，请登录", "success")
-                  this.$store.commit('changeLogin', true);
+            axios.post("/user/changePwd", {
+              userPassword: this.userPassword,
+              // userNewPassword: this.userPassword,
+              userEmail: this.forgetEmail,
+              captcha: result.value
+            }).then(res => {
+              if (res.data.code === 200) {
+                this.forgetPwd = false
+                this.$sa("密码修改成功，请登录", "success")
+                this.$store.commit('changeLogin', true);
 
 
-                  resolve(res.data.code)
-                } else {
-                  this.$st(res.data.data, 'error')
-                  reject(res.data)
-                }
-              })
+                resolve(res.data.code)
+              } else {
+                this.$st(res.data.data, 'error')
+                reject(res.data)
+              }
+            })
 
           })
         }

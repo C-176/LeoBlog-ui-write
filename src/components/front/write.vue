@@ -147,7 +147,7 @@ export default {
       return this.color[Math.floor(Math.random() * this.color.length)]
     },
     handleAvatarSuccess(res, file) {
-      this.imgUrl = res.data.url;
+      this.imgUrl = res.url;
       this.article.articlePic = this.imgUrl;
       this.$st("背景图片上传成功", 'success')
     },

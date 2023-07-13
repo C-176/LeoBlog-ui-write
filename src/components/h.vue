@@ -88,10 +88,10 @@
 
 
             <template v-if="!logined">
-              <a @click="login"
-                 class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">登陆</a>
               <a @click="registerAction"
-                 class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">注册</a>
+                 class="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900">注册</a>
+              <a @click="login"
+                 class="ml-8 inline-flex items-center justify-center whitespace-nowrap rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">登陆</a>
             </template>
             <template v-else>
 
@@ -233,12 +233,12 @@
               <!--              小屏登陆注册-->
               <div>
                 <template v-if="!logined">
-                  <a @click="registerAction"
-                     class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">注册</a>
+                  <a @click="login"
+                     class="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700">登陆</a>
                   <p class="mt-6 text-center text-base font-medium text-gray-500">
-                    已经有账户了?
+                    还没有账户?
                     {{ ' ' }}
-                    <a @click="login" class="text-indigo-600 hover:text-indigo-500">登陆</a>
+                    <a @click="registerAction" class="text-indigo-600 hover:text-indigo-500">注册</a>
                   </p></template>
                 <template v-else>
                   <a @click="logOut"
@@ -308,6 +308,7 @@ import SearchDialog from "@/components/pub/searchDialog";
 import music from "@/components/pub/music";
 import Message from "@/components/pub/message.vue";
 import app from "@/main";
+import axios from "axios";
 
 const router = useRouter()
 let openSearch = ref(false)
@@ -399,14 +400,21 @@ function logOut() {
   }).then((result) => {
     if (result.value) {
       // this.$store.commit('removeToken')
-      localStorage.removeItem(encode("lb_user"))
-      localStorage.removeItem(encode("lb_userName"))
-      localStorage.removeItem(encode("lb_userPassword"))
-      localStorage.removeItem('token')
-      store.commit('setUser', null)
+      // localStorage.removeItem(encode("lb_user"))
+      // localStorage.removeItem(encode("lb_userName"))
+      // localStorage.removeItem(encode("lb_userPassword"))
 
+      axios.interceptors.request.use(config => {
+        const token = localStorage.getItem('token')
+        if (token) config.headers['Authorization'] = token
+        return config
+      })
+
+      axios.get("/user/logout");
+      setTimeout(() => {
+        store.commit('setUser', null)
+      }, 500)
       router.push('/LR')
-
     }
   })
 }

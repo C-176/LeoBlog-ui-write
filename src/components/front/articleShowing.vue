@@ -85,7 +85,7 @@
             'opacity-100 h-auto': showComment,
             'opacity-0 h-0': !showComment
                }"
-              class="gs ti uf w-full flex justify-start transition duration-500">
+              class="ti uf w-full flex justify-start transition duration-500">
             <div class="w-full ls ys abe mt-2">
               <div class="uk">
                 <img class="lq nc re adn border border-indigo-600"
@@ -100,7 +100,7 @@
                     <textarea v-model="commentIn"
                               @keyup.enter.stop="saveComment(-1)"
                               rows="3" name="comment" id="comment"
-                              class=" lp ti xo aev alh arl axq bfy bmx cht chv"
+                              class=" lp ti xo p-2 aev alh arl axq bfy bmx cht chv"
                               placeholder="添加评论..."></textarea>
                     <div class="arq" aria-hidden="true">
                       <div class="asb">

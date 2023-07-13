@@ -74,84 +74,105 @@
           <div class="">{{ talkTo.user.userPos }}</div>
         </div>
         <div id="chat" ref="chat"
-             class="w-full h-2/3 bg-gray-100  rounded-xl p-3 overflow-auto"
+             class="w-full relative flex justify-center h-2/3 bg-gray-100 overflow-x-hidden  rounded-xl p-3 overflow-auto"
         >
+          <div
+              :class="{'invisible':isLoading == 0,'visible':isLoading !==0,
+              'top-0':isLoading == -1,'bottom-0':isLoading == 1,}"
+              class="flex  w-full z-40 absolute items-center justify-center transition-all duration-500">
+            <button class="inline-flex text-center justify-center  w-full items-center p-2
+            text-indigo-600 text-sm backdrop-blur-sm cursor-not-allowed" disabled="">
+              <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg"
+                   fill="none"
+                   viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+
+            </button>
+          </div>
+
+
           <!--             @wheel.capture="scrollRecord">-->
-
-          <template v-for="(record,index) in talkTo.record" :key="index">
-            <div v-if="timeDiff(index,index-1)"
-                 class=" w-full h-auto my-1 text-center text-gray-400 text-sm"
-                 id="updateTime">
-              {{ this.$moments(record.recordUpdateTime) }}
-            </div>
-
-            <template v-if="record.userId == $store.state.user.userId">
-
-              <div
-                  class="w-full transition duration-300 ease-in flex-1 text-right  mb-1 flex float-right justify-end space-x-0.5  items-start"
-                  :key="record.userId">
-                <div class="flex-col justify-start items-end space-y-0.5">
-                  <!--                      <div class="text-xs text-right">{{ $store.state.user.userNickname }}</div>-->
-                  <div
-                      class=" w-auto rounded-xl bg-indigo-600 hover:bg-indigo-500 cursor-pointer text-white shadow text-left text-xs p-2"><span
-                      v-html="record.recordContent" id="message"></span></div>
-                </div>
-                <div class="min-w-10 min-h-10 rounded-full">
-                  <!--                      <user v-slot="slotP" :user-id="record.userId">-->
-                  <a-avatar
-                      :src="p($store.state.user.userProfilePhoto)"
-                      :style="{ backgroundColor:'#0eb73a', verticalAlign: 'middle' ,float:'right'}"
-                      shape="circle"
-                      size="middle"
-                  >
-                    {{ $store.state.user.userNickname }}
-                  </a-avatar>
-                  <!--                      </user>-->
-                </div>
-
-
+          <ul ref="listItem">
+            <template v-for="(record,index) in talkTo.record" :key="index">
+              <div v-if="timeDiff(index,index-1)"
+                   class=" w-full h-auto my-1 text-center text-gray-400 text-sm"
+                   id="updateTime">
+                {{ this.$moments(record.recordUpdateTime) }}
               </div>
 
-            </template>
-            <template v-else>
-              <div class="w-full  mb-2 flex float-left justify-start  items-start"
-                   :key="record.userId">
 
-                <user v-slot="slotP" :user-id="record.userId">
-                  <div class="flex justify-start space-x-1 items-start">
-                    <div class="min-w-10 min-h-10 rounded-full">
+              <template v-if="record.userId == $store.state.user.userId">
 
-                      <a-avatar
-                          :src="p(slotP.photo)"
-                          :style="{ backgroundColor:'#0eb73a', verticalAlign: 'middle' ,float:'right'}"
-                          shape="circle"
-                          size="middle"
-                      >
-                        {{ slotP.text }}
-
-                      </a-avatar>
-                    </div>
-                    <div class="flex-col space-y-1 justify-start items-start">
-                      <div v-if="talkTo.user.userId == -1"
-                           class="text-xs w-auto text-left">{{
-                          slotP.text
-                        }}
-                      </div>
-                      <div
-
-                          class="rounded-xl bg-white hover:bg-gray-100 cursor-pointer text-black shadow text-left text-xs p-2"><span
-                          v-html="record.recordContent" id="message"></span>
-                      </div>
-                    </div>
+                <li
+                    class="w-full transition duration-300 ease-in flex-1 text-right  mb-1 flex float-right justify-end space-x-0.5  items-start"
+                    :key="record.userId">
+                  <div class="flex-col justify-start items-end space-y-0.5">
+                    <!--                      <div class="text-xs text-right">{{ $store.state.user.userNickname }}</div>-->
+                    <div
+                        class=" w-auto rounded-xl bg-indigo-600 hover:bg-indigo-500 cursor-pointer text-white shadow text-left text-xs p-2"><span
+                        v-html="record.recordContent" id="message"></span></div>
                   </div>
-                </user>
+                  <div class="min-w-10 min-h-10 rounded-full">
+                    <!--                      <user v-slot="slotP" :user-id="record.userId">-->
+                    <a-avatar
+                        :src="p($store.state.user.userProfilePhoto)"
+                        :style="{ backgroundColor:'#0eb73a', verticalAlign: 'middle' ,float:'right'}"
+                        shape="circle"
+                        size="middle"
+                    >
+                      {{ $store.state.user.userNickname }}
+                    </a-avatar>
+                    <!--                      </user>-->
+                  </div>
 
 
-              </div>
+                </li>
+
+              </template>
+              <template v-else>
+                <li class="w-full  mb-2 flex float-left justify-start  items-start"
+                    :key="record.userId">
+
+                  <user v-slot="slotP" :user-id="record.userId">
+                    <div class="flex justify-start space-x-1 items-start">
+                      <div class="min-w-10 min-h-10 rounded-full">
+
+                        <a-avatar
+                            :src="p(slotP.photo)"
+                            :style="{ backgroundColor:'#0eb73a', verticalAlign: 'middle' ,float:'right'}"
+                            shape="circle"
+                            size="middle"
+                        >
+                          {{ slotP.text }}
+
+                        </a-avatar>
+                      </div>
+                      <div class="flex-col space-y-1 justify-start items-start">
+                        <div v-if="talkTo.user.userId == -1"
+                             class="text-xs w-auto text-left">{{
+                            slotP.text
+                          }}
+                        </div>
+                        <div
+
+                            class="rounded-xl bg-white hover:bg-gray-100 cursor-pointer text-black shadow text-left text-xs p-2"><span
+                            v-html="record.recordContent" id="message"></span>
+                        </div>
+                      </div>
+                    </div>
+                  </user>
 
 
+                </li>
+
+
+              </template>
             </template>
-          </template>
+          </ul>
+
         </div>
         <!--            </template>-->
 
@@ -163,9 +184,25 @@
             :defaultConfig="toolbarConfig"
             :editor="editor"
             mode="simple"
-            class="w-full h-8"
-        />
-        <div class="w-full relative border-2 h-1/4 bg-gray-100 overflow-auto rounded-xl">
+            class="w-full h-8 "
+        >
+
+        </Toolbar>
+        <div class="w-full relative border-2 h-1/4 bg-gray-100  rounded-xl">
+          <div
+              @click="loadingLast"
+              :class="{'invisible':!hasNewMessage,'visible':hasNewMessage,
+                        }"
+              class="-top-20 right-20 flex cursor-pointer  w-full z-40 absolute items-center justify-end transition-all duration-500">
+            <div
+                class="animate-bounce bg-white dark:bg-slate-800 p-2 w-8 h-8 ring-1 ring-slate-900/5 dark:ring-slate-200/20
+                            shadow-lg rounded-full flex items-center justify-center">
+              <svg class="w-6 h-6 text-violet-500" fill="none" stroke-linecap="round" stroke-linejoin="round"
+                   stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                <path d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+              </svg>
+            </div>
+          </div>
 
           <Editor
               v-model="message"
@@ -188,6 +225,7 @@
             发送
 
           </button>
+
         </div>
 
 
@@ -205,11 +243,8 @@ import user from "@/components/pub/user";
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
 import {Editor, Toolbar} from '@wangeditor/editor-for-vue'
 import Swal from "sweetalert2";
-import {Boot} from '@wangeditor/editor'
-import ctrlEnterModule from '@wangeditor/plugin-ctrl-enter'
 import {mapState} from "vuex";
 import bigImg from "@/components/pub/bigImg";
-import {SlateTransforms} from '@wangeditor/editor'
 import app from "@/main";
 
 // Boot.use(ctrlEnterModule)
@@ -232,7 +267,6 @@ export default {
       pageSize: 50,
       pages: 0,
       loadingTime: new Date().getTime(),
-
       submitting: false,
       logoSrc: '',
       key: '',
@@ -243,13 +277,8 @@ export default {
           userNickname: '',
           userAddress: '',
         },
-        record: [{
-          recordId: -1,
-          userId: -1,
-          receiverId: -1,
-          recordContent: '聊天记录加载中...',
-          recordUpdateTime: '2021-05-01 12:00:00',
-        }]
+        record: [],
+        totalRecord: []
       },
       toDown: true,
       chats: [
@@ -270,6 +299,7 @@ export default {
         //   }
         // }
       ],
+      totalChats: [],
       record: {
         userId: 1,
         receiverId: 1,
@@ -309,7 +339,8 @@ export default {
             },
             // 自定义增加 http  header
             headers: {
-              Authorization: localStorage.getItem('token')
+              Authorization: localStorage.getItem('token'),
+              'X-API-Key': 'chv_CXdb_302522b7eaa636d3ca99a17838e41d221da84aebd23147e515ff600c3736e3fc01a5f0b7994c5bfe3f4258aea800741c082bd078c4e36b4f8cb868cb1f6a9a01'
             },
             // // 跨域是否传递 cookie ，默认为 false
             // withCredentials: true,
@@ -349,6 +380,13 @@ export default {
       },
       state: '',
       connecting: false,
+      isLast: false,
+      rollSize: 30,
+      canScroll: false,
+      offset: 0,
+      distance: 0,
+      isLoading: -1,
+      hasNewMessage: false,
     }
 
   },
@@ -358,10 +396,11 @@ export default {
     this.editorConfig1.MENU_CONF.uploadVideo.server = this.baseURL + '/upload/file'
     this.getUsers();
 
+
     this.logoSrc = this.baseURL + '/source/images/logoTest.png'
     this.$nextTick(() => {
       this.redPoint = new Array(this.chats.length).fill(0)
-      this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight
+      // this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight
     })
 
 
@@ -374,23 +413,16 @@ export default {
 
   },
   mounted() {
-    setTimeout(() => {
-      this.$refs.chat.scrollTop = 10
-      this.$refs.chat.addEventListener("scroll", this.scrollRecord)
-    }, 500)
+    this.$refs.chat.addEventListener('scroll', this.handleScroll, true);
+  },
+  beforeUnmount() {
+    this.$refs.chat.removeEventListener('scroll', this.handleScroll);
   },
 
   watch: {
-
     talkTo: {
       handler() {
         this.$nextTick(() => {
-          if (this.toDown) {
-            this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight
-            this.toDown = false
-          }
-
-
           this.$loading = false
           //给所有img标签添加点击事件
           let imgs = document.querySelectorAll('#chat #message img')
@@ -448,10 +480,165 @@ export default {
     logined() {
       return this.$store.state.user != null
     },
+    lastest() {
+      let record = this.talkTo.record;
+      let totalRecord = this.talkTo.totalRecord;
+      let length = record.length;
+      let totalLen = totalRecord.length;
+      if (length == 0 && totalLen == 0) {
+        return true
+      }
+      // 如果record最后一个 和 totalRecord最后一个相同，说明已经加载完毕
+      if (length > 0 && totalLen > 0) {
+        if (record[length - 1].recordId === totalRecord[totalLen - 1].recordId
+            && record[length - 1] != undefined) {
+          return true
+        }
+      }
+      return false
+    },
 
   },
 
   methods: {
+
+
+    handleScroll(e) {
+      if (this.isLoading !== 0) return
+      if (e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight) {
+        this.scrollToBottom();
+      } else if (e.target.scrollTop <= 0) {
+        this.scrollToTop();
+      }
+    }
+    ,
+    async scrollToTop() {
+      this.isLoading = -1;
+      // 到顶的话，根据游标去请求数据
+      await this.getCursorPage();
+      this.move(-1);
+    },
+    scrollToBottom() {
+      this.isLoading = 1;
+      // 到顶的话，根据游标去请求数据
+      this.move(1);
+    },
+    getScrollPosition(element) {
+      // 获取父元素
+      const parentElement = element.parentNode
+
+      // 计算滚动距离
+      const scrollTop =
+          parentElement.scrollTop +
+          element.getBoundingClientRect().top -
+          parentElement.getBoundingClientRect().top -
+          parseInt(getComputedStyle(parentElement).borderTopWidth) -
+          parseInt(getComputedStyle(parentElement).paddingTop)
+
+      // 返回结果
+      return scrollTop
+    },
+    move(forward) {
+      console.log('move....................', forward)
+
+      // forward 1 向下，-1 向上
+      // 获取totalChats和chats
+      let totalSize = this.talkTo.totalRecord.length;
+      let size = this.talkTo.record.length;
+      // if (totalSize == size && size == 0 && this.isLast) {
+      //   this.isLoading = 0;
+      //   return;
+      // }
+      var recordId = this.talkTo.record[forward === 1 ? size - 1 : 0].recordId;
+      // 如果现在显示的是中间的数据，
+      if (forward === -1) {
+        // 如果我想往上看，先判断，现在看到的数据是不是最旧的
+        // 如果是最旧的，没有了，因为已经加载过最旧的数据
+        if (this.talkTo.record[0].recordId === this.talkTo.totalRecord[0].recordId && this.isLast) {
+          this.isLoading = 0;
+          return;
+        }
+        // 如果不是最旧的，滚动加载数据
+        let index = this.talkTo.totalRecord.findIndex(item => item.recordId === this.talkTo.record[0].recordId);
+        let start = index - this.rollSize;
+        let end = index;
+        if (start < 0) {
+          start = 0;
+        }
+        // 计算新加载的数据
+        let newChats = this.talkTo.totalRecord.slice(start, end);
+        let newLen = newChats.length;
+        if (size >= this.pageSize) {
+          // 把原数据删掉一部分
+          this.talkTo.record = newChats.concat(this.talkTo.record.slice(0, size - newLen));
+        } else {
+          this.talkTo.record = newChats.concat(this.talkTo.record);
+        }
+
+      } else if (forward === 1) {
+        // 如果我想往下看，先判断，现在看到的数据是不是最新的
+        // 如果是最新的，没有了
+
+        if (this.talkTo.record[size - 1].recordId === this.talkTo.totalRecord[totalSize - 1].recordId) {
+          this.isLoading = 0;
+          return;
+        }
+        // 如果不是最新的，滚动加载数据
+        let index = this.talkTo.totalRecord.findIndex(item => item.recordId === this.talkTo.record[size - 1].recordId);
+        let start = index + 1;
+        let end = index + this.rollSize + 1;
+        if (end > totalSize) {
+          end = totalSize;
+        }
+        // 计算新加载的数据
+        let newChats = this.talkTo.totalRecord.slice(start, end);
+        let newLen = newChats.length;
+        if (size >= this.pageSize) {
+          // 把原数据删掉一部分
+          this.talkTo.record = this.talkTo.record.slice(newLen).concat(newChats);
+        } else {
+          this.talkTo.record = this.talkTo.record.concat(newChats);
+        }
+
+      }
+      this.isLoading = 0;
+      this.$nextTick(() => {
+        var findIndex = this.talkTo.record.findIndex(item => item.recordId === recordId);
+        this.$refs.chat.scrollTop = this.getScrollPosition(this.$refs.listItem.children[findIndex]);
+      })
+    },
+    async getCursorPage() {
+      if (this.isLast) return;
+      await this.$axios.post('/chat/record/cursor/list', {
+        'cursor': this.cursor,
+        'pageSize': this.pageSize,
+        'offset': this.offset,
+        'talkToId': this.talkTo.user.userId,
+      }).then(res => {
+        if (res.data.code == 200) {
+          this.isLast = res.data.data.isLast;
+          this.cursor = res.data.data.cursor;
+          this.offset = res.data.data.offset;
+          if (res.data.data.list.length != 0) {
+            // 有数据的话，加入到总数据中
+            if (this.talkTo.record.length == 0) {
+              this.talkTo.record = res.data.data.list
+              if (this.talkTo.totalRecord.length == 0) {
+                this.talkTo.record.forEach(item => this.talkTo.totalRecord.push(item))
+              }
+            } else {
+              // 判断新数据的最后一条数据的recordId是否小于现在的第一条数据的recordId，如果是，说明是往上滚动加载的数据，否则是无效的重复数据
+              if (res.data.data.list[res.data.data.list.length - 1].recordId < this.talkTo.totalRecord[0].recordId) {
+                this.talkTo.totalRecord = res.data.data.list.concat(this.talkTo.totalRecord)
+              }
+            }
+          }
+        }
+      }).catch(err => {
+        console.log(err)
+      })
+
+    },
     querySearch(queryString, cb) {
       let results = null;
       if (this.state.trim() == '') {
@@ -636,13 +823,27 @@ export default {
           }, 500)
         })
       }
-
-
       this.editor.focus()
 
     },
-    select(index) {
-      this.toDown = true
+    refreshCursorReq: function () {
+      this.offset = 0
+      this.cursor = null
+      this.isLast = false
+      this.talkTo.record = []
+      this.talkTo.totalRecord = []
+      this.hasNewMessage = false
+    },
+    async select(index) {
+      this.isLoading = -1
+      // this.toDown = true
+      // 无需切换好友
+      if (this.talkTo.user.userId == this.chats[index].user.userId && this.talkTo.record.length != 0) {
+        this.isLoading = 0;
+        return;
+      }
+      // 切换好友,清空游标查询条件
+      this.refreshCursorReq();
 
       this.talkTo.user = this.chats[index].user
       // 选中好友状态
@@ -654,25 +855,30 @@ export default {
 
       //更新聊天记录
       //TODO:从localstorage中获取聊天记录
-      this.talkTo.record = this.getChatRecord(this.$store.state.user.userId, this.talkTo.user.userId)
-      if (this.talkTo.record.length == 0) {
-        if (this.talkTo.user.userId !== 1) {
-          this.$axios.get(this.baseURL + '/chat/connect/' + this.$store.state.user.userId + '/' + this.talkTo.user.userId).then(res => {
-            if (res.data.code === 200) {
-              this.currentPage = res.data.data.current;
-              this.pages = res.data.data.pages;
-              this.talkTo.record = res.data.data.records;
-              this.talkTo.record.forEach(record => {
-                record.recordContent = this.replaceURL(record.recordContent)
-              })
-              this.saveChatRecord(this.$store.state.user.userId, this.talkTo.user.userId, this.talkTo.record)
+      // this.talkTo.record = this.getChatRecord(this.$store.state.user.userId, this.talkTo.user.userId)
+      // if (this.talkTo.record.length == 0) {
+      //   if (this.talkTo.user.userId !== 1) {
+      //     this.$axios.get(this.baseURL + '/chat/connect/' + this.$store.state.user.userId + '/' + this.talkTo.user.userId).then(res => {
+      //       if (res.data.code === 200) {
+      //         this.currentPage = res.data.data.current;
+      //         this.pages = res.data.data.pages;
+      //         this.talkTo.record = res.data.data.records;
+      //         if(this.talkTo.totalRecord.length == 0) this.talkTo.totalRecord = this.talkTo.record
+      //         this.talkTo.record.forEach(record => {
+      //           record.recordContent = this.replaceURL(record.recordContent)
+      //         })
+      //         this.saveChatRecord(this.$store.state.user.userId, this.talkTo.user.userId, this.talkTo.record)
+      //
+      //       } else {
+      //         this.$st(res.data.data, "error")
+      //       }
+      //     })
+      //   }
+      // }
 
-            } else {
-              this.$st(res.data.data, "error")
-            }
-          })
-        }
-      }
+      await this.getCursorPage()
+      this.isLoading = 0
+      this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight
       this.editor.focus()
     }
     ,
@@ -763,7 +969,21 @@ export default {
       this.editor.insertBreak()
     },
 
-    sendMessage() {
+    loadingLast() {
+      if (!this.lastest) {
+        // 加载最新的pageSize，如果不够，加载全部
+        if (this.talkTo.totalRecord.length < this.pageSize) {
+          this.talkTo.totalRecord.forEach(record => this.talkTo.record.push(record))
+        } else {
+          this.talkTo.record = this.talkTo.totalRecord.slice(this.talkTo.totalRecord.length - this.pageSize)
+        }
+      }
+
+      this.$nextTick(() => {
+        this.$refs.chat.scrollTop = this.$refs.chat.scrollHeight
+        this.hasNewMessage = false
+      })
+    }, sendMessage() {
       this.insertNode()
       this.$nextTick(() => {
         let msg = this.message.replaceAll('<p><br></p>', '').trim()
@@ -795,8 +1015,9 @@ export default {
           userId: this.$store.state.user.userId,
           receiverId: this.talkTo.user.userId
         }
-        this.talkTo.record.push(d)
-        this.addAndSaveChatRecord(d.userId, d.receiverId, d)
+        this.talkTo.totalRecord.push(d)
+        this.loadingLast();
+        // this.addAndSaveChatRecord(d.userId, d.receiverId, d)
         try {
           this.editor.clear()
           this.editor.focus()
@@ -808,8 +1029,6 @@ export default {
     onMessage(event) {
       this.toDown = true
       let data = JSON.parse(event.data);
-      // console.log(data)
-
       if (data.type === 1) {
         // this.$st(data.recordContent, 'info')
         if (data.recordContent.indexOf(" 已上线") !== -1) {
@@ -848,15 +1067,23 @@ export default {
         }
         // 保存聊天记录
         // 保存收到的消息
-        if (receiverId !== -1) {
-          this.addAndSaveChatRecord(receiverId, userId, data)
-        } else {
-          if(userId !== this.$store.state.user.userId) this.addAndSaveChatRecord(this.$store.state.user.userId, -1, data)
-        }
+        // if (receiverId !== -1) {
+        //   this.addAndSaveChatRecord(receiverId, userId, data)
+        // } else {
+        //   if (userId !== this.$store.state.user.userId) this.addAndSaveChatRecord(this.$store.state.user.userId, -1, data)
+        // }
         //向对应的聊天框中添加消息
         if ((userId == this.talkTo.user.userId && receiverId == this.$store.state.user.userId)
             || (this.talkTo.user.userId == -1 && data.receiverId == -1 && this.$store.state.user.userId != userId)) {
-          this.talkTo.record.push(data)
+          if (this.lastest === true) {
+            this.talkTo.totalRecord.push(data)
+            this.loadingLast()
+          } else {
+            this.talkTo.totalRecord.push(data)
+
+            // 提示有新消息
+            this.hasNewMessage = true
+          }
         } else {
           var uid;
           if (receiverId === -1 && this.$store.state.user.userId !== userId) {
