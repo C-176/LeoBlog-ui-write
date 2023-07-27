@@ -23,9 +23,9 @@
                v-for="(article,index) in myArticles" :key="article.articleId">
             <div class="min-w-0 flex-1">
               <h2 @click="$router.push('/article/'+article.articleId)"
-                  :title="article.articleTitle.replaceAll('<p>','').replaceAll('</p>','').replaceAll('<br>','')"
+                  :title="article.articleTitle"
                   class="text-base cursor-pointer hover:text-gray-600 font-bold leading-5 text-gray-900 sm:truncate sm:text-base sm:tracking-tight">
-                {{ article.articleTitle.replaceAll('<p>','').replaceAll('</p>','').replaceAll('<br>','') }}
+                {{ article.articleTitle }}
               </h2>
               <div class="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
 
@@ -155,11 +155,7 @@ export default {
       //根据articleList中每个article的userId获取user信息
       this.articleList.forEach((item, index) => {
         this.articleList[index].articleUpdateDate = this.$moments(this.articleList[index].articleUpdateDate)
-        this.$axios.get("/user/" + item.userId).then((res) => {
-          if (res.data.data != null) {
-            this.articles[index].author = res.data.data.userName
-          }
-        })
+        this.articles[index].author = this.$store.state.user.userNickName
       })
       return this.articles
     }

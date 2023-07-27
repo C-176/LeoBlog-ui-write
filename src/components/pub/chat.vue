@@ -95,7 +95,7 @@
 
 
           <!--             @wheel.capture="scrollRecord">-->
-          <ul ref="listItem">
+          <ul ref="listItem" class="w-full">
             <template v-for="(record,index) in talkTo.record" :key="index">
               <div v-if="timeDiff(index,index-1)"
                    class=" w-full h-auto my-1 text-center text-gray-400 text-sm"
@@ -539,8 +539,6 @@ export default {
       return scrollTop
     },
     move(forward) {
-      console.log('move....................', forward)
-
       // forward 1 向下，-1 向上
       // 获取totalChats和chats
       let totalSize = this.talkTo.totalRecord.length;
@@ -971,12 +969,15 @@ export default {
 
     loadingLast() {
       if (!this.lastest) {
+        this.talkTo.record = []
         // 加载最新的pageSize，如果不够，加载全部
         if (this.talkTo.totalRecord.length < this.pageSize) {
           this.talkTo.totalRecord.forEach(record => this.talkTo.record.push(record))
         } else {
           this.talkTo.record = this.talkTo.totalRecord.slice(this.talkTo.totalRecord.length - this.pageSize)
         }
+      }else{
+        this.talkTo.record = this.talkTo.totalRecord.slice(this.talkTo.totalRecord.length - this.pageSize)
       }
 
       this.$nextTick(() => {
@@ -1009,13 +1010,13 @@ export default {
         } catch (e) {
           this.$st("连接失败，请刷新页面重试", 'error')
         }
-        let d = {
-          recordContent: this.replaceURL(msg),
-          recordUpdateTime: new Date().getTime(),
-          userId: this.$store.state.user.userId,
-          receiverId: this.talkTo.user.userId
-        }
-        this.talkTo.totalRecord.push(d)
+        // let d = {
+        //   recordContent: this.replaceURL(msg),
+        //   recordUpdateTime: new Date().getTime(),
+        //   userId: this.$store.state.user.userId,
+        //   receiverId: this.talkTo.user.userId
+        // }
+        this.talkTo.totalRecord.push(data)
         this.loadingLast();
         // this.addAndSaveChatRecord(d.userId, d.receiverId, d)
         try {

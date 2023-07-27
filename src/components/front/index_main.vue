@@ -1,15 +1,30 @@
 <template>
-  <MyCompostion >
-    <div ref="show" class="w-full lg:flex p-2 justify-center space-x-2 items-start z-10  " @wheel="scrollBottom">
+  <MyCompostion>
+    <div ref="show" class="w-full lg:flex p-2 justify-center space-x-2 items-start z-10  "
+         @wheel="scrollBottom">
 
-      <div class="w-full min-w-full lg:my-0 ">
+      <div class="w-full min-w-full lg:my-0 relative">
         <article-show :article-list="articleList"></article-show>
+        <div
+            class="flex bottom-0  w-full z-40 absolute items-center justify-center transition-all duration-500">
+          <button class="inline-flex text-center justify-center  w-full items-center p-2
+            text-indigo-600 text-sm backdrop-blur-sm cursor-not-allowed" disabled="">
+            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg"
+                 fill="none"
+                 viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+
+          </button>
+        </div>
       </div>
     </div>
-<!--    <template #slider>-->
-<!--      <right-self></right-self>-->
-<!--&lt;!&ndash;      <copy-right></copy-right>&ndash;&gt;-->
-<!--    </template>-->
+    <!--    <template #slider>-->
+    <!--      <right-self></right-self>-->
+    <!--&lt;!&ndash;      <copy-right></copy-right>&ndash;&gt;-->
+    <!--    </template>-->
 
     <!--  <el-slider-->
     <!--      v-model="value"-->
@@ -51,7 +66,6 @@ export default {
       value: 0,
       updateTime: new Date().getTime(),
 
-
     }
   },
 
@@ -60,19 +74,9 @@ export default {
 
   },
   mounted() {
-    // 获取指定元素
-    // const scrollview = this.$refs.show
-    // 添加滚动监听，该滚动监听了拖拽滚动条
-    // 尾部的 true 最好加上，我这边测试没加 true ，拖拽滚动条无法监听到滚动，加上则可以监听到拖拽滚动条滚动回调
-    // scrollview.addEventListener('scroll', this.scrollBottom, true)
     window.addEventListener('scroll', this.scrollBottom)
   },
   beforeRouteLeave() {
-
-    // 获取指定元素
-    // const scrollview = this.$refs.show
-    // 移除滚动监听
-    // scrollview.removeEventListener('scroll', this.scrollBottom, true)
     window.removeEventListener('scroll', this.scrollBottom)
   },
 
@@ -106,10 +110,14 @@ export default {
       this.max = scrollHeight - clientHeight
       this.value = scrollTop;
       if (scrollTop + clientHeight >= scrollHeight) {
-        if (new Date().getTime() - this.updateTime > 1000 * 10) {
-          this.updateTime = new Date().getTime()
-          this.queryArticle()
-        }
+        this.addArticles()
+      }
+
+    },
+    addArticles() {
+      if (new Date().getTime() - this.updateTime > 1000 * 3) {
+        this.updateTime = new Date().getTime()
+        this.queryArticle()
       }
     }
     ,

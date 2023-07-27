@@ -38,53 +38,52 @@
         </div>
       </div>
     </div>
-    <div class=" rounded-lg hidden lg:inline-block  p-5 w-2/4">
+    <div class=" rounded-lg hidden lg:inline-block  p-2 full-5/6 w-2/5">
 
-      <div class="flex-col justify-center overflow-y-scroll  items-center  space-y-2">
+      <div class="flex-col  justify-center overflow-y-scroll h-full p-2 items-center  space-y-2">
         <div class=" flex justify-start float-left w-2/3 ls ys abe">
           <div class="uk border-2 border-gray-200 rounded-full">
             <img class="lq nc re adn "
                  :src="this.$logo"
                  alt=""></div>
-          <div class="tl uh">
-              <div class="w-auto p-2 text-left adb ado bbi bbo bbs bca bgu bgz">
-                <span>你好！有什么问题我可以帮你解答吗？</span>
-
-          </div>
-        </div>
-        </div>
-        <div class=" flex justify-end float-right w-2/3 ls ys abe">
-
-          <div class="tl uh">
-              <div class="p-2 text-left max-w-full adb ado bbi bbo bbs bca bgu bgz"><span>使用正则进行拦截器的放行为什么不生效</span>
-              </div>
-          </div>
-          <div class="uk"><img class="lq nc re adn"
-                               :src="this.$default_avator"
-                               alt="">
-          </div>
-        </div>
-        <div class=" flex justify-start float-left w-2/3 ls ys abe">
-          <div class="uk border-2 border-gray-200 rounded-full">
-            <img class="lq nc re adn "
-                 :src="this.$logo"
-                 alt=""></div>
-          <div class="tl uh">
-            <div class="p-2 text-left adb ado bbi bbo bbs bca bgu bgz">
-              <span>使用正则表达式进行拦截器的放行需要注意几个问题：
-
-正则表达式的语法是否正确。如果正则表达式的语法有误，匹配请求路径时会失败，拦截器也会正常执行。
-
-拦截器的顺序是否正确。如果有多个拦截器，需要确保放行规则所在的拦截器在其他拦截器之前执行，否则放行规则可能会被后续的拦截器覆盖。
-
-放行规则是否正确。如果放行规则中使用了正则表达式，需要确保正则表达式能够正确地匹配请求路径。此外，还需要确保放行规则中所使用的字符串符合实际情况，比如是否包含了上下文路径、是否使用了 URL 编码等。</span>
+          <div class="tl ">
+            <div class="w-auto p-2 text-left adb ado bbi bbo bbs bca bgu bgz">
+              <span>你好！有什么问题我可以帮你解答吗？</span>
 
             </div>
           </div>
         </div>
         <div class=" flex justify-end float-right w-2/3 ls ys abe">
 
-          <div class="tl uh">
+          <div class="tl ">
+            <div class="p-2 text-left max-w-full adb ado bbi bbo bbs bca bgu bgz">
+              <span>使用正则进行拦截器的放行为什么不生效</span>
+            </div>
+          </div>
+          <div class="uk"><img class="lq nc re adn"
+                               :src="this.$default_avator"
+                               alt="">
+          </div>
+        </div>
+        <div class=" flex justify-start float-left  w-2/3 ls ys abe">
+          <div class="uk border-2 border-gray-200 rounded-full">
+            <img class="lq nc re adn "
+                 :src="this.$logo"
+                 alt=""></div>
+          <div class="tl ">
+            <div class="p-2 text-left adb ado bbi bbo bbs bca bgu bgz">
+              <span>使用正则表达式进行拦截器的放行需要注意几个问题：
+
+正则表达式的语法是否正确。如果正则表达式的语法有误，匹配请求路径时会失败，拦截器也会正常执行。
+
+拦截器的顺序是否正确。</span>
+
+            </div>
+          </div>
+        </div>
+        <div class=" flex justify-end float-right w-2/3 ls ys abe">
+
+          <div class="tl ">
             <div class="p-2 text-left max-w-full adb ado bbi bbo bbs bca bgu bgz"><span>excludePathPatterns 中添加放行路径的规则是什么</span>
             </div>
           </div>
@@ -98,27 +97,15 @@
             <img class="lq nc re adn "
                  :src="this.$logo"
                  alt=""></div>
-          <div class="tl uh">
+          <div class="tl ">
             <div class="p-2 text-left adb ado bbi bbo bbs bca bgu bgz">
               <span>excludePathPatterns 是 Spring MVC 中的一个配置项，用于指定一些请求路径，这些请求路径将不会被拦截器拦截，直接放行。在 WebMvcConfigurer 接口中，可以通过 addInterceptors 方法来添加拦截器，并通过 excludePathPatterns 方法来指定放行路径。
 
-excludePathPatterns 方法接受一个或多个 Ant 样式路径表达式，用于匹配需要放行的请求路径。Ant 样式路径表达式是一种通配符，用于匹配多个路径。其中，* 表示匹配任意数量的字符，** 表示匹配任意数量的路径，? 表示匹配任意一个字符，{} 表示匹配一组选择项。
-
-以下是一些示例，展示了如何使用 Ant 样式路径表达式来配置 excludePathPatterns：
-
-excludePathPatterns("/api/user/**") 表示放行以 /api/user/ 开头的任意请求路径，包括 "/api/user/123"、"/api/user/login"、"/api/user/info/123" 等。
-
-excludePathPatterns("/api/user/{id}") 表示放行形如 /api/user/{id} 的请求路径，其中 {id} 表示一个变量，可以匹配任意字符串。
-
-excludePathPatterns("/api/user/{id:[0-9]+}") 表示放行形如 /api/user/{id} 的请求路径，其中 {id:[0-9]+} 表示一个变量，只能匹配数字。
-
-需要注意的是，excludePathPatterns 中添加的放行路径规则是从上到下依次匹配的，只要请求路径匹配其中任意一个规则，就会被放行。因此，如果有多个放行规则，需要按照优先级从高到低依次添加，确保优先匹配到较高优先级的规则。</span>
+excludePathPatterns 方法接受一个或多个 Ant 样式路径表达式，用于匹配需要放行的请求路径。</span>
 
             </div>
           </div>
         </div>
-
-
 
         <!--        <icon src="xfftupfv" trigger="loop" class1="mr-0.5 "></icon>-->
         <!--        <input  @keyup.enter="search" v-model="key"-->

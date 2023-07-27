@@ -125,7 +125,7 @@
           v-if="logined"
           :class="{
             'opacity-100 h-auto': showComment,
-            'opacity-0 h-0': !showComment
+            'hidden h-0': !showComment
                }"
           class="gs ti uf w-full flex justify-start ">
         <div class="w-full ls ys abe mt-2">

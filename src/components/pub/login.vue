@@ -237,7 +237,7 @@ export default {
                 localStorage.setItem(encode('lb_userName'), encode(this.userName))
                 localStorage.setItem(encode('lb_userPassword'), encode(this.userPassword))
               }
-              this.$st("登陆成功", "success")
+              // this.$st("登陆成功", "success")
               let map = res.data.data
               let token = map.token
               let user = map.user

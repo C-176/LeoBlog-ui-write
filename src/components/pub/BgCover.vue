@@ -2,7 +2,7 @@
   <transition name="fade">
     <div v-if="showCover"
          @click="quit()"
-         class="fixed bg-opacity-10 bg-indigo-300 w-screen h-screen  backdrop-blur-lg z-40 "></div>
+         class="fixed bg-opacity-10  w-screen h-screen  backdrop-blur z-40 "></div>
   </transition>
 </template>
 

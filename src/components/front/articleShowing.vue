@@ -64,7 +64,7 @@
           <!--      <el-affix position="bottom" target=".content" :offset="10">-->
 
           <template v-if="article.isArticle === 1">
-            <div class="w-full flex justify-around items-center">
+            <div class="w-full relative flex justify-around items-center">
               <a class="tools " @click="like(article.articleId) ">
                 <icon src="gclzwloa" size="24" class1="transform rotate-180"></icon>
                 {{ article.articleLikes }} </a>
@@ -77,46 +77,45 @@
               <a class="tools" @click="share(article.articleId)">
                 <icon src="vpzjmdjv" size="24"></icon>
               </a>
-            </div>
-          </template>
-          <div
-              v-if="logined"
-              :class="{
-            'opacity-100 h-auto': showComment,
-            'opacity-0 h-0': !showComment
-               }"
-              class="ti uf w-full flex justify-start transition duration-500">
-            <div class="w-full ls ys abe mt-2">
-              <div class="uk">
-                <img class="lq nc re adn border border-indigo-600"
 
-                     :src="$store.state.user.userProfilePhoto"
-                     alt=""></div>
-              <div class="tl uh">
-                <div class="ab">
-                  <div class="focus-within:bg-white adb ado bbi bbo bbs bca bgu bgz"><label for="comment" class="t">Add
-                    your
-                    comment</label>
-                    <textarea v-model="commentIn"
-                              @keyup.enter.stop="saveComment(-1)"
-                              rows="3" name="comment" id="comment"
-                              class=" lp ti xo p-2 aev alh arl axq bfy bmx cht chv"
-                              placeholder="添加评论..."></textarea>
-                    <div class="arq" aria-hidden="true">
-                      <div class="asb">
-                        <div class="od"></div>
+
+              <div
+                  v-if="logined"
+                  :class="{
+            'opacity-100 ': showComment,
+            'opacity-0  -translate-x-96': !showComment
+               }"
+                  class="ti  absolute top-10 uf w-full  border-1 ring-1 border-indigo-300 bg-white rounded-2xl p-2 z-10 flex justify-start transition duration-500">
+                <div class="w-full ls ys abe mt-2">
+                  <div class="uk">
+                    <img class="lq nc re adn border border-indigo-600"
+                         :src="$store.state.user.userProfilePhoto"
+                         alt=""></div>
+                  <div class="tl uh">
+                    <div class="ab">
+                      <div class="focus-within:bg-white adb border-0 ring-0 ado bbi bbo bbs bca bgu bgz">
+                        <textarea v-model="commentIn"
+                                  @keyup.enter.stop="saveComment(-1)"
+                                  rows="3" name="comment" id="comment"
+                                  class="bg-white focus-visible:outline-0 lp ti xo p-2 text-gray-400 aev alh arl axq bfy bmx cht chv"
+                                  placeholder="添加评论..."></textarea>
+                        <div class="arq" aria-hidden="true">
+                          <div class="asb">
+                            <div class="od"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="aa aj bx ls arq ath flex justify-end atv">
+                        <button @click="saveComment(-1,article.user.userId)"
+                                class="lt yu adp ajm ara arq avv awb bac bbi bin bot bou bow bpf">发送
+                        </button>
                       </div>
                     </div>
-                  </div>
-                  <div class="aa aj bx ls za arq ath flex justify-end atv">
-                    <button @click="saveComment(-1,article.user.userId)"
-                            class="lt yu adp ajm ara arq avv awb bac bbi bin bot bou bow bpf">发送
-                    </button>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </template>
         </div>
 
       </template>
@@ -260,7 +259,7 @@
         <div class="ls yu za">
           <a-divider orientation="center">最新文章</a-divider>
         </div>
-        <a @click="$router.push('/home/article')" class="avv awb awk ayc bla">查看全部</a>
+        <a @click="$router.push('/home/article')" class="avv awb cursor-pointer awk ayc bla">查看全部</a>
         <ul role="list" class="lf lw yb aar cyi space-x-1">
           <li class="adb ads aeu afp hover:shadow-xl duration-300 transition" v-for="(a1,index) in articleList"
               :id="a1.articleId">
@@ -316,11 +315,24 @@ import catlog from "@/components/pub/catlog";
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
 import shareModal from "@/components/pub/shareModal";
 import MyCompostion from "@/components/pub/MyCompostion.vue";
+import MyModal from "@/components/pub/myModal.vue";
 
 
 export default {
   name: 'forward-article',
-  components: {MyCompostion, h, commentTemplate, Divider, Tag, EnterOutlined, user, bigImg, catlog, shareModal},
+  components: {
+    MyModal,
+    MyCompostion,
+    h,
+    commentTemplate,
+    Divider,
+    Tag,
+    EnterOutlined,
+    user,
+    bigImg,
+    catlog,
+    shareModal
+  },
   data() {
     return {
       banner: 'url(../img/home_bg.png)',

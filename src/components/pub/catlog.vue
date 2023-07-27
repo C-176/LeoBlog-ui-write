@@ -3,22 +3,23 @@
   <div
       class="w-1/4 text-left bg-gray-50 p-3 invisible lg:visible overscroll-contain overflow-y-auto h-screen rounded-xl pb-20 fixed flex-col justify-start items-center space-y-2">
 
-    <div class="flex justify-between items-center text-xl italic text-left ">
-      <div>
-        <span class="text-gray-500">目录</span>
-      </div>
-      <div class="w-2/3">
+    <div class="flex justify-start items-center text-xl italic text-left ">
+
+      <div class="w-4/5 inline-flex justify-start space-x-1.5">
+        <span class="text-gray-500 1/4" >目录</span>
+        <div class="w-3/4 inline-flex items-center">
+
         <!--      // 增加一条进度条-->
-        <div class="duration-1000 flex justify-start border-b-4 border-indigo-600 transition-all"
+        <div class="duration-1000 border-b-4 border-indigo-600 transition-all"
              :class="{
         'w-0':progress===0,
         'w-1/4':progress>0&&progress<25,
         'w-1/2':progress>=25&&progress<50,
         'w-3/4':progress>=50&&progress<75,
         'w-full':progress>=75,
-      }"></div>
+      }"></div></div>
       </div>
-      <span class="text-indigo-600 ">{{ progress }}%</span>
+      <span class="text-indigo-600 w-1/5">{{ progress }}%</span>
     </div>
 
     <div class="flex-col justify-center items-center space-y-1">
