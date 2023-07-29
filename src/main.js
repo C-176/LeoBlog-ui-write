@@ -83,22 +83,18 @@ if (env === 1) {
     app.config.globalProperties.baseURL = 'http://' + host + '/api'
     axios.defaults.baseURL = 'http://' + host + '/api'
 }
-app.config.globalProperties.$logo = app.config.globalProperties.baseURL + "/source/images/logoS.png"
-app.config.globalProperties.$default_avator = "/source/images/default_pic.png"
+// app.config.globalProperties.$logo = app.config.globalProperties.baseURL + "/source/images/logoS.png"
+// app.config.globalProperties.$default_avator = "/source/images/default_pic.png"
 app.config.globalProperties.$host = host
 axios.interceptors.response.use(res => {
-        // if (res.data.code === 401) {
-        //     app.config.globalProperties.$st('身份认证失效，请重新登录', 'error')
-        //     // store.commit('changeBgCover', false)
-        //
-        //     // axios.get("/user/logout");
-        //     // setTimeout(() => {
-        //     //     store.commit('setUser', null)
-        //     // }, 500)
-        //     // router.push('/LR')
-        // }
-        // 给res添加cors
-        // res.headers['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        if (res.data.code === 401) {
+            store.commit('changeBgCover', false)
+            setTimeout(() => {
+                store.commit('setUser', null)
+                localStorage.removeItem('token')
+            }, 500)
+            router.push('/LR')
+        }
         return res
     }
 )

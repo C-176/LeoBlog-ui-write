@@ -80,7 +80,10 @@ export default {
       }
     },
     getArticlesDefault() {
-      this.$axios.get('/article/list/' + this.currentPage + '/' + this.pageSize).then((res) => {
+      this.$axios.post('/article/list/',{
+        pageNo: this.currentPage,
+        pageSize: this.pageSize
+      }).then((res) => {
         let map = res.data.data
         this.articleList = map.records
         this.articleList.forEach(x => {

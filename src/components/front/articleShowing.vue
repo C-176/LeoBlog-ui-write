@@ -473,7 +473,12 @@ export default {
   ,
   methods: {
     getArticlesDefault() {
-      this.$axios.get('/article/list/1/20').then((res) => {
+      let pageReq = {
+        pageNo:1,
+        pageSize:20
+
+      }
+      this.$axios.post('/article/list',pageReq).then((res) => {
         let map = res.data.data
         var articleList = map.records
         articleList = articleList.filter(x => x.articleId !== this.article.articleId)

@@ -247,7 +247,7 @@ export default {
               // console.log("将token存到localStorage中： " + token)
               this.$store.commit("setToken", token)
               this.$store.commit("setUser", user)
-              this.$router.push('/home')
+              this.$router.push('/home/article')
               resolve(res)
             } else {
               this.$st(res.data.data, 'error')

@@ -853,7 +853,10 @@ export default {
 
       //更新聊天记录
       //TODO:从localstorage中获取聊天记录
-      // this.talkTo.record = this.getChatRecord(this.$store.state.user.userId, this.talkTo.user.userId)
+      // if(this.talkTo.user.userId == 1) { // 保存机器人聊天记录
+      //   this.talkTo.totalRecord = this.getChatRecord(this.$store.state.user.userId, this.talkTo.user.userId)
+      //   this.loadingLast()
+      // }
       // if (this.talkTo.record.length == 0) {
       //   if (this.talkTo.user.userId !== 1) {
       //     this.$axios.get(this.baseURL + '/chat/connect/' + this.$store.state.user.userId + '/' + this.talkTo.user.userId).then(res => {
@@ -976,7 +979,7 @@ export default {
         } else {
           this.talkTo.record = this.talkTo.totalRecord.slice(this.talkTo.totalRecord.length - this.pageSize)
         }
-      }else{
+      } else {
         this.talkTo.record = this.talkTo.totalRecord.slice(this.talkTo.totalRecord.length - this.pageSize)
       }
 
@@ -997,11 +1000,11 @@ export default {
         this.submitting = true
         // console.log(msg.length)
         let data = {
-          "userId": this.$store.state.user.userId,
-          "receiverId": this.talkTo.user.userId,
-          "recordContent": msg,
-          "recordUpdateTime": new Date(),
-          "isSaw": 0
+          userId: this.$store.state.user.userId,
+          receiverId: this.talkTo.user.userId,
+          recordContent: msg,
+          recordUpdateTime: new Date(),
+          isSaw: 0
         }
 
         this.toDown = true
@@ -1010,15 +1013,10 @@ export default {
         } catch (e) {
           this.$st("连接失败，请刷新页面重试", 'error')
         }
-        // let d = {
-        //   recordContent: this.replaceURL(msg),
-        //   recordUpdateTime: new Date().getTime(),
-        //   userId: this.$store.state.user.userId,
-        //   receiverId: this.talkTo.user.userId
-        // }
         this.talkTo.totalRecord.push(data)
         this.loadingLast();
-        // this.addAndSaveChatRecord(d.userId, d.receiverId, d)
+        // 如果是和机器人聊天，就保存聊天记录
+        // if (this.talkTo.user.userId === 1) this.addAndSaveChatRecord(data.userId, data.receiverId, data)
         try {
           this.editor.clear()
           this.editor.focus()
@@ -1072,6 +1070,11 @@ export default {
         //   this.addAndSaveChatRecord(receiverId, userId, data)
         // } else {
         //   if (userId !== this.$store.state.user.userId) this.addAndSaveChatRecord(this.$store.state.user.userId, -1, data)
+        // }
+
+        // // 保存机器人回复
+        // if (userId === 1) {
+        //   this.addAndSaveChatRecord(this.$store.state.user.userId, 1, data)
         // }
         //向对应的聊天框中添加消息
         if ((userId == this.talkTo.user.userId && receiverId == this.$store.state.user.userId)

@@ -38,84 +38,84 @@
         </div>
       </div>
     </div>
-    <div class=" rounded-lg hidden lg:inline-block  p-2 full-5/6 w-2/5">
+    <div class=" rounded-lg hidden lg:flex justify-center p-2 full-5/6 w-2/5">
 
-      <div class="flex-col  justify-center overflow-y-scroll h-full p-2 items-center  space-y-2">
-        <div class=" flex justify-start float-left w-2/3 ls ys abe">
-          <div class="uk border-2 border-gray-200 rounded-full">
-            <img class="lq nc re adn "
-                 :src="this.$logo"
-                 alt=""></div>
-          <div class="tl ">
-            <div class="w-auto p-2 text-left adb ado bbi bbo bbs bca bgu bgz">
-              <span>你好！有什么问题我可以帮你解答吗？</span>
+<!--      <div class="flex-col  justify-center overflow-y-scroll h-full p-2 items-center  space-y-2">-->
+<!--        <div class=" flex justify-start float-left w-2/3 ls ys abe">-->
+<!--          <div class="uk border-2 border-gray-200 rounded-full">-->
+<!--            <img class="lq nc re adn "-->
+<!--                 :src="this.$logo"-->
+<!--                 alt=""></div>-->
+<!--          <div class="tl ">-->
+<!--            <div class="w-auto p-2 text-left adb ado bbi bbo bbs bca bgu bgz">-->
+<!--              <span>你好！有什么问题我可以帮你解答吗？</span>-->
 
-            </div>
-          </div>
-        </div>
-        <div class=" flex justify-end float-right w-2/3 ls ys abe">
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class=" flex justify-end float-right w-2/3 ls ys abe">-->
 
-          <div class="tl ">
-            <div class="p-2 text-left max-w-full adb ado bbi bbo bbs bca bgu bgz">
-              <span>使用正则进行拦截器的放行为什么不生效</span>
-            </div>
-          </div>
-          <div class="uk"><img class="lq nc re adn"
-                               :src="this.$default_avator"
-                               alt="">
-          </div>
-        </div>
-        <div class=" flex justify-start float-left  w-2/3 ls ys abe">
-          <div class="uk border-2 border-gray-200 rounded-full">
-            <img class="lq nc re adn "
-                 :src="this.$logo"
-                 alt=""></div>
-          <div class="tl ">
-            <div class="p-2 text-left adb ado bbi bbo bbs bca bgu bgz">
-              <span>使用正则表达式进行拦截器的放行需要注意几个问题：
+<!--          <div class="tl ">-->
+<!--            <div class="p-2 text-left max-w-full adb ado bbi bbo bbs bca bgu bgz">-->
+<!--              <span>使用正则进行拦截器的放行为什么不生效</span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="uk"><img class="lq nc re adn"-->
+<!--                               :src="this.$default_avator"-->
+<!--                               alt="">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class=" flex justify-start float-left  w-2/3 ls ys abe">-->
+<!--          <div class="uk border-2 border-gray-200 rounded-full">-->
+<!--            <img class="lq nc re adn "-->
+<!--                 :src="this.$logo"-->
+<!--                 alt=""></div>-->
+<!--          <div class="tl ">-->
+<!--            <div class="p-2 text-left adb ado bbi bbo bbs bca bgu bgz">-->
+<!--              <span>使用正则表达式进行拦截器的放行需要注意几个问题：-->
 
-正则表达式的语法是否正确。如果正则表达式的语法有误，匹配请求路径时会失败，拦截器也会正常执行。
+<!--正则表达式的语法是否正确。如果正则表达式的语法有误，匹配请求路径时会失败，拦截器也会正常执行。-->
 
-拦截器的顺序是否正确。</span>
+<!--拦截器的顺序是否正确。</span>-->
 
-            </div>
-          </div>
-        </div>
-        <div class=" flex justify-end float-right w-2/3 ls ys abe">
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class=" flex justify-end float-right w-2/3 ls ys abe">-->
 
-          <div class="tl ">
-            <div class="p-2 text-left max-w-full adb ado bbi bbo bbs bca bgu bgz"><span>excludePathPatterns 中添加放行路径的规则是什么</span>
-            </div>
-          </div>
-          <div class="uk"><img class="lq nc re adn"
-                               :src="this.$default_avator"
-                               alt="">
-          </div>
-        </div>
-        <div class=" flex justify-start float-left w-2/3 ls ys abe">
-          <div class="uk border-2 border-gray-200 rounded-full">
-            <img class="lq nc re adn "
-                 :src="this.$logo"
-                 alt=""></div>
-          <div class="tl ">
-            <div class="p-2 text-left adb ado bbi bbo bbs bca bgu bgz">
-              <span>excludePathPatterns 是 Spring MVC 中的一个配置项，用于指定一些请求路径，这些请求路径将不会被拦截器拦截，直接放行。在 WebMvcConfigurer 接口中，可以通过 addInterceptors 方法来添加拦截器，并通过 excludePathPatterns 方法来指定放行路径。
+<!--          <div class="tl ">-->
+<!--            <div class="p-2 text-left max-w-full adb ado bbi bbo bbs bca bgu bgz"><span>excludePathPatterns 中添加放行路径的规则是什么</span>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="uk"><img class="lq nc re adn"-->
+<!--                               :src="this.$default_avator"-->
+<!--                               alt="">-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class=" flex justify-start float-left w-2/3 ls ys abe">-->
+<!--          <div class="uk border-2 border-gray-200 rounded-full">-->
+<!--            <img class="lq nc re adn "-->
+<!--                 :src="this.$logo"-->
+<!--                 alt=""></div>-->
+<!--          <div class="tl ">-->
+<!--            <div class="p-2 text-left adb ado bbi bbo bbs bca bgu bgz">-->
+<!--              <span>excludePathPatterns 是 Spring MVC 中的一个配置项，用于指定一些请求路径，这些请求路径将不会被拦截器拦截，直接放行。在 WebMvcConfigurer 接口中，可以通过 addInterceptors 方法来添加拦截器，并通过 excludePathPatterns 方法来指定放行路径。-->
 
-excludePathPatterns 方法接受一个或多个 Ant 样式路径表达式，用于匹配需要放行的请求路径。</span>
+<!--excludePathPatterns 方法接受一个或多个 Ant 样式路径表达式，用于匹配需要放行的请求路径。</span>-->
 
-            </div>
-          </div>
-        </div>
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
 
-        <!--        <icon src="xfftupfv" trigger="loop" class1="mr-0.5 "></icon>-->
-        <!--        <input  @keyup.enter="search" v-model="key"-->
-        <!--               class="w-3/4 bg-white pl-2 text-base font-bold outline-0 border-2 border-indigo-600 rounded-bl rounded-tl"-->
-        <!--               placeholder='用文字连接世界'/>-->
-        <!--        <button @click="search"-->
-        <!--                class="bg-indigo-600 cursor-pointer p-2 rounded-tr-lg rounded-br-lg text-white font-bold hover:bg-indigo-500 transition-colors">-->
-        <!--          探索世界-->
-        <!--        </button>-->
-      </div>
+                <icon src="xfftupfv" trigger="loop" class1="mr-0.5 "></icon>
+                <input  @keyup.enter="search" v-model="key"
+                       class="w-3/4 bg-white pl-2 text-base font-bold outline-0 border-2 border-indigo-600 rounded-bl rounded-tl"
+                       placeholder='用文字连接世界'/>
+                <button @click="search"
+                        class="bg-indigo-600 cursor-pointer p-2 rounded-tr-lg rounded-br-lg text-white font-bold hover:bg-indigo-500 transition-colors">
+                  探索世界
+                </button>
+<!--      </div>-->
     </div>
   </main>
   <!--  <div class="flex h-screen w-screen items-center justify-center p-5">-->

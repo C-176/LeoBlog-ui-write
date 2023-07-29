@@ -23,10 +23,10 @@
     </template>
   </MyCompostion>
   <my-modal :visible="visible" @closeModal="visible=false">
-    <div class="relative flex w-full items-center overflow-hidden bg-white  sm:px-2 sm:pt-2 p-3">
+    <div class="relative flex w-full h-full items-center overflow-hidden bg-white  sm:px-2 sm:pt-2 p-3">
       <div class="grid w-full grid-cols-1 items-start gap-x-6 gap-y-6 sm:grid-cols-12 lg:gap-x-8">
         <div
-            class="flex justify-center aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
+            class="flex justify-center aspect-h-3  overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
           <!--                    <badge :badge-src="focusBadge.badgeIcon" :size="300"></badge>-->
           <lottie-player ref="lottie" autoplay loop mode="normal" style="width: 320px">
           </lottie-player>
@@ -183,7 +183,6 @@ export default {
     },
     purchase(badge) {
       if (this.hasKey(badge)) {
-        this.$st("已拥有", "error")
         return
       }
       let badgeType = badge.badgeType

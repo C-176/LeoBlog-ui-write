@@ -169,7 +169,10 @@ export default {
   },
   methods: {
     getArticles() {
-      this.$axios.get('/article/slist/user/' + this.$store.state.user.userId + '/' + this.currentPage + '/' + this.pageSize).then((res) => {
+      this.$axios.post('/article/slist/user/',{
+        pageNo: this.currentPage,
+        pageSize: this.pageSize,
+      }).then((res) => {
         // console.log(res.data.data)
         let map = res.data.data
         this.articleList = map.records

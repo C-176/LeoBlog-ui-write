@@ -1,6 +1,6 @@
 <template>
 
-  <MyCompostion >
+  <MyCompostion slider="true">
       <article-show :article-list="articleList"></article-show>
       <el-pagination
           class="bg-white w-full flex justify-center items-center  space-x-2"
@@ -20,9 +20,9 @@
 
       />
 
-<!--    <template #slider >-->
-<!--      <account></account>-->
-<!--    </template>-->
+    <template #slider >
+     <activity></activity>
+    </template>
 
   </MyCompostion>
 </template>
@@ -33,10 +33,12 @@ import articleShow from "@/components/pub/articleShow";
 import {ChevronLeftIcon, ChevronRightIcon} from '@heroicons/vue/20/solid'
 import Account from "@/components/pub/account.vue";
 import MyCompostion from "@/components/pub/MyCompostion.vue";
+import Activity from "@/components/pub/activity.vue";
 
 export default {
   name: "articles",
   components: {
+    Activity,
     MyCompostion,
     Account,
     articleShow,
@@ -64,7 +66,11 @@ export default {
 
   }, methods: {
     getArticlesDefault() {
-      this.$axios.get('/article/list/' + this.currentPage + '/' + this.pageSize).then((res) => {
+      let pageReq = {
+        pageSize: this.pageSize,
+        pageNo: this.currentPage
+      }
+      this.$axios.post('/article/list',pageReq).then((res) => {
         let map = res.data.data
         this.articleList = map.records
         this.articleList.forEach(x => {

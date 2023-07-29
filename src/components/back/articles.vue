@@ -176,7 +176,11 @@ export default {
   },
   methods: {
     getArticles() {
-      this.$axios.get('/article/list/user/' + this.$store.state.user.userId + '/' + this.currentPage + '/' + this.pageSize).then((res) => {
+      let pageReq = {
+        current: this.currentPage,
+        size: this.pageSize
+      }
+      this.$axios.post('/article/list/user/',pageReq).then((res) => {
         let map = res.data.data
         this.articleList = map.records
         this.total = map.total
