@@ -24,7 +24,7 @@
                 开始创作
                 <span class="text-indigo-200" aria-hidden="true">&rarr;</span>
               </a>
-              <a @click="$router.push('/home/index')"
+              <a @click="$router.push('/home/article')"
                  class="inline-block rounded-lg  flex items-center px-4 py-1.5 text-base font-semibold leading-7 text-gray-900 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
                 <icon src="hezrwbzv" trigger="loop"></icon>
                 开始体验

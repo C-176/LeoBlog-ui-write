@@ -84,7 +84,10 @@ export default {
     queryArticle() {
       this.currentPage++;
       //获取articleList,一次获取20条
-      this.$axios.get('/article/list/' + this.currentPage + '/' + this.pageSize).then((res) => {
+      this.$axios.post('/article/list/',{
+        pageNo: this.currentPage,
+        pageSize: this.pageSize
+      }).then((res) => {
         let map = res.data.data
         let articleList = map.records
         articleList.forEach(x => {
