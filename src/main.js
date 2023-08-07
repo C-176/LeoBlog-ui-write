@@ -33,6 +33,8 @@ import '@kangc/v-md-editor/lib/plugins/emoji/emoji.css';
 import createCopyCodePlugin from '@kangc/v-md-editor/lib/plugins/copy-code/index';
 import '@kangc/v-md-editor/lib/plugins/copy-code/copy-code.css';
 
+import {cursorPageReq,cursorPageResp} from "@/util/activity";
+
 VueMarkdownEditor.use(vuepressTheme, {Prism}).use(createCopyCodePlugin()).use(createEmojiPlugin());
 
 import icon from '@/components/pub/icon'
@@ -72,7 +74,7 @@ app.config.globalProperties.$st = (title, icon) => {
     })
 }
 //1.开发 2.生产
-let env = 2
+let env = 1
 let host = ''
 if (env === 1) {
     host = 'localhost'
@@ -195,6 +197,7 @@ import bgCover from "@/components/pub/BgCover.vue";
 import badge from "@/components/pub/badge.vue";
 import myModal from "@/components/pub/myModal.vue";
 import Avatar from "@/components/pub/avatar.vue";
+import userHolder from "@/components/pub/user-holder.vue";
 
 app.use(router).use(store).use(ElementPlus).use(Antd).use(VueMarkdownEditor).component('loader', loader)
     .component('bread', bread).component('bgCover', bgCover)
@@ -204,6 +207,7 @@ app.use(router).use(store).use(ElementPlus).use(Antd).use(VueMarkdownEditor).com
     .component('badge', badge)
     .component('myModal', myModal)
     .component('avatar', Avatar)
+    .component('userHolder',userHolder)
 
 
 app.mount('#app')

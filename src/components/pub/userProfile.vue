@@ -32,7 +32,7 @@
               <div class="lf ard bxd bxh cax ces">
                 <div class="bzn">
                   <div>
-                    <div class="ls yu"><h3 class="avw avy axq chl">{{ userx.userNickname }}</h3><span
+                    <div class="ls yu cursor-pointer" @click="this.$router.push('/user/'+userx.userId)"><h3 class="avw avy axq chl ">{{ userx.userNickname }}</h3><span
                         class="jp lq nh rj uk adn aja"><span class="t">Online</span></span></div>
                     <p class="avv axm">@{{ userx.userId }}</p></div>
                   <div class="le ls yo abq ccc cch">

@@ -35,13 +35,14 @@ const routes = [
             {path: '/about/privacy', component: () => import('@/components/front/privacy')},
             {path: '/about/join', component: () => import('@/components/front/join')},
             {path: '/video/:add', component: () => import('@/components/pub/video')},
+            {path: '/user/:userId', component: () => import('@/components/back/info')},
+
             {
                 path: '/back/info', component: () => import('@/components/back/info'), children: [
 
-                    {path: '/back/info/article', component: () => import('@/components/back/info-articles.vue')},
-                    {path: '/back/info/comment', component: () => import('@/components/back/info-comments.vue')},
+                    {path: '/back/info/article/:userId', component: () => import('@/components/back/info-articles.vue')},
+                    {path: '/back/info/comment/:userId', component: () => import('@/components/back/info-comments.vue')},
                     {path: '/back/info/picture', component: () => import('@/components/front/pictures.vue')},
-
                 ]
             },
             {path: '/back/articles', component: () => import('@/components/back/articles')},

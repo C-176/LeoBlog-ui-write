@@ -67,7 +67,10 @@
 
       <div class="w-5/6 lg:w-3/5 -mt-4 h-full flex-col justify-start items-center p-5">
         <div class="min-h-1/8  text-center w-full mx-auto -mt-2  space-y-0 flex-col justify-between items-center ">
-          <div @click="()=>{this.$router.push('/user/'+talkTo.user.userId)}"
+          <div @click="()=>{
+            this.$store.commit('changeChatVisible',!$store.state.chatVisible);
+            this.$store.commit('changeBgCover',false);
+            this.$router.push('/user/'+talkTo.user.userId)}"
                class="text-base font-bold h-full min-h-full cursor-pointer">
             {{ talkTo.user.userNickname }}
           </div>
@@ -116,7 +119,7 @@
                         v-html="record.recordContent" id="message"></span></div>
                   </div>
                   <div class="min-w-10 min-h-10 rounded-full">
-                    <!--                      <user v-slot="slotP" :user-id="record.userId">-->
+<!--                                          <user v-slot="slotP" :user-id="record.userId">-->
                     <a-avatar
                         :src="p($store.state.user.userProfilePhoto)"
                         :style="{ backgroundColor:'#0eb73a', verticalAlign: 'middle' ,float:'right'}"
@@ -611,7 +614,7 @@ export default {
         'cursor': this.cursor,
         'pageSize': this.pageSize,
         'offset': this.offset,
-        'talkToId': this.talkTo.user.userId,
+        'userId': this.talkTo.user.userId,
       }).then(res => {
         if (res.data.code == 200) {
           this.isLast = res.data.data.isLast;

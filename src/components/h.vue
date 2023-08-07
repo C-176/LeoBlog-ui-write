@@ -51,7 +51,6 @@
 
               <transition enter-active-class="transition ease-out duration-200"
                           enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0"
-                          leave-active-class="transition ease-in duration-150"
                           leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
                 <PopoverPanel
                     class="absolute z-10 -ml-4 mt-3 w-screen max-w-md transform px-2 sm:px-0 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2">
@@ -312,6 +311,7 @@ import axios from "axios";
 
 const router = useRouter()
 let openSearch = ref(false)
+let test = ref(true)
 
 
 function quit($store) {
@@ -523,6 +523,8 @@ const about = [
     name: '大事记',
     description: '我们的历程',
     href: function ($router) {
+      test.value = false
+      console.log('xxxx')
       $router.push("/about/bigs")
     }, iconSrc: 'krmfspeu'
   },

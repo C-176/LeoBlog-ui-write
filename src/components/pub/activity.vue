@@ -3,81 +3,57 @@
       class="w-1/4 overscroll-contain overflow-y-auto h-screen rounded-xl
       pb-20 fixed flex-col justify-start items-center space-y-2">
     <div class="crw w-full  bg-gray-50 p-2 text-left rounded-xl">
-      <h2 class="avv awb awk axq">Activity</h2>
-      <ul role="list" class="lf abt">
-        <li class="ab ls aab">
-          <div class="as aa cb di ls rz yz">
-            <div class="tj aig"></div>
-          </div>
-          <div class="ab ls nx rz uj yu yz ">
-            <div class="mz ra adn aie bbo bca"></div>
-          </div>
-          <p class="ui arj avx awj axm"><span class="avz axq">Chelsea Hagon</span> created the invoice.</p>
-          <time datetime="2023-01-23T10:32" class="uj arj avx awj axm">7d ago</time>
-        </li>
-        <li class="ab ls aab">
-          <div class="as aa cb di ls rz yz">
-            <div class="tj aig"></div>
-          </div>
-          <div class="ab ls nx rz uj yu yz ">
-            <div class="mz ra adn aie bbo bca"></div>
-          </div>
-          <p class="ui arj avx awj axm"><span class="avz axq">Chelsea Hagon</span> created the invoice.</p>
-          <time datetime="2023-01-23T10:32" class="uj arj avx awj axm">7d ago</time>
-        </li>
-
-
-        <li class="ab ls aab">
-          <div class="as aa cb di ls rz yz">
-            <div class="tj aig"></div>
-          </div>
-          <img
-              src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80"
-              alt="" class="ab la nx rz uj adn ail">
-          <div class="ui adp aqn bbo bbs bbz">
-            <div class="ls za aab">
-              <div class="arj avx awj axm"><span class="avz axq">Chelsea Hagon</span> commented</div>
-              <time datetime="2023-01-23T15:56" class="uj arj avx awj axm">3d ago</time>
+      <h2 class="avv awb awk axq">历史轨迹</h2>
+      <cursor-div :get-key="getKey" :load-data="getActivities" v-slot="slot">
+      <div role="list" class=" abt w-full" v-if="this.login">
+        <div class="ab ls aab w-full" v-for="item in slot.list" :key="item.messageId">
+          <user-holder :user-id="item.userId" v-slot="user">
+            <div class="as aa cb di ls rz yz">
+              <div class="tj aig"></div>
             </div>
-            <p class="avv awk axm">Called client, they reassured me the invoice would be paid by the 25th.</p></div>
-        </li>
-        <li class="ab ls aab">
-          <div class="as aa cb di ls rz yz">
-            <div class="tj aig"></div>
-          </div>
-          <div class="ab ls nx rz uj yu yz ">
-            <div class="mz ra adn aie bbo bca"></div>
-          </div>
-          <p class="ui arj avx awj axm"><span class="avz axq">Alex Curren</span> viewed the invoice.</p>
-          <time datetime="2023-01-24T09:12" class="uj arj avx awj axm">2d ago</time>
-        </li>
-        <li class="ab ls aab">
-          <div class="nx aa cb di ls rz yz">
-            <div class="tj aig"></div>
-          </div>
-          <div class="ab ls nx rz uj yu yz ">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"
-                 class="nx rz ayc">
-              <path fill-rule="evenodd"
-                    d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
-                    clip-rule="evenodd"></path>
-            </svg>
-          </div>
-          <p class="ui arj avx awj axm"><span class="avz axq">Alex Curren</span> paid the invoice.</p>
-          <time datetime="2023-01-24T09:20" class="uj arj avx awj axm">1d ago</time>
-        </li>
-      </ul>
-      <div class="lf ls aaa"><img
-          src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&amp;ixid=eyJhcHBfaWQiOjEyMDd9&amp;auto=format&amp;fit=facearea&amp;facepad=2&amp;w=256&amp;h=256&amp;q=80"
+            <div v-if="this.isMySelf(item.userId)" class="ab ls nx rz uj yu yz ">
+              <div class="mz ra adn aie bbo bca"></div>
+            </div>
+            <img v-else
+                 :src="user.userProfilePhoto"
+                 alt="" class="ab nx rz uj adn ail">
+            <div class="ui arj avx awj axm cursor-pointer group " @click="this.$router.push(item.messageRedirect)">
+              <div v-if="!this.isMySelf(item.userId)" class="avz axq ">{{ user.userNickname }}</div>
+              <div class="group-hover: text-gray-800">{{
+                  item.messageTitle
+                }}
+              </div>
+              <!--              <div -->
+              <!--                   class ="rounded-2xl ring-2 ring-gray-300 p-2">-->
+              <!--                -->
+              <!--              </div>-->
+              <div v-if="item.messageContent != null && item.messageContent.trim().length != 0"
+                   class="adb ado p-0 bbi  bbs text-gray-400 bgu bgz"><label for="comment"
+                                                                             class="t">评价活动轨迹</label>
+                <textarea
+                    class="overflow-hidden cursor-pointer outline-0 lp h-auto ti xo aev p-2 focus-visible:outline-0 arl bfy bmx cht chv"
+                >{{item.messageContent}}</textarea>
+              </div>
+            </div>
+            <div class="uj arj avx awj axm">{{ this.$simpleFormat(item.messageUpdateTime) }}</div>
+          </user-holder>
+
+
+        </div>
+      </div>
+      </cursor-div>
+
+
+      <div class=" ls aaa mt-4"><img
+          :src="this.$store.state.user.userProfilePhoto"
           alt="" class="nx rz uj adn ail">
-        <form action="#" class="ab ui">
-          <div class="adb ado asg bbi bbo bbs bca bgu bgz"><label for="comment" class="t">Add your
-            comment</label>
+        <form class="ab ui">
+          <div class="adb ado asg bbi bbo bbs bca bgu bgz"><label for="comment" class="t">评价活动轨迹</label>
             <textarea rows="2" name="comment" id="comment"
-                                     class="lp ti xo aev p-2 focus-visible:outline-0 alh arl axq bfy bmx cht chv"
-                                     placeholder="Add your comment..."></textarea></div>
+                      class="lp ti xo aev p-2 focus-visible:outline-0 alh arl axq bfy bmx cht chv"
+                      placeholder="添加评论..."></textarea></div>
           <div class="aa aj bx ls za arq ath atv">
-            <button type="submit" class="adp  aqz arl avv awb axq bbi bbo bbs bca bic">Comment</button>
+            <button type="submit" class="adp  aqz arl avv awb axq bbi bbo bbs bca bic">评论</button>
           </div>
         </form>
       </div>
@@ -86,10 +62,92 @@
 </template>
 
 <script>
-
+import activity from '@/util/activity.js'
+import {ComboboxLabel} from "@headlessui/vue";
+import UserHolder from "@/components/pub/user-holder.vue";
+import CursorDiv from "@/components/pub/cursorDiv.vue";
 
 export default {
   name: 'activity',
+  components: {CursorDiv, UserHolder, ComboboxLabel},
+  props: {
+    userId: {
+      type: Number,
+      default: null
+    }
+  },
+
+  data() {
+    return {
+      messages: [
+        {
+          userId: 1,
+          messageId: 1,
+          messageTitle: '向你发来一条心动消息',
+          messageContent: '听人说，你也喜欢我，你能做我男朋友吗...',
+          messageRedirect: 'https://www.baidu.com',
+          messageUpdateTime: '2022-12-06 00:00:00',
+          messageType: 1,
+          isSaw: 1,
+        }
+      ],
+      cursorPageReq: {
+        offset: 0,
+        cursor: null,
+        pageSize: 10
+      },
+      cursorPageResp: {
+        offset: 0,
+        cursor: null,
+        isLast: false,
+        list: [],
+        userId: null,
+      },
+      totalList: [],
+      showList: [],
+      pageSize: 20,
+
+      activity: activity
+    }
+  },
+  created() {
+    // console.log(this.activity)
+    // if (this.login) {
+    //   if (this.userId == null) {
+    //     this.cursorPageReq.userId = this.$store.state.user.userId
+    //   }
+    //   this.cursorPageReq.userId = this.userId
+    //   this.getActivities()
+    // }
+
+  },
+  computed: {
+    login() {
+      return this.$store.state.user != null
+    }
+  }
+  , methods: {
+    isMySelf(userId) {
+      return this.$store.state.user.userId == userId
+    },
+    getKey(item) {
+      return item.messageUpdateTime
+    },
+    async getActivities(cursorPageReq) {
+      return await this.$axios.post(`\/message/activity/cursor/list`, cursorPageReq)
+      //     .then(res => {
+      //   if (res.data.code === 200) {
+      //     this.cursorPageResp = res.data.data;
+      //     if (this.cursorPageResp.list.length !== 0) {
+      //       this.totalList = this.totalList.concat(this.cursorPageResp.list)
+      //     }
+      //   } else {
+      //     this.$st(res.data.data, 'error')
+      //   }
+      // })
+
+    },
+  }
 
 }
 </script>

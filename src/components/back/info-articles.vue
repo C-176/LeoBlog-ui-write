@@ -65,9 +65,11 @@ export default {
 
   }, methods: {
     getArticlesDefault() {
-      this.$axios.post('/article/list/user/',{
+      let userId = this.$route.params.userId ? this.$route.params.userId : this.$store.state.user.userId
+      this.$axios.post('/article/list/user', {
         pageSize: this.pageSize,
         pageNo: this.currentPage,
+        userId: userId
       }).then((res) => {
         let map = res.data.data
         this.articleList = map.records

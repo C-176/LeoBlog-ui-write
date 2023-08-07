@@ -84,7 +84,7 @@ export default {
     queryArticle() {
       this.currentPage++;
       //获取articleList,一次获取20条
-      this.$axios.post('/article/list/',{
+      this.$axios.post('/article/list/', {
         pageNo: this.currentPage,
         pageSize: this.pageSize
       }).then((res) => {

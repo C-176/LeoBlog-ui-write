@@ -68,13 +68,13 @@
             </div>
 
             <div class="px-4 py-3 sm:px-6 flex-col justify-between items-center">
-              <h3 class="text-lg font-medium leading-6 text-gray-900">{{ userx.userNickname }}</h3>
-              <div class=" inline-block  mt-1 max-w-2xl text-sm text-gray-500">{{ userx.userIntro }}</div>
+              <!--              <h3 class="text font-medium leading-6 text-gray-900">{{ userx.userNickname }}</h3>-->
+              <!--              <div class=" inline-block  mt-1 max-w-2xl text-xs text-gray-500">{{ userx.userIntro }}</div>-->
             </div>
             <div
-                class="w-2/3 h-auto float-right flex items-center justify-around space-x-2 my-2 ring-indigo-200 ring-2 rounded-xl">
+                class="w-2/3 h-auto float-right flex items-center justify-around space-x-2 my-2 rounded-xl">
               <button v-for="key in keys" :key="key.key"
-                      class=" justify-items-end w-full h-full p-1 rounded-xl hover:bg-indigo-500 group hover:text-white  text-center transform duration-500"
+                      class=" justify-items-end w-full h-full p-1 rounded-xl hover:bg-indigo-500 group hover:text-white ring-gray-200 ring-2  text-center transform duration-500"
                       :class="[
                     activeProject == key.key ? 'bg-indigo-500' : '',
                 ]">
@@ -84,11 +84,11 @@
                      }"
                      @click="()=>{
                        if(this.changing) return;
-                       key.href($router);
+                       key.href($router,this.userId);
                        this.$store.commit('changeProject',key.key)
                      }">
                   <icon class="hidden lg:block" :src="key.iconSrc" :size="20"/>
-                  <span class="text-center group-hover:text-white  "
+                  <span class="text-center group-hover:text-white transition duration-500"
                         :class="[
 
                     activeProject == key.key ? 'text-white' : 'text-gray-600',
@@ -101,12 +101,14 @@
 
           <div v-if="activeProject === 'info'" class="border-t border-gray-200">
             <dl>
-              <div class="bg-white px-4 py-3 sm:grid  flex items-center  sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <div
+                  class="bg-white px-4 py-3 sm:grid  flex items-center justify-between sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm font-medium text-gray-500">昵称</dt>
                 <input v-model="userx.userNickname" :readonly="readonly"
                        class="introInput">
               </div>
-              <div class="bg-gray-50 px-4 py-3 sm:grid  flex items-center  sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <div
+                  class="bg-gray-50 px-4 py-3 sm:grid  flex items-center  justify-between  sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm font-medium text-gray-500">性别</dt>
                 <select v-model="userx.userSex" :disabled="readonly"
                         class=" introInput w-1/2"
@@ -123,10 +125,11 @@
 
                 </select>
               </div>
-              <div class="bg-white px-4 py-3 sm:grid sm:grid-cols-3  flex items-center  sm:gap-4 sm:px-6">
+              <div
+                  class="bg-white px-4 py-3 sm:grid sm:grid-cols-3  justify-between  flex items-center  sm:gap-4 sm:px-6">
                 <dt class="text-sm font-medium text-gray-500">生日</dt>
                 <!--              <div class="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">-->
-                <div class="flex justify-start items-center">
+                <div class="flex justify-start items-center focus-visible:outline-0">
                   <el-date-picker
                       :readonly="readonly"
                       v-model="userx.userBirthday"
@@ -138,26 +141,31 @@
                 </div>
                 <!--              </div>-->
               </div>
-              <div class="bg-gray-50 px-4 py-3 sm:grid flex items-center sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <div
+                  class="bg-gray-50 px-4 py-3 sm:grid flex items-center  justify-between  sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm font-medium text-gray-500">居住地</dt>
                 <input v-model="userx.userPos" :readonly="readonly" class="introInput">
               </div>
-              <div class="bg-white px-4 py-3 sm:grid flex items-center  sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <div
+                  class="bg-white px-4 py-3 sm:grid flex items-center  justify-between  sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm font-medium text-gray-500">所在行业</dt>
                 <input v-model="userx.userIndustry" :readonly="readonly" class="introInput">
               </div>
-              <div class="bg-gray-50 px-4 py-3 sm:grid  flex items-center sm:grid-cols-3 sm:gap-4 sm:px-6">
+              <div
+                  class="bg-gray-50 px-4 py-3 sm:grid  flex items-center justify-between  sm:grid-cols-3 sm:gap-4 sm:px-6">
                 <dt class="text-sm font-medium text-gray-500">教育经历</dt>
                 <input v-model="userx.userEducation" :readonly="readonly" class="introInput">
               </div>
               <div
-                  class="bg-white px-4 py-3  flex items-center  sm:grid-cols-3 sm:gap-4 sm:px-6 flex-col justify-start items-center">
+                  class="bg-white px-4 py-3  flex items-center  sm:grid-cols-3 sm:gap-4 sm:px-6 flex-col justify-start ">
                 <div class="text-sm font-medium text-gray-500 w-full py-2">个人介绍</div>
-                <textarea v-model="userx.userIntro" :readonly="readonly" class="introInput w-full"></textarea>
+                <textarea v-model="userx.userIntro" :readonly="readonly"
+                          class="introInput resize-none w-full"></textarea>
               </div>
 
 
               <button
+                  v-if="hasAuth"
                   class="button w-full"
                   @click="todo">{{ changing ? '保存' : '修改' }}
               </button>
@@ -182,7 +190,7 @@
     </canvas-pic>
 
     <template #slider>
-      <activity></activity>
+      <activity :user-id="this.$route.params.userId ?this.$route.params.userId :-1 "></activity>
     </template>
   </MyCompostion>
 
@@ -207,6 +215,7 @@ export default {
   },
   data() {
     return {
+      userId: -1,
       lottie: null,
       testSrc: 'https://assets9.lottiefiles.com/packages/lf20_stozcwgt.json',
       showCanvas: false,
@@ -240,15 +249,15 @@ export default {
 
         }
       }, {
-        key: 'article', title: '文章', iconSrc: 'vufjamqa', href: function ($router) {
-          $router.push('/back/info/article')
+        key: 'article', title: '文章', iconSrc: 'vufjamqa', href: function ($router, userId) {
+          $router.push('/back/info/article/' + userId)
         }
       }, {
         key: 'comment',
         title: '评论',
         iconSrc: 'hpivxauj',
-        href: function ($router) {
-          $router.push('/back/info/comment')
+        href: function ($router, userId) {
+          $router.push('/back/info/comment/' + userId)
 
         }
       }
@@ -261,9 +270,9 @@ export default {
   },
 
   created() {
-
+    this.userId = this.$route.params.userId ? this.$route.params.userId : this.$store.state.user.userId
     //将this.$store.state.user赋值给user
-    this.$axios.get(this.baseURL + '/user/' + this.$store.state.user.userId,).then(res => {
+    this.$axios.get(this.baseURL + '/user/' + this.userId).then(res => {
       this.userx = res.data.data
       this.imageUrl = this.userx.userProfilePhoto
     })
@@ -387,6 +396,9 @@ export default {
   computed: {
     activeProject() {
       return this.$store.state.activeProject
+    },
+    hasAuth() {
+      return this.$store.state.user.userId == this.$route.params.userId
     },
   }
 

@@ -13,7 +13,7 @@
 }
 
 .introInput{
-    @apply mt-1 rounded-xl bg-transparent p-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0;
+    @apply mt-1 rounded-xl bg-transparent p-2 text-sm text-gray-900 focus-visible:outline-0 sm:col-span-2 sm:mt-0;
 }
 
 .button{

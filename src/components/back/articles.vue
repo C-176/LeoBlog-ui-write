@@ -177,10 +177,10 @@ export default {
   methods: {
     getArticles() {
       let pageReq = {
-        current: this.currentPage,
-        size: this.pageSize
+        pageNo: this.currentPage,
+        pageSize: this.pageSize
       }
-      this.$axios.post('/article/list/user/',pageReq).then((res) => {
+      this.$axios.post('/article/list/user',pageReq).then((res) => {
         let map = res.data.data
         this.articleList = map.records
         this.total = map.total

@@ -3,33 +3,38 @@
   <el-empty v-if="messages.length===0" description="暂无消息"/>
   <template v-else>
 
-    <div class="gs tx bg-white py-1 overscroll-contain overflow-y-scroll max-h-1/2">
-      <ul role="list" class="flex-col justify-center items-center space-y-1">
-        <li class="arx p-2 cursor-pointer hover:bg-gray-100 transition  duration-300 rounded-xl"
-            v-for="item in messages"
-            @click="()=>{this.$router.push(item.messageRedirect);this.$store.commit('changeMessageVisible',false)}">
-          <div class="ls yu aaa justify-between">
-            <avatar :user-id="item.userId">
+    <div class="gs tx bg-white py-1  overscroll-contain overflow-y-scroll">
+      <cursor-div :load-data="getScrollMsgs" :get-key="getKey" v-slot="slot">
+        <div role="list" class="flex-col w-full justify-center items-center space-y-1">
+          <div class="arx p-2 cursor-pointer hover:bg-gray-100 transition  duration-300 rounded-xl"
+              v-for="item in slot.list"
+              @click="()=>{this.$router.push(item.messageRedirect);this.$store.commit('changeMessageVisible',false)}">
+            <div class="ls yu aaa justify-between">
+              <avatar :user-id="item.userId">
 
-              <user :user-id="item.userId" v-slot="userP">
-                <div class="flex justify-start items-center space-x-1.5">
-                  <a class="relative block nx rz uj adn air">
+                <user :user-id="item.userId" v-slot="userP">
+                  <div class="flex justify-start items-center space-x-1.5">
+                    <a class="relative block nx rz uj adn air">
 
-                    <img :src="userP.photo"
-                         alt="" class="nx rz uj adn air">
-                    <span
-                        class="absolute bg-red-500 w-3 h-3 transform -translate-x-1/4  border-2 border-white rounded-full left-1/2 -top-2"
-                        :class="{'hidden':item.isSaw !== 0}">
+                      <img :src="userP.photo"
+                           alt="" class="nx rz uj adn air">
+                      <span
+                          class="absolute bg-red-500 w-3 h-3 transform -translate-x-1/4  border-2 border-white rounded-full left-1/2 -top-2"
+                          :class="{'hidden':item.isSaw !== 0}">
                                       </span>
-                  </a>
-                  <h3 class="ui adg avv awb awk axq">{{ userP.text }}</h3></div>
-              </user>
-            </avatar>
-            <time datetime="2023-01-23T11:00" class="uj avx axm">{{ this.$simpleFormat(item.messageUpdateTime) }}</time>
-          </div>
-          <p class="la adg avv axm">{{ item.messageTitle }}</p></li>
+                    </a>
+                    <h3 class="ui adg avv awb awk axq">{{ userP.text }}</h3></div>
+                </user>
+              </avatar>
+              <time datetime="2023-01-23T11:00" class="uj avx axm">{{
+                  this.$simpleFormat(item.messageUpdateTime)
+                }}
+              </time>
+            </div>
+            <p class="la adg avv axm">{{ item.messageTitle }}</p></div>
 
-      </ul>
+        </div>
+      </cursor-div>
     </div>
 
 
@@ -79,10 +84,12 @@
 import {CloseOutlined, EnterOutlined} from '@ant-design/icons-vue';
 import user from "@/components/pub/user";
 import MyModal from "@/components/pub/myModal.vue";
+import CursorDiv from "@/components/pub/cursorDiv.vue";
 
 export default {
   name: "message",
   components: {
+    CursorDiv,
     MyModal,
     CloseOutlined,
     EnterOutlined,
@@ -113,40 +120,29 @@ export default {
   created() {
     this.logoSrc = this.baseURL + '/source/images/logoC.png'
     // this.getMessages()
-    this.getScrollMsgs()
+    // this.getScrollMsgs()
   },
   methods: {
+    getKey(data) {
+      return data.messageUpdateTime
+    },
     closeMessage() {
       this.$store.commit('changeMessageVisible', false)
     },
-    getScrollMsgs() {
-      if (this.lastScore == null) {
-        this.lastScore = new Date().getTime();
-        this.messages = []
-      }
+    async getScrollMsgs(cursorPageReq) {
+      // if (this.lastScore == null) {
+      //   this.lastScore = new Date().getTime();
+      //   this.messages = []
+      // }
+      //
+      // const cursorPageReq = {
+      //   offset: this.offset,
+      //   cursor: this.lastScore,
+      //   pageSize: 10
+      // }
 
-      const cursorPageReq = {
-        offset: this.offset,
-        cursor: this.lastScore,
-        pageSize: 10
-      }
+      return await this.$axios.post('/message/activity/cursor/list', cursorPageReq)
 
-      this.$axios.post(`\/message/activity/cursor/list`, cursorPageReq).then(res => {
-        if (res.data.code === 200) {
-          let msgs = res.data.data.list;
-          if (msgs.length === 0) {
-            this.lastScore = null
-            this.offset = 0
-            return;
-          }
-          this.offset = res.data.data.offset;
-          this.lastScore = res.data.data.cursor;
-          this.messages = this.messages.concat(msgs);
-
-        } else {
-          this.$st(res.data.data, 'error')
-        }
-      })
 
     },
     checkout(msg) {

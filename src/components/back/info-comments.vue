@@ -101,11 +101,11 @@ export default {
     }
   },
   created() {
-    this.$axios.get(this.baseURL + "/comment/list/user/" + this.$store.state.user.userId).then((res) => {
+    let userId = this.$route.params.userId ? this.$route.params.userId : this.$store.state.user.userId
+    this.$axios.get(this.baseURL + "/comment/list/user/" + userId).then((res) => {
       if (res.data.code === 200) {
         this.comments = res.data.data
         this.comments.forEach((item) => {
-
           item.commentUpdateTime = this.$moments(item.commentUpdateTime)
           item.value.forEach((item3) => {
             item3.commentUpdateTime = this.$moments(item3.commentUpdateTime)
