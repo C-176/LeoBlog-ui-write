@@ -6,7 +6,8 @@
     <div class="gs tx bg-white py-1 overscroll-contain overflow-y-scroll max-h-1/2">
       <ul role="list" class="flex-col justify-center items-center space-y-1">
         <li class="arx p-2 cursor-pointer hover:bg-gray-100 transition  duration-300 rounded-xl"
-            v-for="item in messages" @click="checkout(item)">
+            v-for="item in messages"
+            @click="()=>{this.$router.push(item.messageRedirect);this.$store.commit('changeMessageVisible',false)}">
           <div class="ls yu aaa justify-between">
             <avatar :user-id="item.userId">
 
@@ -124,16 +125,22 @@ export default {
         this.messages = []
       }
 
-      this.$axios.get(`\/message/${this.offset}/${this.lastScore}`).then(res => {
+      const cursorPageReq = {
+        offset: this.offset,
+        cursor: this.lastScore,
+        pageSize: 10
+      }
+
+      this.$axios.post(`\/message/activity/cursor/list`, cursorPageReq).then(res => {
         if (res.data.code === 200) {
-          let msgs = res.data.data.messages;
+          let msgs = res.data.data.list;
           if (msgs.length === 0) {
             this.lastScore = null
             this.offset = 0
             return;
           }
           this.offset = res.data.data.offset;
-          this.lastScore = res.data.data.lastScore;
+          this.lastScore = res.data.data.cursor;
           this.messages = this.messages.concat(msgs);
 
         } else {
