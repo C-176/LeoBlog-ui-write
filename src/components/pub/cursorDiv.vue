@@ -71,7 +71,7 @@ export default {
       hasNewMessage: false,
       cursorPageReq: {
         cursor: null,
-        pageSize: 5,
+        pageSize: 10,
         offset: 0,
       },
       list: [],

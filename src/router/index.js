@@ -57,6 +57,7 @@ const routes = [
                 }
             },
             {path: '/badgeShow', component: () => import('@/components/pub/badgeShow.vue')},
+            {path: '/badgeShow/:badgeId', component: () => import('@/components/pub/badgeShow.vue')},
             {path: '/article/:articleId', component: () => import('@/components/front/articleShowing')},
             {path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('@/components/pub/404')},
         ]

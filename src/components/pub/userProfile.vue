@@ -34,13 +34,15 @@
                   <div>
                     <div class="ls yu cursor-pointer" @click="this.$router.push('/user/'+userx.userId)"><h3 class="avw avy axq chl ">{{ userx.userNickname }}</h3><span
                         class="jp lq nh rj uk adn aja"><span class="t">Online</span></span></div>
-                    <p class="avv axm">@{{ userx.userId }}</p></div>
+                    <p class="avv axm">uid:{{ userx.userId }}</p></div>
                   <div class="le ls yo abq ccc cch">
                     <button type="button"
                             @click="chat"
                             class="lt ti uk yu yz adp ajm ara arq avv awb bac bbi bin bot bou bow bpf bzn">私信
                     </button>
-                    <button type="button" class="lt ti uh yu yz adp alj ara arq avv awb axq bbi bbo bbs bca bic">Call
+                    <button type="button"
+                            @click="follow"
+                            class="lt ti uh yu yz adp alj ara arq avv awb axq bbi bbo bbs bca bic"> {{ this.followed ? '取关' : '关注'}}
                     </button>
                     <div class="jr lt bvt">
                       <div class="ab lq avf" data-headlessui-state="">
@@ -109,7 +111,9 @@ export default {
         userPos: '',
         userProfilePhoto: '',
 
-      }
+      },
+      follows: [],
+      fans: []
     }
   },
   computed: {
@@ -118,6 +122,18 @@ export default {
     },
     userId() {
       return this.$store.state.userProfileId
+    },
+    followEachOther() {
+      return this.fans.findIndex(x => x == this.userx.userId) != -1 && this.follows.findIndex(x => x == this.userx.userId) != -1;
+    },
+    followed() {
+      // 获取follows
+      let userId = this.userx.userId;
+      this.$store.dispatch('getFollows').then(res => {
+        this.follows = res;
+      })
+      var index = this.follows.findIndex(x => x == userId + "");
+      return index != -1;
     },
 
 
@@ -131,10 +147,37 @@ export default {
     }
 
   },
+
+
+
   methods: {
+    follow() {
+      if (!this.followed) {
+        this.$axios.get(`/user/follow/${this.userx.userId}`).then(res => {
+          if (res.data.code === 200) {
+            this.$st('关注成功', 'success')
+            this.$store.commit('addFollow', this.userx.userId);
+            this.followed = true;
+          } else {
+            this.$st('你没有资格关注TA', 'error')
+          }
+        })
+      } else {
+        this.$axios.get(`/user/unfollow/${this.userx.userId}`).then(res => {
+          if (res.data.code === 200) {
+            this.$st('取消关注成功', 'success')
+            this.followed = false;
+            this.$store.commit('deleteFollow', this.userx.userId);
+          } else {
+            this.$st('你没有资格取消关注TA', 'error')
+          }
+        })
+      }
+      // console.log(this.$store.state.follows.length)
+
+    },
     toggle() {
       this.$store.commit('changeUserProfileVisible', false)
-      // this.$emit('close')
     },
     chat() {
       this.$axios.get(this.baseURL + '/chat/connect/' + this.$store.state.user.userId + '/' + this.userx.userId).then(res => {

@@ -3,44 +3,51 @@
       class="w-1/4 overscroll-contain overflow-y-auto h-screen rounded-xl
       pb-20 fixed flex-col justify-start items-center space-y-2">
     <div class="crw w-full  bg-gray-50 p-2 text-left rounded-xl">
-      <h2 class="avv awb awk axq">历史轨迹</h2>
+      <h2 class="avv awb awk axq">活动事件</h2>
       <cursor-div :get-key="getKey" :load-data="getActivities" v-slot="slot">
-      <div role="list" class=" abt w-full" v-if="this.login">
-        <div class="ab ls aab w-full" v-for="item in slot.list" :key="item.messageId">
-          <user-holder :user-id="item.userId" v-slot="user">
-            <div class="as aa cb di ls rz yz">
-              <div class="tj aig"></div>
-            </div>
-            <div v-if="this.isMySelf(item.userId)" class="ab ls nx rz uj yu yz ">
-              <div class="mz ra adn aie bbo bca"></div>
-            </div>
-            <img v-else
-                 :src="user.userProfilePhoto"
-                 alt="" class="ab nx rz uj adn ail">
-            <div class="ui arj avx awj axm cursor-pointer group " @click="this.$router.push(item.messageRedirect)">
-              <div v-if="!this.isMySelf(item.userId)" class="avz axq ">{{ user.userNickname }}</div>
-              <div class="group-hover: text-gray-800">{{
-                  item.messageTitle
-                }}
+        <div role="list" class="w-full flex-col items-center space-y-3" v-if="this.login">
+          <div class="ab ls  w-full" v-for="item in slot.list" :key="item.messageId">
+            <user-holder :user-id="item.userId" v-slot="user">
+              <div class="as aa cb di ls rz yz">
+                <div class="tj aig"></div>
               </div>
-              <!--              <div -->
-              <!--                   class ="rounded-2xl ring-2 ring-gray-300 p-2">-->
-              <!--                -->
-              <!--              </div>-->
-              <div v-if="item.messageContent != null && item.messageContent.trim().length != 0"
-                   class="adb ado p-0 bbi  bbs text-gray-400 bgu bgz"><label for="comment"
-                                                                             class="t">评价活动轨迹</label>
-                <textarea
-                    class="overflow-hidden cursor-pointer outline-0 lp h-auto ti xo aev p-2 focus-visible:outline-0 arl bfy bmx cht chv"
-                >{{item.messageContent}}</textarea>
+              <div v-if="this.isMySelf(item.userId)" class="ab ls nx rz uj yu yz ">
+                <div class="mz ra adn aie bbo bca"></div>
               </div>
-            </div>
-            <div class="uj arj avx awj axm">{{ this.$simpleFormat(item.messageUpdateTime) }}</div>
-          </user-holder>
+              <template v-else>
+                <avatar :user-id="item.userId">
+                  <img
+                      :src="user.userProfilePhoto"
+                      alt="" class="ab nx rz uj adn ail">
+                </avatar>
+              </template>
+              <div class="flex ml-2 w-11/12 items-start justify-between">
+              <div class="flex-col arj avx awj w-5/6 axm cursor-pointer group truncate"
+                   @click="this.$router.push(item.messageRedirect)">
+                <span v-if="!this.isMySelf(item.userId)" class="avz axq ">{{ user.userNickname }}</span>
+                <div class="text-gray-600 truncate">{{
+                    item.messageTitle
+                  }}
+                </div>
+                <!--              <div -->
+                <!--                   class ="rounded-2xl ring-2 ring-gray-300 p-2">-->
+                <!--                -->
+                <!--              </div>-->
+                <div v-if="item.messageContent != null && item.messageContent.trim().length != 0"
+                     class="adb  p-0 bbi  bbs  bgu bgz">
+                  <div
+                      class="border-l-2 border-indigo-300
+                      overflow-hidden cursor-pointer text-xs text-gray-400 outline-0 lp h-auto
+                       ti  p-2 focus-visible:outline-0 arl bfy bmx  chv"
+                  >{{item.messageContent}}</div>
+                </div>
+              </div>
+              <div class=" arj avx awj axm">{{ this.$simpleFormat(item.messageUpdateTime) }}</div></div>
+            </user-holder>
 
 
+          </div>
         </div>
-      </div>
       </cursor-div>
 
 
@@ -66,10 +73,11 @@ import activity from '@/util/activity.js'
 import {ComboboxLabel} from "@headlessui/vue";
 import UserHolder from "@/components/pub/user-holder.vue";
 import CursorDiv from "@/components/pub/cursorDiv.vue";
+import UserProfile from "@/components/pub/userProfile.vue";
 
 export default {
   name: 'activity',
-  components: {CursorDiv, UserHolder, ComboboxLabel},
+  components: {UserProfile, CursorDiv, UserHolder, ComboboxLabel},
   props: {
     userId: {
       type: Number,

@@ -119,7 +119,7 @@ app.config.globalProperties.$simpleFormat = (stamp) => {
     let s = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
     var result;
     var time_diff = new Date().getTime() - date.getTime();
-    if (time_diff < 1000 * 60 * 60 * 24) {
+    if (time_diff <= 1000 * 60 * 60 * 24) {
         // 计算相差小时数
         var leave1 = time_diff % (24 * 3600 * 1000);    // 计算天数后剩余的毫秒数
         var hours = Math.floor(leave1 / (3600 * 1000));
@@ -141,7 +141,7 @@ app.config.globalProperties.$simpleFormat = (stamp) => {
         }
         return result
     }
-    if (time_diff < 30 * 1000 * 60 * 60 * 24) {
+    if (time_diff <= 30 * 1000 * 60 * 60 * 24) {
         // 计算相差天数
         var days = Math.floor(time_diff / (24 * 3600 * 1000));
         if (days === 1) {
@@ -155,7 +155,7 @@ app.config.globalProperties.$simpleFormat = (stamp) => {
         }
         return result
     }
-    if (time_diff < 365 * 1000 * 60 * 60 * 24) {
+    if (time_diff <= 365 * 1000 * 60 * 60 * 24) {
         return Y + '-' + M + '-' + D
     }
     return "很久以前"

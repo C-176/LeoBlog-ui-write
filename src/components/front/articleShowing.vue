@@ -50,7 +50,7 @@
             </div>
             <div class="flex items-center text-gray-500 space-x-1 pl-2">
               <icon src="qznlhdss" size="16"></icon>
-              <span>最后更新时间: {{ this.$simpleFormat(article.articleUpdateDate) }}</span>
+              <span>最后更新时间: {{ article.articleUpdateDate}}</span>
 
             </div>
           </div>

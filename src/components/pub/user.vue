@@ -1,9 +1,10 @@
 <template>
-  <!--  <a-popover v-show="visible">-->
+<!--    <a-popover v-show="visible">-->
   <!--    <template #title>-->
   <slot class="cursor-pointer"
         :photo="userx.userProfilePhoto" :text="userx.userNickname"></slot>
-  <div v-show='visible && showUserId === userx.userId'
+  <div
+      v-if="visible && showUserId == userx.userId"
        class="fixed z-40 p-4 bg-white shadow-lg transition duration-300 rounded-2xl w-80 dark:bg-gray-800">
 
     <div class="flex flex-row items-start gap-4">
@@ -44,7 +45,7 @@
   </div>
   <!--    </template>-->
 
-  <!--  </a-popover>-->
+<!--    </a-popover>-->
 
 </template>
 

@@ -6,7 +6,7 @@
     <div class="gs tx bg-white py-1  overscroll-contain overflow-y-scroll">
       <cursor-div :load-data="getScrollMsgs" :get-key="getKey" v-slot="slot">
         <div role="list" class="flex-col w-full justify-center items-center space-y-1">
-          <div class="arx p-2 cursor-pointer hover:bg-gray-100 transition  duration-300 rounded-xl"
+          <div class="p-2 cursor-pointer hover:bg-gray-100 transition  duration-300 rounded-xl"
               v-for="item in slot.list"
               @click="()=>{this.$router.push(item.messageRedirect);this.$store.commit('changeMessageVisible',false)}">
             <div class="ls yu aaa justify-between">
@@ -15,7 +15,6 @@
                 <user :user-id="item.userId" v-slot="userP">
                   <div class="flex justify-start items-center space-x-1.5">
                     <a class="relative block nx rz uj adn air">
-
                       <img :src="userP.photo"
                            alt="" class="nx rz uj adn air">
                       <span
