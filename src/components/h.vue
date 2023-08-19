@@ -18,7 +18,7 @@
             <span class="sr-only">LeoBlog</span>
             <img @click="$router.push('/index')"
                  class="h-full scale-140 transition duration-500 cursor-pointer w-auto sm:h-10"
-                 :src="app.config.globalProperties.baseURL+'/source/images/logoTest.png'"
+                 src="/source/images/logoTest.png"
                  alt=""/>
 
 
@@ -101,7 +101,7 @@
 
                 <div class="js lv avv cpv" data-headlessui-state="open">
                   <button type="button" @click="$store.commit('changeMessageVisible',!$store.state.messageVisible)"
-                          class=" bpw fn ls yu aql ">
+                          class=" bpw fn ls yu aql focus-visible:outline-0">
                     <icon src="psnhyobz" size="22"></icon>
                   </button>
                   <div :class="{
@@ -198,7 +198,7 @@
                 <!--logo-->
                 <div>
                   <img @click="$router.push('/index')" class="cursor-pointer h-10 pl-1 animate-bounce scale-140 w-auto"
-                       :src="app.config.globalProperties.baseURL+'/source/images/logoTest.png'"
+                       src="/source/images/logoTest.png"
                        alt="LeoBlog"/>
                 </div>
                 <!--                小屏关闭选项卡按钮-->
@@ -262,7 +262,7 @@
   />
   <search-dialog :is-open="openSearch" @closeSearch="() => {openSearch=false}"></search-dialog>
 
-
+  <websocket v-if="logined"></websocket>
 </template>
 
 <script setup>
@@ -282,7 +282,7 @@ import {
   PopoverGroup,
   PopoverPanel
 } from '@headlessui/vue'
-import {computed, ref} from 'vue'
+import {computed, onBeforeUnmount, onMounted, ref, watch} from 'vue'
 import {
   Bars3Icon,
   BellIcon,
@@ -306,8 +306,9 @@ import {useRouter} from 'vue-router'
 import SearchDialog from "@/components/pub/searchDialog";
 import music from "@/components/pub/music";
 import Message from "@/components/pub/message.vue";
-import app from "@/main";
+import app, {st} from "@/main";
 import axios from "axios";
+import Websocket from "@/components/pub/websocket.vue";
 
 const router = useRouter()
 let openSearch = ref(false)
@@ -351,14 +352,6 @@ function registerAction() {
 function goto(item, $router) {
   openMenu.value = false
   item.href($router);
-  // // 模拟按下esc键
-  //
-  // setTimeout(() => {
-  //   var e = new KeyboardEvent('keydown', {'keyCode': 27, 'which': 27});
-  //   document.dispatchEvent(e);
-  //
-  // }, 500)
-
 }
 
 const store = useStore()
@@ -405,14 +398,17 @@ function logOut() {
       // localStorage.removeItem(encode("lb_userPassword"))
 
       axios.interceptors.request.use(config => {
-        const token = localStorage.getItem('token')
+        const token = store.state.accessToken
+        const refreshToken = store.state.refreshToken
         if (token) config.headers['Authorization'] = token
+        if (token) config.headers['RefreshAuthorization'] = refreshToken
         return config
       })
 
       axios.get("/user/logout");
       setTimeout(() => {
         store.commit('setUser', null)
+        store.commit('removeToken')
       }, 500)
       router.push('/LR')
     }
@@ -562,5 +558,19 @@ const navList = ref([{name: '文章', list: article},
 const open = computed(() => {
   return store.state.messageVisible
 })
+
+watch(
+    () => store.state.systemBufferList,
+    (o, n) => {
+      if (n.length > 0) {
+        let content = n[0]
+        st(content, 'warning')
+        store.commit('deleteFromSystemBuffer', content)
+      }
+    },
+    {deep: true}
+
+)
+
 
 </script>

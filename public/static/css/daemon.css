@@ -75,11 +75,12 @@ a:hover {
 
 /*    color: #fff;*/
 /*}*/
-::selection {  /*设置选中区域文字背景变化*/
+::selection { /*设置选中区域文字背景变化*/
     text-shadow: none;
     color: #fff;
-    background-color: #4f46e5;/*为选中文字设置背景颜色*/
+    background-color: #4f46e5; /*为选中文字设置背景颜色*/
 }
+
 .fade-enter-active, .fade-leave-active {
     transition: opacity .3s;
 }
@@ -128,7 +129,7 @@ a:hover {
 
 
 body {
-    font-family: "Arial", "PingFang SC", sans-serif;
+    font-family: "Arial", "PingFang SC", "smileySans", sans-serif;
     /*font-family: "smileySans";*/
     /*background: #eef2f4;*/
     background-size: 100% 100%;
@@ -207,21 +208,26 @@ body {
     .ie-scrollbar-vertical {
         width: 10px;
     }
+
     .ie-scrollbar-vertical::-webkit-scrollbar-thumb {
         background-color: #666;
         border-radius: 10px;
     }
+
     .ie-scrollbar-vertical::-webkit-scrollbar-thumb:hover {
         background-color: #333;
     }
+
     /* 水平滚动条 */
     .ie-scrollbar-horizontal {
         height: 10px;
     }
+
     .ie-scrollbar-horizontal::-webkit-scrollbar-thumb {
         background-color: #666;
         border-radius: 10px;
     }
+
     .ie-scrollbar-horizontal::-webkit-scrollbar-thumb:hover {
         background-color: #333;
     }

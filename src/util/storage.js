@@ -2,14 +2,21 @@ import {decode, encode} from '@/util/AES'
 
 
 const storage = {
-    setToken(value) {
-        localStorage.setItem("token", value);
+    setAccessToken(value) {
+        localStorage.setItem("accessToken", value);
     },
-    getToken() {
-        return localStorage.getItem("token");
+    getAccessToken() {
+        return localStorage.getItem("accessToken");
+    },
+    setRefreshToken(value) {
+        localStorage.setItem("refreshToken", value);
+    },
+    getRefreshToken() {
+        return localStorage.getItem("refreshToken");
     },
     rmToken() {
-        localStorage.removeItem("token");
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
     },
     set(key, value, expire) {
         // console.log("set", key, value);

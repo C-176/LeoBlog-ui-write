@@ -11,19 +11,24 @@ const mutations = {
         state.index = index;
     },
     // 保存token
-    setToken(state, token) {
-        state.token = token;
-        storage.setToken(token);
+    setAccessToken(state, token) {
+        state.accessToken = token;
+        storage.setAccessToken(token);
+    },
+    setRefreshToken(state,value) {
+        state.refreshToken = value;
+        storage.setRefreshToken(value);
     },
     // 移除token
     removeToken(state) {
-        state.token = "";
+        state.accessToken = "";
+        state.refreshToken = "";
         storage.rmToken();
     },
     // 设置用户并保存到storage
     setUser(state, user) {
         state.user = user;
-        if(user == null){
+        if (user == null) {
             // 清空localStorage
             storage.clear();
             return;
@@ -58,7 +63,7 @@ const mutations = {
         if (messageVisible) {
             state.messagePoint = 0;
         }
-    },changeMusicVisible(state, musicVisible) {
+    }, changeMusicVisible(state, musicVisible) {
         state.musicVisible = musicVisible;
     },
     changeSliderVisible(state, sliderVisible) {
@@ -97,7 +102,7 @@ const mutations = {
     },
     initSocket(state) {
         const host = main.config.globalProperties.$host
-        state.socket = new WebSocket("ws://" + host + ":8080/net/" + state.user.userId);
+        state.socket = new WebSocket("ws://" + host + ":8080/net/" + state.user.userId + "/" + state.accessToken);
     },
     changeMode(state) {
         state.mode = state.mode === 'light' ? 'dark' : 'light';
@@ -141,7 +146,32 @@ const mutations = {
     },
     deleteFollow(state, follow) {
         state.follows = state.follows.filter(f => f != follow);
+    },
+    addToSendBuffer(state, message) {
+        state.sendBufferList.push(message);
+    },
+    deleteFromSendBuffer(state, message) {
+        state.sendBufferList = state.sendBufferList.filter(m => m != message);
+    },
+    addToReceiveBuffer(state, message) {
+        state.receiveBufferList.push(message);
+    },
+    deleteFromReceiveBuffer(state, message) {
+        state.receiveBufferList = state.receiveBufferList.filter(m => m != message);
+    },
+    addToActivityBuffer(state, message) {
+        state.activityBufferList.push(message);
+    },
+    deleteFromActivityBuffer(state, message) {
+        state.activityBufferList = state.activityBufferList.filter(m => m != message);
+    },
+    addToSystemBuffer(state, message) {
+        state.systemBufferList.push(message);
+    },
+    deleteFromSystemBuffer(state, message) {
+        state.systemBufferList = state.systemBufferList.filter(m => m != message);
     }
+
 
 
 }

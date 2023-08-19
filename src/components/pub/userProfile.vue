@@ -159,7 +159,7 @@ export default {
             this.$store.commit('addFollow', this.userx.userId);
             this.followed = true;
           } else {
-            this.$st('你没有资格关注TA', 'error')
+            this.$st(res.data.msg, 'error')
           }
         })
       } else {
@@ -169,7 +169,7 @@ export default {
             this.followed = false;
             this.$store.commit('deleteFollow', this.userx.userId);
           } else {
-            this.$st('你没有资格取消关注TA', 'error')
+            this.$st(res.data.msg, 'error')
           }
         })
       }

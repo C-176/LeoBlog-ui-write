@@ -4,8 +4,10 @@
       pb-20 fixed flex-col justify-start items-center space-y-2">
     <div class="crw w-full  bg-gray-50 p-2 text-left rounded-xl">
       <h2 class="avv awb awk axq">活动事件</h2>
-      <cursor-div :get-key="getKey" :load-data="getActivities" v-slot="slot">
-        <div role="list" class="w-full flex-col items-center space-y-3" v-if="this.login">
+      <cursor-div :get-key="getKey" :load-data="getActivities" @newMessage="()=>{
+
+      }" v-slot="slot">
+<!--        <div role="list" class="w-full flex-col items-center space-y-3" v-if="this.login">-->
           <div class="ab ls  w-full" v-for="item in slot.list" :key="item.messageId">
             <user-holder :user-id="item.userId" v-slot="user">
               <div class="as aa cb di ls rz yz">
@@ -18,7 +20,7 @@
                 <avatar :user-id="item.userId">
                   <img
                       :src="user.userProfilePhoto"
-                      alt="" class="ab nx rz uj adn ail">
+                      alt="" class="ab w-6 h-6 min-w-6 min-h-6 uj adn ail">
                 </avatar>
               </template>
               <div class="flex ml-2 w-11/12 items-start justify-between">
@@ -37,7 +39,7 @@
                      class="adb  p-0 bbi  bbs  bgu bgz">
                   <div
                       class="border-l-2 border-indigo-300
-                      overflow-hidden cursor-pointer text-xs text-gray-400 outline-0 lp h-auto
+                      overflow-hidden cursor-pointer text-xs bg-indigo-50 rounded text-gray-400 outline-0 lp h-auto
                        ti  p-2 focus-visible:outline-0 arl bfy bmx  chv"
                   >{{item.messageContent}}</div>
                 </div>
@@ -47,11 +49,11 @@
 
 
           </div>
-        </div>
+<!--        </div>-->
       </cursor-div>
 
 
-      <div class=" ls aaa mt-4"><img
+      <div class=" ls aaa mt-4" v-if="login"><img
           :src="this.$store.state.user.userProfilePhoto"
           alt="" class="nx rz uj adn ail">
         <form class="ab ui">
@@ -74,6 +76,7 @@ import {ComboboxLabel} from "@headlessui/vue";
 import UserHolder from "@/components/pub/user-holder.vue";
 import CursorDiv from "@/components/pub/cursorDiv.vue";
 import UserProfile from "@/components/pub/userProfile.vue";
+import {mapState} from "vuex";
 
 export default {
   name: 'activity',
@@ -118,6 +121,11 @@ export default {
       activity: activity
     }
   },
+  watch:{
+
+
+
+  },
   created() {
     // console.log(this.activity)
     // if (this.login) {
@@ -130,16 +138,18 @@ export default {
 
   },
   computed: {
+
     login() {
       return this.$store.state.user != null
     }
   }
   , methods: {
+
     isMySelf(userId) {
       return this.$store.state.user.userId == userId
     },
     getKey(item) {
-      return item.messageUpdateTime
+      return item.messageId
     },
     async getActivities(cursorPageReq) {
       return await this.$axios.post(`\/message/activity/cursor/list`, cursorPageReq)

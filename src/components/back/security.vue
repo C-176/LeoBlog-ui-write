@@ -193,7 +193,7 @@ export default {
         this.$st('请先获取验证码', 'error')
         return
       }
-      this.$axios.put('/user/security/' + this.$store.state.user.userId, {
+      this.$axios.put('/user/security', {
         userPhone: this.user.userPhone,
         captcha: this.phoneCaptcha
       }).then(res => {

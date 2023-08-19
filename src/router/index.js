@@ -102,7 +102,7 @@ router.beforeEach((to, from, next) => {
         store.commit('changeIndex', false)
         next()
     }
-    let token = localStorage.getItem("token")
+    let token = localStorage.getItem("accessToken")
     let user = store.state.user
     if (to.path.includes('/home/index')) {
         if (token == null || token.trim() == '' || token == undefined || user == null || user == undefined) {

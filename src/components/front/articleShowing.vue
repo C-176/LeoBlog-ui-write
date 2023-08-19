@@ -425,6 +425,9 @@ export default {
         this.article = res.data.data
         //将articleUpdateDate转换为yyyy-MM-dd HH:mm:ss格式
         this.article.articleUpdateDate = this.$simpleFormat(this.article.articleUpdateDate)
+      }else {
+        this.$st(res.data.data, 'error')
+        this.$router.replace('/404')
       }
     })
     // 取出this.article 前三个元素

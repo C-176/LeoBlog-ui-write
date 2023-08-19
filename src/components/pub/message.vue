@@ -30,7 +30,7 @@
                 }}
               </time>
             </div>
-            <p class="la adg avv axm">{{ item.messageTitle }}</p></div>
+            <p class="adg text-xs axm">{{ item.messageTitle }}</p></div>
 
         </div>
       </cursor-div>

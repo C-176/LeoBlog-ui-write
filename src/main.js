@@ -33,7 +33,7 @@ import '@kangc/v-md-editor/lib/plugins/emoji/emoji.css';
 import createCopyCodePlugin from '@kangc/v-md-editor/lib/plugins/copy-code/index';
 import '@kangc/v-md-editor/lib/plugins/copy-code/copy-code.css';
 
-import {cursorPageReq,cursorPageResp} from "@/util/activity";
+import {cursorPageReq, cursorPageResp} from "@/util/activity";
 
 VueMarkdownEditor.use(vuepressTheme, {Prism}).use(createCopyCodePlugin()).use(createEmojiPlugin());
 
@@ -48,7 +48,8 @@ import IMG_SRC from '/source/images/index/1.jpg'
 
 //全局注册一个a函数
 const app = createApp(App)
-app.config.globalProperties.$sa = (msg, icon) => {
+
+export function sa(msg, icon) {
     Swal.fire({
         title: msg,
         // text: 'This is a sweet alert',
@@ -57,7 +58,8 @@ app.config.globalProperties.$sa = (msg, icon) => {
 
     })
 }
-app.config.globalProperties.$st = (title, icon) => {
+
+export function st(title, icon) {
 
     const Toast = Swal.mixin({
         toast: true,
@@ -73,6 +75,9 @@ app.config.globalProperties.$st = (title, icon) => {
         title
     })
 }
+
+app.config.globalProperties.$sa = sa
+app.config.globalProperties.$st = st
 //1.开发 2.生产
 let env = 1
 let host = ''
@@ -90,10 +95,11 @@ if (env === 1) {
 app.config.globalProperties.$host = host
 axios.interceptors.response.use(res => {
         if (res.data.code === 401) {
+            console.log(res.data)
             store.commit('changeBgCover', false)
             setTimeout(() => {
                 store.commit('setUser', null)
-                localStorage.removeItem('token')
+                store.commit('removeToken')
             }, 500)
             router.push('/LR')
         }
@@ -101,8 +107,11 @@ axios.interceptors.response.use(res => {
     }
 )
 axios.interceptors.request.use(config => {
-        const token = localStorage.getItem('token')
+        const token = store.state.accessToken
+        const refreshToken = store.state.refreshToken
         if (token) config.headers['Authorization'] = token
+        if (refreshToken) config.headers['RefreshAuthorization'] = refreshToken
+
         return config
     }
 )
@@ -207,7 +216,7 @@ app.use(router).use(store).use(ElementPlus).use(Antd).use(VueMarkdownEditor).com
     .component('badge', badge)
     .component('myModal', myModal)
     .component('avatar', Avatar)
-    .component('userHolder',userHolder)
+    .component('userHolder', userHolder)
 
 
 app.mount('#app')

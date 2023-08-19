@@ -124,10 +124,10 @@
       <div
           v-if="logined"
           :class="{
-            'opacity-100 h-auto': showComment,
-            'hidden h-0': !showComment
+            'opacity-100 translate-0': showComment,
+            'invisible translate-x-full ': !showComment
                }"
-          class="gs ti uf w-full flex justify-start ">
+          class="gs ti uf w-full flex justify-start transition duration-500 ">
         <div class="w-full ls ys abe mt-2">
           <div class="uk">
             <img class="lq nc re adn border border-indigo-600"
@@ -135,12 +135,12 @@
                  alt=""></div>
           <div class="tl uh">
             <div class="ab">
-              <div class="focus-within:bg-white adb ado bbi bbo bbs bca bgu bgz"><label for="comment" class="t">Add your
+              <div class="focus-within:bg-white outline-0 adb ado bbi bbo bbs bca bgu bgz"><label for="comment" class="t">Add your
                 comment</label>
                 <textarea v-model="commentIn"
                           @keyup.enter.stop="saveComment()"
-                          rows="3" name="comment" id="comment"
-                          class=" lp ti xo aev alh arl axq bfy bmx cht chv"
+                           name="comment" id="comment"
+                          class="p-2 lp focus-visible:outline-0 ti xo aev alh arl axq bfy bmx cht chv"
                           placeholder="添加评论..."></textarea>
                 <div class="arq" aria-hidden="true">
                   <div class="asb">

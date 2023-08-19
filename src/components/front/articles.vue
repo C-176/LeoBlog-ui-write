@@ -3,7 +3,7 @@
   <MyCompostion slider="true">
       <article-show :article-list="articleList"></article-show>
       <el-pagination
-          class="bg-white w-full flex justify-center items-center  space-x-2"
+          class="bg-white w-full  mx-auto text-xs flex justify-center items-center  space-x-0.5"
           v-model:currentPage="currentPage"
           v-model:page-size="pageSize"
           :page-sizes="pageSizes"
@@ -51,7 +51,7 @@ export default {
       currentPage: 1,
       pageSize: 20,
       pageSizes: [20, 50, 100, 200],
-      small: false,
+      small: true,
       disabled: false,
       background: false,
       total: 30,

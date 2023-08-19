@@ -179,7 +179,7 @@ export default {
     }
   },
   created() {
-    this.logoSrc = this.baseURL + '/source/images/logoTest.png'
+    this.logoSrc = '/source/images/logoTest.png'
     //记住密码  恢复密码
     let uname = localStorage.getItem(encode('lb_userName'))
     let upwd = localStorage.getItem(encode('lb_userPassword'))
@@ -239,13 +239,15 @@ export default {
               }
               // this.$st("登陆成功", "success")
               let map = res.data.data
-              let token = map.token
+              let token = map.accessToken
+              let refreshToken = map.refreshToken
               let user = map.user
               this.refreshCaptCha()
 
               // 将token存到localStorage中
               // console.log("将token存到localStorage中： " + token)
-              this.$store.commit("setToken", token)
+              this.$store.commit("setAccessToken", token)
+              this.$store.commit("setRefreshToken", refreshToken)
               this.$store.commit("setUser", user)
               this.$router.push('/home/article')
               resolve(res)
@@ -303,8 +305,6 @@ export default {
                       this.$store.commit('changeLR', true)
                       this.$st("注册成功，已定向到登陆页面，请登录", "success")
                       this.$store.commit('changeLogin', true);
-                      this.$store.commit('setToken', res.data.data.token)
-
                       resolve(res.data.code)
                     } else {
                       this.$st(res.data.data, 'error')

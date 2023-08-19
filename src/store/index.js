@@ -24,7 +24,8 @@ const store = createStore({
                 sliderVisible: true,
                 chatPoint: 0,
                 messagePoint: 0,
-                token: storage.getToken(),
+                accessToken: storage.getAccessToken(),
+                refreshToken:storage.getRefreshToken(),
                 user: storage.get(encode("lb_user")),
                 users: [],
                 follows: null,
@@ -44,6 +45,10 @@ const store = createStore({
                     'geekblue',
                     'purple'
                 ],
+                sendBufferList: [],
+                receiveBufferList: [],
+                activityBufferList: [],
+                systemBufferList: [],
             }
         },
         mutations: mutations,
