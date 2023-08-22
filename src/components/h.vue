@@ -52,11 +52,14 @@
               <transition enter-active-class="transition ease-out duration-200"
                           enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0"
                           leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
-                <PopoverPanel
+                <PopoverPanel v-slot="{close}"
                     class="absolute z-10 -ml-4 mt-3 w-screen max-w-md transform px-2 sm:px-0 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2">
                   <div class="overflow-hidden rounded-lg shadow-lg ring-0 ring-black ring-opacity-5">
                     <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-                      <a v-for="item in nav.list" :key="item.name" @click="item.href($router)"
+                      <a v-for="item in nav.list" :key="item.name" @click="()=>{
+                        close()
+                        item.href($router)
+                      }"
                          class="-m-3 flex items-start rounded-lg p-1 hover:bg-gray-50">
                         <icon :src="item.iconSrc" trigger="loop"></icon>
                         <div class="ml-4">
@@ -306,7 +309,7 @@ import {useRouter} from 'vue-router'
 import SearchDialog from "@/components/pub/searchDialog";
 import music from "@/components/pub/music";
 import Message from "@/components/pub/message.vue";
-import app, {st} from "@/main";
+import {st} from "@/main";
 import axios from "axios";
 import Websocket from "@/components/pub/websocket.vue";
 
@@ -392,25 +395,7 @@ function logOut() {
     cancelButtonText: '取消',
   }).then((result) => {
     if (result.value) {
-      // this.$store.commit('removeToken')
-      // localStorage.removeItem(encode("lb_user"))
-      // localStorage.removeItem(encode("lb_userName"))
-      // localStorage.removeItem(encode("lb_userPassword"))
-
-      axios.interceptors.request.use(config => {
-        const token = store.state.accessToken
-        const refreshToken = store.state.refreshToken
-        if (token) config.headers['Authorization'] = token
-        if (token) config.headers['RefreshAuthorization'] = refreshToken
-        return config
-      })
-
-      axios.get("/user/logout");
-      setTimeout(() => {
-        store.commit('setUser', null)
-        store.commit('removeToken')
-      }, 500)
-      router.push('/LR')
+      store.commit('logout')
     }
   })
 }

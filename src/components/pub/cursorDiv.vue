@@ -97,14 +97,14 @@ export default {
   watch: {
     activityBufferList: {
       handler(val) {
-        this.hasNewMessage = true
-        // if (val.length > 0) {
-        //   this.hasNewMessage = true
-        //   const data = val[0]
-        //   this.addActivity(data)
-        //   // this.loadingLast()
-        //   this.$store.commit('deleteFromActivityBuffer', data)
-        // }
+        // this.hasNewMessage = true
+        if (val.length > 0) {
+          this.hasNewMessage = true
+          const data = val[0]
+          this.addActivity(data)
+          // this.loadingLast()
+          this.$store.commit('deleteFromActivityBuffer', data)
+        }
         // console.log(this.hasNewMessage)
       },
       deep: true

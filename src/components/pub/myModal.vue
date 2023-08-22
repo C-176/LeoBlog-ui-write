@@ -10,13 +10,16 @@
         <!--                leave-from="opacity-100 scale-100"-->
         <!--                leave-to="opacity-0 scale-95"-->
         <!--        >-->
-        <div v-show="visible"
+        <div
+
              :class="{
             'lg:w-1/3 lg:h-1/3':size==='sm',
             'lg:w-2/5 lg:h-4/5':size==='md',
             'lg:w-2/3 lg:h-5/6':size==='lg',
+            '-translate-y-full opacity-0 -z-10':!visible,
+            'translate-y-0 opacity-100  z-50':visible,
              }"
-             class="fixed text-left z-50 shadow-2xl lg:inset-1 flex-col items-center justify-center mx-auto lg:mt-16 w-screen h-screen bg-white p-2 lg:rounded-xl">
+             class="fixed transition-all duration-300 text-left z-50 shadow-2xl lg:inset-1 flex-col items-center justify-center mx-auto lg:mt-16 w-screen h-screen bg-white p-2 lg:rounded-xl">
             <a-tooltip class="absolute top-0 right-0" title="关闭">
                 <button class="rounded-bl-xl rounded-tr-xl z-20 text-white h-8 w-8 text-center bg-indigo-600 hover:bg-indigo-500"
                         @click="quit()">

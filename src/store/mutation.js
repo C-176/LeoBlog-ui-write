@@ -1,11 +1,34 @@
 import storage from "@/util/storage";
 import main from "@/main";
 import {encode} from '@/util/AES'
+import axios from "axios";
+import router from "@/router";
+import store from "@/store/index";
 
 
 const mutations = {
     changeLogin(state, login) {
         state.login = login;
+    },
+    clear() {
+        store.commit('setUser',null)
+        store.commit('removeToken',null)
+        router.push('/LR')
+    },
+    logout(state) {
+        axios.interceptors.request.use(config => {
+            const token = state.accessToken
+            const refreshToken = state.refreshToken
+            if (token) config.headers['Authorization'] = token
+            if (token) config.headers['RefreshAuthorization'] = refreshToken
+            return config
+        })
+        axios.get("/user/logout");
+        setTimeout(() => {
+            store.commit('setUser',null)
+            store.commit('removeToken',null)
+        }, 500)
+        router.push('/LR')
     },
     changeIndex(state, index) {
         state.index = index;
@@ -15,7 +38,7 @@ const mutations = {
         state.accessToken = token;
         storage.setAccessToken(token);
     },
-    setRefreshToken(state,value) {
+    setRefreshToken(state, value) {
         state.refreshToken = value;
         storage.setRefreshToken(value);
     },
@@ -102,7 +125,7 @@ const mutations = {
     },
     initSocket(state) {
         const host = main.config.globalProperties.$host
-        state.socket = new WebSocket("ws://" + host + ":8080/net/" + state.user.userId + "/" + state.accessToken);
+        state.socket = new WebSocket("ws://" + host + ":8080/net/" + state.user.userId + "/" + state.refreshToken);
     },
     changeMode(state) {
         state.mode = state.mode === 'light' ? 'dark' : 'light';
@@ -171,7 +194,6 @@ const mutations = {
     deleteFromSystemBuffer(state, message) {
         state.systemBufferList = state.systemBufferList.filter(m => m != message);
     }
-
 
 
 }

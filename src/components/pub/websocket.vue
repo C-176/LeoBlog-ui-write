@@ -3,8 +3,8 @@
 
 import {onBeforeUnmount, onMounted, ref, watch} from "vue";
 import store from "@/store";
-import {eventEnum, WebSocketChatData, WebSocketData} from "@/util/eventEnum";
-
+import {eventEnum, WebSocketChatData} from "@/util/eventEnum";
+import {st} from "@/main"
 const socket = ref(null);
 
 
@@ -27,8 +27,6 @@ function buildWs(socket) {
   // 监听 WebSocket 接收到消息事件
   socket.value.onmessage = (event) => {
     const data = JSON.parse(event.data);
-    console.log(data)
-
     switch (data.type) {
       case eventEnum.SINGLE_CHAT:
         store.commit('addToReceiveBuffer', JSON.parse(data.content))
@@ -37,7 +35,12 @@ function buildWs(socket) {
         refreshTimer();
         break;
       case eventEnum.AUTH_FAIL_RESPONSE:
-        store.commit('initSocket')
+        st("登录失效，请重新登录", 'warning')
+        store.commit('clear')
+        break;
+      case eventEnum.FORCE_OFFLINE_NOTICE:
+        st("账号已在其他地方登录", 'warning')
+        store.commit('clear')
         break;
       case eventEnum.NEW_ACTIVITY_NOTICE:
         store.commit('addToActivityBuffer', JSON.parse(data.content))

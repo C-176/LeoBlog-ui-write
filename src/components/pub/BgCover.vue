@@ -1,9 +1,10 @@
 <template>
-  <transition name="fade">
+<!--  <transition name="fade">-->
     <div v-if="showCover"
          @click="quit()"
-         class="fixed bg-opacity-10  w-screen h-screen  backdrop-blur z-40 "></div>
-  </transition>
+  class="fixed  w-screen h-screen   z-40 "></div>
+  <!--         class="fixed bg-opacity-10  w-screen h-screen  backdrop-blur z-40 "></div>-->
+  <!--  </transition>-->
 </template>
 
 <script>
