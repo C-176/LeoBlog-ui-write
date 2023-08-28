@@ -125,7 +125,7 @@ const mutations = {
     },
     initSocket(state) {
         const host = main.config.globalProperties.$host
-        state.socket = new WebSocket("ws://" + host + ":8080/net/" + state.user.userId + "/" + state.refreshToken);
+        state.socket = new WebSocket("ws://" + host + "/api/net/" + state.user.userId + "/" + state.refreshToken);
     },
     changeMode(state) {
         state.mode = state.mode === 'light' ? 'dark' : 'light';

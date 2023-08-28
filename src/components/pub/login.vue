@@ -324,7 +324,7 @@ export default {
 
     refreshCaptCha() {
       // console.log(localStorage.getItem("token"));
-      this.captchaUrl = this.baseURL + "/user/getCaptcha?time=" + new Date().getTime() + '&token=' + localStorage.getItem("token")
+      this.captchaUrl = this.baseURL + "/user/getCaptcha?time=" + new Date().getTime()
     },
     changePwd() {
       if (this.forgetEmail.trim().length == 0) {

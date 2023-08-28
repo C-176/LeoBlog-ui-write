@@ -148,7 +148,7 @@
 
 
                       class="absolute ease-in-out transition duration-500 p-2 right-0 w-56 mt-2 origin-top-right
-                       bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
+                       bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5">
                     <div class="py-1  transition duration-500 " role="menu" aria-orientation="vertical"
                          aria-labelledby="options-menu">
 
@@ -191,7 +191,7 @@
       <transition enter-active-class="duration-200 ease-out" enter-from-class="opacity-0 scale-95"
                   enter-to-class="opacity-100 scale-100" leave-active-class="duration-100 ease-in"
                   leave-from-class="opacity-100 scale-100" leave-to-class="opacity-0 scale-95">
-        <PopoverPanel focus
+        <PopoverPanel focus v-slot="{close}"
                       class="absolute z-50 max-w-xl inset-x-0 top-0 origin-top-right transform p-2 transition lg:hidden">
           <div
 
@@ -219,7 +219,10 @@
                   <template v-for="nav in navList">
                     <hr>
                     <div class="grid grid-cols-2 gap-y-2 gap-x-8">
-                      <a v-for="item in nav.list" :key="item.name" @click="goto(item,$router)"
+                      <a v-for="item in nav.list" :key="item.name" @click="()=>{
+                        close()
+                        goto(item,$router)
+                      }"
                          class="flex items-center space-x-2 text-sm text-center font-medium text-gray-900 p-1 rounded-xl hover:bg-gray-100">
                         <icon trigger="loop" :src="item.iconSrc"></icon>
                         <span class="text-gray-900">{{ item.name }}</span>

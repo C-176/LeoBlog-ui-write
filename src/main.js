@@ -83,13 +83,11 @@ let env = 1
 let host = ''
 if (env === 1) {
     host = 'localhost'
-    app.config.globalProperties.baseURL = 'http://localhost:8080'
-    axios.defaults.baseURL = 'http://localhost:8080'
 } else if (env === 2) {
     host = '49.235.100.240'
-    app.config.globalProperties.baseURL = 'http://' + host + '/api'
-    axios.defaults.baseURL = 'http://' + host + '/api'
 }
+app.config.globalProperties.baseURL = 'http://' + host + '/api'
+axios.defaults.baseURL = 'http://' + host + '/api'
 // app.config.globalProperties.$logo = app.config.globalProperties.baseURL + "/source/images/logoS.png"
 // app.config.globalProperties.$default_avator = "/source/images/default_pic.png"
 app.config.globalProperties.$host = host

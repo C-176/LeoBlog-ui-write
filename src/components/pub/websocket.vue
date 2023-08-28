@@ -31,6 +31,12 @@ function buildWs(socket) {
       case eventEnum.SINGLE_CHAT:
         store.commit('addToReceiveBuffer', JSON.parse(data.content))
         break;
+      case eventEnum.GROUP_CHAT:
+        store.commit('addToReceiveBuffer', JSON.parse(data.content))
+            break;
+      case eventEnum.AI_CHAT:
+        store.commit('addToReceiveBuffer', JSON.parse(data.content))
+        break;
       case eventEnum.HEART_BEAT_RESPONSE:
         refreshTimer();
         break;
@@ -80,7 +86,17 @@ watch(
         const data = newVal[0]
         var webSocketChatData = new WebSocketChatData();
         webSocketChatData.userId = data.userId;
-        webSocketChatData.type = eventEnum.SINGLE_CHAT
+        switch(data.receiverId){
+          case -1:
+            webSocketChatData.type = eventEnum.GROUP_CHAT;
+            break;
+          case 1:
+            webSocketChatData.type = eventEnum.AI_CHAT;
+            break;
+          default:
+            webSocketChatData.type = eventEnum.SINGLE_CHAT;
+            break;
+        }
         webSocketChatData.content = data
         socket.value.send(JSON.stringify(webSocketChatData));
 
